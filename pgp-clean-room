@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+
+from snack import *
+import subprocess
+from pgpcr import *
+
+screen = SnackScreen()
+ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", ["GPG", "PKI", "Run Shell", "Quit"] )
+screen.finish()
+
+if ret == "gpg":
+	gpg.main()
+elif ret == "pki":
+	pki.main()
+elif ret == "run shell":
+	subprocess.run(["/bin/bash", "-l"])
+elif ret == "quit":
+	subprocess.run(["/usr/bin/sudo", "shutdown", "now"])
