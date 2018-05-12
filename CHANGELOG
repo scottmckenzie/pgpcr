@@ -11,7 +11,9 @@
  * Write a proper threat model for offline master key storage
  * Locate various communities around these tools (gnupg-users, etc) to assist when stuck.
  * Minimum hardware requirements
-
+	* i386
+	* One USB port or SD card slot
+		* Should theoretically be able to eject the live usb after booting, but I'll need to do some testing and confirm
 === Week 1 ===
  * Write "user stories"
   * Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
