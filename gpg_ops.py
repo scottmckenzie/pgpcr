@@ -6,7 +6,8 @@ masteralgo = "rsa4096"
 subalgo = masteralgo
 
 def init(home):
-	ctx = gpg.Context(homedir=home)
+	global ctx
+	ctx = gpg.Context(home_dir=home)
 
 def genmaster(userid):
 	return ctx.create_key(userid, algorithm=masteralgo, sign=True, certify=True)
