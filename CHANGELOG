@@ -1,6 +1,8 @@
 === Community Bonding Period ===
 
  * Write proof-of-concept to test Python's GPGME bindings.
+	* Key Generation written
+	* Just need moving keys to card and signing keys
  * Research disk handling with Python
 	* Use lsblk to get information on local drives
 	* Use pyparted to format drives
