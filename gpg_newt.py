@@ -1,5 +1,6 @@
 from snack import *
-from . import common_newt
+from . import gpg_ops, common_newt as common
+import tempfile
 
 def main():
 	screen = SnackScreen()
@@ -14,10 +15,13 @@ def main():
 		print(bcw)
 
 def gengpgkey():
+	tmp = tempfile.TemporaryDirectory()
+	gpg_ops.init(tmp.name)
 	screen = SnackScreen()
 	ew = EntryWindow(screen, "New GPG Key", "Enter User Information", ["Name", "Email Address"])
 	screen.finish()
 	name = ew[1][0]
 	email = ew[1][1]
 	pw = common.password()
-	print(name,email,pw)
+	m = gpg_ops.genmaster(name+" <"+email+">", pw)
+	#s, e, a = gpg_ops.gensub(m)
