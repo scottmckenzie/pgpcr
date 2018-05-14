@@ -7,8 +7,6 @@
 	* Use lsblk to get information on local drives
 	* Use pyparted to format drives
 	* Switch from lsblk to just pyparted?
- * Research smartcard handling and key generation with Python
- * Write a proper threat model for offline master key storage
  * Locate various communities around these tools (gnupg-users, etc) to assist when stuck.
  * Minimum hardware requirements
 	* i386
@@ -16,6 +14,10 @@
 		* Should theoretically be able to eject the live usb after booting, but I'll need to do some testing and confirm
 === Week 1 ===
 2018-05-14
+ * Research smartcard handling and key generation with Python
+	* GPA and Kleopatra do this already with GPGME, so just follow their example.
+	* https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gpa.git;a=blob;f=src/cm-openpgp.c
+ * Write a proper threat model for offline master key storage
  * Write "user stories"
   * Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
  * Use these stories to restructure the UI
