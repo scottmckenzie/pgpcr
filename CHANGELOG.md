@@ -20,8 +20,9 @@ Week 1
 2018-05-14
 ----------
  - [x] Research smartcard handling and key generation with Python
-	GPA and Kleopatra do this already with GPGME, so just follow their example.
-	https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gpa.git;a=blob;f=src/cm-openpgp.c
+	- GPA and Kleopatra do this already with GPGME, so just follow their example.
+	- https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gpa.git;a=blob;f=src/cm-openpgp.c
+ - [ ] Follow up on GPGME backport
  - [ ] Write a proper threat model for offline master key storage
  - [ ] Write "user stories"
 	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
