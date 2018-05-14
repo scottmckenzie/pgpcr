@@ -2,8 +2,8 @@
 
 from snack import *
 import subprocess
-from pgpcr import gpg_newt as gpg_ui
-from pgpcr import disks_newt as disks
+from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
+
 screen = SnackScreen()
 ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("List Disks","disks"),"GPG", "PKI", ("Run Shell","shell"), "Quit"] )
 screen.finish()
