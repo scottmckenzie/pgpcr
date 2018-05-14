@@ -1,20 +1,20 @@
 === Community Bonding Period ===
 
- - [*] Write proof-of-concept to test Python's GPGME bindings.
-	- [*] Key Generation written
-	- [*] Just need moving keys to card and signing keys
- - [*] Research disk handling with Python
-	- [*] Use lsblk to get information on local drives
-	- [*] Use pyparted to format drives
-	- [*] Switch from lsblk to just pyparted?
- - [*] Locate various communities around these tools (gnupg-users, etc) to assist when stuck.
- - [*] Minimum hardware requirements
+ - [x] Write proof-of-concept to test Python's GPGME bindings.
+	- [x] Key Generation written
+	- [x] Just need moving keys to card and signing keys
+ - [x] Research disk handling with Python
+	- [x] Use lsblk to get information on local drives
+	- [x] Use pyparted to format drives
+	- [x] Switch from lsblk to just pyparted?
+ - [x] Locate various communities around these tools (gnupg-users, etc) to assist when stuck.
+ - [x] Minimum hardware requirements
 	i386
 	One USB port or SD card slot
 		- [ ] Should theoretically be able to eject the live usb after booting, but I'll need to do some testing and confirm
 === Week 1 ===
 2018-05-14
- - [*] Research smartcard handling and key generation with Python
+ - [x] Research smartcard handling and key generation with Python
 	GPA and Kleopatra do this already with GPGME, so just follow their example.
 	https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gpa.git;a=blob;f=src/cm-openpgp.c
  - [ ] Write a proper threat model for offline master key storage
