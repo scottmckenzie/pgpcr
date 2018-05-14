@@ -2,17 +2,19 @@
 
 from snack import *
 import subprocess
-from pgpcr import *
-
+from pgpcr import gpg_newt as gpg_ui
+from pgpcr import disks_newt as disks
 screen = SnackScreen()
-ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", ["GPG", "PKI", "Run Shell", "Quit"] )
+ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("List Disks","disks"),"GPG", "PKI", ("Run Shell","shell"), "Quit"] )
 screen.finish()
 
-if ret == "gpg":
-	gpg.main()
+if ret == "disks":
+	disks.listdisks()
+elif ret == "gpg":
+	gpg_ui.main()
 elif ret == "pki":
 	pki.main()
-elif ret == "run shell":
+elif ret == "shell":
 	subprocess.run(["/bin/bash", "-l"])
 elif ret == "quit":
 	subprocess.run(["/usr/bin/sudo", "shutdown", "now"])
