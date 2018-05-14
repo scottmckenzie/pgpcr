@@ -12,7 +12,6 @@ Community Bonding Period
  - [x] Minimum hardware requirements
 	- i386
 	- One USB port or SD card slot
-		- [ ] Should theoretically be able to eject the live usb after booting, but I'll need to do some testing and confirm
 
 Week 1
 ======
@@ -22,6 +21,9 @@ Week 1
  - [x] Research smartcard handling and key generation with Python
 	- GPA and Kleopatra do this already with GPGME, so just follow their example.
 	- https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gpa.git;a=blob;f=src/cm-openpgp.c
+ - [x] Test ejecting disk while running application
+	- Should theoretically be able to eject the live usb after booting, but I'll need to do some testing and confirm
+	- This does NOT appear to be the case by default
  - [ ] Follow up on GPGME backport
  - [ ] Write a proper threat model for offline master key storage
  - [ ] Write "user stories"
