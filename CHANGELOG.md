@@ -27,13 +27,16 @@ Week 1
  - [x] Refamilarize myself with pgp-clean-room codebase (haven't touched it in a bit)
  - [x] Research how "user stories" work
 	- As a < type of user >, I want < some goal > so that < some reason >.
+ - [x] Write a few user stories
  - [ ] Read up on threat modelling
- - [ ] Write "user stories"
-	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
+Big storm here so may lose power. Will use time to complete the above task and check the box when I'm back online 
+
 
 2018-05-15
 ----------
  - [ ] Write a proper threat model for offline master key storage
+ - [ ] Write "user stories"
+	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
  - [ ] Turn user stories into workflow
  - [ ] Restructure the UI
 
