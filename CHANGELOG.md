@@ -24,7 +24,6 @@ Week 1
  - [x] Test ejecting disk while running application
 	- Should theoretically be able to eject the live usb after booting, but I'll need to do some testing and confirm
 	- This does NOT appear to be the case by default
- - [ ] Follow up on GPGME backport
  - [ ] Write a proper threat model for offline master key storage
  - [ ] Write "user stories"
 	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
@@ -35,6 +34,7 @@ Week 2
 
 2018-05-14
 ----------
+ - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
 	- [ ] It's really important to get this right before I start writing the major parts of this application
  - [ ] Skeleton UI
