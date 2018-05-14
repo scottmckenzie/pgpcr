@@ -10,9 +10,10 @@ Community Bonding Period
 	- [x] Switch from lsblk to just pyparted?
  - [x] Locate various communities around these tools (gnupg-users, etc) to assist when stuck.
  - [x] Minimum hardware requirements
-	i386
-	One USB port or SD card slot
+	- i386
+	- One USB port or SD card slot
 		- [ ] Should theoretically be able to eject the live usb after booting, but I'll need to do some testing and confirm
+
 Week 1
 ======
 
