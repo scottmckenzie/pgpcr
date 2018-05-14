@@ -1,0 +1,13 @@
+User Stories
+
+As a debian contributor,... 
+
+I want to create a gpg keypair offline so that my master key never touches my hard drive
+
+I don't want to touch gpg directly or try to follow some long-winded online guide so that I can save time
+
+I want to use any random external storage I might have lying around so that I can save money
+
+I want to be able to sign other people's keys so that I can be part of the web of trust
+
+I want to put my subkeys on a smartcard, so that even they aren't on my hard drive
