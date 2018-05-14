@@ -1,15 +1,17 @@
 from snack import *
-from . import common
+from . import common_newt
 
 def main():
 	screen = SnackScreen()
-	bcw = ButtonChoiceWindow(screen, "GPG", "What do you wish to do?", ["New GPG Key", "Mount GPG Key", "Quit to Main Menu"])
+	bcw = ButtonChoiceWindow(screen, "GPG", "What do you wish to do?", [("New GPG Key","new"), ("Mount GPG Key","mount"), ("Quit to Main Menu","quit")])
 	screen.finish()
-	if bcw == "new gpg key":
+	if bcw == "new":
 		gengpgkey()
 		print("Not Implemented Yet")
-	elif bcw == "mount gpg key":
+	elif bcw == "mount":
 		print("Not Implemented Yet")
+	else:
+		print(bcw)
 
 def gengpgkey():
 	screen = SnackScreen()
