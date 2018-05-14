@@ -24,10 +24,18 @@ Week 1
  - [x] Test ejecting disk while running application
 	- Should theoretically be able to eject the live usb after booting, but I'll need to do some testing and confirm
 	- This does NOT appear to be the case by default
- - [ ] Write a proper threat model for offline master key storage
+ - [x] Refamilarize myself with pgp-clean-room codebase (haven't touched it in a bit)
+ - [x] Research how "user stories" work
+	- As a < type of user >, I want < some goal > so that < some reason >.
+ - [ ] Read up on threat modelling
  - [ ] Write "user stories"
 	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
- - [ ] Use these stories to restructure the UI
+
+2018-05-15
+----------
+ - [ ] Write a proper threat model for offline master key storage
+ - [ ] Turn user stories into workflow
+ - [ ] Restructure the UI
 
 Week 2
 ======
