@@ -34,7 +34,9 @@ Week 1
 
 2018-05-15
 ----------
- - [ ] Write a proper threat model for offline master key storage
+ ~~- [ ] Write a proper threat model for offline master key storage~~
+	- This is too much. See above.
+ - [ ] Add newt progress bar
  - [ ] Write "user stories"
 	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
  - [ ] Turn user stories into workflow
