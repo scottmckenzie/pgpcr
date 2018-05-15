@@ -1,17 +1,20 @@
 #!/usr/bin/python3
 
 from snack import *
-import subprocess
+import subprocess, tempfile
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 
 screen = SnackScreen()
-ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("List Disks","disks"),"GPG", "PKI", ("Run Shell","shell"), "Quit"] )
+ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("List Disks","disks"),("New GPG Key", "new gpg"), ("Load GPG Key","load gpg"), "PKI", ("Run Shell","shell"), "Quit"] )
 screen.finish()
 
+workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
 if ret == "disks":
 	disks.listdisks()
-elif ret == "gpg":
-	gpg_ui.main()
+elif ret == "new gpg":
+	gpg_ui.new(workdir)
+elif ret == "old gpg":
+	gpg_ui.load(workdir)
 elif ret == "pki":
 	pki.main()
 elif ret == "shell":
