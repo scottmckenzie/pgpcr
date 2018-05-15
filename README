@@ -3,20 +3,3 @@ PGP Clean Room
 
 This is the PGP Clean Room application, designed to be run as part of the
 [PGP/PKI Clean Room Live CD](https://salsa.debian.org/tookmund-guest/make-pgp-clean-room)
-
-Running locally
----------------
-If you want to help debug or develop this application, it might be useful to run it locally.
-In order to do so you need to first run:
-```
-export PYTHONPATH=`pwd`/..
-```
-
-Or your shell equivalent to add pgpcr's parent directory to the python module search path.
-
-After that, you can run:
-```
-./pgp-clean-room
-```
-
-to launch the application
