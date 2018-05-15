@@ -45,7 +45,8 @@ Week 1
  - [x] Turn user stories into workflow
 	- see workflow.md
  - [x] setup.py
- - [ ] remove install hack from make-pgp-clean-room
+ - [x] remove install hack from make-pgp-clean-room
+	- Will build a pgpcr debian package and then install it in the clean room
  - [ ] Restructure the UI
 
 Week 2
