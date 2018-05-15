@@ -1,11 +1,9 @@
 from snack import *
 from . import gpg_ops, common_newt as common
 
-def new(workdir):
+def new(screen, workdir):
 	gk = gpg_ops.GPGKey(workdir.name, progress)
-	screen = SnackScreen()
 	ew = EntryWindow(screen, "New GPG Key", "Enter User Information", ["Name", "Email Address"])
-	screen.finish()
 	name = ew[1][0]
 	email = ew[1][1]
 	pw = common.password()
