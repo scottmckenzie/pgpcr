@@ -51,6 +51,7 @@ Week 1
 	- I've been using screen wrong, only finish once the program is over
  - [ ] Proper newt progress bar
  - [ ] Restructure the UI
+
 Week 2
 ======
 
