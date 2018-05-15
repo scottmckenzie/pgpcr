@@ -3,12 +3,10 @@ from snack import *
 width = 40
 padding = (0, 0, 0, 1)
 
-def password():
-	screen = SnackScreen()
+def password(screen):
 	pass1 = Entry(20, password=1)
 	pass2 = Entry(20, password=1)
 	ew = EntryWindow(screen, "Password", "Enter your password", [("Password:", pass1), ("Password (again):", pass2)])
-	screen.finish()
 	if pass1.value() != pass2.value():
 		error("Passwords do not match!")
 		return password()
@@ -17,27 +15,40 @@ def password():
 		return password()
 	return pass1.value()
 
-def error(msg):
-	screen = SnackScreen()
+def error(screen, msg):
 	ButtonChoiceWindow(screen, "Error", msg, ['Ok'])
-	screen.finish()
 
 class Progress:
-	def __init__(self, title, text, total, current=0):
-		self.title = title
-		self.text = text
-		self.total = total
+	def __init__(self, screen, title, text, total, current=0):
+		self.screen = screen
 		self.current = current
-		self.screen = SnackScreen()
 		g = GridFormHelp(self.screen, title, None, 1, 2)
 		t = TextboxReflowed(width, text)
+		b = ButtonBar(screen, ['Close'])
 		self.p = Scale(width, total)
 		self.p.set(current)
 		g.add(t, 0, 0, padding=padding)
-		g.add(p, 0, 1, padding=padding)
-		g.runOnce()
-		self.screen.finish()
+		g.add(self.p, 0, 1, padding=padding)
+		g.run()
 
-	def progress(prog):
-		self.p.set(prog)
+	def set(self, prog):
+		self.current = prog
+		self.refresh()
+
+	def refresh(self):
+		self.p.set(self.current)
 		self.screen.refresh()
+
+	def inc(self, prog):
+		self.current += prog
+		self.refresh()
+
+
+if __name__ == "__main__":
+	screen = SnackScreen()
+	prog = Progress(screen, "Test Progress", "This is a test", 100)
+	from time import sleep
+	for i in range(100):
+		prog.set(i)
+		sleep(0.05)
+	screen.finish()
