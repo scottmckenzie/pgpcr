@@ -5,7 +5,7 @@ import subprocess, tempfile
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 
 screen = SnackScreen()
-ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("List Disks","disks"),("New GPG Key", "new gpg"), ("Load GPG Key","load gpg"), "PKI", ("Run Shell","shell"), "Quit"] )
+ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("List Disks","disks"),("New GPG Key", "new gpg"), ("Load GPG Key","load gpg"), ("Run Shell","shell"), ("Quit", "quit")] )
 screen.finish()
 
 workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
@@ -15,8 +15,6 @@ elif ret == "new gpg":
 	gpg_ui.new(workdir)
 elif ret == "old gpg":
 	gpg_ui.load(workdir)
-elif ret == "pki":
-	pki.main()
 elif ret == "shell":
 	subprocess.run(["/bin/bash", "-l"])
 elif ret == "quit":
