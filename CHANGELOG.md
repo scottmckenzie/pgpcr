@@ -47,10 +47,10 @@ Week 1
  - [x] setup.py
  - [x] remove install hack from make-pgp-clean-room
 	- Will build a pgpcr debian package and then install it in the clean room
- - [ ] Learn more newt stuff
-	- I think I've been using screen wrong
-
+ - [x] Learn more newt stuff
+	- I've been using screen wrong, only finish once the program is over
  - [ ] Proper newt progress bar
+	- Much closer on this just need to figure out why it requires the screen to close before it will refresh
  - [ ] Restructure the UI
 Week 2
 ======
