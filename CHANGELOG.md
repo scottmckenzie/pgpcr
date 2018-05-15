@@ -28,9 +28,9 @@ Week 1
  - [x] Research how "user stories" work
 	- As a < type of user >, I want < some goal > so that < some reason >.
  - [x] Write a few user stories
- - [ ] Read up on threat modelling
-Big storm here so may lose power. Will use time to complete the above task and check the box when I'm back online 
-
+ - [x] Read up on threat modelling
+	- The physical safety of the storage is probably more of a deterrent than an encrypted storage device
+	- Fewer passwords is better, so unencrypted storage but enforce having a password on the key
 
 2018-05-15
 ----------
