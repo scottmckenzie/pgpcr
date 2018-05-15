@@ -1,6 +1,15 @@
 from snack import *
 from . import gpg_ops, common_newt as common
-import tempfile
+
+def new(workdir):
+	gk = gpg_ops.GPGKey(workdir.name, progress)
+	screen = SnackScreen()
+	ew = EntryWindow(screen, "New GPG Key", "Enter User Information", ["Name", "Email Address"])
+	screen.finish()
+	name = ew[1][0]
+	email = ew[1][1]
+	pw = common.password()
+	gk.genmaster(name+" <"+email+">",pw)
 
 def main():
 	screen = SnackScreen()
@@ -14,14 +23,5 @@ def main():
 	else:
 		print(bcw)
 
-def gengpgkey():
-	tmp = tempfile.TemporaryDirectory()
-	gpg_ops.init(tmp.name)
-	screen = SnackScreen()
-	ew = EntryWindow(screen, "New GPG Key", "Enter User Information", ["Name", "Email Address"])
-	screen.finish()
-	name = ew[1][0]
-	email = ew[1][1]
-	pw = common.password()
-	m = gpg_ops.genmaster(name+" <"+email+">", pw)
-	#s, e, a = gpg_ops.gensub(m)
+def progress(what, type, current, total):
+	print(what, type, current, "/", total)
