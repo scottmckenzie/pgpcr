@@ -36,9 +36,13 @@ Load
 
 ### Sign
  - Copy public usb to another tempdir
- - 
+ - For each key on usb, prompt user to confirm and then sign the key
+ - Copy tempdir back to public usb
 
 ### Revoke
+ - Ask which keys to revoke
+ - Generate Revocation certificate
+ - Ask if user wants to generate new keys to replace the revoked ones
 
 Advanced
 --------
