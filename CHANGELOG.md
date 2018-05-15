@@ -38,7 +38,7 @@ Week 1
 	This is too much. See above.
  - [x] GPGKey Object
  - [ ] Add newt progress bar
-	- Some progress made, but not ready yet
+	- Much closer on this just need to figure out why it requires the screen to close before it will refresh
 	- GPGME progress callback is confusing
  - [x] Write "user stories"
 	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
@@ -50,7 +50,6 @@ Week 1
  - [x] Learn more newt stuff
 	- I've been using screen wrong, only finish once the program is over
  - [ ] Proper newt progress bar
-	- Much closer on this just need to figure out why it requires the screen to close before it will refresh
  - [ ] Restructure the UI
 Week 2
 ======
