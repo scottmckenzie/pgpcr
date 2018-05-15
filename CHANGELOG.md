@@ -34,7 +34,7 @@ Week 1
 
 2018-05-15
 ----------
- ~~ Write a proper threat model for offline master key storage~~ This is too much. See above.
+ ~~Write a proper threat model for offline master key storage~~ This is too much. See above.
 
  - [x] GPGKey Object
  - [ ] Add newt progress bar
