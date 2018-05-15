@@ -44,6 +44,8 @@ Week 1
 	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
  - [x] Turn user stories into workflow
 	- see workflow.md
+ - [x] setup.py
+ - [ ] remove install hack from make-pgp-clean-room
  - [ ] Restructure the UI
 
 Week 2
