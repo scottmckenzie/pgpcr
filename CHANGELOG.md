@@ -35,14 +35,15 @@ Week 1
 2018-05-15
 ----------
  ~~- [ ] Write a proper threat model for offline master key storage~~
-	- This is too much. See above.
+	This is too much. See above.
  - [x] GPGKey Object
  - [ ] Add newt progress bar
 	- Some progress made, but not ready yet
 	- GPGME progress callback is confusing
- - [ ] Write "user stories"
+ - [x] Write "user stories"
 	- Figure out what exactly the user wants to do, what information we need from them, and how that maps to the traditional GPG key generation process
- - [ ] Turn user stories into workflow
+ - [x] Turn user stories into workflow
+	- see workflow.md
  - [ ] Restructure the UI
 
 Week 2
