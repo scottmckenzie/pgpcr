@@ -6,7 +6,6 @@ Conflicts=getty@tty1.service
 [Service]
 User=pgp
 Type=simple
-Restart=always
 ExecStart=/usr/bin/pgp-clean-room
 TTYPath=/dev/tty1
 TTYReset=yes
