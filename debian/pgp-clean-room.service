@@ -1,0 +1,19 @@
+[Unit]
+Description=PGP Clean Room
+After=getty.target
+Conflicts=getty@tty1.service
+
+[Service]
+User=pgp
+Type=simple
+Restart=always
+ExecStart=/usr/bin/pgp-clean-room
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+StandardInput=tty-force
+StandardOutput=inherit
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target

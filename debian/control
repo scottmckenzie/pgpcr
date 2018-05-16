@@ -1,0 +1,12 @@
+Source: pgp-clean-room
+Maintainer: Jacob Adams <tookmund@gmail.com>
+Section: utils
+Priority: optional
+Build-Depends: dh-python, python3-setuptools, python3-all, debhelper (>= 11)
+Standards-Version: 4.1.4
+Homepage: https://salsa.debian.org/tookmund-guest/pgpcr
+
+Package: pgp-clean-room
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}, python3-gpg (>= 1.11.1)
+Description: UNKNOWN
