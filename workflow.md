@@ -2,7 +2,7 @@ Workflow
 ========
 
  - Create temporary GPG directory
- - Present New/Load/Advanced/shell menu
+ - Present New/Load/Advanced menu
 	- Stops us messing with any hardware the user doesn't want us to
 
 New
@@ -47,8 +47,11 @@ Load
 Advanced
 --------
 ### Generate a key on a smartcard
-- This breaks the standard workflow above and leaves the user with no backups
-- Available for those who want it but not the default
+ - This breaks the standard workflow above and leaves the user with no backups
+ - Available for those who want it but not the default
 
 ### Import old key
  - A feature I would definitely use but likely not helpful for most users
+
+### Shell
+ - Keeps main menu cleaner
