@@ -60,6 +60,7 @@ Week 1
 	- spacewalk, system-firewall-tui in Fedora
  - [x] Proper newt progress bar
  - [x] Main menu skeleton
+ - [x] Proper GPG key creation
  - [ ] Restructure the UI
 
 Week 2
