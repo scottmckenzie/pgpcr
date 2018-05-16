@@ -15,8 +15,11 @@ def password(screen):
 		return password()
 	return pass1.value()
 
+def alert(screen, title, msg):
+	ButtonChoiceWindow(screen, title, msg, ['Ok'])
+
 def error(screen, msg):
-	ButtonChoiceWindow(screen, "Error", msg, ['Ok'])
+	alert(screen, "Error", msg)
 
 class Progress:
 	def __init__(self, screen, title, text, total, current=0):
