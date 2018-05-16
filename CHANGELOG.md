@@ -59,6 +59,7 @@ Week 1
 	- Just byobu in Debian, but I'll look for more in Fedora
 	- spacewalk, system-firewall-tui in Fedora
  - [x] Proper newt progress bar
+ - [x] Main menu skeleton
  - [ ] Restructure the UI
 
 Week 2
