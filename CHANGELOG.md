@@ -59,7 +59,7 @@ Week 2
 ----------
  - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
-	- [ ] It's really important to get this right before I start writing the major parts of this application
+	- It's really important to get this right before I start writing the major parts of this application
  - [ ] Skeleton UI
 
 Week 3 
@@ -68,7 +68,7 @@ Week 3
 2018-05-28
 ----------
  - [ ] Disk handling UI
-	- [ ] This is basically what makes or breaks this application so it has to work and work really well
+	- This is basically what makes or breaks this application so it has to work and work really well
  - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
 
 Week 4 
@@ -104,7 +104,7 @@ Week 7
 2018-06-25
 ----------
  - [ ] Generate GPG keys on a smartcard
-	- [ ] Two weeks is a long time for developing support to generate keys on a smartcard, but this operation does not appear to be supported by GPGME
+	- Two weeks is a long time for developing support to generate keys on a smartcard, but this operation does not appear to be supported by GPGME
 
 Week 8
 ======
