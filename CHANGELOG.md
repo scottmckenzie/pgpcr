@@ -52,8 +52,12 @@ Week 1
 
 2018-05-16
 ----------
+ - [x] Speed up make-pgp-clean-room building
+ - [x] Basic Debian packaging for pgpcr
+ - [x] Build pgpcr in make-pgp-clean-room
  - [ ] Read code of projects using newt
 	- Just byobu in Debian, but I'll look for more in Fedora
+	- spacewalk, system-firewall-tui in Fedora
  - [ ] Proper newt progress bar
  - [ ] Restructure the UI
 
