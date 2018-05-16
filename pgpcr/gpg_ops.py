@@ -2,7 +2,7 @@ import gpg
 
 class GPGKey:
 
-	def __init__(self, home, progress):
+	def __init__(self, home, progress=None):
 		self.ctx = gpg.Context(home_dir=home)
 		self.masteralgo = "rsa4096"
 		self.subalgo = "rsa2048"
