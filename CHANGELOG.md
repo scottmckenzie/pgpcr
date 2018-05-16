@@ -49,6 +49,11 @@ Week 1
 	- Will build a pgpcr debian package and then install it in the clean room
  - [x] Learn more newt stuff
 	- I've been using screen wrong, only finish once the program is over
+
+2018-05-16
+----------
+ - [ ] Read code of projects using newt
+	- Just byobu in Debian, but I'll look for more in Fedora
  - [ ] Proper newt progress bar
  - [ ] Restructure the UI
 
