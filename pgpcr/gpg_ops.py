@@ -16,3 +16,12 @@ class GPGKey:
 		self.subsig = self.ctx.create_subkey(self.master, algorithm=self.subalgo, sign=True)
 		self.subenc = self.ctx.create_subkey(self.master, algorithm=self.subalgo, encrypt=True)
 		self.subauth = self.ctx.create_subkey(self.master, algorithm=self.subalgo, authenticate=True)
+
+if __name__ == "__main__":
+	import tempfile
+	tmp = tempfile.TemporaryDirectory()
+	gk = GPGKey(tmp.name)
+	print("Generating masterkey...")
+	gk.genmaster("Test <test@example.com>", "111")
+	print("Generating subkeys...")
+	gk.gensub()
