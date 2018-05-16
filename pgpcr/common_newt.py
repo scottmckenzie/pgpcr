@@ -25,14 +25,13 @@ class Progress:
 	def __init__(self, screen, title, text, total, current=0):
 		self.screen = screen
 		self.current = current
-		g = GridFormHelp(self.screen, title, None, 1, 2)
+		self.g = GridFormHelp(self.screen, title, None, 1, 2)
 		t = TextboxReflowed(width, text)
 		self.p = Scale(width, total)
 		self.p.set(current)
-		g.add(t, 0, 0, padding=padding)
-		g.add(self.p, 0, 1, padding=padding)
-		g.draw()
-		self.screen.refresh()
+		self.g.add(t, 0, 0, padding=padding)
+		self.g.add(self.p, 0, 1, padding=padding)
+		self.refresh()
 
 	def set(self, prog):
 		self.current = prog
@@ -40,6 +39,7 @@ class Progress:
 
 	def refresh(self):
 		self.p.set(self.current)
+		self.g.draw()
 		self.screen.refresh()
 
 	def inc(self, prog):
