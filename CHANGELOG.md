@@ -177,6 +177,8 @@ Misc
 ====
 
 Would like to do these if I have time but we'll see how this goes
+ - [ ] Figure out when progress_cb is called with primegen
+	- Time based? amount of randomness gathered?
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
  - [ ] Secure the Live Environment as much as possible
