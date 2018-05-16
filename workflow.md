@@ -46,6 +46,9 @@ Load
 
 Advanced
 --------
- - Generate a key on a smartcard
-	- This breaks the standard workflow above and leaves the user with no backups
-	- Available for those who want it but not the default
+### Generate a key on a smartcard
+- This breaks the standard workflow above and leaves the user with no backups
+- Available for those who want it but not the default
+
+### Import old key
+ - A feature I would definitely use but likely not helpful for most users
