@@ -48,6 +48,7 @@ class Progress:
 
 if __name__ == "__main__":
 	screen = SnackScreen()
+	alert(screen, "test", "test alert")
 	prog = Progress(screen, "Test Progress", "This is a test", 100)
 	from time import sleep
 	for i in range(100):
