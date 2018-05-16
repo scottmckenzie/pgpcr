@@ -1,3 +1,11 @@
 __pycache__
 *.egg-info
 .pybuild
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/pgp-clean-room.postinst.debhelper
+debian/pgp-clean-room.postrm.debhelper
+debian/pgp-clean-room.prerm.debhelper
+debian/pgp-clean-room.substvars
+debian/pgp-clean-room/
