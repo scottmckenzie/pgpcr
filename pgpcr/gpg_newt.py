@@ -6,7 +6,7 @@ def new(screen, workdir):
 	ew = EntryWindow(screen, "New GPG Key", "Enter User Information", ["Name", "Email Address"])
 	name = ew[1][0]
 	email = ew[1][1]
-	pw = common.password()
+	pw = common.password(screen)
 	gk.genmaster(name+" <"+email+">",pw)
 
 def main():
