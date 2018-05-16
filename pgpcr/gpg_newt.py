@@ -8,6 +8,7 @@ def new(screen, workdir):
 	email = ew[1][1]
 	pw = common.password(screen)
 	gk.genmaster(name+" <"+email+">",pw)
+	gk.gensub()
 
 def progress(what, type, current, total):
 	print(what, type, current, "/", total)
