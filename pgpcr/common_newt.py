@@ -27,7 +27,6 @@ class Progress:
 		self.current = current
 		g = GridFormHelp(self.screen, title, None, 1, 2)
 		t = TextboxReflowed(width, text)
-		b = ButtonBar(screen, ['Close'])
 		self.p = Scale(width, total)
 		self.p.set(current)
 		g.add(t, 0, 0, padding=padding)
