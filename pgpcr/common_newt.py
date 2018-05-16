@@ -32,6 +32,7 @@ class Progress:
 		g.add(t, 0, 0, padding=padding)
 		g.add(self.p, 0, 1, padding=padding)
 		g.draw()
+		self.screen.refresh()
 
 	def set(self, prog):
 		self.current = prog
