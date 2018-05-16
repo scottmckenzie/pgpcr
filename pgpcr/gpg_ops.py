@@ -9,7 +9,8 @@ class GPGKey:
 		self.ctx.set_progress_cb(progress)
 
 	def genmaster(self, userid, password):
-		self.master = self.ctx.create_key(userid, algorithm=self.masteralgo, sign=True, certify=True, passphrase=password)
+		genkey = self.ctx.create_key(userid, algorithm=self.masteralgo, sign=True, certify=True, passphrase=password)
+		self.master = self.ctx.get_key(genkey.fpr)
 
 	def gensub(self):
 		self.subsig = self.ctx.create_subkey(self.master, algorithm=self.subalgo, sign=True)
