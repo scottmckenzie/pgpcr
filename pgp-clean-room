@@ -31,5 +31,4 @@ elif ret == "adv":
 elif ret == "quit":
 	screen.finish()
 	subprocess.run(["/usr/bin/sudo", "shutdown", "now"])
-else:
-	screen.finish()
+screen.finish()
