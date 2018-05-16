@@ -9,17 +9,5 @@ def new(screen, workdir):
 	pw = common.password(screen)
 	gk.genmaster(name+" <"+email+">",pw)
 
-def main():
-	screen = SnackScreen()
-	bcw = ButtonChoiceWindow(screen, "GPG", "What do you wish to do?", [("New GPG Key","new"), ("Mount GPG Key","mount"), ("Quit to Main Menu","quit")])
-	screen.finish()
-	if bcw == "new":
-		gengpgkey()
-		print("Not Implemented Yet")
-	elif bcw == "mount":
-		print("Not Implemented Yet")
-	else:
-		print(bcw)
-
 def progress(what, type, current, total):
 	print(what, type, current, "/", total)
