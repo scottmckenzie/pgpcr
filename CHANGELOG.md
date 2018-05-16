@@ -61,7 +61,15 @@ Week 1
  - [x] Proper newt progress bar
  - [x] Main menu skeleton
  - [x] Proper GPG key creation
+ - [x] Add a few tests to common_newt and gpg_newt
+	- Not proper unittests yet but I'll add those later
+ - [x] Progress bars on master and sub key creation
+	- Very approximate but some indication that something is happening
+ - [x] Add gpg.conf to tempdir
  - [ ] Restructure the UI
+ - [ ] common_newt unittests
+ - [ ] gpg_newt unittests
+ - [ ] gpg_ops unittests
 
 Week 2
 ======
