@@ -29,7 +29,7 @@ class Progress:
 		self.p.set(current)
 		g.add(t, 0, 0, padding=padding)
 		g.add(self.p, 0, 1, padding=padding)
-		g.run()
+		g.draw()
 
 	def set(self, prog):
 		self.current = prog
