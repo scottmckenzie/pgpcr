@@ -66,6 +66,11 @@ Week 1
  - [x] Progress bars on master and sub key creation
 	- Very approximate but some indication that something is happening
  - [x] Add gpg.conf to tempdir
+
+2018-05-17
+----------
+ - [x] Return to main menu after operation
+ - [x] Confirm before shutdown
  - [ ] Restructure the UI
  - [ ] common_newt unittests
  - [ ] gpg_newt unittests
