@@ -71,11 +71,12 @@ Week 1
 ----------
  - [x] Return to main menu after operation
  - [x] Confirm before shutdown
- - [ ] Restructure the UI
+ - [x] Test on real hardware
  - [ ] common_newt unittests
  - [ ] gpg_newt unittests
  - [ ] gpg_ops unittests
-
+ - [ ] Handle GPGME general errors
+ - [ ] Restructure the UI
 Week 2
 ======
 
