@@ -14,6 +14,7 @@ def new(screen, workdir):
 	sprog = common.Progress(screen, "Key Generation", "Generating Sub Keys...", 50)
 	gk.set_progress(progress, sprog)
 	gk.gensub()
+	screen = SnackScreen()
 	common.alert(screen, "Key Generation", "Key Generation Complete!")
 
 def progress(what, type, current, total, prog):
