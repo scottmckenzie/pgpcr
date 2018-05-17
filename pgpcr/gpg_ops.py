@@ -6,7 +6,8 @@ class GPGKey:
 		self.ctx = gpg.Context(home_dir=home)
 		self.masteralgo = "rsa4096"
 		self.subalgo = "rsa2048"
-		self.ctx.set_progress_cb(progress, hook)
+		if progress is not None:
+			self.ctx.set_progress_cb(progress, hook)
 
 	def genmaster(self, userid, password):
 		genkey = self.ctx.create_key(userid, algorithm=self.masteralgo, sign=True, certify=True, passphrase=password)
