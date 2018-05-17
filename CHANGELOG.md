@@ -77,7 +77,9 @@ Week 1
 	- Disabled for now while I consider the security implications
  - [x] Handle GPGME general errors
 	- Caught by gpg_newt, now just have to figure out why they're happening
- - [ ] Restructure the UI
+ - [x] Restructure the UI
+	- I think it's fairly final but we'll see
+	- Puts me ahead of schedule
 
 Week 2
 ======
@@ -187,6 +189,8 @@ Misc
 Would like to do these if I have time but we'll see how this goes
  - [ ] Figure out when progress_cb is called with primegen
 	- Time based? amount of randomness gathered?
+ - [ ] GPGME General Error
+	- Getting these randomly during key generation
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
  - [ ] Secure the Live Environment as much as possible
