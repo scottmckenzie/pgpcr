@@ -74,10 +74,10 @@ Week 1
  - [x] Test on real hardware
  - [x] Add newt password callback
 	- Pinentry loopback might be safer, but pinentry curses breaks the screen
- - [ ] common_newt unittests
- - [ ] gpg_newt unittests
+	- Disabled for now while I consider the security implications
  - [ ] gpg_ops unittests
- - [ ] Handle GPGME general errors
+ - [x] Handle GPGME general errors
+	- Caught by gpg_newt, now just have to figure out why they're happening
  - [ ] Restructure the UI
 Week 2
 ======
