@@ -23,6 +23,8 @@ class GPGKey:
 		self.ctx.set_passphrase_cb(password, hook)
 
 
+error = gpg.errors.GPGMEError
+
 # Below callbacks pulled directly from callbacks.py in GPGME
 def _test_progress(what, type, current, total, hook=None):
 	print("PROGRESS UPDATE: what = %s, type = %d, current = %d, total = %d" %\
