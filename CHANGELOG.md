@@ -72,6 +72,8 @@ Week 1
  - [x] Return to main menu after operation
  - [x] Confirm before shutdown
  - [x] Test on real hardware
+ - [ ] Add newt password callback
+	- Might just let GPG handle all the passwords
  - [ ] common_newt unittests
  - [ ] gpg_newt unittests
  - [ ] gpg_ops unittests
