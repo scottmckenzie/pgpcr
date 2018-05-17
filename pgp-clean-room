@@ -4,10 +4,10 @@ from snack import *
 import subprocess, tempfile, shutil
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 
+screen = SnackScreen()
+lang = ListboxChoiceWindow(screen, "Language", "Choose your language", ["English"])
 running = True
 while running:
-	screen = SnackScreen()
-	lang = ListboxChoiceWindow(screen, "Language", "Choose your language", ["English"])
 	ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("New GPG Key", "new gpg"), ("Load GPG Key","load gpg"), ("Advanced","adv"), ("Quit", "quit")] )
 
 	workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
