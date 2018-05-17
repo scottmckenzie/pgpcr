@@ -16,6 +16,10 @@ def new_password(screen):
 	return pass1.value()
 
 def password(hint, desc, prev_bad, screen):
+	if hint is None:
+		hint = "Password"
+	if desc is None:
+		desc = "Enter your password"
 	p = Entry(20, password=1)
 	label = "Password"
 	if prev_bad:
