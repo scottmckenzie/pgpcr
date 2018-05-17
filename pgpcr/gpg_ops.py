@@ -43,11 +43,13 @@ def _test_password(hint, desc, prev_bad, hook=None):
 if __name__ == "__main__":
 	import tempfile
 	tmp = tempfile.TemporaryDirectory()
-	gk = GPGKey(tmp.name)
-	gk.set_progress(_test_progress)
-	gk.set_password(_test_password)	
-	print("Generating masterkey...")
-	# if passphrase is true, gpgme will call the password callback to get a password
-	gk.genmaster("Test <test@example.com>", True)
-	print("Generating subkeys...")
-	gk.gensub()
+	try:
+		gk = GPGKey(tmp.name)
+		gk.set_progress(_test_progress)
+		gk.set_password(_test_password)
+		print("Generating masterkey...")
+		gk.genmaster("Test <test@example.com>", "111")
+		print("Generating subkeys...")
+		gk.gensub()
+	except gpg.errors.GPGMEError as g:
+		print(g, g.getsource())
