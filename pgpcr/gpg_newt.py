@@ -11,10 +11,19 @@ def new(screen, workdir):
 	gk.set_password(common.password, screen)
 	mprog = common.Progress(screen, "Key Generation", "Generating Master Key...", 50)
 	gk.set_progress(progress, mprog)
-	gk.genmaster(name+" <"+email+">",pw)
+	try:
+		gk.genmaster(name+" <"+email+">",pw)
+	except gpg_ops.error as g:
+		screen = SnackScreen()
+		common.error(screen, "Master Key generation error: "+str(g))
+		return
 	sprog = common.Progress(screen, "Key Generation", "Generating Sub Keys...", 50)
 	gk.set_progress(progress, sprog)
-	gk.gensub()
+	try:
+		gk.gensub()
+	except gpg_ops.error as g:
+		screen = SnackScreen()
+		common.error(screen, "Subkey generation error: "+str(g))
 	screen = SnackScreen()
 	common.alert(screen, "Key Generation", "Key Generation Complete!")
 
