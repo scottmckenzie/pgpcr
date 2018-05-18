@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+# Parition a given device
+# Must be run as root
+
+import parted, sys
+
+if sys.argv[1] is None:
+	print("Need a disk to partition!")
+	sys.exit(1)
+
+dev = parted.getDevice(sys.argv[1])
+disk = parted.freshDisk(dev, 'msdos')
+geo = parted.Geometry(start=0, length=parted.sizeToSectors(10, "MiB", dev.sectorSize), device=dev)
+part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, geometry=geo)
+disk.maximizePartition(part)
