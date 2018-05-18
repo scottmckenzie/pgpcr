@@ -81,6 +81,12 @@ Week 1
 	- I think it's fairly final but we'll see
 	- Puts me ahead of schedule
 
+2018-05-18
+==========
+ - [x] Look into replacing lsblk with pyparted
+	- Not feasible as pyparted doesn't expose as much information
+ - [ ] pyparted partitioning script
+	- Separate script as it has to be run as root
 Week 2
 ======
 
