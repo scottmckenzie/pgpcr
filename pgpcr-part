@@ -10,6 +10,10 @@ if sys.argv[1] is None:
 
 dev = parted.getDevice(sys.argv[1])
 disk = parted.freshDisk(dev, 'msdos')
-geo = parted.Geometry(start=0, length=parted.sizeToSectors(10, "MiB", dev.sectorSize), device=dev)
-part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, geometry=geo)
-disk.maximizePartition(part)
+geo = parted.Geometry(device=dev, start=1, length=dev.getLength()-1)
+fs = parted.FileSystem(type="ext4", geometry=geo)
+part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, fs=fs, geometry=geo)
+disk.addPartition(part)
+disk.commit()
+
+subprocess.run(["/sbin/mkfs.ext4", "-F", part.path])
