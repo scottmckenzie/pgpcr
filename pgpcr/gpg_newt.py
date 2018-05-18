@@ -1,5 +1,5 @@
 from snack import *
-from . import gpg_ops, common_newt as common
+from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt
 
 def new(screen, workdir):
 	gk = gpg_ops.GPGKey(workdir.name)
@@ -26,6 +26,11 @@ def new(screen, workdir):
 		common.error(screen, "Subkey generation error: "+str(g))
 	screen = SnackScreen()
 	common.alert(screen, "Key Generation", "Key Generation Complete!")
+	export = ButtonChoiceWindow(screen, "Key Export", "How would you like to export your key?", [("External Storage", "storage"), ("Smartcard", "smartcard")])
+	if export == "storage":
+		disks_newt.store(screen, workdir)
+	elif export == "smartcard":
+		smartcard_newt.store(screen, workdir)
 
 def progress(what, type, current, total, prog):
 	if what == "primegen":

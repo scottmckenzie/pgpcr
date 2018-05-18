@@ -8,3 +8,6 @@ def listdisks():
 	lcw = ListboxChoiceWindow(screen,"Disks", "Pick your disks", dlist)
 	screen.finish()
 	print(lcw)
+
+def store(screen, workdir):
+	pass
