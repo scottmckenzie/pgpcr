@@ -85,8 +85,12 @@ Week 1
 ==========
  - [x] Look into replacing lsblk with pyparted
 	- Not feasible as pyparted doesn't expose as much information
+ - [x] Virtual usb disk in KVM
  - [ ] pyparted partitioning script
 	- Separate script as it has to be run as root
+ - [ ] Load entire system into RAM
+	- Allows user to eject disk and save a usb port
+
 Week 2
 ======
 
