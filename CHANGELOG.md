@@ -88,8 +88,9 @@ Week 1
  - [x] Virtual usb disk in KVM
  - [x] pyparted partitioning script
 	- Separate script as it has to be run as root
- - [ ] Load entire system into RAM
+ - [x] Load entire system into RAM
 	- Allows user to eject disk and save a usb port
+	- I've got a hack for this, but I need to research live-build more
 
 Week 2
 ======
