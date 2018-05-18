@@ -99,6 +99,8 @@ Week 2
 ----------
  - [ ] Follow up on GPGME backport
  - [ ] Detect built-in SD card readers
+ - [ ] README
+	- "I've just downloaded this, what do I do now?"
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
  - [ ] Skeleton UI
