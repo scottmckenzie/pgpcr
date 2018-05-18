@@ -130,6 +130,8 @@ Week 6
 
 2018-06-18
 ----------
+ - [ ] Purchase another Yubikey for testing
+	- Other smartcards?
  - [ ] Support for exporting to a smartcard
  - [ ] Generate GPG keys on a smartcard
 
