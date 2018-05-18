@@ -1,2 +1,3 @@
 pgp-clean-room /usr/bin/
+pgpcr-part	/usr/bin/
 pgpcr-gpg.conf	/etc/
