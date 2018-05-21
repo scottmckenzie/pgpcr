@@ -103,6 +103,8 @@ Week 2
  - [x] README
 	- "I've just downloaded this, what do I do now?"
 	- Need to calculate exact storage numbers once key generation is stable
+ - [x] Unittests
+	- Some of this is too interdependent for these kinds of tests but I split it up as best I could
  - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
