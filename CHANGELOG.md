@@ -105,6 +105,8 @@ Week 2
 	- Need to calculate exact storage numbers once key generation is stable
  - [x] Unittests
 	- Some of this is too interdependent for these kinds of tests but I split it up as best I could
+ - [x] Let GPG do all the password management
+	- Breaks screen at times but it's more secure
  - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
