@@ -6,13 +6,11 @@ def new(screen, workdir):
 	ew = EntryWindow(screen, "New GPG Key", "Enter User Information", ["Name", "Email Address"])
 	name = ew[1][0]
 	email = ew[1][1]
-	pw = common.new_password(screen)
 	common.alert(screen, "Key Generation", "GPG keys will now be generated. Progress is estimated and this may take a while. You will be prompted for your password several times.")
-	gk.set_password(common.password, screen)
 	mprog = common.Progress(screen, "Key Generation", "Generating Master Key...", 50)
 	gk.set_progress(progress, mprog)
 	try:
-		gk.genmaster(name+" <"+email+">",pw)
+		gk.genmaster(name+" <"+email+">")
 	except gpg_ops.error as g:
 		screen = SnackScreen()
 		common.error(screen, "Master Key generation error: "+str(g))

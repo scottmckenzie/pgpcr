@@ -7,8 +7,8 @@ class GPGKey:
 		self.masteralgo = "rsa4096"
 		self.subalgo = "rsa2048"
 
-	def genmaster(self, userid, password):
-		genkey = self.ctx.create_key(userid, algorithm=self.masteralgo, sign=True, certify=True, passphrase=password)
+	def genmaster(self, userid):
+		genkey = self.ctx.create_key(userid, algorithm=self.masteralgo, sign=True, certify=True, passphrase=True)
 		self.master = self.ctx.get_key(genkey.fpr)
 
 	def gensub(self):
