@@ -41,17 +41,3 @@ def _test_password(hint, desc, prev_bad, hook=None):
 		why += ' (again)'
 	p = input("Please supply %s' password%s:" % (hint, why))
 	return p
-
-if __name__ == "__main__":
-	import tempfile
-	tmp = tempfile.TemporaryDirectory()
-	try:
-		gk = GPGKey(tmp.name)
-		gk.set_progress(_test_progress)
-		gk.set_password(_test_password)
-		print("Generating masterkey...")
-		gk.genmaster("Test <test@example.com>", "111")
-		print("Generating subkeys...")
-		gk.gensub()
-	except gpg.errors.GPGMEError as g:
-		print(g, g.getsource())
