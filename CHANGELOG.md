@@ -97,10 +97,13 @@ Week 2
 
 2018-05-14
 ----------
- - [ ] Follow up on GPGME backport
- - [ ] Detect built-in SD card readers
- - [ ] README
+ - [x] Detect built-in SD card readers
+	- The one I have access to apparently uses usb transport so I'll enable just that for now
+	- Some may be sata which could be problematic, but I'll wait for bug reports once this is in the wild
+ - [x] README
 	- "I've just downloaded this, what do I do now?"
+	- Need to calculate exact storage numbers once key generation is stable
+ - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
  - [ ] Skeleton UI
