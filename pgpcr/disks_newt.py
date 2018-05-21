@@ -1,12 +1,10 @@
 from snack import *
 from . import disks
 
-def listdisks():
-	screen = SnackScreen()
+def listdisks(screen):
 	d = disks.getdisks()
-	dlist = [x['model']+" "+x['size'] for x in d] #if x['tran'] == "usb"]
+	dlist = [x['model']+" "+x['size'] for x in d]
 	lcw = ListboxChoiceWindow(screen,"Disks", "Pick your disks", dlist)
-	screen.finish()
 	print(lcw)
 
 def store(screen, workdir):
