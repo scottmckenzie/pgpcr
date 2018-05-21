@@ -26,8 +26,8 @@ class GPGOpsTests(unittest.TestCase):
 	def test_callbacks_generation(self):
 		self.gk.set_progress(self._progress)
 		self.gk.set_password(self._password)
-		print("Generating masterkey...")
-		self.gk.genmaster("Test <test@example.com>", "111")
+		print("\nGenerating masterkey...")
+		self.gk.genmaster("Test <test@example.com>")
 		print("Generating subkeys...")
 		self.gk.gensub()
 
