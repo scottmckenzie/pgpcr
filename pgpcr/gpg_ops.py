@@ -24,20 +24,3 @@ class GPGKey:
 
 
 error = gpg.errors.GPGMEError
-
-# Below callbacks pulled directly from callbacks.py in GPGME
-def _test_progress(what, type, current, total, hook=None):
-	print("PROGRESS UPDATE: what = %s, type = %d, current = %d, total = %d" %\
-		(what, type, current, total))
-
-def _test_password(hint, desc, prev_bad, hook=None):
-	"""This is a sample callback that will read a passphrase from
-	the terminal.  The hook here, if present, will be used to describe
-	why the passphrase is needed."""
-	why = ''
-	if hook != None:
-		why = ' ' + hook
-	if prev_bad:
-		why += ' (again)'
-	p = input("Please supply %s' password%s:" % (hint, why))
-	return p
