@@ -3,7 +3,7 @@ import gpg
 class GPGKey:
 
 	def __init__(self, home):
-		self.ctx = gpg.Context(home_dir=home, pinentry_mode=gpg.constants.PINENTRY_MODE_LOOPBACK)
+		self.ctx = gpg.Context(home_dir=home)
 		self.masteralgo = "rsa4096"
 		self.subalgo = "rsa2048"
 
