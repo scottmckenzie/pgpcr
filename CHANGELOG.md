@@ -113,11 +113,15 @@ Week 2
 ----------
  - [x] Clarify gpg_ops API
  - [x] Disk mounting and formatting from pgpcr
- - [ ] Pinentry: Permission denied?
- - [ ] Follow up on GPGME backport
+ - [x] Pinentry: Permission denied?
+	- This problem is no longer occurring, but I have no idea why
+ - [ ] Begin Disk handling UI
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
  - [ ] Skeleton UI
+ - [ ] Key Export
+	- Not directly exposed as part of the python bindings, but part of GPGME
+	- Write a patch for the python bindings to do this?
 
 Week 3 
 ======
