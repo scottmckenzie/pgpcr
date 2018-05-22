@@ -107,6 +107,7 @@ Week 2
 	- Some of this is too interdependent for these kinds of tests but I split it up as best I could
  - [x] Let GPG do all the password management
 	- Breaks screen at times but it's more secure
+ - [x] Move gpg conffiles to their own directory in /etc
  - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
