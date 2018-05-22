@@ -112,6 +112,7 @@ Week 2
 2018-05-22
 ----------
  - [x] Clarify gpg_ops API
+ - [x] Disk mounting and formatting from pgpcr
  - [ ] Pinentry: Permission denied?
  - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
