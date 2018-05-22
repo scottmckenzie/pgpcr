@@ -1,4 +1,4 @@
-import json, sys, subprocess, os
+import json, sys, subprocess
 
 def getdisks():
 	p = subprocess.run(["lsblk", "-p", "-d", "-o", "tran,name,model,size,serial,mountpoint", "--json"], stdout=subprocess.PIPE)
@@ -14,10 +14,7 @@ def format(device):
 
 def mount(device):
 	mountdir = "/mnt/"+device['serial']
-	try:
-		os.mkdir(mountdir)
-	except FileExistsError:
-		pass # Just need it to exist, don't need to create it
+	subprocess.run(["sudo", "mkdir", "-p", mountdir])
 	ret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
 	if ret == 0:
 		device['mountpoint'] = mountdir
