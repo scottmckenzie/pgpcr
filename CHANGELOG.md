@@ -82,7 +82,7 @@ Week 1
 	- Puts me ahead of schedule
 
 2018-05-18
-==========
+----------
  - [x] Look into replacing lsblk with pyparted
 	- Not feasible as pyparted doesn't expose as much information
  - [x] Virtual usb disk in KVM
@@ -108,6 +108,7 @@ Week 2
  - [x] Let GPG do all the password management
 	- Breaks screen at times but it's more secure
  - [x] Move gpg conffiles to their own directory in /etc
+ - [ ] Pinentry: Permission denied?
  - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
