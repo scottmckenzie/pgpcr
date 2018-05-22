@@ -8,5 +8,5 @@ class testDisksNewt(unittest.TestCase):
 	def tearDown(self):
 		self.screen.finish()
 
-	def test_listdisks(self):
-		disks_newt.listdisks(self.screen)
+	def test_pickdisks(self):
+		disks_newt.pickdisks(self.screen, "TEST")
