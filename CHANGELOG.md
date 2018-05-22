@@ -116,8 +116,8 @@ Week 2
  - [x] Pinentry: Permission denied?
 	- This problem is no longer occurring, but I have no idea why
  - [x] Begin Disk handling UI
-	- Everything that can go wrong and how we recover from it
  - [ ] Disk handling errors
+	- Everything that can go wrong and how we recover from it
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
  - [ ] Skeleton UI
