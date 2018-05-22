@@ -8,18 +8,18 @@ def new(screen, workdir):
 	email = ew[1][1]
 	common.alert(screen, "Key Generation", "GPG keys will now be generated. Progress is estimated and this may take a while. You will be prompted for your password several times.")
 	mprog = common.Progress(screen, "Key Generation", "Generating Master Key...", 50)
-	gk.set_progress(progress, mprog)
+	gk.setprogress(progress, mprog)
 	try:
 		gk.genmaster(name+" <"+email+">")
-	except gpg_ops.error as g:
+	except gpg_ops.GPGMEError as g:
 		screen = SnackScreen()
 		common.error(screen, "Master Key generation error: "+str(g))
 		return
 	sprog = common.Progress(screen, "Key Generation", "Generating Sub Keys...", 50)
-	gk.set_progress(progress, sprog)
+	gk.setprogress(progress, sprog)
 	try:
 		gk.gensub()
-	except gpg_ops.error as g:
+	except gpg_ops.GPGMEError as g:
 		screen = SnackScreen()
 		common.error(screen, "Subkey generation error: "+str(g))
 	screen = SnackScreen()

@@ -24,8 +24,10 @@ class GPGOpsTests(unittest.TestCase):
 		return p
 	
 	def test_callbacks_generation(self):
-		self.gk.set_progress(self._progress)
-		self.gk.set_password(self._password)
+		self.gk.setprogress(self._progress)
+		self.gk.setpassword(self._password)
+		# Generate smaller keys so the test doesn't take as long
+		self.gk.setalgorithms("rsa1024", "rsa1024")
 		print("\nGenerating masterkey...")
 		self.gk.genmaster("Test <test@example.com>")
 		print("Generating subkeys...")
