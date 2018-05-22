@@ -5,7 +5,7 @@ def getdisks():
 	if p.returncode != 0:
 		return None
 	pstr = p.stdout.decode(sys.stdout.encoding)
-	j = json.loads(p.stdout)
+	j = json.loads(pstr)
 	return [x for x in j['blockdevices'] if x['tran'] == "usb"]
 
 def format(device):
