@@ -22,6 +22,7 @@ while running:
 		gpg_ui.load(screen, workdir)
 	elif ret == "adv":
 		ret = ListboxChoiceWindow(screen, "Advanced Options", "These options are for users who know what they are doing", [("Generate Key on Smartcard", "gen"), ("Import existing key", "import"), ("Run shell", "shell")])
+		ret = ret[1]
 		if ret == "gen":
 			gpg_ui.smartcardgen(screen, workdir)
 		elif ret == "import":
