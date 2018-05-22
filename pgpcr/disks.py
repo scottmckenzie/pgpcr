@@ -15,5 +15,7 @@ def setup(device):
 	mountret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
 	if partret == 0 and mountret == 0:
 		device['mountpoint'] = mountdir
-	# TODO: Don't hardcode user
-	subprocess.run(["sudo", "chown", "-R", "pgp", mountdir])
+		# TODO: Don't hardcode user
+		subprocess.run(["sudo", "chown", "-R", "pgp", mountdir])
+	else:
+		device['mountpoint'] = False
