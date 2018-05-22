@@ -1,7 +1,7 @@
 import json, sys, subprocess
 
 def getdisks():
-	p = subprocess.run(["lsblk", "-d", "-o", "name,size,mountpoint,tran,model", "--json"], stdout=subprocess.PIPE)
+	p = subprocess.run(["lsblk", "-p", "-d", "-o", "tran,name,model,size,serial,mountpoint", "--json"], stdout=subprocess.PIPE)
 	if p.returncode != 0:
 		return None
 	pstr = p.stdout.decode(sys.stdout.encoding)
