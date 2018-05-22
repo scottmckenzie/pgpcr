@@ -9,7 +9,7 @@ def getdisks():
 	return [x for x in j['blockdevices'] if x['tran'] == "usb"]
 
 def setup(device):
-	partret = subprocess.run(["sudo", "pgpcr-part", device['name']])
+	partret = subprocess.run(["sudo", "pgpcr-part", device['name']], stdout=subprocess.PIPE)
 	mountdir = "/mnt/"+device['serial']
 	subprocess.run(["sudo", "mkdir", "-p", mountdir])
 	mountret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
