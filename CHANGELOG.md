@@ -95,7 +95,7 @@ Week 1
 Week 2
 ======
 
-2018-05-14
+2018-05-21
 ----------
  - [x] Detect built-in SD card readers
 	- The one I have access to apparently uses usb transport so I'll enable just that for now
@@ -108,6 +108,10 @@ Week 2
  - [x] Let GPG do all the password management
 	- Breaks screen at times but it's more secure
  - [x] Move gpg conffiles to their own directory in /etc
+
+2018-05-22
+----------
+ - [x] Clarify gpg_ops API
  - [ ] Pinentry: Permission denied?
  - [ ] Follow up on GPGME backport
  - [ ] Finish restructuring
