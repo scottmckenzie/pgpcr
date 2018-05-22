@@ -12,7 +12,7 @@ while running:
 	ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("New GPG Key", "new gpg"), ("Load GPG Key","load gpg"), ("Advanced","adv"), ("Quit", "quit")] )
 
 	workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
-	if ret.endswith("gpg"):
+	if ret is not None and ret.endswith("gpg"):
 		shutil.copyfile("/etc/pgpcr/gpg.conf", workdir.name+"/gpg.conf")
 		shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir.name+"/gpg-agent.conf")
 		subprocess.run(["gpgconf", "--kill", "gpg-agent"])
