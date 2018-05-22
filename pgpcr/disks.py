@@ -18,3 +18,5 @@ def mount(device):
 	ret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
 	if ret == 0:
 		device['mountpoint'] = mountdir
+	# TODO: Don't hardcode user
+	subprocess.run(["sudo", "chown", "-R", "pgp", mountdir])
