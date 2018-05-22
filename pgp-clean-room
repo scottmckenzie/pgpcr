@@ -28,11 +28,11 @@ while running:
 			gpg_ui.smartcardimport(screen, workdir)
 		elif ret == "shell":
 			screen.finish()
-			subprocess.run(["/bin/bash", "-l"])
+			subprocess.run(["bash", "-l"])
 	elif ret == "quit":
 		running = False
 
 ret = ButtonChoiceWindow(screen, "PGP Clean Room", "Would you like to shutdown the PGP Clean Room?", ["Yes", "No"])
 screen.finish()
 if ret == "yes":
-	subprocess.run(["/usr/bin/sudo", "shutdown", "now"])
+	subprocess.run(["sudo", "shutdown", "now"])
