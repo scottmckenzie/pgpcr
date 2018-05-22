@@ -28,4 +28,7 @@ class GPGKey:
 		if sub is not None:
 			self._subalgo = sub
 
+	def masterfpr(self):
+		return self._master.fpr
+
 GPGMEError = gpg.errors.GPGMEError

@@ -30,6 +30,7 @@ class GPGOpsTests(unittest.TestCase):
 		self.gk.setalgorithms("rsa1024", "rsa1024")
 		print("\nGenerating masterkey...")
 		self.gk.genmaster("Test <test@example.com>")
+		print("\nGenerated master key", self.gk.masterfpr())
 		print("Generating subkeys...")
 		self.gk.gensub()
 
