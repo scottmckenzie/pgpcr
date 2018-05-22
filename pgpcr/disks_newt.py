@@ -18,7 +18,7 @@ def pickdisks(screen, use):
 	else:
 		return None
 
-def store(screen, workdir):
+def store(screen, workdir, name):
 	b1 = setup(screen, "master key backup")
 	b2 = setup(screen, "second master key backup")
 	public = setup(screen, "public key export")
