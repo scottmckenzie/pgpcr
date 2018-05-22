@@ -11,7 +11,7 @@ def pickdisks(screen, use):
 		return
 	for x in d:
 		x['displayname'] = x['model']+" "+x['size']
-	dlist = [x['displayname'] for x in d]
+	dlist = [x['displayname'] for x in d if x['mountpoint'] is None]
 	lcw = ListboxChoiceWindow(screen,"Disks", "Pick your "+use+" disk", dlist)
 	if lcw[0] is None or lcw[0] == 'ok':
 		return d[lcw[1]]
