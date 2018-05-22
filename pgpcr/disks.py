@@ -8,15 +8,12 @@ def getdisks():
 	j = json.loads(pstr)
 	return [x for x in j['blockdevices'] if x['tran'] == "usb"]
 
-def format(device):
-	ret = subprocess.run(["sudo", "pgpcr-part", device['name']])
-	return ret.returncode
-
-def mount(device):
+def setup(device):
+	partret = subprocess.run(["sudo", "pgpcr-part", device['name']])
 	mountdir = "/mnt/"+device['serial']
 	subprocess.run(["sudo", "mkdir", "-p", mountdir])
-	ret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
-	if ret == 0:
+	mountret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
+	if partret == 0 and mountret == 0:
 		device['mountpoint'] = mountdir
 	# TODO: Don't hardcode user
 	subprocess.run(["sudo", "chown", "-R", "pgp", mountdir])
