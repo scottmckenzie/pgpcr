@@ -128,6 +128,7 @@ Week 3
 
 2018-05-28
 ----------
+ - [ ] Follow up on GPGME backport
  - [ ] Disk handling UI
 	- This is basically what makes or breaks this application so it has to work and work really well
  - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
