@@ -19,4 +19,16 @@ def listdisks(screen, use):
 		return None
 
 def store(screen, workdir):
-	pass
+	b1 = setup(screen, "master key backup")
+	b2 = setup(screen, "second master key backup")
+	public = setup(screen, "public key export")
+
+def setup(screen, use):
+	dev = listdisks(screen, use)
+	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+ dev['displayname']+"? All the data currently on the device WILL BE WIPED!")
+	if bcw == 'ok':
+		disks.format(dev)
+		disks.mount(dev)
+		return dev['mountpoint']
+	else:
+		return None
