@@ -21,6 +21,7 @@ def setup(device):
 	#else:
 	#	device['mountpoint'] = False
 	device['mountpoint'] = mountdir
+	subprocess.run(["sudo", "chown", "-R", "pgp", mountdir])
 
 def backup(workdir, destdir, name):
 	return shutil.copyfile(workdir, destdir+"/"+name)
