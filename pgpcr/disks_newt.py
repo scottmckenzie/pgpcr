@@ -7,8 +7,7 @@ def pickdisks(screen, use):
 	if d == []:
 		common_newt.alert(screen, "Disks", "No removable storage connected. Please connect some and press OK.")
 		sleep(1)
-		pickdisks(screen)
-		return
+		return pickdisks(screen, use)
 	for x in d:
 		x['displayname'] = x['model']+" "+x['size']
 	dlist = [x['displayname'] for x in d if x['mountpoint'] is None]
