@@ -116,11 +116,14 @@ Week 2
  - [x] Pinentry: Permission denied?
 	- This problem is no longer occurring, but I have no idea why
  - [x] Begin Disk handling UI
- - [ ] Disk handling errors
-	- Everything that can go wrong and how we recover from it
+
+2018-05-23
+----------
+ - [ ] Skeleton UI
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
- - [ ] Skeleton UI
+ - [ ] Disk handling errors
+	- Everything that can go wrong and how we recover from it
  - [ ] Key Export
 	- Not directly exposed as part of the python bindings, but part of GPGME
 	- Write a patch for the python bindings to do this?
