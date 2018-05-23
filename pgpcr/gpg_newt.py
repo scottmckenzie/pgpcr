@@ -26,9 +26,10 @@ def new(screen, workdir):
 	common.alert(screen, "Key Generation", "Key Generation Complete!")
 	export = ButtonChoiceWindow(screen, "Key Export", "How would you like to export your key?", [("External Storage", "storage"), ("Smartcard", "smartcard")])
 	if export == "storage":
-		disks_newt.store(screen, workdir, gk.masterfpr())
+		public = disks_newt.store(screen, workdir, gk.masterfpr())
 	elif export == "smartcard":
-		smartcard_newt.store(screen, workdir)
+		public = smartcard_newt.store(screen, workdir, gk.masterfpr())
+	gk.export(public)
 
 def progress(what, type, current, total, prog):
 	if what == "primegen":
