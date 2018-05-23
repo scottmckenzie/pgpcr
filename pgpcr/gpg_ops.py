@@ -31,4 +31,7 @@ class GPGKey:
 	def masterfpr(self):
 		return self._master.fpr
 
+	def export(self, dir):
+		pass
+
 GPGMEError = gpg.errors.GPGMEError
