@@ -1,4 +1,4 @@
-import json, sys, subprocess, shutil
+import json, sys, subprocess, shutil, os
 
 def getdisks():
 	p = subprocess.run(["lsblk", "-p", "-d", "-o", "tran,name,model,size,serial,mountpoint", "--json"], stdout=subprocess.PIPE)
@@ -16,12 +16,11 @@ def setup(device):
 	#mountret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
 	#if partret == 0 and mountret == 0:
 	#	device['mountpoint'] = mountdir
-		# TODO: Don't hardcode user
-	#	subprocess.run(["sudo", "chown", "-R", "pgp", mountdir])
+	#	subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 	#else:
 	#	device['mountpoint'] = False
 	device['mountpoint'] = mountdir
-	subprocess.run(["sudo", "chown", "-R", "pgp", mountdir])
+	subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
 def backup(workdir, destdir, name):
 	return shutil.copytree(workdir.name, destdir+"/"+name)
