@@ -1,4 +1,4 @@
-import json, sys, subprocess
+import json, sys, subprocess, shutil
 
 def getdisks():
 	p = subprocess.run(["lsblk", "-p", "-d", "-o", "tran,name,model,size,serial,mountpoint", "--json"], stdout=subprocess.PIPE)
@@ -22,3 +22,5 @@ def setup(device):
 	#	device['mountpoint'] = False
 	device['mountpoint'] = mountdir
 
+def backup(workdir, destdir, name):
+	return shutil.copyfile(workdir, destdir+"/"+name)
