@@ -119,6 +119,9 @@ Week 2
 
 2018-05-23
 ----------
+ - [x] Virtual USB devices
+	- dummy_hcd and g_mass_storage
+	- Development drivers not enabled in my kernel
  - [ ] Skeleton UI
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
