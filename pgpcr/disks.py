@@ -24,4 +24,4 @@ def setup(device):
 	subprocess.run(["sudo", "chown", "-R", "pgp", mountdir])
 
 def backup(workdir, destdir, name):
-	return shutil.copyfile(workdir, destdir+"/"+name)
+	return shutil.copytree(workdir.name, destdir+"/"+name)
