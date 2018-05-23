@@ -4,19 +4,17 @@ def getdisks():
 	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial,mountpoint", "--json"])
 	return [x for x in j if x['tran'] == "usb"]
 
-def setup(device):
-	# TODO: Remove skeleton code
-	#partret = subprocess.run(["sudo", "pgpcr-part", device['name']], stdout=subprocess.PIPE)
+def setupdevice(device):
+	partret = subprocess.run(["sudo", "pgpcr-part", device['name']], stdout=subprocess.PIPE)
 	mountdir = "/mnt/"+device['serial']
 	subprocess.run(["sudo", "mkdir", "-p", mountdir])
-	#mountret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
-	#if partret == 0 and mountret == 0:
-	#	device['mountpoint'] = mountdir
-	#	subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
-	#else:
-	#	device['mountpoint'] = False
-	device['mountpoint'] = mountdir
-	subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
+	mountret = subprocess.run(["sudo", "mount", device['name']+"1", mountdir])
+	if partret == 0 and mountret == 0:
+		device['mountpoint'] = mountdir
+		subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
+	else:
+		device['mountpoint'] = False
+	return device['mountpoint']
 
 def backup(workdir, destdir, name):
 	return shutil.copytree(workdir.name, destdir+"/"+name)
