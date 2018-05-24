@@ -53,6 +53,13 @@ class Disk:
 		m = self._mount()
 		return (p, m)
 
+	def backup(self, workdir, name):
+		if not self.ismounted():
+			return None
+		else:
+			ret =  shutil.copytree(workdir.name, self.mountpoint+"/"+name)
+			return (ret, self._eject())
+
 	def _partition(self):
 		ret = subprocess.run(["sudo", "pgpcr-part", self.path], stdout=subprocess.PIPE)
 		if ret.returncode() == 0:
@@ -70,8 +77,8 @@ class Disk:
 			self.mountpoint = False
 		return False
 
-	def backup(self, workdir, name):
-		if not self.ismounted():
-			return None
-		else:
-			return shutil.copytree(workdir.name, self.mountpoint+"/"+name)
+	def _eject(self):
+		ret = subprocess.run(['sudo', 'eject', self.path])
+		if ret.returncode() == 0:
+			return True
+		return False
