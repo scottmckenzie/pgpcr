@@ -11,9 +11,8 @@ def getdisks():
 def lsblk(options):
 	com = ["lsblk"]
 	com.extend(options)
-	p = subprocess.run(com, stdout=subprocess.PIPE)
-	if p.returncode != 0:
-		return None
+	p = subprocess.run(com, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	p.check_returncode()
 	pstr = p.stdout.decode(sys.stdout.encoding)
 	return json.loads(pstr)['blockdevices']
 
@@ -59,23 +58,23 @@ class Disk:
 		if not self.ismounted():
 			return None
 		else:
-			ret =  shutil.copytree(workdir.name, self.mountpoint+"/"+name)
-			return (ret, self._eject())
+			shutil.copytree(workdir.name, self.mountpoint+"/"+name)
+			self._eject()
 
 	def _partition(self):
-		ret = subprocess.run(["sudo", "pgpcr-part", self.path], stdout=subprocess.PIPE)
+		ret = subprocess.run(["sudo", "pgpcr-part", self.path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		ret.check_returncode()
 
 	def _mount(self):
 		mountdir = "/mnt/"+self.serial
-		ret = subprocess.run(["sudo", "mkdir", "-p", mountdir])
+		ret = subprocess.run(["sudo", "mkdir", "-p", mountdir], stderr=subprocess.PIPE)
 		ret.check_returncode()
 		self.mountpoint = mountdir
-		chown = subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
+		chown = subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir], stderr=subprocess.PIPE)
 		chown.check_returncode()
 
 	def _eject(self):
-		ret = subprocess.run(['sudo', 'eject', self.path])
+		ret = subprocess.run(['sudo', 'eject', self.path], stderr=subprocess.PIPE)
 		ret.check_returncode()
 
 CalledProcessError = subprocess.CalledProcessError
