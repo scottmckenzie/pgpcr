@@ -57,7 +57,8 @@ class Disk:
 		ret = subprocess.run(["sudo", "pgpcr-part", device['name']], stdout=subprocess.PIPE)
 		if ret.returncode() == 0:
 			self.children = self.getchildren()
-		return ret.returncode()
+			return True
+		return False
 
 	def _mount(self):
 		mountdir = "/mnt/"+device['serial']
@@ -65,8 +66,10 @@ class Disk:
 		if ret == 0:
 			self.mountpoint = mountdir
 			chown = subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
+			return True
 		else:
 			self.mountpoint = False
+		return False
 
 	def backup(self, workdir, name):
 		if not self.ismounted():
