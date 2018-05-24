@@ -24,10 +24,10 @@ def store(screen, workdir, name):
 	return public
 
 def setup(screen, use):
-	dev = pickdisks(screen, use)
-	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+ dev['displayname']+"? All the data currently on the device WILL BE WIPED!")
+	disk = pickdisks(screen, use)
+	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+disk.display+"? All the data currently on the device WILL BE WIPED!")
 	if bcw == 'ok':
-		ret = disks.setupdevice(dev)
+		ret = disk.setup()
 	else:
 		ret = False
 	if ret:
