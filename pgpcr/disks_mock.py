@@ -15,9 +15,12 @@ class Disk:
 		self.size = blkdev['size']
 		self.serial = blkdev['serial']
 		self.mountpoint = None
-		self.display = self.model+" "+self.size
+
+	def __str__(self):
+		s = self.model+" "+self.size
 		if self.ismounted():
-			self.display += "[IN USE]"
+			s += "[IN USE]"
+		return s
 
 	def ismounted(self):
 		if self.mountpoint is not None:

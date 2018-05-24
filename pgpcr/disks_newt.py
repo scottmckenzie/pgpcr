@@ -8,7 +8,7 @@ def pickdisks(screen, use):
 		common_newt.alert(screen, "Disks", "No removable storage connected. Please connect some and press OK.")
 		sleep(1)
 		return pickdisks(screen, use)
-	dlist = [x.display for x in d]
+	dlist = [str(x) for x in d]
 	lcw = ListboxChoiceWindow(screen, "Disks", "Pick your "+use+" disk", dlist)
 	if lcw[0] is None or lcw[0] == 'ok':
 		return d[lcw[1]]
@@ -25,7 +25,7 @@ def store(screen, workdir, name):
 
 def setup(screen, use):
 	disk = pickdisks(screen, use)
-	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+disk.display+"? All the data currently on the device WILL BE WIPED!")
+	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+str(disk)+"? All the data currently on the device WILL BE WIPED!")
 	if bcw == 'ok':
 		ret = disk.setup()
 	else:
