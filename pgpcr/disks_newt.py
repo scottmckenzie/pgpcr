@@ -8,12 +8,8 @@ def pickdisks(screen, use):
 		common_newt.alert(screen, "Disks", "No removable storage connected. Please connect some and press OK.")
 		sleep(1)
 		return pickdisks(screen, use)
-	for x in d:
-		x['displayname'] = x['model']+" "+x['size']
-		if disks.checkmounted(x['name']):
-			x['displayname'] += "[IN USE]"
-	dlist = [x['displayname'] for x in d]
-	lcw = ListboxChoiceWindow(screen,"Disks", "Pick your "+use+" disk", dlist)
+	dlist = [x.display for x in d]
+	lcw = ListboxChoiceWindow(screen, "Disks", "Pick your "+use+" disk", dlist)
 	if lcw[0] is None or lcw[0] == 'ok':
 		return d[lcw[1]]
 	else:
