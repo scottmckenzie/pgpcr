@@ -78,3 +78,4 @@ class Disk:
 		ret.check_returncode()
 
 CalledProcessError = subprocess.CalledProcessError
+CopyError = shutil.Error
