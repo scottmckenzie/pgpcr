@@ -127,7 +127,9 @@ Week 2
 
 2018-05-24
 ----------
- - [ ] disks_mock module
+ - [x] Disks class
+	- Rewrite of disks module
+ - [x] disks_mock module
  - [ ] Finish Skeleton UI for disks
  - [ ] Skeleton UI for smartcards
  - [ ] Finish restructuring
