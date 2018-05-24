@@ -15,5 +15,6 @@ class testDisksNewt(unittest.TestCase):
 	def test_pickdisks(self):
 		disks_newt.pickdisks(self.screen, "PICKDISKS TEST")
 
+	@unittest.skip
 	def test_store(self):
 		disks_newt.store(self.screen, self.tmp, "STORETEST")
