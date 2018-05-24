@@ -74,6 +74,8 @@ class Disk:
 		chown.check_returncode()
 
 	def _eject(self):
+		ret = subprocess.run(['sudo', 'umount', self.mountpoint])
+		ret.check_returncode()
 		ret = subprocess.run(['sudo', 'eject', self.path], stderr=subprocess.PIPE)
 		ret.check_returncode()
 
