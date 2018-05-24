@@ -25,6 +25,8 @@ def store(screen, workdir, name):
 	except disks.CopyError as e:
 		s = " ".join(e)
 		common_newt.error(s)
+	except disks.CalledProcessError as e:
+		common_newt.catchCPE(e)
 	return public
 
 def setup(screen, use):
@@ -34,11 +36,7 @@ def setup(screen, use):
 		try:
 			ret = disk.setup()
 		except disks.CalledProcessError as e:
-			s = " ".join(e.cmd)
-			if e.stderr is not None:
-				common_newt.alert(screen, s, e.stderror)
-			else:
-				common_newt.error(screen, s)
+			common_newt.catchCPE(e)
 	else:
 		disk = setup(screen, use)
 	return disk
