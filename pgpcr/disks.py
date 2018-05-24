@@ -30,7 +30,7 @@ class Disk:
 			self.display += "[IN USE]"
 
 	def _getchildren(self):
-		j = lsblk(["-p", "-o", "name,mountpoint", self.name])
+		j = lsblk(["-p", "-o", "name,mountpoint", self.name, "--json"])
 		if "children" not in j:
 			return None
 		else:
