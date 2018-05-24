@@ -10,7 +10,7 @@ def getdisks():
 
 def lsblk(options):
 	com = ["lsblk"]
-	com.append(options)
+	com.extend(options)
 	p = subprocess.run(com, stdout=subprocess.PIPE)
 	if p.returncode != 0:
 		return None
