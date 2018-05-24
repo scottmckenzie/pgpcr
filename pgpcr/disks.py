@@ -20,7 +20,7 @@ def lsblk(options):
 class Disk:
 
 	def __init__(self, blkdev):
-		self.name = blkdev['name']
+		self.path = blkdev['name']
 		self.model = blkdev['model']
 		self.size = blkdev['size']
 		self.serial = blkdev['serial']
@@ -30,7 +30,7 @@ class Disk:
 			self.display += "[IN USE]"
 
 	def _getchildren(self):
-		j = lsblk(["-p", "-o", "name,mountpoint", self.name, "--json"])
+		j = lsblk(["-p", "-o", "name,mountpoint", self.path, "--json"])
 		if "children" not in j:
 			return None
 		else:
@@ -54,9 +54,8 @@ class Disk:
 		return (p, m)
 
 	def _partition(self):
-		ret = subprocess.run(["sudo", "pgpcr-part", device['name']], stdout=subprocess.PIPE)
+		ret = subprocess.run(["sudo", "pgpcr-part", self.path], stdout=subprocess.PIPE)
 		if ret.returncode() == 0:
-			self.children = self.getchildren()
 			return True
 		return False
 
