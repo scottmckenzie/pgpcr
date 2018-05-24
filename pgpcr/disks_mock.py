@@ -2,20 +2,35 @@ import json, sys, subprocess, shutil, os
 # Pretend three usb devices of size 1G are attached
 
 def getdisks():
-	return [
-		{"name": "/tmp/test1", "tran": "usb", "model": "TEST", "serial":"1", "mountpoint": None},
-		
-		{"name": "/tmp/test2", "tran": "usb", "model": "TEST", "serial":"2", "mountpoint": None},
-		{"name": "/tmp/test3", "tran": "usb", "model": "TEST", "serial":"3", "mountpoint": None}
-	]
+	d = []
+	for x in range(3):
+		d.append({"name": "/tmp/test"+str(x), "tran": "usb", "model": "TEST"+str(x), "serial":str(x), "mountpoint": None, "size": "1G"})
+	return d
 
-def setupdevice(device):
-	os.mkdir(device['name'])
-	return device['name']
+class Disk:
 
-def backup(workdir, destdir, name):
-	return shutil.copytree(workdir.name, destdir+"/"+name)
+	def __init__(self, blkdev):
+		self.path = blkdev['name']
+		self.model = blkdev['model']
+		self.size = blkdev['size']
+		self.serial = blkdev['serial']
+		self.mountpoint = None
+		self.display = self.model+" "+self.size
+		if self.ismounted():
+			self.display += "[IN USE]"
 
-# check if the given device has any mounted child devices
-def checkmounted(device):
-	return False
+	def ismounted(self):
+		if self.mountpoint is not None:
+			return True
+		return False
+
+	def setup(self):
+		os.mkdir(self.name)
+		self.mountpoint = self.name
+		return (True, True)
+
+	def backup(self, workdir, name):
+		if not self.ismounted():
+			return None
+		else:
+			return shutil.copytree(workdir.name, self.mountpoint+"/"+name)
