@@ -67,7 +67,7 @@ class Disk:
 		ret.check_returncode()
 
 	def _mount(self):
-		mountdir = "/mnt/"+device['serial']
+		mountdir = "/mnt/"+self.serial
 		ret = subprocess.run(["sudo", "mkdir", "-p", mountdir])
 		ret.check_returncode()
 		self.mountpoint = mountdir
