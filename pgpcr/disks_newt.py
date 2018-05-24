@@ -10,7 +10,9 @@ def pickdisks(screen, use):
 		return pickdisks(screen, use)
 	for x in d:
 		x['displayname'] = x['model']+" "+x['size']
-	dlist = [x['displayname'] for x in d if x['mountpoint'] is None]
+		if disks.checkmounted(x['name']):
+			x['displayname'] += "[IN USE]"
+	dlist = [x['displayname'] for x in d]
 	lcw = ListboxChoiceWindow(screen,"Disks", "Pick your "+use+" disk", dlist)
 	if lcw[0] is None or lcw[0] == 'ok':
 		return d[lcw[1]]
@@ -29,7 +31,9 @@ def setup(screen, use):
 	dev = pickdisks(screen, use)
 	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+ dev['displayname']+"? All the data currently on the device WILL BE WIPED!")
 	if bcw == 'ok':
-		disks.setup(dev)
-		return dev['mountpoint']
+		ret = disks.setupdevice(dev)
 	else:
-		return None
+		ret = False
+	if ret:
+		return ret
+	setup(screen, use)
