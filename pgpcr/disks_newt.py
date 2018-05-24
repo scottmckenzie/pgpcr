@@ -17,9 +17,9 @@ def pickdisks(screen, use):
 
 def store(screen, workdir, name):
 	b1 = setup(screen, "master key backup")
-	disks.backup(workdir, b1, name)
+	b1.backup(workdir, name)
 	b2 = setup(screen, "second master key backup")
-	disks.backup(workdir, b2, name)
+	b2.backup(workdir, name)
 	public = setup(screen, "public key export")
 	return public
 
@@ -31,5 +31,5 @@ def setup(screen, use):
 	else:
 		ret = False
 	if ret:
-		return ret
+		return disk
 	setup(screen, use)
