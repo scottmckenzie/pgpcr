@@ -122,7 +122,9 @@ Week 2
  - [x] Virtual USB devices
 	- dummy_hcd and g_mass_storage
 	- Development drivers not enabled in my kernel
- - [ ] Skeleton UI
+ - [x] More diskhandling
+ - [x] Begin skeleton UI for usb-based backups
+ - [ ] Skeleton UI for smartcards
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
  - [ ] Disk handling errors
