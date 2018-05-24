@@ -30,7 +30,8 @@ def checkmounted(device):
 	return False
 
 def lsblk(options):
-	com = ["lsblk"].append(options)
+	com = ["lsblk"]
+	com.append(options)
 	p = subprocess.run(com, stdout=subprocess.PIPE)
 	if p.returncode != 0:
 		return None
