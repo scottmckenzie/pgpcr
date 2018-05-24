@@ -124,6 +124,11 @@ Week 2
 	- Development drivers not enabled in my kernel
  - [x] More diskhandling
  - [x] Begin skeleton UI for usb-based backups
+
+2018-05-24
+----------
+ - [ ] disks_mock module
+ - [ ] Finish Skeleton UI for disks
  - [ ] Skeleton UI for smartcards
  - [ ] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
