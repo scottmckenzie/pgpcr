@@ -23,10 +23,11 @@ def store(screen, workdir, name):
 		b2.backup(workdir, name)
 		public = setup(screen, "public key export")
 	except disks.CalledProcessError as e:
+		s = " ".join(e.cmd)
 		if e.stderr is not None:
-			common_newt.alert(screen, e.cmd, e.stderror)
+			common_newt.alert(screen, s, e.stderror)
 		else:
-			common_newt.error(screen, e.cmd)
+			common_newt.error(screen, s)
 	return public
 
 def setup(screen, use):
