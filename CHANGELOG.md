@@ -130,6 +130,8 @@ Week 2
  - [x] Disks class
 	- Rewrite of disks module
  - [x] disks_mock module
+ - [x] Disk handling exceptions
+	- Catching everything now, just need to handle it
  - [ ] Finish Skeleton UI for disks
  - [ ] Skeleton UI for smartcards
  - [ ] Finish restructuring
