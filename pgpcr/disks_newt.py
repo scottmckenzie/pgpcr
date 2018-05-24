@@ -16,11 +16,17 @@ def pickdisks(screen, use):
 		return None
 
 def store(screen, workdir, name):
-	b1 = setup(screen, "master key backup")
-	b1.backup(workdir, name)
-	b2 = setup(screen, "second master key backup")
-	b2.backup(workdir, name)
-	public = setup(screen, "public key export")
+	try:
+		b1 = setup(screen, "master key backup")
+		b1.backup(workdir, name)
+		b2 = setup(screen, "second master key backup")
+		b2.backup(workdir, name)
+		public = setup(screen, "public key export")
+	except disks.CalledProcessError as e:
+		if e.stderr is not None:
+			common_newt.alert(screen, e.cmd, e.stderror)
+		else:
+			common_newt.error(screen, e.cmd)
 	return public
 
 def setup(screen, use):

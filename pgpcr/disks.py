@@ -52,9 +52,8 @@ class Disk:
 					return True
 
 	def setup(self):
-		p = self._partition()
-		m = self._mount()
-		return (p, m)
+		self._partition()
+		self._mount()
 
 	def backup(self, workdir, name):
 		if not self.ismounted():
@@ -65,23 +64,18 @@ class Disk:
 
 	def _partition(self):
 		ret = subprocess.run(["sudo", "pgpcr-part", self.path], stdout=subprocess.PIPE)
-		if ret.returncode() == 0:
-			return True
-		return False
+		ret.check_returncode()
 
 	def _mount(self):
 		mountdir = "/mnt/"+device['serial']
 		ret = subprocess.run(["sudo", "mkdir", "-p", mountdir])
-		if ret == 0:
-			self.mountpoint = mountdir
-			chown = subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
-			return True
-		else:
-			self.mountpoint = False
-		return False
+		ret.check_returncode()
+		self.mountpoint = mountdir
+		chown = subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir])
+		chown.check_returncode()
 
 	def _eject(self):
 		ret = subprocess.run(['sudo', 'eject', self.path])
-		if ret.returncode() == 0:
-			return True
-		return False
+		ret.check_returncode()
+
+CalledProcessError = subprocess.CalledProcessError
