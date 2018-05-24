@@ -16,27 +16,25 @@ def pickdisks(screen, use):
 		return None
 
 def store(screen, workdir, name):
-	try:
-		b1 = setup(screen, "master key backup")
-		b1.backup(workdir, name)
-		b2 = setup(screen, "second master key backup")
-		b2.backup(workdir, name)
-		public = setup(screen, "public key export")
-	except disks.CalledProcessError as e:
-		s = " ".join(e.cmd)
-		if e.stderr is not None:
-			common_newt.alert(screen, s, e.stderror)
-		else:
-			common_newt.error(screen, s)
+	b1 = setup(screen, "master key backup")
+	b1.backup(workdir, name)
+	b2 = setup(screen, "second master key backup")
+	b2.backup(workdir, name)
+	public = setup(screen, "public key export")
 	return public
 
 def setup(screen, use):
 	disk = pickdisks(screen, use)
 	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+str(disk)+"? All the data currently on the device WILL BE WIPED!")
 	if bcw == 'ok':
-		ret = disk.setup()
+		try:
+			ret = disk.setup()
+		except disks.CalledProcessError as e:
+			s = " ".join(e.cmd)
+			if e.stderr is not None:
+				common_newt.alert(screen, s, e.stderror)
+			else:
+				common_newt.error(screen, s)
 	else:
-		ret = False
-	if ret:
-		return disk
-	setup(screen, use)
+		disk = setup(screen, use)
+	return disk
