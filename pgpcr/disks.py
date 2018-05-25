@@ -1,6 +1,8 @@
 from . import external
 import json, shutil, os
 
+CopyError = shutil.Error
+
 def getdisks():
 	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial", "--json"])
 	d = []
@@ -72,6 +74,4 @@ class Disk:
 
 	def _eject(self):
 		external.process(['sudo', 'umount', self.mountpoint])
-		external.process((['sudo', 'eject', self.path])
-
-CopyError = shutil.Error
+		external.process(['sudo', 'eject', self.path])
