@@ -4,7 +4,7 @@ import json, shutil, os
 CopyError = shutil.Error
 
 def getdisks():
-	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial", "--json"])
+	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial"])
 	d = []
 	for x in j:
 		if x['tran'] == "usb":
@@ -14,6 +14,7 @@ def getdisks():
 def lsblk(options):
 	com = ["lsblk"]
 	com.extend(options)
+	com.append("--json")
 	p = external.process(com)
 	return json.loads(p.stdout)['blockdevices']
 
@@ -33,7 +34,7 @@ class Disk:
 		return s
 
 	def _getchildren(self):
-		j = lsblk(["-p", "-o", "name,mountpoint", self.path, "--json"])
+		j = lsblk(["-p", "-o", "name,mountpoint", self.path])
 		if "children" not in j:
 			return None
 		else:
