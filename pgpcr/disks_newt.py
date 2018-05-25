@@ -1,5 +1,5 @@
 from snack import *
-from . import disks, common_newt
+from . import disks, common_newt, external
 from time import sleep
 
 def pickdisks(screen, use):
@@ -25,7 +25,7 @@ def store(screen, workdir, name):
 	except disks.CopyError as e:
 		s = " ".join(e)
 		common_newt.error(s)
-	except disks.CalledProcessError as e:
+	except external.CalledProcessError as e:
 		common_newt.catchCPE(e)
 	return public
 
@@ -35,7 +35,7 @@ def setup(screen, use):
 	if bcw == 'ok':
 		try:
 			ret = disk.setup()
-		except disks.CalledProcessError as e:
+		except external.CalledProcessError as e:
 			common_newt.catchCPE(e)
 	else:
 		disk = setup(screen, use)

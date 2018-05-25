@@ -1,4 +1,5 @@
-import json, sys, subprocess, shutil, os
+from . import external
+import json, sys, shutil, os
 
 def getdisks():
 	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial", "--json"])
@@ -11,8 +12,7 @@ def getdisks():
 def lsblk(options):
 	com = ["lsblk"]
 	com.extend(options)
-	p = subprocess.run(com, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	p.check_returncode()
+	p = external.process(com)
 	pstr = p.stdout.decode(sys.stdout.encoding)
 	return json.loads(pstr)['blockdevices']
 
@@ -62,22 +62,16 @@ class Disk:
 			self._eject()
 
 	def _partition(self):
-		ret = subprocess.run(["sudo", "pgpcr-part", self.path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-		ret.check_returncode()
+		external.process(["sudo", "pgpcr-part", self.path])
 
 	def _mount(self):
 		mountdir = "/mnt/"+self.serial
-		ret = subprocess.run(["sudo", "mkdir", "-p", mountdir], stderr=subprocess.PIPE)
-		ret.check_returncode()
+		ret = external.process(["sudo", "mkdir", "-p", mountdir])
 		self.mountpoint = mountdir
-		chown = subprocess.run(["sudo", "chown", "-R", str(os.getuid()), mountdir], stderr=subprocess.PIPE)
-		chown.check_returncode()
+		chown = external.process(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
 	def _eject(self):
-		ret = subprocess.run(['sudo', 'umount', self.mountpoint])
-		ret.check_returncode()
-		ret = subprocess.run(['sudo', 'eject', self.path], stderr=subprocess.PIPE)
-		ret.check_returncode()
+		external.process(['sudo', 'umount', self.mountpoint])
+		external.process((['sudo', 'eject', self.path])
 
-CalledProcessError = subprocess.CalledProcessError
 CopyError = shutil.Error
