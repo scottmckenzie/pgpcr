@@ -1,4 +1,4 @@
-import json, sys, subprocess, shutil, os
+import shutil, os
 # Pretend three usb devices of size 1G are attached
 
 def getdisks():
