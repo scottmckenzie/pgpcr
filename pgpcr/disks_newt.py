@@ -19,8 +19,10 @@ def store(screen, workdir, name):
 	try:
 		b1 = setup(screen, "master key backup")
 		b1.backup(workdir, name)
+		common_newt.alert(screen, str(b1), "Your backup to the above disk is now complete and the disk can be ejected.")
 		b2 = setup(screen, "second master key backup")
 		b2.backup(workdir, name)
+		common_newt.alert(screen, str(b2), "Your backup to the above disk is now complete and the disk can be ejected.")
 		public = setup(screen, "public key export")
 	except disks.CopyError as e:
 		s = " ".join(e)
