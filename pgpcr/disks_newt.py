@@ -26,7 +26,7 @@ def store(screen, workdir, name):
 		s = " ".join(e)
 		common_newt.error(s)
 	except external.CalledProcessError as e:
-		common_newt.catchCPE(e)
+		common_newt.catchCPE(screen, e)
 	return public
 
 def setup(screen, use):
@@ -36,7 +36,7 @@ def setup(screen, use):
 		try:
 			ret = disk.setup()
 		except external.CalledProcessError as e:
-			common_newt.catchCPE(e)
+			common_newt.catchCPE(screen, e)
 	else:
 		disk = setup(screen, use)
 	return disk

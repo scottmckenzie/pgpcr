@@ -59,7 +59,7 @@ class Progress:
 		self.current += prog
 		self.refresh()
 
-def catchCPE(e):
+def catchCPE(screen, e):
 	s = " ".join(e.cmd)
 	if e.stderr is not None:
 		alert(screen, s, e.stderror)
