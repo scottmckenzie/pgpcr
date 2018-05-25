@@ -135,16 +135,13 @@ Week 2
 
 2018-05-25
 ----------
+ - [x] Finish restructuring
+	- It's really important to get this right before I start writing the major parts of this application
  - [x] external module for subprocess calls
  - [ ] Finish Skeleton UI for disks
  - [ ] Skeleton UI for smartcards
- - [ ] Finish restructuring
-	- It's really important to get this right before I start writing the major parts of this application
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
- - [ ] Key Export
-	- Not directly exposed as part of the python bindings, but part of GPGME
-	- Write a patch for the python bindings to do this?
 
 Week 3 
 ======
@@ -155,6 +152,9 @@ Week 3
  - [ ] Disk handling UI
 	- This is basically what makes or breaks this application so it has to work and work really well
  - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
+ - [ ] Key Export
+	- Not directly exposed as part of the python bindings, but part of GPGME
+	- Write a patch for the python bindings to do this?
 
 Week 4 
 ======
@@ -256,4 +256,5 @@ Would like to do these if I have time but we'll see how this goes
  - [ ] Prepare application for translation
 	- Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Alternative UI (Qt, GTK, etc)
+ - [ ] Add the option to print key backups and revocation certificates
 
