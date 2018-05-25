@@ -61,6 +61,7 @@ class Progress:
 
 def catchCPE(screen, e):
 	s = " ".join(e.cmd)
+	external.outputtostr(e)
 	if e.stderr is not None:
 		alert(screen, s, e.stderr)
 	else:
