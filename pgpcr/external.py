@@ -1,5 +1,11 @@
 from subprocess import *
-from sys import stdout
+import sys
 
 def process(cmd):
-	return run(cmd, check=True, stdout=PIPE, stderr=PIPE, encoding=stdout.encoding)
+	args = {check: True, stdout: PIPE, stderr: PIPE}j
+	if sys.version_info.minor >= 6:
+		args.encoding = sys.stdout.encoding
+	ret = run(cmd, **args)
+	if sys.version_info.minor <= 5:
+		ret.stdout = ret.stdout.decode(sys.stdout.encoding)
+	return ret
