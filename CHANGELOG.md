@@ -141,7 +141,7 @@ Week 2
  - [x] Finish Skeleton UI for disks
  - [x] Initial key generation and backup to external disks
  - [x] Key Export
-	- Write a patch for the python bindings to do this: See https://salsa.debian.org/tookmund-guest/gpgme/tree/python-export
+	- Wrote a patch for the python bindings to do this: https://salsa.debian.org/tookmund-guest/gpgme/tree/python-export
  - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
 
 Week 3 
@@ -150,6 +150,7 @@ Week 3
 2018-05-29
 ----------
  - [ ] Follow up on GPGME backport
+ - [ ] Upstream GPGME patches
  - [ ] Skeleton UI for smartcards
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
