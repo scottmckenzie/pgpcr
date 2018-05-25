@@ -1,5 +1,5 @@
 from . import external
-import json, sys, shutil, os
+import json, shutil, os
 
 def getdisks():
 	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial", "--json"])
@@ -13,8 +13,7 @@ def lsblk(options):
 	com = ["lsblk"]
 	com.extend(options)
 	p = external.process(com)
-	pstr = p.stdout.decode(sys.stdout.encoding)
-	return json.loads(pstr)['blockdevices']
+	return json.loads(p.stdout)['blockdevices']
 
 class Disk:
 
