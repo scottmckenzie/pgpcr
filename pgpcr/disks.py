@@ -74,5 +74,5 @@ class Disk:
 		chown = external.process(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
 	def _eject(self):
+		external.process(['sync'])
 		external.process(['sudo', 'umount', self.mountpoint])
-		external.process(['sudo', 'eject', self.path])
