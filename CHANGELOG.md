@@ -132,6 +132,10 @@ Week 2
  - [x] disks_mock module
  - [x] Disk handling exceptions
 	- Catching everything now, just need to handle it
+
+2018-05-25
+----------
+ - [x] external module for subprocess calls
  - [ ] Finish Skeleton UI for disks
  - [ ] Skeleton UI for smartcards
  - [ ] Finish restructuring
