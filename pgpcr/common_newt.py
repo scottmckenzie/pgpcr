@@ -1,4 +1,5 @@
 from snack import *
+from . import external
 
 width = 40
 padding = (0, 0, 0, 1)
