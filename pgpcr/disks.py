@@ -35,10 +35,10 @@ class Disk:
 
 	def _getchildren(self):
 		j = lsblk(["-p", "-o", "name,mountpoint", self.path])
-		if "children" not in j:
+		if "children" not in j[0]:
 			return None
 		else:
-			return j["children"]
+			return j[0]["children"]
 
 	def ismounted(self):
 		if self.mountpoint is not None:
