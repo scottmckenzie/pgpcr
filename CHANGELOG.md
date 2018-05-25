@@ -138,7 +138,8 @@ Week 2
  - [x] Finish restructuring
 	- It's really important to get this right before I start writing the major parts of this application
  - [x] external module for subprocess calls
- - [ ] Finish Skeleton UI for disks
+ - [x] Finish Skeleton UI for disks
+ - [x] Initial key generation and backup to external disks
  - [ ] Skeleton UI for smartcards
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
