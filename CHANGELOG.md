@@ -140,22 +140,23 @@ Week 2
  - [x] external module for subprocess calls
  - [x] Finish Skeleton UI for disks
  - [x] Initial key generation and backup to external disks
- - [ ] Skeleton UI for smartcards
- - [ ] Disk handling errors
-	- Everything that can go wrong and how we recover from it
-
-Week 3 
-======
-
-2018-05-28
-----------
- - [ ] Follow up on GPGME backport
- - [ ] Disk handling UI
-	- This is basically what makes or breaks this application so it has to work and work really well
  - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
  - [ ] Key Export
 	- Not directly exposed as part of the python bindings, but part of GPGME
 	- Write a patch for the python bindings to do this?
+
+Week 3 
+======
+
+2018-05-29
+----------
+ - [ ] Follow up on GPGME backport
+ - [ ] Skeleton UI for smartcards
+ - [ ] Disk handling errors
+	- Everything that can go wrong and how we recover from it
+ - [ ] Disk handling UI
+	- This is basically what makes or breaks this application so it has to work and work really well
+ - [ ] Public key export disk
 
 Week 4 
 ======
