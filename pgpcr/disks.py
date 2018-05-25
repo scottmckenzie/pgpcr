@@ -65,7 +65,8 @@ class Disk:
 
 	def _mount(self):
 		mountdir = "/mnt/"+self.serial
-		ret = external.process(["sudo", "mkdir", "-p", mountdir])
+		external.process(["sudo", "mkdir", "-p", mountdir])
+		external.process(["sudo", "mount", self._getchildren()[0]['name']])
 		self.mountpoint = mountdir
 		chown = external.process(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
