@@ -33,14 +33,22 @@ class GPGKey:
 	def masterfpr(self):
 		return self._master.fpr
 
-	def export(self, dir):
-		data = gpg.Data()
+	def _export(self, pattern, mode=0):
 		# 0 is the normal mode
-		mode = 0
-		self._ctx.op_export(self.masterfpr(), mode, data)
+		data = gpg.Data()
+		self._ctx.op_export(pattern, mode, data)
 		data.seek(0, os.SEEK_SET)
-		d = data.read()
+		return data.read()
+
+	def export(self, dir):
+		d = self._export(self.masterfpr())
 		with open(dir+"/"+self.masterfpr()+".pub", "wb") as f:
 			f.write(d)
+
+	def exportsubkeys(self, dir):
+		for k in [self._subsig, self._subenc, self._subauth]:
+			d = self._export(k.fpr, gpg.constants.EXPORT_MODE_SECRET)
+			with open(dir+"/"+k.fpr+".sec", "wb") as f:
+				f.write(d)
 
 GPGMEError = gpg.errors.GPGMEError
