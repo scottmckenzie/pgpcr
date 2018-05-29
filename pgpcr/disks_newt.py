@@ -9,9 +9,11 @@ def pickdisks(screen, use):
 		sleep(1)
 		return pickdisks(screen, use)
 	dlist = [str(x) for x in d]
-	lcw = ListboxChoiceWindow(screen, "Disks", "Pick your "+use+" disk", dlist)
+	lcw = ListboxChoiceWindow(screen, "Disks", "Pick your "+use+" disk", dlist, buttons = [("Refresh", 'refresh')])
 	if lcw[0] is None or lcw[0] == 'ok':
 		return d[lcw[1]]
+	elif lcw[0] == 'refresh':
+		return pickdisks(screen, use)
 	else:
 		return None
 
