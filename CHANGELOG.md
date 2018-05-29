@@ -143,21 +143,26 @@ Week 2
  - [x] Key Export
 	- Not directly exposed as part of the python bindings, but part of GPGME
 	- Wrote a patch for the python bindings to do this: https://salsa.debian.org/tookmund-guest/gpgme/tree/python-export
- - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
 
 Week 3 
 ======
 
 2018-05-29
 ----------
+ - [x] Upstream GPGME patches
+	- Located a much better set of patches that must have gotten lost at some point:
+		https://lists.gnupg.org/pipermail/gnupg-devel/2017-August/033031.html
+	- Submitted them instead with a minor update: https://dev.gnupg.org/T4001
+ - [x] gpg_ops export method
+	- Will be simplified once the above patch lands, but for now we can use the lower-level interface
+ - [ ] Public key export disk
  - [ ] Follow up on GPGME backport
- - [ ] Upstream GPGME patches
+ - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
  - [ ] Skeleton UI for smartcards
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
  - [ ] Disk handling UI
 	- This is basically what makes or breaks this application so it has to work and work really well
- - [ ] Public key export disk
 
 Week 4 
 ======
