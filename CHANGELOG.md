@@ -159,6 +159,8 @@ Week 3
  - [x] Test disk handling UI on as many removable storage devices as I can get my hands on
 	- A bunch of random storage devices and a VM with fake USB disks
  - [x] gpg_ops export testing
+ - [ ] Distinguish between simliar disks
+	- Many usb disks simply show as very generic names
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
 	- Mount failures are fairly common. Why?
