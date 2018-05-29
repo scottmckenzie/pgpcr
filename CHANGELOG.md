@@ -155,13 +155,14 @@ Week 3
 	- Submitted them instead with a minor update: https://dev.gnupg.org/T4001
  - [x] gpg_ops export method
 	- Will be simplified once the above patch lands, but for now we can use the lower-level interface
- - [ ] Public key export disk
- - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
- - [ ] Skeleton UI for smartcards
+ - [x] Public key export disk
+ - [x] Test disk handling UI on as many removable storage devices as I can get my hands on
+	- A bunch of random storage devices and a VM with fake USB disks
+ - [x] gpg_ops export testing
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
- - [ ] Disk handling UI
-	- This is basically what makes or breaks this application so it has to work and work really well
+	- Mount failures are fairly common. Why?
+ - [ ] Skeleton UI for smartcards
 
 Week 4 
 ======
@@ -257,6 +258,7 @@ Would like to do these if I have time but we'll see how this goes
 	- Time based? amount of randomness gathered?
  - [ ] GPGME General Error
 	- Getting these randomly during key generation
+ - [ ] Pinentry: Permission Denied
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
  - [ ] Secure the Live Environment as much as possible
