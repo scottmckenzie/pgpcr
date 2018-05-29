@@ -36,6 +36,7 @@ class GPGKey:
 		# 0 is the normal mode
 		mode = 0
 		self._ctx.op_export(self.masterfpr(), mode, data)
+		data.seek(0, os.SEEK_SET)
 		d = data.read()
 		with open(dir+"/"+self.masterfpr()+".pub", "wb") as f:
 			f.write(d)
