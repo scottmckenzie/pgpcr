@@ -33,6 +33,7 @@ class GPGOpsTests(unittest.TestCase):
 		print("\nGenerated master key", self.gk.masterfpr())
 		print("Generating subkeys...")
 		self.gk.gensub()
+		self.gk.export(self.tmp.name)
 
 if __name__ == "__main__":
 	unittest.main()

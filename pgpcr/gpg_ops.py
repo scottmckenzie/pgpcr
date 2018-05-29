@@ -32,6 +32,12 @@ class GPGKey:
 		return self._master.fpr
 
 	def export(self, dir):
-		pass
+		data = gpg.Data()
+		# 0 is the normal mode
+		mode = 0
+		self._ctx.op_export(self.masterfpr(), mode, data)
+		d = data.read()
+		with open(dir+"/"+self.masterfpr()+".pub", "wb") as f:
+			f.write(d)
 
 GPGMEError = gpg.errors.GPGMEError
