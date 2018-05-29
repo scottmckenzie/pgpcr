@@ -156,7 +156,6 @@ Week 3
  - [x] gpg_ops export method
 	- Will be simplified once the above patch lands, but for now we can use the lower-level interface
  - [ ] Public key export disk
- - [ ] Follow up on GPGME backport
  - [ ] Test disk handling UI on as many removable storage devices as I can get my hands on
  - [ ] Skeleton UI for smartcards
  - [ ] Disk handling errors
@@ -188,6 +187,7 @@ Week 6
 
 2018-06-18
 ----------
+ - [ ] Follow up on GPGME backport
  - [ ] Purchase another Yubikey for testing
 	- Other smartcards?
  - [ ] Support for exporting to a smartcard
