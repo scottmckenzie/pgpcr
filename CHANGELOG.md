@@ -267,6 +267,6 @@ Would like to do these if I have time but we'll see how this goes
 	- Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Alternative UI (Qt, GTK, etc)
  - [ ] Add the option to print key backups and revocation certificates
- - [ ] Testing via a virtual machine
+ - [ ] Run all tests in a virtual machine
 	- kvm?
-
+ - [ ] Better import UI
