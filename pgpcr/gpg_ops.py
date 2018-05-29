@@ -1,11 +1,13 @@
-import gpg
+import gpg, os
 
 class GPGKey:
 
-	def __init__(self, home):
+	def __init__(self, home,  loadfpr=None):
 		self._ctx = gpg.Context(home_dir=home)
 		self._masteralgo = "rsa4096"
 		self._subalgo = "rsa2048"
+		if loadfpr:
+			self._master = self._ctx.get_key(loadfpr)
 
 	def genmaster(self, userid):
 		genkey = self._ctx.create_key(userid, algorithm=self._masteralgo, sign=True, certify=True, passphrase=True)
