@@ -31,6 +31,7 @@ def new(screen, workdir):
 	elif export == "smartcard":
 		public = smartcard_newt.store(screen, workdir, gk.masterfpr())
 	gk.export(public.mountpoint)
+	common.alert(screen, "New Key Creation Complete", "You can now store your backups in a safe place and import your new key to your main computer by running import.sh.")
 
 def progress(what, type, current, total, prog):
 	if what == "primegen":
