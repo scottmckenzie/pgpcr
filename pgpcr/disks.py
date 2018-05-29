@@ -30,7 +30,7 @@ class Disk:
 	def __str__(self):
 		s = self.model+" "+self.size
 		if self.ismounted():
-			s += "[IN USE]"
+			s = "[IN USE] "+s
 		return s
 
 	def _getchildren(self):
