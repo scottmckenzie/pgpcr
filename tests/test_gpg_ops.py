@@ -4,7 +4,12 @@ from pgpcr import gpg_ops
 class GPGOpsTests(unittest.TestCase):
 	def setUp(self):
 		self.tmp = tempfile.TemporaryDirectory()
-		self.gk = gpg_ops.GPGKey(self.tmp.name)
+		# Directory where the test key is stored
+		self.testkeydir = "tests/testkey"
+		self.testkeyfpr = "074D3879D4609448DEF716F6C7B98BC88227953F"
+
+	def tearDown(self):
+		self.tmp.cleanup()
 
 	# Below callbacks pulled directly from callbacks.py in GPGME
 	def _progress(self, what, type, current, total, hook=None):
@@ -24,6 +29,7 @@ class GPGOpsTests(unittest.TestCase):
 		return p
 	
 	def test_callbacks_generation(self):
+		self.gk = gpg_ops.GPGKey(self.tmp.name)
 		self.gk.setprogress(self._progress)
 		self.gk.setpassword(self._password)
 		# Generate smaller keys so the test doesn't take as long
@@ -33,7 +39,13 @@ class GPGOpsTests(unittest.TestCase):
 		print("\nGenerated master key", self.gk.masterfpr())
 		print("Generating subkeys...")
 		self.gk.gensub()
+
+	def test_export(self):
+		self.gk = gpg_ops.GPGKey(self.testkeydir, self.testkeyfpr)
 		self.gk.export(self.tmp.name)
+		with open(self.tmp.name+"/"+self.gk.masterfpr()+".pub", "rb") as f:
+			with  open(self.testkeydir+"/"+self.testkeyfpr+".pub", "rb") as a:
+				self.assertEqual(a.read(), f.read())
 
 if __name__ == "__main__":
 	unittest.main()
