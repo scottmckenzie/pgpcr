@@ -1,12 +1,9 @@
 import tempfile, unittest
 from pgpcr import gpg_ops
 
-class GPGOpsTests(unittest.TestCase):
+class GPGOpsTestGenCall(unittest.TestCase):
 	def setUp(self):
 		self.tmp = tempfile.TemporaryDirectory()
-		# Directory where the test key is stored
-		self.testkeydir = "tests/testkey"
-		self.testkeyfpr = "074D3879D4609448DEF716F6C7B98BC88227953F"
 
 	def tearDown(self):
 		self.tmp.cleanup()
@@ -40,12 +37,28 @@ class GPGOpsTests(unittest.TestCase):
 		print("Generating subkeys...")
 		self.gk.gensub()
 
+
+class GPGOpsTestKey(unittest.TestCase):
+
 	def test_export(self):
-		self.gk = gpg_ops.GPGKey(self.testkeydir, self.testkeyfpr)
 		self.gk.export(self.tmp.name)
 		with open(self.tmp.name+"/"+self.gk.masterfpr()+".pub", "rb") as f:
 			with  open(self.testkeydir+"/"+self.testkeyfpr+".pub", "rb") as a:
 				self.assertEqual(a.read(), f.read())
+
+	def test_export_subkeys(self):
+		self.gk.exportsubkeys(self.tmp.name)
+
+
+	def setUp(self):
+		self.tmp = tempfile.TemporaryDirectory()
+		# Directory where the test key is stored
+		self.testkeydir = "tests/testkey"
+		self.testkeyfpr = "074D3879D4609448DEF716F6C7B98BC88227953F"
+		self.gk = gpg_ops.GPGKey(self.testkeydir, self.testkeyfpr)
+
+	def tearDown(self):
+		self.tmp.cleanup()
 
 if __name__ == "__main__":
 	unittest.main()
