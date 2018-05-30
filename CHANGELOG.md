@@ -159,10 +159,16 @@ Week 3
  - [x] Test disk handling UI on as many removable storage devices as I can get my hands on
 	- A bunch of random storage devices and a VM with fake USB disks
  - [x] gpg_ops export testing
+
+2018-05-30
+----------
+ - [x] GPGOpsTestKey testcase
+ - [x] Distinguish between simliar disks
+	- Many usb disks simply show as very generic names
+	- Not much we can do about this but we can label the ones we've used
  - [ ] Export only subkeys
 	- For some reason the subkey export currently contains the master key
- - [ ] Distinguish between simliar disks
-	- Many usb disks simply show as very generic names
+	- Need a GPGME equivalent of "gpg --export-secret-subkeys"
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
 	- Mount failures are fairly common. Why?
