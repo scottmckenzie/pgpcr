@@ -8,6 +8,15 @@ class GPGKey:
 		self._subalgo = "rsa2048"
 		if loadfpr:
 			self._master = self._ctx.get_key(loadfpr)
+			for k in self._master.subkeys:
+				if k.can_certify:
+					continue
+				if k.can_sign:
+					self._subsig = k
+				elif k.can_encrypt:
+					self._subenc = k
+				elif k.can_authenticate:
+					self._subauth = k
 
 	def genmaster(self, userid):
 		genkey = self._ctx.create_key(userid, algorithm=self._masteralgo, sign=True, certify=True, passphrase=True)
