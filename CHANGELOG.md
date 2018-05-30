@@ -166,7 +166,7 @@ Week 3
  - [x] Distinguish between simliar disks
 	- Many usb disks simply show as very generic names
 	- Not much we can do about this but we can label the ones we've used
- - [ ] Export only subkeys
+ - [x] Export only subkeys
 	- For some reason the subkey export currently contains the master key
 	- Need a GPGME equivalent of "gpg --export-secret-subkeys"
  - [ ] Disk handling errors
