@@ -38,7 +38,7 @@ def setup(screen, use):
 	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+str(disk)+"? All the data currently on the device WILL BE WIPED!")
 	if bcw == 'ok':
 		try:
-			ret = disk.setup()
+			ret = disk.setup(use)
 		except external.CalledProcessError as e:
 			common_newt.catchCPE(screen, e)
 	else:

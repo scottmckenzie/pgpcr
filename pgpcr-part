@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# Parition a given device
+# pgpcr-part device label
+# Parition a given device and give it the specified label
 # Must be run as root
 
 import parted, sys, subprocess
@@ -13,6 +14,8 @@ disk = parted.freshDisk(dev, 'msdos')
 geo = parted.Geometry(device=dev, start=1, length=dev.getLength()-1)
 fs = parted.FileSystem(type="ext4", geometry=geo)
 part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, fs=fs, geometry=geo)
+if sys.argv[2] is not None:
+	part.set_name(sys.argv[2])
 disk.addPartition(part, dev.optimalAlignedConstraint)
 disk.commit()
 

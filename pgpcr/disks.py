@@ -4,7 +4,7 @@ import json, shutil, os
 CopyError = shutil.Error
 
 def getdisks():
-	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial"])
+	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial,label"])
 	d = []
 	for x in j:
 		if x['tran'] == "usb":
@@ -25,10 +25,15 @@ class Disk:
 		self.model = blkdev['model']
 		self.size = blkdev['size']
 		self.serial = blkdev['serial']
+		self.label = blkdev['label']
 		self.mountpoint = None
 
 	def __str__(self):
-		s = self.model+" "+self.size
+		s = ""
+		if self.label is not None:
+			s = self.label
+		else:
+			s = self.model+" "+self.size
 		if self.ismounted():
 			s = "[IN USE] "+s
 		return s
@@ -52,8 +57,8 @@ class Disk:
 					self.mountpoint = x['mountpoint']
 					return True
 
-	def setup(self):
-		self._partition()
+	def setup(self, label):
+		self._partition(label)
 		self._mount()
 
 	def backup(self, workdir, name):
@@ -63,8 +68,8 @@ class Disk:
 			shutil.copytree(workdir.name, self.mountpoint+"/"+name, ignore=shutil.ignore_patterns('S.*'))
 			self._eject()
 
-	def _partition(self):
-		external.process(["sudo", "pgpcr-part", self.path])
+	def _partition(self, label):
+		external.process(["sudo", "pgpcr-part", self.path, label])
 
 	def _mount(self):
 		mountdir = "/mnt/"+self.serial
