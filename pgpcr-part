@@ -5,7 +5,7 @@
 
 import parted, sys, subprocess
 
-if sys.argv[1] is None:
+if len(sys.argv) <= 1:
 	print("Need a disk to partition!")
 	sys.exit(1)
 
@@ -14,8 +14,8 @@ disk = parted.freshDisk(dev, 'msdos')
 geo = parted.Geometry(device=dev, start=1, length=dev.getLength()-1)
 fs = parted.FileSystem(type="ext4", geometry=geo)
 part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, fs=fs, geometry=geo)
-if sys.argv[2] is not None:
-	part.set_name(sys.argv[2])
+if len(sys.argv) >= 3:
+	part.name = sys.argv[2]
 disk.addPartition(part, dev.optimalAlignedConstraint)
 disk.commit()
 
