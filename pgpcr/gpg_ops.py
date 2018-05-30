@@ -1,4 +1,5 @@
 import gpg, os
+from . import external
 
 class GPGKey:
 
@@ -46,8 +47,7 @@ class GPGKey:
 		# 0 is the normal mode
 		data = gpg.Data()
 		self._ctx.op_export(pattern, mode, data)
-		data.seek(0, os.SEEK_SET)
-		return data.read()
+		return self._readdata(data)
 
 	def export(self, dir):
 		d = self._export(self.masterfpr())
@@ -55,9 +55,20 @@ class GPGKey:
 			f.write(d)
 
 	def exportsubkeys(self, dir):
-		for k in [self._subsig, self._subenc, self._subauth]:
-			d = self._export(k.fpr, gpg.constants.EXPORT_MODE_SECRET)
-			with open(dir+"/"+k.fpr+".sec", "wb") as f:
-				f.write(d)
+		# Exporting only the secret subkeys isn't directly available so we have to call gpg directly
+		# gpg --export-secret-subkeys
+		k = self._callgpg(['--export-secret-subkeys'])
+		with open(dir+"/"+self.masterfpr()+".subsec", "wb") as f:
+			f.write(k)
 
+	def _readdata(self, data):
+		data.seek(0, os.SEEK_SET)
+		return data.read()
+
+	def _callgpg(self, args):
+		os.environ["GNUPGHOME"] = self._ctx.engine_info.home_dir
+		gpgargv = ['gpg']
+		gpgargv.extend(args)
+		ret = external.processb(gpgargv)
+		return ret.stdout
 GPGMEError = gpg.errors.GPGMEError
