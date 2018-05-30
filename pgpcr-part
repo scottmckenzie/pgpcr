@@ -14,9 +14,10 @@ disk = parted.freshDisk(dev, 'msdos')
 geo = parted.Geometry(device=dev, start=1, length=dev.getLength()-1)
 fs = parted.FileSystem(type="ext4", geometry=geo)
 part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, fs=fs, geometry=geo)
-if len(sys.argv) >= 3:
-	part.name = sys.argv[2]
 disk.addPartition(part, dev.optimalAlignedConstraint)
 disk.commit()
 
 subprocess.run(["/sbin/mkfs.ext4", "-F", part.path])
+
+if len(sys.argv) >= 3:
+	subprocess.run(["e2label", dev.path, sys.argv[2]])
