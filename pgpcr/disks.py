@@ -50,6 +50,8 @@ class Disk:
 		if self.label is not None:
 			return self.label
 		c = self._getchildren()
+		if c is None:
+			return None
 		for p in c:
 			if p['label'] is not None:
 				return p['label']
