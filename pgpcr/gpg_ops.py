@@ -65,10 +65,10 @@ class GPGKey:
 		data.seek(0, os.SEEK_SET)
 		return data.read()
 
-	def _callgpg(self, args):
+	def _callgpg(self, args, file):
 		os.environ["GNUPGHOME"] = self._ctx.engine_info.home_dir
-		gpgargv = ['gpg']
+		gpgargv = [self._ctx.engine_info.file_name]
 		gpgargv.extend(args)
-		ret = external.processb(gpgargv)
-		return ret.stdout
+		ret = external.processtofile(gpgargv, file)
+
 GPGMEError = gpg.errors.GPGMEError
