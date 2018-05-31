@@ -13,6 +13,7 @@ TTYVHangup=yes
 StandardInput=tty-force
 StandardOutput=inherit
 StandardError=inherit
+Environment=GPGME_DEBUG="9:/home/pgp/gpgme.log"
 
 [Install]
 WantedBy=multi-user.target
