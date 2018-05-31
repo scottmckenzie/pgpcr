@@ -26,6 +26,7 @@ class Disk:
 		self.size = blkdev['size']
 		self.serial = blkdev['serial']
 		self.label = blkdev['label']
+		self.label = self._getlabel()
 		self.mountpoint = None
 
 	def __str__(self):
@@ -39,11 +40,19 @@ class Disk:
 		return s
 
 	def _getchildren(self):
-		j = lsblk(["-p", "-o", "name,mountpoint", self.path])
+		j = lsblk(["-p", "-o", "name,mountpoint,label", self.path])
 		if "children" not in j[0]:
 			return None
 		else:
 			return j[0]["children"]
+
+	def _getlabel(self):
+		if self.label is not None:
+			return self.label
+		c = self._getchildren()
+		for p in c:
+			if p['label'] is not None:
+				return p['label']
 
 	def ismounted(self):
 		if self.mountpoint is not None:
