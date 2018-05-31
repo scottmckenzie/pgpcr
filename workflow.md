@@ -8,6 +8,7 @@ Workflow
 New
 ---
  - Generate new GPG Master key, prompting for userid and password
+ - Backup master key to two backup disks (using the same process as storage export below)
  - Ask user how they want to export their key
 
 ### Storage (better name needed)
@@ -16,15 +17,14 @@ New
  - Format it
 	- See format.md
  - copy gnupghome from tempdir to usb
- - Ask for second USB, third if they have it, and repeat process
+ - Ask for second USB, and repeat process
 
 ### Smartcard
- - Ask for model name
+ - List attached and supported smartcards
 	- Perhaps we can support any smartcard but will require testing
  - Keytocard the subkeys
- - Ask user for storage for master key backup
- - Ask user for storage for public key export
- - Follow process above for wiping and formatting
+ - No need for public key export, since I'm pretty sure you can get the key from the smartcard?
+	- Will require testing
 
 Load
 ----
