@@ -4,6 +4,7 @@
 # Must be run as root
 
 import parted, sys, subprocess
+from time import sleep
 
 if len(sys.argv) <= 1:
 	print("Need a disk to partition!")
@@ -17,6 +18,9 @@ fs = parted.FileSystem(type="ext4", geometry=geo)
 part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, fs=fs, geometry=geo)
 disk.addPartition(part, dev.optimalAlignedConstraint)
 disk.commit()
+
+# Sometimes the system needs a bit to figure out partitions
+sleep(1)
 
 mkfs = ["mkfs.ext4", "-F", part.path]
 if len(sys.argv) >= 3:
