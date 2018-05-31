@@ -21,7 +21,7 @@ disk.commit()
 mkfs = ["mkfs.ext4", "-F", part.path]
 if len(sys.argv) >= 3:
 	mkfs.extend(["-L", sys.argv[2]])
-log.write(str(dev)+"\n"+str(disk)+"\n"+str(part)+"\n")
+log.write(str(dev)+"\n"+str(disk)+"\n"+str(part)+"\n"+str(mkfs)+"\n")
 log.flush()
 subprocess.run(mkfs, stdout=log, stderr=log)
 log.write("\n\n")
