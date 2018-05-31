@@ -77,7 +77,7 @@ class Disk:
 			return None
 		else:
 			shutil.copytree(workdir.name, self.mountpoint+"/"+name, ignore=shutil.ignore_patterns('S.*'))
-			self._eject()
+			self.eject()
 
 	def _partition(self, label):
 		external.process(["sudo", "pgpcr-part", self.path, label])
@@ -89,6 +89,6 @@ class Disk:
 		self.mountpoint = mountdir
 		chown = external.process(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
-	def _eject(self):
+	def eject(self):
 		external.process(['sync'])
 		external.process(['sudo', 'umount', self.mountpoint])

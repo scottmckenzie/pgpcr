@@ -36,6 +36,7 @@ def export(screen, gk):
 		public = setup(screen, "public key export", "public export")
 		gk.export(public.mountpoint)
 		gk.exportsubkeys(public.mountpoint)
+		public.eject()
 	except disks.CopyError as e:
 		s = " ".join(e)
 		common_newt.error(s)
