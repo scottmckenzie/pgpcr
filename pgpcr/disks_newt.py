@@ -19,13 +19,13 @@ def pickdisks(screen, use):
 
 def store(screen, workdir, name):
 	try:
-		b1 = setup(screen, "master key backup")
+		b1 = setup(screen, "master key backup", "master backup")
 		b1.backup(workdir, name)
 		common_newt.alert(screen, str(b1), "Your backup to the above disk is now complete and the disk can be ejected.")
-		b2 = setup(screen, "second master key backup")
+		b2 = setup(screen, "second master key backup", "master backup 2")
 		b2.backup(workdir, name)
 		common_newt.alert(screen, str(b2), "Your backup to the above disk is now complete and the disk can be ejected.")
-		public = setup(screen, "public key export")
+		public = setup(screen, "public key export", "public export")
 	except disks.CopyError as e:
 		s = " ".join(e)
 		common_newt.error(s)
@@ -33,14 +33,14 @@ def store(screen, workdir, name):
 		common_newt.catchCPE(screen, e)
 	return public
 
-def setup(screen, use):
+def setup(screen, use, label):
 	disk = pickdisks(screen, use)
 	bcw = ButtonChoiceWindow(screen, "Warning", "Are you sure you want to use "+str(disk)+"? All the data currently on the device WILL BE WIPED!")
 	if bcw == 'ok':
 		try:
-			ret = disk.setup(use)
+			ret = disk.setup(label)
 		except external.CalledProcessError as e:
 			common_newt.catchCPE(screen, e)
 	else:
-		disk = setup(screen, use)
+		disk = setup(screen, use, label)
 	return disk
