@@ -17,7 +17,7 @@ part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, fs=fs, geometry
 disk.addPartition(part, dev.optimalAlignedConstraint)
 disk.commit()
 
-subprocess.run(["/sbin/mkfs.ext4", "-F", part.path])
-
+mkfs = ["/sbin/mkfs.ext4", "-F", part.path]
 if len(sys.argv) >= 3:
-	subprocess.run(["e2label", dev.path, sys.argv[2]])
+	mkfs.extend(["-L", sys.argv[2]])
+subprocess.run(mkfs)
