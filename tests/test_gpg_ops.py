@@ -42,13 +42,15 @@ class GPGOpsTestKey(unittest.TestCase):
 
 	def test_export(self):
 		self.gk.export(self.tmp.name)
-		with open(self.tmp.name+"/"+self.gk.masterfpr()+".pub", "rb") as f:
-			with  open(self.testkeydir+"/"+self.testkeyfpr+".pub", "rb") as a:
-				self.assertEqual(a.read(), f.read())
+		self._cmpfiles(self.testkeydir, self.tmp.name, self.gk.masterfpr()+".pub")
 
 	def test_export_subkeys(self):
 		self.gk.exportsubkeys(self.tmp.name)
+		self._cmpfiles(self.testkeydir, self.tmp.name, self.gk.masterfpr()+".subsec")
 
+	def _cmpfiles(self, a, b, name):
+		with open(a+"/"+name, "rb") as f1, open(b+"/"+name, "rb") as f2:
+			self.assertEqual(f1.read(), f2.read())
 
 	def setUp(self):
 		self.tmp = tempfile.TemporaryDirectory()
