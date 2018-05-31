@@ -5,7 +5,7 @@ def process(cmd):
 	args = {}
 	if sys.version_info.minor >= 6:
 		args['encoding'] = sys.stdout.encoding
-	ret = _process(cmd, args)
+	ret = processb(cmd, args)
 	if sys.version_info.minor <= 5:
 		outputtostr(ret)
 	return ret
@@ -16,10 +16,12 @@ def outputtostr(ret):
 	if ret.stderr is not None:
 		ret.stderr = ret.stderr.decode(sys.stderr.encoding)
 
-def processb(cmd):
-	return _process(cmd, {})
-
-def _process(cmd, args):
+def processb(cmd, args={}):
 	default = {'args': cmd, 'check': True, 'stdout': PIPE, 'stderr': PIPE}
 	default.update(args)
 	return run(**default)
+
+def processtofile(cmd, file):
+	with open(file, "wb") as f:
+		args = {'stdout': f}
+		return processb(cmd, args)
