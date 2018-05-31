@@ -173,14 +173,20 @@ Week 3
 2018-05-31
 ----------
  - [x] Simplify file export for gpg operations and tests
- - [x] Log Everything
+ - [x] Log paritioning process
+	- Should help fixing occasional mount errors
 	- Still working on GPGME logging though
  - [x] Update workflow to match what we actually do
 	- Workflow was a bit out-of-order
+ - [x] Fix occasional mount failure
+	- Logging revealed that mkfs occasionally couldn't see the newly-created partition
+	- Inserting a sleep after committing partition changes to disk appears to have fixed it
+ - [ ] GPGME logging
+	- Environment variable doesn't seem to have an effect
+	- Can't call set_global_flag from the python bindings as it unecessarily passes the context object
  - [ ] Skeleton UI for smartcards
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
-	- Mount failures are fairly common. Why?
 
 Week 4 
 ======
