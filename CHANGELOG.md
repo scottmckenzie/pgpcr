@@ -169,10 +169,14 @@ Week 3
  - [x] Export only subkeys
 	- For some reason the subkey export currently contains the master key
 	- Need a GPGME equivalent of "gpg --export-secret-subkeys"
+
+2018-05-31
+----------
+ - [x] Simplify file export for gpg operations and tests
+ - [ ] Skeleton UI for smartcards
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
 	- Mount failures are fairly common. Why?
- - [ ] Skeleton UI for smartcards
 
 Week 4 
 ======
