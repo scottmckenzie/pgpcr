@@ -24,15 +24,12 @@ def new(screen, workdir):
 		common.error(screen, "Subkey generation error: "+str(g))
 	screen = SnackScreen()
 	common.alert(screen, "Key Generation", "Key Generation Complete!")
+	disks_newt.store(screen, workdir, gk.masterfpr())
 	export = ButtonChoiceWindow(screen, "Key Export", "How would you like to export your key?", [("External Storage", "storage"), ("Smartcard", "smartcard")])
-	public = None
 	if export == "storage":
-		public = disks_newt.store(screen, workdir, gk.masterfpr())
+		public = disks_newt.export(screen, gk)
 	elif export == "smartcard":
-		public = smartcard_newt.store(screen, workdir, gk.masterfpr())
-	gk.export(public.mountpoint)
-	if export == "storage":
-		gk.exportsubkeys(public.mountpoint)
+		smartcard_newt.export(screen, gk)
 	common.alert(screen, "New Key Creation Complete", "You can now store your backups in a safe place and import your new key to your main computer by running import.sh.")
 
 def progress(what, type, current, total, prog):

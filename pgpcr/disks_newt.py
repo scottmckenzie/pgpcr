@@ -25,13 +25,22 @@ def store(screen, workdir, name):
 		b2 = setup(screen, "second master key backup", "master backup 2")
 		b2.backup(workdir, name)
 		common_newt.alert(screen, str(b2), "Your backup to the above disk is now complete and the disk can be ejected.")
-		public = setup(screen, "public key export", "public export")
 	except disks.CopyError as e:
 		s = " ".join(e)
 		common_newt.error(s)
 	except external.CalledProcessError as e:
 		common_newt.catchCPE(screen, e)
-	return public
+
+def export(screen, gk):
+	try:
+		public = setup(screen, "public key export", "public export")
+		gk.export(public.mountpoint)
+		gk.exportsubkeys(public.mountpoint)
+	except disks.CopyError as e:
+		s = " ".join(e)
+		common_newt.error(s)
+	except external.CalledProcessError as e:
+		common_newt.catchCPE(screen, e)
 
 def setup(screen, use, label):
 	disk = pickdisks(screen, use)

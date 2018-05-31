@@ -1,4 +1,5 @@
 from snack import *
+from . import disks_newt
 
-def store(screen, workdir):
+def export(screen, workdir):
 	pass
