@@ -43,23 +43,22 @@ class GPGKey:
 	def masterfpr(self):
 		return self._master.fpr
 
-	def _export(self, pattern, mode=0):
+	def _export(self, pattern, mode=0, file=None):
 		# 0 is the normal mode
+		open(file, "wb").close()
 		data = gpg.Data()
 		self._ctx.op_export(pattern, mode, data)
-		return self._readdata(data)
+		if file is not None:
+			with open(file, "wb") as f:
+				f.write(self._readdata(data))
 
 	def export(self, dir):
-		d = self._export(self.masterfpr())
-		with open(dir+"/"+self.masterfpr()+".pub", "wb") as f:
-			f.write(d)
+		d = self._export(self.masterfpr(), file=dir+"/"+self.masterfpr()+".pub")
 
 	def exportsubkeys(self, dir):
 		# Exporting only the secret subkeys isn't directly available so we have to call gpg directly
 		# gpg --export-secret-subkeys
-		k = self._callgpg(['--export-secret-subkeys'])
-		with open(dir+"/"+self.masterfpr()+".subsec", "wb") as f:
-			f.write(k)
+		k = self._callgpg(['--export-secret-subkeys'], dir+"/"+self.masterfpr()+".subsec")
 
 	def _readdata(self, data):
 		data.seek(0, os.SEEK_SET)
