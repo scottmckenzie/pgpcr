@@ -1,6 +1,7 @@
 from snack import *
 from . import disks, common_newt, external
 from time import sleep
+from shutil import copy
 
 def pickdisks(screen, use):
 	d = disks.getdisks()
@@ -34,6 +35,7 @@ def store(screen, workdir, name):
 def export(screen, gk):
 	try:
 		public = setup(screen, "public key export", "public export")
+		copy("/etc/pgpcr/import.sh", public.mountpoint)
 		gk.export(public.mountpoint)
 		gk.exportsubkeys(public.mountpoint)
 		public.eject()
