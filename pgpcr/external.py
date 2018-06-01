@@ -1,8 +1,7 @@
 from subprocess import *
 import sys
 
-def process(cmd):
-	args = {}
+def process(cmd, args={}):
 	if sys.version_info.minor >= 6:
 		args['encoding'] = sys.stdout.encoding
 	ret = processb(cmd, args)

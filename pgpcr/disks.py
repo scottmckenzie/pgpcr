@@ -77,7 +77,7 @@ class Disk:
 			self.eject()
 
 	def _partition(self, label):
-		external.process(["sudo", "pgpcr-part", self.path, label])
+		external.process(["sudo", "pgpcr-part", self.path, label], {'stdout': None})
 
 	def _mount(self):
 		mountdir = "/mnt/"+self.serial
