@@ -53,3 +53,10 @@ Running
  - Boot from this device
 	- Again, see the [Debian installation manual](https://www.debian.org/releases/stretch/i386/ch05s01.html.en)
  - Follow the instructions in the PGP Clean Room application that appears once the system boots
+
+Known Issues
+------------
+
+Occasionally, initial key creation fails with "Pinentry: Permission Denied"
+
+The only solution I've found so far is to reboot. It's annoying but I'm working on it.
