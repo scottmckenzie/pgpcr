@@ -10,7 +10,7 @@ from pgpcr import common_newt
 if len(sys.argv) <= 1:
 	print("Need a disk to partition!")
 	sys.exit(1)
-prog = common_newt.Progress(None, "Disk Setup: "+sys.argv[1], "Setting up...", 3)
+prog = common_newt.Progress(None, "Disk Setup: "+sys.argv[1], "Setting up...", 4)
 log = open("/home/pgp/pgpcr-part.log", "a")
 log.write(sys.argv[1]+"\n")
 dev = parted.getDevice(sys.argv[1])

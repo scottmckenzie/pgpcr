@@ -7,7 +7,7 @@ def new(screen, workdir):
 	name = ew[1][0]
 	email = ew[1][1]
 	common.alert(screen, "Key Generation", "GPG keys will now be generated. Progress is estimated and this may take a while. You will be prompted for your password several times.")
-	mprog = common.Progress(screen, "Key Generation", "Generating Master Key...", 50)
+	mprog = common.Progress(screen, "Key Generation", "Generating Master Key...", 40)
 	gk.setprogress(progress, mprog)
 	try:
 		gk.genmaster(name+" <"+email+">")
@@ -15,7 +15,7 @@ def new(screen, workdir):
 		screen = SnackScreen()
 		common.error(screen, "Master Key generation error: "+str(g))
 		return
-	sprog = common.Progress(screen, "Key Generation", "Generating Sub Keys...", 50)
+	sprog = common.Progress(screen, "Key Generation", "Generating Sub Keys...", 60)
 	gk.setprogress(progress, sprog)
 	try:
 		gk.gensub()
