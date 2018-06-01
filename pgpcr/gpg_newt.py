@@ -27,10 +27,12 @@ def new(screen, workdir):
 	disks_newt.store(screen, workdir, gk.masterfpr())
 	export = ButtonChoiceWindow(screen, "Key Export", "How would you like to export your key?", [("External Storage", "storage"), ("Smartcard", "smartcard")])
 	if export == "storage":
-		public = disks_newt.export(screen, gk)
+		disks_newt.export(screen, gk)
 	elif export == "smartcard":
 		smartcard_newt.export(screen, gk)
-	common.alert(screen, "New Key Creation Complete", "You can now store your backups in a safe place and import your new key to your main computer by running import.sh.")
+	common.alert(screen, "New Key Creation Complete", "You can now store your backups in a safe place")
+	if export == "storage":
+		common.alert(screen, "IMPORTANT", "Don't forget to import your new key to your main computer by running import.sh from your public export disk.")
 
 def progress(what, type, current, total, prog):
 	if what == "primegen":
