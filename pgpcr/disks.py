@@ -4,7 +4,7 @@ import json, shutil, os
 CopyError = shutil.Error
 
 def getdisks():
-	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial,label"])
+	j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial"])
 	d = []
 	for x in j:
 		if x['tran'] == "usb":
@@ -25,7 +25,6 @@ class Disk:
 		self.model = blkdev['model']
 		self.size = blkdev['size']
 		self.serial = blkdev['serial']
-		self.label = blkdev['label']
 		self.label = self._getlabel()
 		self.mountpoint = None
 
@@ -47,8 +46,6 @@ class Disk:
 			return j[0]["children"]
 
 	def _getlabel(self):
-		if self.label is not None:
-			return self.label
 		c = self._getchildren()
 		if c is None:
 			return None
