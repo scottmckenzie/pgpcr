@@ -196,8 +196,6 @@ Week 3
 	- Stops kernel from breaking our progress bars
  - [x] Use live build's toram instead of custom solution
 	- Didn't realize it existed, but it massively simplifies things
- - [ ] Disk handling errors
-	- Everything that can go wrong and how we recover from it
 
 Week 4 
 ======
@@ -205,6 +203,8 @@ Week 4
 2018-06-04
 ----------
 
+ - [ ] Disk handling errors
+	- Everything that can go wrong and how we recover from it
  - [ ] Test everything we have so far
  - [ ] Automated testing for python-newt
 	- [ ] Allow tests to mock user input and write tests to take advantage of this
