@@ -189,9 +189,11 @@ Week 3
 2018-06-01
 ----------
  - [x] import.sh
- - [ ] Skeleton UI for smartcards
+ - [x] Skeleton UI for smartcards
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
+ - [ ] Disk progress bars
+	- Progress on reformatting, paritioning, exporting, etc.
 
 Week 4 
 ======
