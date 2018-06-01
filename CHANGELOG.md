@@ -190,10 +190,10 @@ Week 3
 ----------
  - [x] import.sh
  - [x] Skeleton UI for smartcards
+ - [x] Disk progress bars
+	- Progress on reformatting, paritioning, exporting, etc.
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
- - [ ] Disk progress bars
-	- Progress on reformatting, paritioning, exporting, etc.
 
 Week 4 
 ======
