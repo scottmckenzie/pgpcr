@@ -37,13 +37,13 @@ def error(screen, msg):
 
 class Progress:
 	def __init__(self, screen, title, text, total, current=0):
-		self.screen = screen
+		self.screen = SnackScreen() if screen is None else screen
 		self.current = current
 		self.g = GridFormHelp(self.screen, title, None, 1, 2)
-		t = TextboxReflowed(width, text)
+		self.t = TextboxReflowed(width, text)
 		self.p = Scale(width, total)
 		self.p.set(current)
-		self.g.add(t, 0, 0, padding=padding)
+		self.g.add(self.t, 0, 0, padding=padding)
 		self.g.add(self.p, 0, 1, padding=padding)
 		self.refresh()
 
@@ -56,8 +56,12 @@ class Progress:
 		self.g.draw()
 		self.screen.refresh()
 
-	def inc(self, prog):
+	def inc(self, prog=1):
 		self.current += prog
+		self.refresh()
+
+	def setText(self, text):
+		self.t.setText(text)
 		self.refresh()
 
 def catchCPE(screen, e):

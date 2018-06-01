@@ -16,4 +16,5 @@ class commonNewtTest(unittest.TestCase):
 		prog = common_newt.Progress(self.screen, "Test Progress", "This is a test", 100)
 		for i in range(100):
 			prog.set(i)
+			prog.setText(str(i))
 			sleep(0.05)
