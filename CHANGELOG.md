@@ -192,6 +192,10 @@ Week 3
  - [x] Skeleton UI for smartcards
  - [x] Disk progress bars
 	- Progress on reformatting, paritioning, exporting, etc.
+ - [x] Hide notice log messages
+	- Stops kernel from breaking our progress bars
+ - [x] Use live build's toram instead of custom solution
+	- Didn't realize it existed, but it massively simplifies things
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
 
