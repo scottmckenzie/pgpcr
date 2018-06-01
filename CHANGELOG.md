@@ -185,7 +185,10 @@ Week 3
 	- Environment variable doesn't seem to have an effect when set from python
 	- Can't call set_global_flag from the python bindings as it unecessarily passes the context object
 	- Solved by setting it in the systemd service file
- - [ ] import.sh
+
+2018-06-01
+----------
+ - [x] import.sh
  - [ ] Skeleton UI for smartcards
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
