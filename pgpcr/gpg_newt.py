@@ -24,6 +24,7 @@ def new(screen, workdir):
 	except gpg_ops.GPGMEError as g:
 		screen = SnackScreen()
 		common.error(screen, "Subkey generation error: "+str(g))
+		return
 	screen = SnackScreen()
 	common.alert(screen, "Key Generation", "Key Generation Complete!")
 	disks_newt.store(screen, workdir, gk.masterfpr())
