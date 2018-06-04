@@ -35,6 +35,9 @@ def alert(screen, title, msg):
 def error(screen, msg):
 	alert(screen, "Error", msg)
 
+def notImplementedYet(screen):
+	alert(screen, "Not Implemented Yet", "This feature has not yet been implemented")
+
 class Progress:
 	def __init__(self, screen, title, text, total, current=0):
 		self.screen = SnackScreen() if screen is None else screen
