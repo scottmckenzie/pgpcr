@@ -39,4 +39,4 @@ def new(screen, workdir):
 
 def _progress(what, type, current, total, prog):
 	if what == "primegen":
-		prog.inc(1)
+		prog.inc()
