@@ -197,7 +197,7 @@ Week 3
  - [x] Use live build's toram instead of custom solution
 	- Didn't realize it existed, but it massively simplifies things
 
-Week 4 
+Week 4
 ======
 
 2018-06-04
@@ -205,6 +205,10 @@ Week 4
  - [x] Make sure all button do something
 	- Many NotImplementedYet alerts
 	- Cancel buttons also work
+ - [x] Research unittest.mock
+	- Not quite what I'm looking for but close
+ - [x] Comply with PEP8
+	- Important for future maintainability
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
  - [ ] Test everything we have so far
