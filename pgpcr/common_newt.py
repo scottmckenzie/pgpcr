@@ -35,7 +35,7 @@ def alert(screen, title, msg):
 def error(screen, msg):
 	alert(screen, "Error", msg)
 
-def notImplementedYet(screen):
+def NotImplementedYet(screen):
 	alert(screen, "Not Implemented Yet", "This feature has not yet been implemented")
 
 class Progress:
