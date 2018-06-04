@@ -202,7 +202,9 @@ Week 4
 
 2018-06-04
 ----------
-
+ - [x] Make sure all button do something
+	- Many NotImplementedYet alerts
+	- Cancel buttons also work
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
  - [ ] Test everything we have so far
