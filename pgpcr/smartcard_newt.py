@@ -1,5 +1,5 @@
 from snack import *
-from . import smartcard
+from . import smartcard, common_newt as common
 
 def pickcard(screen):
 	s = smartcard.getsmartcards()
@@ -19,3 +19,6 @@ def pickcard(screen):
 def export(screen, gk):
 	smart = pickcard(screen)
 	# TODO: Read over assuan commands used by GPA and figure out keytocard
+
+def generate(screen, workdir):
+	common.NotImplementedYet(screen)
