@@ -17,4 +17,4 @@ class commonNewtTest(unittest.TestCase):
 		for i in range(100):
 			prog.set(i)
 			prog.setText(str(i))
-			sleep(0.05)
+			sleep(0.01)
