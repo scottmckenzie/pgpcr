@@ -4,6 +4,8 @@ from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt
 def new(screen, workdir):
 	gk = gpg_ops.GPGKey(workdir.name)
 	ew = EntryWindow(screen, "New GPG Key", "Enter User Information", ["Name", "Email Address"])
+	if ew[0] != 'ok':
+		return
 	name = ew[1][0]
 	email = ew[1][1]
 	common.alert(screen, "Key Generation", "GPG keys will now be generated. Progress is estimated and this may take a while. You will be prompted for your password several times.")
