@@ -5,7 +5,7 @@ import subprocess, tempfile, shutil
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 
 screen = SnackScreen()
-lang = ListboxChoiceWindow(screen, "Language", "Choose your language", ["English"])
+lang = ListboxChoiceWindow(screen, "Language", "Choose your language", ["English"], buttons = ['Ok'])
 running = True
 while running:
 	screen = SnackScreen()
