@@ -1,40 +1,56 @@
 #!/usr/bin/python3
 
 from snack import *
-import subprocess, tempfile, shutil
+import subprocess
+import tempfile
+import shutil
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks, smartcard_newt as smartcard_ui
 
 screen = SnackScreen()
-lang = ListboxChoiceWindow(screen, "Language", "Choose your language", ["English"], buttons = ['Ok'])
+lang = ListboxChoiceWindow(screen, "Language", "Choose your language",
+                           ["English"], buttons=['Ok'])
 running = True
 while running:
-	screen = SnackScreen()
-	ret = ButtonChoiceWindow(screen,"Welcome to PGP Clean Room!", "What do you wish to do?", [("New GPG Key", "new gpg"), ("Load GPG Key","load gpg"), ("Advanced","adv"), ("Quit", "quit")] )
+    screen = SnackScreen()
+    ret = ButtonChoiceWindow(screen, "Welcome to PGP Clean Room!",
+                             "What do you wish to do?",
+                             [("New GPG Key", "new gpg"),
+                              ("Load GPG Key", "load gpg"),
+                              ("Advanced", "adv"),
+                              ("Quit", "quit")
+                             ])
 
-	workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
-	if ret is not None and ret.endswith("gpg"):
-		shutil.copyfile("/etc/pgpcr/gpg.conf", workdir.name+"/gpg.conf")
-		shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir.name+"/gpg-agent.conf")
-		subprocess.run(["gpgconf", "--kill", "gpg-agent"])
-	if ret == "new gpg":
-		gpg_ui.new(screen, workdir)
-	elif ret == "load gpg":
-		gpg_ui.load(screen, workdir)
-	elif ret == "adv":
-		ret = ListboxChoiceWindow(screen, "Advanced Options", "These options are for users who know what they are doing", [("Generate Key on Smartcard", "gen"), ("Import existing key", "import"), ("Run shell", "shell")])
-		if ret[0] != 'ok':
-			break
-		if ret[1] == "gen":
-			smartcard_ui.generate(screen, workdir)
-		elif ret[1] == "import":
-			gpg_ui.importkey(screen, workdir)
-		elif ret[1] == "shell":
-			screen.finish()
-			subprocess.run(["bash", "-l"])
-	elif ret == "quit":
-		running = False
+    workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
+    if ret is not None and ret.endswith("gpg"):
+        shutil.copyfile("/etc/pgpcr/gpg.conf", workdir.name+"/gpg.conf")
+        shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir.name+"/gpg-agent.conf")
+        subprocess.run(["gpgconf", "--kill", "gpg-agent"])
+    if ret == "new gpg":
+        gpg_ui.new(screen, workdir)
+    elif ret == "load gpg":
+        gpg_ui.load(screen, workdir)
+    elif ret == "adv":
+        ret = ListboxChoiceWindow(screen, "Advanced Options",
+                                  "These options are for users who know what they are doing",
+                                  [("Generate Key on Smartcard", "gen"),
+                                   ("Import existing key", "import"),
+                                   ("Run shell", "shell")
+                                  ])
+        if ret[0] != 'ok':
+            break
+        if ret[1] == "gen":
+            smartcard_ui.generate(screen, workdir)
+        elif ret[1] == "import":
+            gpg_ui.importkey(screen, workdir)
+        elif ret[1] == "shell":
+            screen.finish()
+            subprocess.run(["bash", "-l"])
+    elif ret == "quit":
+        running = False
 
-ret = ButtonChoiceWindow(screen, "PGP Clean Room", "Would you like to shutdown the PGP Clean Room?", ["Yes", "No"])
+ret = ButtonChoiceWindow(screen, "PGP Clean Room",
+                         "Would you like to shutdown the PGP Clean Room?",
+                         ["Yes", "No"])
 screen.finish()
 if ret == "yes":
-	subprocess.run(["sudo", "shutdown", "now"])
+    subprocess.run(["sudo", "shutdown", "now"])

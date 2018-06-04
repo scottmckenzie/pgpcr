@@ -1,6 +1,7 @@
 
 def getsmartcards():
-	return []
+    return []
+
 
 class Smartcard:
-	pass
+    pass

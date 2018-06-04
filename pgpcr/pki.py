@@ -1,2 +1,2 @@
 def main():
-	print("Not Implemented Yet")
+    print("Not Implemented Yet")
