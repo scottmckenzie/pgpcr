@@ -40,3 +40,9 @@ def new(screen, workdir):
 def _progress(what, type, current, total, prog):
 	if what == "primegen":
 		prog.inc()
+
+def load(screen, workdir):
+	common.NotImplementedYet(screen)
+
+def importkey(screen, workdir):
+	common.NotImplementedYet(screen)
