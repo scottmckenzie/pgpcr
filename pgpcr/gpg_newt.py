@@ -10,7 +10,7 @@ def new(screen, workdir):
 	email = ew[1][1]
 	common.alert(screen, "Key Generation", "GPG keys will now be generated. Progress is estimated and this may take a while. You will be prompted for your password several times.")
 	mprog = common.Progress(screen, "Key Generation", "Generating Master Key...", 40)
-	gk.setprogress(progress, mprog)
+	gk.setprogress(_progress, mprog)
 	try:
 		gk.genmaster(name+" <"+email+">")
 	except gpg_ops.GPGMEError as g:
@@ -18,7 +18,7 @@ def new(screen, workdir):
 		common.error(screen, "Master Key generation error: "+str(g))
 		return
 	sprog = common.Progress(screen, "Key Generation", "Generating Sub Keys...", 60)
-	gk.setprogress(progress, sprog)
+	gk.setprogress(_progress, sprog)
 	try:
 		gk.gensub()
 	except gpg_ops.GPGMEError as g:
@@ -36,6 +36,6 @@ def new(screen, workdir):
 	if export == "storage":
 		common.alert(screen, "IMPORTANT", "Don't forget to import your new key to your main computer by running import.sh from your public export disk.")
 
-def progress(what, type, current, total, prog):
+def _progress(what, type, current, total, prog):
 	if what == "primegen":
 		prog.inc(1)
