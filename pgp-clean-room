@@ -18,7 +18,7 @@ while running:
 		subprocess.run(["gpgconf", "--kill", "gpg-agent"])
 	if ret == "new gpg":
 		gpg_ui.new(screen, workdir)
-	elif ret == "old gpg":
+	elif ret == "load gpg":
 		gpg_ui.load(screen, workdir)
 	elif ret == "adv":
 		ret = ListboxChoiceWindow(screen, "Advanced Options", "These options are for users who know what they are doing", [("Generate Key on Smartcard", "gen"), ("Import existing key", "import"), ("Run shell", "shell")])
