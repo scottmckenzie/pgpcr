@@ -214,9 +214,8 @@ Week 4
 ----------
  - [ ] Mock disks for disk_newt tests
 	- Doesn't work yet
- - [ ] Automate testing of pgpcr with a vm
-	- Messing around with send-key for automated testing, but nothing concrete yet
-	- Can't wait for pinentry which is problematic
+ - [x] Automate testing of pgpcr with a vm
+	- Some of the sleeps are definitely too long, but it works!
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
  - [ ] Test everything we have so far
