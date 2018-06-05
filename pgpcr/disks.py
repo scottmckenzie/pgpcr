@@ -72,7 +72,7 @@ class Disk:
 
     def setup(self, label):
         self._partition(label)
-        self._mount()
+        self.mount()
 
     def backup(self, workdir, name):
         if not self.ismounted():
@@ -86,7 +86,7 @@ class Disk:
         external.process(
             ["sudo", "pgpcr-part", self.path, label], {'stdout': None})
 
-    def _mount(self):
+    def mount(self):
         mountdir = "/mnt/"+self.serial
         external.process(["sudo", "mkdir", "-p", mountdir])
         external.process(
