@@ -8,8 +8,8 @@ def pickdisks(screen, use):
     d = disks.getdisks()
     if d == []:
         common_newt.alert(screen, "Disks",
-                          """No removable storage connected.
-                           Please connect some and press OK.""")
+                          "No removable storage connected. \
+                           Please connect some and press OK.")
         sleep(1)
         return pickdisks(screen, use)
     dlist = [str(x) for x in d]
