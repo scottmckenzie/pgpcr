@@ -1,8 +1,9 @@
 from pgpcr import disks_newt
 import unittest
+from unittest.mock import patch
 import snack
 import tempfile
-
+import tests.disks_mock
 
 class testDisksNewt(unittest.TestCase):
     def setUp(self):
@@ -18,6 +19,7 @@ class testDisksNewt(unittest.TestCase):
     def test_pickdisks(self):
         disks_newt.pickdisks(self.screen, "PICKDISKS TEST")
 
-    @unittest.skip
+    @patch.dict('sys.modules', {'pgpcr.disks': tests.disks_mock})
+    @unittest.skip("Mocking doesn't actually work yet")
     def test_store(self):
         disks_newt.store(self.screen, self.tmp, "STORETEST")
