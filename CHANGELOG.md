@@ -209,6 +209,14 @@ Week 4
 	- Not quite what I'm looking for but close
  - [x] Comply with PEP8
 	- Important for future maintainability
+
+2018-06-05
+----------
+ - [ ] Mock disks for disk_newt tests
+	- Doesn't work yet
+ - [ ] Automate testing of pgpcr with a vm
+	- Messing around with send-key for automated testing, but nothing concrete yet
+	- Can't wait for pinentry which is problematic
  - [ ] Disk handling errors
 	- Everything that can go wrong and how we recover from it
  - [ ] Test everything we have so far
