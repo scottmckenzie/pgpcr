@@ -79,5 +79,13 @@ class GPGKey:
         gpgargv.extend(args)
         ret = external.processtofile(gpgargv, file)
 
+    # Check if a directory contains gpg backups
+    # If so return a list of keys backed up
+    def backups(self, path):
+       if gpg not in os.listdirs(path):
+           return None
+       else:
+           return os.listdirs(path+"/gpg")
+
 
 GPGMEError = gpg.errors.GPGMEError
