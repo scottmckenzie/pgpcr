@@ -40,6 +40,7 @@ def store(screen, workdir, name):
         common_newt.error(s)
     except external.CalledProcessError as e:
         common_newt.catchCPE(screen, e)
+        store(screen, workdir, name)
 
 
 def export(screen, gk):
@@ -54,6 +55,7 @@ def export(screen, gk):
         common_newt.error(s)
     except external.CalledProcessError as e:
         common_newt.catchCPE(screen, e)
+        export(screen, gk)
 
 
 def setup(screen, use, label):
@@ -66,6 +68,7 @@ def setup(screen, use, label):
             ret = disk.setup(label)
         except external.CalledProcessError as e:
             common_newt.catchCPE(screen, e)
+            setup(screen, use, label)
     else:
         disk = setup(screen, use, label)
     return disk
