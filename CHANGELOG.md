@@ -216,8 +216,10 @@ Week 4
 	- Doesn't work yet
  - [x] Automate testing of pgpcr with a vm
 	- Some of the sleeps are definitely too long, but it works!
- - [ ] Disk handling errors
+ - [x] Disk handling errors
 	- Everything that can go wrong and how we recover from it
+	- For now we loop. More sophisticated error handling later
+ - [x] Begin Key loading
  - [ ] Test everything we have so far
  - [ ] Automated testing for python-newt
 	- [ ] Allow tests to mock user input and write tests to take advantage of this
@@ -318,3 +320,5 @@ Would like to do these if I have time but we'll see how this goes
  - [ ] Run all tests in a virtual machine
 	- kvm?
  - [ ] Better import UI
+ - [ ] Store multiple keys on one disks
+	- Basically just don't always reformat?
