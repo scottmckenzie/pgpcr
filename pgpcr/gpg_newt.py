@@ -34,7 +34,7 @@ def new(screen, workdir):
         return
     screen = SnackScreen()
     common.alert(screen, "Key Generation", "Key Generation Complete!")
-    disks_newt.store(screen, workdir, gk.masterfpr())
+    disks_newt.store(screen, workdir, "gpg/"+gk.masterfpr())
     export = ButtonChoiceWindow(screen, "Key Export",
                                 "How would you like to export your key?",
                                 [("External Storage", "storage"),
