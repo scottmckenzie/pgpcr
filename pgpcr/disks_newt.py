@@ -72,3 +72,13 @@ def setup(screen, use, label):
     else:
         disk = setup(screen, use, label)
     return disk
+
+
+def load(screen):
+    d = pickdisks(screen, "master backup")
+    try:
+        d.mount()
+        return d.mountpoint
+    except external.CalledProcessError as e:
+        common_newt.catchCPE(screen, e)
+        load(screen)

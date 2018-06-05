@@ -57,7 +57,15 @@ def _progress(what, type, current, total, prog):
 
 
 def load(screen, workdir):
-    common.NotImplementedYet(screen)
+    p = disks_newt.load(screen)
+    dirs = gpg_ops.backups(p)
+    lcw = ListChoiceWindow(screen, "Key Fingerprint", "Please select your key.",
+                           dirs)
+    if lcw[0] is not 'ok':
+        return
+    gk = GPGKEY(workdir+lcw[1], lcw[1])
+    bcw = ButtonChoiceWindow(screen, lcw[1], "What would you like to do?",
+                             [('Sign Keys', 'sign'), ('Revoke Keys', 'revoke')]
 
 
 def importkey(screen, workdir):
