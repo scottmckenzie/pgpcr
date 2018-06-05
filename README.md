@@ -7,13 +7,14 @@ This is the PGP Clean Room application, designed to be run as part of the
 Requirements
 ------------
 
- - Three external storage devices with at least 128 MB of storage
+ - Three external storage devices with at least 5 MB of storage
 	- Such as USB flash drives or SD cards
 	- They will be wiped during the export step so ensure any of the data currently on them is backed up
 	- Two will be for master key backups and need to be stored in a safe place, preferably two different safe places
 	- The last will be for public key export and can be reused for other things after your new key is imported to your computer
  - One i686-compatible PC
 	- Most modern computers and even many older computers should work
+	- You need at least 1 GB of RAM
 
  - One blank cd or blank USB drive
 	- To run the installer off of
