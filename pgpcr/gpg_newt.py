@@ -11,9 +11,9 @@ def new(screen, workdir):
     name = ew[1][0]
     email = ew[1][1]
     common.alert(screen, "Key Generation",
-                 "GPG keys will now be generated. \
-                  Progress is estimated and this may take a while. \
-                  You will be prompted for your password several times.")
+                 "GPG keys will now be generated. "
+                 "Progress is estimated and this may take a while. "
+                 "You will be prompted for your password several times.")
     mprog = common.Progress(screen, "Key Generation",
                             "Generating Master Key...", 40)
     gk.setprogress(_progress, mprog)
@@ -47,8 +47,8 @@ def new(screen, workdir):
                  "You can now store your backups in a safe place")
     if export == "storage":
         common.alert(screen, "IMPORTANT",
-                     "Don't forget to import your new key to your main computer \
-                      by running import.sh from your public export disk.")
+                     "Don't forget to import your new key to your main computer "
+                     "by running import.sh from your public export disk.")
 
 
 def _progress(what, type, current, total, prog):

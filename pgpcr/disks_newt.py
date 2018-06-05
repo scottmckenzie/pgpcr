@@ -8,8 +8,8 @@ def pickdisks(screen, use):
     d = disks.getdisks()
     if d == []:
         common_newt.alert(screen, "Disks",
-                          "No removable storage connected. \
-                           Please connect some and press OK.")
+                          "No removable storage connected. "
+                          "Please connect some and press OK.")
         sleep(1)
         return pickdisks(screen, use)
     dlist = [str(x) for x in d]
@@ -28,13 +28,13 @@ def store(screen, workdir, name):
         b1 = setup(screen, "master key backup", "master backup")
         b1.backup(workdir, name)
         common_newt.alert(screen, str(b1),
-                          "Your backup to the above disk is now complete \
-                                  and the disk can be ejected.")
+                          "Your backup to the above disk is now complete "
+                                "and the disk can be ejected.")
         b2 = setup(screen, "second master key backup", "master backup 2")
         b2.backup(workdir, name)
         common_newt.alert(screen, str(b2),
-                          "Your backup to the above disk is now complete \
-                                  and the disk can be ejected.")
+                          "Your backup to the above disk is now complete "
+                                "and the disk can be ejected.")
     except disks.CopyError as e:
         s = " ".join(e)
         common_newt.error(s)
@@ -59,8 +59,8 @@ def export(screen, gk):
 def setup(screen, use, label):
     disk = pickdisks(screen, use)
     bcw = ButtonChoiceWindow(screen, "Warning",
-                             "Are you sure you want to use "+str(disk)+"? \
-                              All the data currently on the device WILL BE WIPED!")
+                             "Are you sure you want to use "+str(disk)+"? "
+                             "All the data currently on the device WILL BE WIPED!")
     if bcw == 'ok':
         try:
             ret = disk.setup(label)
