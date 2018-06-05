@@ -37,7 +37,7 @@ def new(screen, workdir):
     disks_newt.store(screen, workdir, gk.masterfpr())
     export = ButtonChoiceWindow(screen, "Key Export",
                                 "How would you like to export your key?",
-                                ("External Storage", "storage"),
+                                [("External Storage", "storage"),
                                 ("Smartcard", "smartcard")])
     if export == "storage":
         disks_newt.export(screen, gk)
