@@ -42,19 +42,6 @@ class GPGOpsTestGenCall(unittest.TestCase):
 
 class GPGOpsTestKey(unittest.TestCase):
 
-    def test_export(self):
-        self.gk.export(self.tmp.name)
-        self._cmpfiles(self.testkeydir, self.tmp.name,
-                       self.gk.masterfpr()+".pub")
-
-    def test_export_subkeys(self):
-        self.gk.exportsubkeys(self.tmp.name)
-        self._cmpfiles(self.testkeydir, self.tmp.name,
-                       self.gk.masterfpr()+".subsec")
-
-    def _cmpfiles(self, a, b, name):
-        with open(a+"/"+name, "rb") as f1, open(b+"/"+name, "rb") as f2:
-            self.assertEqual(f1.read(), f2.read())
 
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -66,6 +53,21 @@ class GPGOpsTestKey(unittest.TestCase):
 
     def tearDown(self):
         self.tmp.cleanup()
+
+    def _cmpfiles(self, a, b, name):
+        with open(a+"/"+name, "rb") as f1, open(b+"/"+name, "rb") as f2:
+            self.assertEqual(f1.read(), f2.read())
+
+    def test_export(self):
+        self.gk.export(self.tmp.name)
+        self._cmpfiles(self.testkeydir, self.tmp.name,
+                       self.gk.masterfpr()+".pub")
+
+    def test_export_subkeys(self):
+        self.gk.exportsubkeys(self.tmp.name)
+        self._cmpfiles(self.testkeydir, self.tmp.name,
+                       self.gk.masterfpr()+".subsec")
+
 
 
 if __name__ == "__main__":
