@@ -59,13 +59,30 @@ def _progress(what, type, current, total, prog):
 def load(screen, workdir):
     p = disks_newt.load(screen)
     dirs = gpg_ops.backups(p)
-    lcw = ListChoiceWindow(screen, "Key Fingerprint", "Please select your key.",
-                           dirs)
+    if dirs is None:
+        common.error(screen, "This disk does not contain a disk backup")
+        load(screen, workdir)
+    lcw = ListboxChoiceWindow(screen, "Key Fingerprint", "Please select your key.",
+                              dirs)
     if lcw[0] is not 'ok':
         return
-    gk = GPGKEY(workdir+lcw[1], lcw[1])
+
+    gk = gpg_ops.GPGKey(workdir+'/'+lcw[1], lcw[1], workdir+'/'+lcw[1])
     bcw = ButtonChoiceWindow(screen, lcw[1], "What would you like to do?",
-                             [('Sign Keys', 'sign'), ('Revoke Keys', 'revoke')]
+                             [('Sign Keys', 'sign'), ('Revoke Keys', 'revoke')
+                             ])
+    if bcw == 'sign':
+        sign(screen, gk, p)
+    elif bcw == 'revoke':
+        revoke(screen, gk)
+
+
+def sign(screen, gk, path):
+    pass
+
+
+def revoke(screen, gk):
+    pass
 
 
 def importkey(screen, workdir):
