@@ -84,8 +84,7 @@ def load(screen, workdir):
 
 
 def sign(screen, gk, path):
-    pass
-
+    common.NotImplementedYet(screen)
 
 def revoke(screen, gk):
     keys = gk.listkeys()
@@ -93,6 +92,7 @@ def revoke(screen, gk):
                               "Which key do you want to revoke?", keys)
     #TODO: Revoke a key given a fingerprint
     key = keys[lcw[1]]
+    common.NotImplementedYet(screen)
 
 
 
