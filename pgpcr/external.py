@@ -4,7 +4,7 @@ import sys
 
 def process(cmd, args={}):
     if sys.version_info.minor >= 6:
-        args['encoding'] = sys.stdout.encoding
+        args["encoding"] = sys.stdout.encoding
     ret = processb(cmd, args)
     if sys.version_info.minor <= 5:
         outputtostr(ret)
@@ -19,12 +19,12 @@ def outputtostr(ret):
 
 
 def processb(cmd, args={}):
-    default = {'args': cmd, 'check': True, 'stdout': PIPE, 'stderr': PIPE}
+    default = {"args": cmd, "check": True, "stdout": PIPE, "stderr": PIPE}
     default.update(args)
     return run(**default)
 
 
 def processtofile(cmd, file):
     with open(file, "wb") as f:
-        args = {'stdout': f}
+        args = {"stdout": f}
         return processb(cmd, args)

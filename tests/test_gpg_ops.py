@@ -19,11 +19,11 @@ class GPGOpsTestGenCall(unittest.TestCase):
         """This is a sample callback that will read a passphrase from
         the terminal.  The hook here, if present, will be used to describe
         why the passphrase is needed."""
-        why = ''
+        why = ""
         if hook != None:
-            why = ' ' + hook
+            why = " " + hook
         if prev_bad:
-            why += ' (again)'
+            why += " (again)"
         p = input("Please supply %s' password%s:" % (hint, why))
         return p
 

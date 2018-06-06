@@ -78,7 +78,7 @@ class GPGKey:
         # Exporting only the secret subkeys isn't directly available
         # so we have to call gpg directly
         # gpg --export-secret-subkeys
-        k = self._callgpg(['--export-secret-subkeys'],
+        k = self._callgpg(["--export-secret-subkeys"],
                           dir+"/"+self.masterfpr()+".subsec")
 
     def listkeys(self):
@@ -92,7 +92,7 @@ class GPGKey:
 # Check if a directory contains gpg backups
 # If so return a list of keys backed up
 def backups(path):
-    if 'gpg' not in os.listdir(path):
+    if "gpg" not in os.listdir(path):
         return None
     else:
         return os.listdir(path+"/gpg")

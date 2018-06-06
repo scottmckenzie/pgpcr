@@ -34,7 +34,7 @@ def password(hint, desc, prev_bad, screen):
 
 
 def alert(screen, title, msg):
-    ButtonChoiceWindow(screen, title, msg, ['Ok'])
+    ButtonChoiceWindow(screen, title, msg, ["Ok"])
 
 
 def error(screen, msg):

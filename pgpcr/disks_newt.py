@@ -14,10 +14,10 @@ def pickdisks(screen, use):
         return pickdisks(screen, use)
     dlist = [str(x) for x in d]
     lcw = ListboxChoiceWindow(screen, "Disks", "Pick your "+use+" disk", dlist,
-                              buttons=[("Refresh", 'refresh')])
-    if lcw[0] is None or lcw[0] == 'ok':
+                              buttons=[("Refresh", "refresh")])
+    if lcw[0] is None or lcw[0] == "ok":
         return d[lcw[1]]
-    elif lcw[0] == 'refresh':
+    elif lcw[0] == "refresh":
         return pickdisks(screen, use)
     else:
         return None
@@ -63,7 +63,7 @@ def setup(screen, use, label):
     bcw = ButtonChoiceWindow(screen, "Warning",
                              "Are you sure you want to use "+str(disk)+"? "
                              "All the data currently on the device WILL BE WIPED!")
-    if bcw == 'ok':
+    if bcw == "ok":
         try:
             ret = disk.setup(label)
         except external.CalledProcessError as e:

@@ -10,7 +10,7 @@ def getdisks():
     j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial"])
     d = []
     for x in j:
-        if x['tran'] == "usb":
+        if x["tran"] == "usb":
             d.append(Disk(x))
     return d
 
@@ -20,16 +20,16 @@ def lsblk(options):
     com.extend(options)
     com.append("--json")
     p = external.process(com)
-    return json.loads(p.stdout)['blockdevices']
+    return json.loads(p.stdout)["blockdevices"]
 
 
 class Disk:
 
     def __init__(self, blkdev):
-        self.path = blkdev['name']
-        self.model = blkdev['model']
-        self.size = blkdev['size']
-        self.serial = blkdev['serial']
+        self.path = blkdev["name"]
+        self.model = blkdev["model"]
+        self.size = blkdev["size"]
+        self.serial = blkdev["serial"]
         self.label = self._getlabel()
         self.mountpoint = None
 
@@ -55,8 +55,8 @@ class Disk:
         if c is None:
             return None
         for p in c:
-            if p['label'] is not None:
-                return p['label']
+            if p["label"] is not None:
+                return p["label"]
 
     def ismounted(self):
         if self.mountpoint is not None:
@@ -66,8 +66,8 @@ class Disk:
             return False
         else:
             for x in children:
-                if x['mountpoint'] is not None:
-                    self.mountpoint = x['mountpoint']
+                if x["mountpoint"] is not None:
+                    self.mountpoint = x["mountpoint"]
                     return True
 
     def setup(self, label):
@@ -79,22 +79,22 @@ class Disk:
             return None
         else:
             shutil.copytree(workdir.name, self.mountpoint+"/" +
-                            name, ignore=shutil.ignore_patterns('S.*'))
+                            name, ignore=shutil.ignore_patterns("S.*"))
             self.eject()
 
     def _partition(self, label):
         external.process(
-            ["sudo", "pgpcr-part", self.path, label], {'stdout': None})
+            ["sudo", "pgpcr-part", self.path, label], {"stdout": None})
 
     def mount(self):
         mountdir = "/mnt/"+self.serial
         external.process(["sudo", "mkdir", "-p", mountdir])
         external.process(
-            ["sudo", "mount", self._getchildren()[0]['name'], mountdir])
+            ["sudo", "mount", self._getchildren()[0]["name"], mountdir])
         self.mountpoint = mountdir
         chown = external.process(
             ["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
     def eject(self):
-        external.process(['sync'])
-        external.process(['sudo', 'umount', self.mountpoint])
+        external.process(["sync"])
+        external.process(["sudo", "umount", self.mountpoint])

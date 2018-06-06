@@ -6,7 +6,7 @@ def new(screen, workdir):
     gk = gpg_ops.GPGKey(workdir.name)
     ew = EntryWindow(screen, "New GPG Key", "Enter User Information",
                      ["Name", "Email Address"])
-    if ew[0] != 'ok':
+    if ew[0] != "ok":
         return
     name = ew[1][0]
     email = ew[1][1]
@@ -65,21 +65,21 @@ def load(screen, workdir):
         load(screen, workdir)
     lcw = ListboxChoiceWindow(screen, "Key Fingerprint", "Please select your key.",
                               dirs)
-    if lcw[0] == 'cancel':
+    if lcw[0] == "cancel":
         return
     key = dirs[lcw[1]]
-    gk = gpg_ops.GPGKey(workdir.name+'/'+key, key, d.mountpoint+'/gpg/'+key)
+    gk = gpg_ops.GPGKey(workdir.name+"/"+key, key, d.mountpoint+"/gpg/"+key)
     running = True
     while running:
         bcw = ButtonChoiceWindow(screen, key, "What would you like to do?",
-                                 [('Sign Keys', 'sign'), ('Revoke Keys', 'revoke'),
+                                 [("Sign Keys", "sign"), ("Revoke Keys", "revoke"),
                                   ("Quit", "quit")
                                  ])
-        if bcw == 'sign':
+        if bcw == "sign":
             sign(screen, gk, d.mountpoint)
-        elif bcw == 'revoke':
+        elif bcw == "revoke":
             revoke(screen, gk)
-        elif bcw == 'quit':
+        elif bcw == "quit":
             running = False
 
 

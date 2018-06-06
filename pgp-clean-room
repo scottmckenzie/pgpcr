@@ -8,7 +8,7 @@ from pgpcr import gpg_newt as gpg_ui, disks_newt as disks, smartcard_newt as sma
 
 screen = SnackScreen()
 lang = ListboxChoiceWindow(screen, "Language", "Choose your language",
-                           ["English"], buttons=['Ok'])
+                           ["English"], buttons=["Ok"])
 running = True
 while running:
     screen = SnackScreen()
