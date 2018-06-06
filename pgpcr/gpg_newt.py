@@ -69,13 +69,18 @@ def load(screen, workdir):
         return
     key = dirs[lcw[1]]
     gk = gpg_ops.GPGKey(workdir.name+'/'+key, key, d.mountpoint+'/gpg/'+key)
-    bcw = ButtonChoiceWindow(screen, key, "What would you like to do?",
-                             [('Sign Keys', 'sign'), ('Revoke Keys', 'revoke')
-                             ])
-    if bcw == 'sign':
-        sign(screen, gk, p)
-    elif bcw == 'revoke':
-        revoke(screen, gk)
+    running = True
+    while running:
+        bcw = ButtonChoiceWindow(screen, key, "What would you like to do?",
+                                 [('Sign Keys', 'sign'), ('Revoke Keys', 'revoke'),
+                                  ("Quit", "quit")
+                                 ])
+        if bcw == 'sign':
+            sign(screen, gk, p)
+        elif bcw == 'revoke':
+            revoke(screen, gk)
+        elif bcw == 'quit':
+            running = False
 
 
 def sign(screen, gk, path):
@@ -83,7 +88,12 @@ def sign(screen, gk, path):
 
 
 def revoke(screen, gk):
-    pass
+    keys = gk.listkeys()
+    lcw = ListboxChoiceWindow(screen, gk.masterfpr(),
+                              "Which key do you want to revoke?", keys)
+    #TODO: Revoke a key given a fingerprint
+    key = keys[lcw[1]]
+
 
 
 def importkey(screen, workdir):
