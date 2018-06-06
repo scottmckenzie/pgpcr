@@ -57,10 +57,11 @@ def _progress(what, type, current, total, prog):
 
 
 def load(screen, workdir):
-    p = disks_newt.load(screen)
-    dirs = gpg_ops.backups(p)
+    d = disks_newt.load(screen)
+    dirs = gpg_ops.backups(d.mountpoint)
     if dirs is None:
-        common.error(screen, "This disk does not contain a disk backup")
+        common.error(screen, "This disk does not contain a master key backup.")
+        d.eject()
         load(screen, workdir)
     lcw = ListboxChoiceWindow(screen, "Key Fingerprint", "Please select your key.",
                               dirs)
