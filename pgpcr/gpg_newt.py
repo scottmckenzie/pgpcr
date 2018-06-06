@@ -67,9 +67,9 @@ def load(screen, workdir):
                               dirs)
     if lcw[0] == 'cancel':
         return
-
-    gk = gpg_ops.GPGKey(workdir+'/'+lcw[1], lcw[1], workdir+'/'+lcw[1])
-    bcw = ButtonChoiceWindow(screen, lcw[1], "What would you like to do?",
+    key = dirs[lcw[1]]
+    gk = gpg_ops.GPGKey(workdir.name+'/'+key, key, d.mountpoint+'/gpg/'+key)
+    bcw = ButtonChoiceWindow(screen, key, "What would you like to do?",
                              [('Sign Keys', 'sign'), ('Revoke Keys', 'revoke')
                              ])
     if bcw == 'sign':
