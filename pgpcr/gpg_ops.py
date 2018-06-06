@@ -51,6 +51,10 @@ class GPGKey:
     def masterfpr(self):
         return self._master.fpr
 
+    def _readdata(self, data):
+        data.seek(0, os.SEEK_SET)
+        return data.read()
+
     def _export(self, pattern, mode=0, file=None):
         # 0 is the normal mode
         open(file, "wb").close()
@@ -64,6 +68,12 @@ class GPGKey:
         d = self._export(self.masterfpr(), file=dir +
                          "/"+self.masterfpr()+".pub")
 
+    def _callgpg(self, args, file):
+        os.environ["GNUPGHOME"] = self._ctx.engine_info.home_dir
+        gpgargv = [self._ctx.engine_info.file_name]
+        gpgargv.extend(args)
+        ret = external.processtofile(gpgargv, file)
+
     def exportsubkeys(self, dir):
         # Exporting only the secret subkeys isn't directly available
         # so we have to call gpg directly
@@ -71,15 +81,7 @@ class GPGKey:
         k = self._callgpg(['--export-secret-subkeys'],
                           dir+"/"+self.masterfpr()+".subsec")
 
-    def _readdata(self, data):
-        data.seek(0, os.SEEK_SET)
-        return data.read()
 
-    def _callgpg(self, args, file):
-        os.environ["GNUPGHOME"] = self._ctx.engine_info.home_dir
-        gpgargv = [self._ctx.engine_info.file_name]
-        gpgargv.extend(args)
-        ret = external.processtofile(gpgargv, file)
 
 # Check if a directory contains gpg backups
 # If so return a list of keys backed up
