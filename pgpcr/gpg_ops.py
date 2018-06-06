@@ -1,11 +1,13 @@
 import gpg
 import os
+from shutil import copytree
 from . import external
-
 
 class GPGKey:
 
-    def __init__(self, home,  loadfpr=None):
+    def __init__(self, home,  loadfpr=None, loaddir=None):
+        if loaddir:
+            copytree(loaddir, home)
         self._ctx = gpg.Context(home_dir=home)
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
@@ -82,10 +84,10 @@ class GPGKey:
 # Check if a directory contains gpg backups
 # If so return a list of keys backed up
 def backups(path):
-    if gpg not in os.listdirs(path):
+    if gpg not in os.listdir(path):
         return None
     else:
-        return os.listdirs(path+"/gpg")
+        return os.listdir(path+"/gpg")
 
 
 GPGMEError = gpg.errors.GPGMEError

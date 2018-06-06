@@ -61,7 +61,8 @@ class GPGOpsTestKey(unittest.TestCase):
         # Directory where the test key is stored
         self.testkeydir = "tests/testkey"
         self.testkeyfpr = "074D3879D4609448DEF716F6C7B98BC88227953F"
-        self.gk = gpg_ops.GPGKey(self.testkeydir, self.testkeyfpr)
+        self.gk = gpg_ops.GPGKey(self.tmp.name+"/"+self.testkeyfpr,
+                                 self.testkeyfpr, self.testkeydir)
 
     def tearDown(self):
         self.tmp.cleanup()
