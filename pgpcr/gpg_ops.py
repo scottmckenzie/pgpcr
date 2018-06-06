@@ -81,6 +81,12 @@ class GPGKey:
         k = self._callgpg(['--export-secret-subkeys'],
                           dir+"/"+self.masterfpr()+".subsec")
 
+    def listkeys(self):
+        return [self.masterfpr(), self._subsig.fpr+" (signing)",
+                self._subenc.fpr+" (encryption)",
+                self._subauth.fpr+" (authentication)"]
+
+
 
 
 # Check if a directory contains gpg backups
