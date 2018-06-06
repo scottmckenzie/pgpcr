@@ -76,7 +76,7 @@ def load(screen, workdir):
                                   ("Quit", "quit")
                                  ])
         if bcw == 'sign':
-            sign(screen, gk, p)
+            sign(screen, gk, d.mountpoint)
         elif bcw == 'revoke':
             revoke(screen, gk)
         elif bcw == 'quit':
