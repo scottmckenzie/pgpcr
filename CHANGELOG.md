@@ -220,9 +220,14 @@ Week 4
 	- Everything that can go wrong and how we recover from it
 	- For now we loop. More sophisticated error handling later
  - [x] Begin Key loading
- - [ ] Test everything we have so far
+
+2018-06-06
+----------
+ - [x] Initial Key Loading works
  - [ ] Automated testing for python-newt
-	- [ ] Allow tests to mock user input and write tests to take advantage of this
+	- [x] Allow tests to mock user input and write tests to take advantage of this
+		- We can do this with virsh send-key but it's fragile
+ - [ ] Test everything we have so far
  - [ ] Overflow for anything not finished on schedule
 
 Evaluation Period 1 / Week 5
