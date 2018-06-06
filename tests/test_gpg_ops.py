@@ -70,5 +70,13 @@ class GPGOpsTestKey(unittest.TestCase):
 
 
 
+class GPGOpsUtils(unittest.TestCase):
+    def setUp(self):
+        self.data = "tests/data"
+
+    def test_backups(self):
+        b = gpg_ops.backups(self.data)
+        self.assertEqual(b, ["CAFEBABE", "B000DEAD", "DEADBEEF"])
+
 if __name__ == "__main__":
     unittest.main()
