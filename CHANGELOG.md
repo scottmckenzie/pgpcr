@@ -223,7 +223,7 @@ Week 4
 
 2018-06-06
 ----------
- - [x] Initial Key Loading works
+ - [x] Initial key loading works
  - [ ] Automated testing for python-newt
 	- [x] Allow tests to mock user input and write tests to take advantage of this
 		- We can do this with virsh send-key but it's fragile
@@ -235,8 +235,9 @@ Evaluation Period 1 / Week 5
 
 2018-06-11
 ----------
- - [ ] Generate GPG keys on disk
- - [ ] Add keysigning and revocation process
+ - [ ] Key signing
+ - [ ] Key revocation
+ - [ ] Add UIDs
 
 Week 6
 ======
