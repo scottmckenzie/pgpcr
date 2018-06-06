@@ -225,6 +225,10 @@ Week 4
 ----------
  - [x] Initial key loading works
  - [ ] Automated testing for python-newt
+	- Research done into various possible methods but no concrete results yet
+		- ~~Messing with sys.stdin~~
+		- ~~Writing to /proc/self/fd/0~~
+
 	- [x] Allow tests to mock user input and write tests to take advantage of this
 		- We can do this with virsh send-key but it's fragile
  - [ ] Test everything we have so far
