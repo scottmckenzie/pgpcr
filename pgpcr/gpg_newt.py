@@ -65,7 +65,7 @@ def load(screen, workdir):
         load(screen, workdir)
     lcw = ListboxChoiceWindow(screen, "Key Fingerprint", "Please select your key.",
                               dirs)
-    if lcw[0] is not 'ok':
+    if lcw[0] == 'cancel':
         return
 
     gk = gpg_ops.GPGKey(workdir+'/'+lcw[1], lcw[1], workdir+'/'+lcw[1])
