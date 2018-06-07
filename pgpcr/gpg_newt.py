@@ -65,7 +65,7 @@ def load(screen, workdir):
     if lcw[0] == "cancel":
         return
     key = dirs[lcw[1]]
-    gk = gpg_ops.GPGKey(workdir.name+"/"+key, key, d.mountpoint+"/gpg/"+key)
+    gk = gpg_ops.GPGKey(workdir.name, key, d.mountpoint+"/gpg/"+key)
     running = True
     while running:
         bcw = ButtonChoiceWindow(screen, key, "What would you like to do?",
@@ -79,6 +79,7 @@ def load(screen, workdir):
         elif bcw == "quit":
             d.eject()
             running = False
+    disks_newt.store(screen, workdir, "gpg/"+gk.fpr)
 
 
 def sign(screen, gk, path):
