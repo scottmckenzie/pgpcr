@@ -32,6 +32,13 @@ def password(hint, desc, prev_bad, screen):
     ew = EntryWindow(screen, hint, desc, [(label, p)], allowCancel=0)
     return p.value()
 
+def uid(screen, purpose):
+    ew = EntryWindow(screen, purpose, "Enter User Information",
+                     ["Name", "Email Address"])
+    if ew[0] != "ok":
+        return None
+    else:
+        return ew[1][0]+" <"+ew[1][1]+">"
 
 def alert(screen, title, msg):
     ButtonChoiceWindow(screen, title, msg, ["Ok"])
