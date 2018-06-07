@@ -3,7 +3,6 @@ import unittest
 import snack
 from time import sleep
 
-
 class commonNewtTest(unittest.TestCase):
     def setUp(self):
         self.screen = snack.SnackScreen()
@@ -21,3 +20,15 @@ class commonNewtTest(unittest.TestCase):
             prog.set(i)
             prog.setText(str(i))
             sleep(0.01)
+
+    def test_CatchCPE(self):
+        e = _cpetest()
+        self.assertIsInstance(e.stderr, bytes)
+        common_newt.catchCPE(self.screen, e)
+
+
+class _cpetest:
+    def __init__(self):
+        self.stdout = "test".encode()
+        self.stderr = "test error".encode()
+        self.cmd = ["this", "is", "a", "test"]

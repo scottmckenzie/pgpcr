@@ -78,9 +78,9 @@ class Progress:
 
 def catchCPE(screen, e):
     s = " ".join(e.cmd)
-    if type(e) is bytes:
-        external.outputtostr(e)
     if e.stderr is not None:
+        if type(e.stderr) is bytes:
+            external.outputtostr(e)
         alert(screen, s, e.stderr)
     else:
         error(screen, s)
