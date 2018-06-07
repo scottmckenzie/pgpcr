@@ -108,11 +108,13 @@ def adduid(screen, gk):
     common.alert(screen, gk.fpr, "Added "+uid+" to your key")
 
 def revuid(screen, gk):
-    uid = common.uid(screen, "Revoke UID "+gk.fpr)
-    if uid is None:
+    uids = gk.listuids()
+    lcw = ListboxChoiceWindow(screen, gk.fpr, "Which UID would you like to "
+                              "revoke?", uids)
+    if lcw[0] == "cancel":
         return
-    gk.revokeuid(uid)
-    common.alert(screen, gk.fpr, "Removed "+uid+" from your key")
+    gk.revokeuid(uids[lcw[1]])
+    common.alert(screen, gk.fpr, "Removed "+uids[lcw[1]]+" from your key")
 
 def importkey(screen, workdir):
     common.NotImplementedYet(screen)
