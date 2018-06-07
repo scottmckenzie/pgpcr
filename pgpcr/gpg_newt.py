@@ -69,13 +69,20 @@ def load(screen, workdir):
     running = True
     while running:
         bcw = ButtonChoiceWindow(screen, key, "What would you like to do?",
-                                 [("Sign Keys", "sign"), ("Revoke Keys", "revoke"),
+                                 [("Sign Keys", "sign"),
+                                  ("Add UID", "adduid"),
+                                  ("Revoke UID", "revuid"),
+                                  ("Revoke Keys", "revkeys"),
                                   ("Quit", "quit")
                                  ])
         if bcw == "sign":
             sign(screen, gk, d.mountpoint)
-        elif bcw == "revoke":
-            revoke(screen, gk)
+        elif bcw == "adduid":
+            adduid(screen, gk)
+        elif bcw == "revuid":
+            revuid(screen, gk)
+        elif bcw == "revkey":
+            revokekey(screen, gk)
         elif bcw == "quit":
             d.eject()
             running = False
@@ -85,7 +92,7 @@ def load(screen, workdir):
 def sign(screen, gk, path):
     common.NotImplementedYet(screen)
 
-def revoke(screen, gk):
+def revokekey(screen, gk):
     keys = gk.listkeys()
     lcw = ListboxChoiceWindow(screen, gk.fpr,
                               "Which key do you want to revoke?", keys)
@@ -93,7 +100,19 @@ def revoke(screen, gk):
     key = keys[lcw[1]]
     common.NotImplementedYet(screen)
 
+def adduid(screen, gk):
+    uid = common.uid(screen, "Add UID "+gk.fpr)
+    if uid is None:
+        return
+    gk.adduid(uid)
+    common.alert(screen, gk.fpr, "Added "+uid+" to your key")
 
+def revuid(screen, gk):
+    uid = common.uid(screen, "Revoke UID "+gk.fpr)
+    if uid is None:
+        return
+    gk.revokeuid(uid)
+    common.alert(screen, gk.fpr, "Removed "+uid+" from your key")
 
 def importkey(screen, workdir):
     common.NotImplementedYet(screen)
