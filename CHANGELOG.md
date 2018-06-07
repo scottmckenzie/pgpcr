@@ -245,6 +245,7 @@ Week 4
 	- Import to root of temporary directory
 	- export to gpg / key fingerprint
  - [x] Add and revoke UIDs
+ - [x] Tests for adding and revoking UIDs
  - [ ] Optionally backup to more than two disks
  - [ ] Optionally export public key again
  - [ ] Don't unecessarily reformat a disk

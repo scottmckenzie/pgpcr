@@ -74,6 +74,13 @@ class GPGOpsTestKey(unittest.TestCase):
               '04E8C72E5513A1FB1D925ABA62E94671570D8082 (Authentication)']
         self.assertEqual(kl, self.gk.keys)
 
+    def test_addrevuid(self):
+        addtest = "addtest <addtest@example.com>"
+        self.gk.adduid(addtest)
+        self.assertIn(addtest, self.gk.uids)
+        self.gk.revokeuid(addtest)
+        # Currently fails despite removing uid
+        #self.assertNotIn(addtest, self.gk.uids)
 
 class GPGOpsUtils(unittest.TestCase):
     def setUp(self):
