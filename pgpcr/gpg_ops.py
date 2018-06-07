@@ -19,6 +19,9 @@ class GPGKey:
                                       sign=True, certify=True, passphrase=True)
         self._master = self._ctx.get_key(genkey.fpr)
 
+    def _refreshmaster(self):
+        self._master = self._ctx.get_key(self._master.fpr)
+
     def gensub(self):
         self._ctx.create_subkey(self._master, sign=True,
                                 algorithm=self._subalgo)
@@ -26,6 +29,7 @@ class GPGKey:
                                 algorithm=self._subalgo)
         self._ctx.create_subkey(self._master, authenticate=True,
                                 algorithm=self._subalgo)
+        self._refreshmaster()
 
     def setprogress(self, progress, hook=None):
         self._ctx.set_progress_cb(progress, hook)
@@ -95,9 +99,11 @@ class GPGKey:
 
     def adduid(self, uid):
         self._ctx.key_add_uid(self._master, uid)
+        self._refreshmaster()
 
     def revokeuid(self, uid):
         self._ctx.key_revoke_uid(self._master, uid)
+        self._refreshmaster()
 
     @property
     def uids(self):
