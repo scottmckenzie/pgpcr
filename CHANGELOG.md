@@ -244,7 +244,9 @@ Week 4
  - [x] Use directories consistently
 	- Import to root of temporary directory
 	- export to gpg / key fingerprint
- - [ ] Add UIDs
+ - [x] Add and revoke UIDs
+ - [ ] Optionally backup to more than two disks
+ - [ ] Optionally export public key again
  - [ ] Don't unecessarily reformat a disk
 
 Evaluation Period 1 / Week 5
@@ -254,7 +256,7 @@ Evaluation Period 1 / Week 5
 ----------
  - [ ] Key signing
  - [ ] Key revocation
- - [ ] Add UIDs
+ - [ ] Key expiration
 
 Week 6
 ======
