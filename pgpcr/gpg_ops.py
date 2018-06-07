@@ -98,7 +98,8 @@ class GPGKey:
     def revokeuid(self, uid):
         self._ctx.key_revoke_uid(self._master, uid)
 
-
+    def listuids(self):
+        return [x.uid for x in self._master.uids]
 
 # Check if a directory contains gpg backups
 # If so return a list of keys backed up
