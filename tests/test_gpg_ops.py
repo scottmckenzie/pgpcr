@@ -35,7 +35,7 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.gk.setalgorithms("rsa1024", "rsa1024")
         print("\nGenerating masterkey...")
         self.gk.genmaster("Test <test@example.com>")
-        print("\nGenerated master key", self.gk.masterfpr())
+        print("\nGenerated master key", self.gk.fpr)
         print("Generating subkeys...")
         self.gk.gensub()
 
@@ -60,12 +60,12 @@ class GPGOpsTestKey(unittest.TestCase):
     def test_export(self):
         self.gk.export(self.tmp.name)
         self._cmpfiles(self.testkeydir, self.tmp.name,
-                       self.gk.masterfpr()+".pub")
+                       self.gk.fpr+".pub")
 
     def test_export_subkeys(self):
         self.gk.exportsubkeys(self.tmp.name)
         self._cmpfiles(self.testkeydir, self.tmp.name,
-                       self.gk.masterfpr()+".subsec")
+                       self.gk.fpr+".subsec")
 
     def test_listkeys(self):
         kl = ['074D3879D4609448DEF716F6C7B98BC88227953F (Master)',

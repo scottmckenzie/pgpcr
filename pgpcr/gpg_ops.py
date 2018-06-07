@@ -39,7 +39,8 @@ class GPGKey:
         if sub is not None:
             self._subalgo = sub
 
-    def masterfpr(self):
+    @property
+    def fpr(self):
         return self._master.fpr
 
     def _readdata(self, data):
@@ -56,8 +57,8 @@ class GPGKey:
                 f.write(self._readdata(data))
 
     def export(self, dir):
-        d = self._export(self.masterfpr(), file=dir +
-                         "/"+self.masterfpr()+".pub")
+        d = self._export(self.fpr, file=dir +
+                         "/"+self.fpr+".pub")
 
     def _callgpg(self, args, file):
         os.environ["GNUPGHOME"] = self._ctx.engine_info.home_dir
@@ -70,13 +71,13 @@ class GPGKey:
         # so we have to call gpg directly
         # gpg --export-secret-subkeys
         k = self._callgpg(["--export-secret-subkeys"],
-                          dir+"/"+self.masterfpr()+".subsec")
+                          dir+"/"+self.fpr+".subsec")
 
     def listkeys(self):
         keys = []
         for k in self._master.subkeys:
             s = k.fpr
-            if k.fpr == self.masterfpr():
+            if k.fpr == self.fpr:
                 s += " (Master)"
                 keys.append(s)
                 continue
