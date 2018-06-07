@@ -236,9 +236,10 @@ Week 4
  - [x] Test everything we have so far
 	- Everything except user interfaces has comprehensive testing
 	- Can't yet perfectly test UI stuff
- - [ ] Allow for more than three subkeys
+ - [x] Allow for more than three subkeys
 	- Perhaps the users subkeys have expired
 	- No need for an artificial limitation
+ - [ ] Save key back to disk
  - [ ] Add UIDs
 
 Evaluation Period 1 / Week 5
