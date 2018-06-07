@@ -228,11 +228,18 @@ Week 4
 	- Research done into various possible methods but no concrete results yet
 		- ~~Messing with sys.stdin~~
 		- ~~Writing to /proc/self/fd/0~~
-
 	- [x] Allow tests to mock user input and write tests to take advantage of this
 		- We can do this with virsh send-key but it's fragile
- - [ ] Test everything we have so far
- - [ ] Overflow for anything not finished on schedule
+
+2018-06-07
+----------
+ - [x] Test everything we have so far
+	- Everything except user interfaces has comprehensive testing
+	- Can't yet perfectly test UI stuff
+ - [ ] Allow for more than three subkeys
+	- Perhaps the users subkeys have expired
+	- No need for an artificial limitation
+ - [ ] Add UIDs
 
 Evaluation Period 1 / Week 5
 ============================
