@@ -93,7 +93,7 @@ def sign(screen, gk, path):
     common.NotImplementedYet(screen)
 
 def revokekey(screen, gk):
-    keys = gk.listkeys()
+    keys = gk.keys
     lcw = ListboxChoiceWindow(screen, gk.fpr,
                               "Which key do you want to revoke?", keys)
     #TODO: Revoke a key given a fingerprint
@@ -108,7 +108,7 @@ def adduid(screen, gk):
     common.alert(screen, gk.fpr, "Added "+uid+" to your key")
 
 def revuid(screen, gk):
-    uids = gk.listuids()
+    uids = gk.uids
     lcw = ListboxChoiceWindow(screen, gk.fpr, "Which UID would you like to "
                               "revoke?", uids)
     if lcw[0] == "cancel":

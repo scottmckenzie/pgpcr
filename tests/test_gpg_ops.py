@@ -72,7 +72,7 @@ class GPGOpsTestKey(unittest.TestCase):
               'DE43E1D47D0ECADB711A62CE5A6BE3238D90C3D3 (Signing)',
               'F351E19BF3F9C2E5392338104B4C747617C77194 (Encryption)',
               '04E8C72E5513A1FB1D925ABA62E94671570D8082 (Authentication)']
-        self.assertEqual(kl, self.gk.listkeys())
+        self.assertEqual(kl, self.gk.keys)
 
 
 class GPGOpsUtils(unittest.TestCase):

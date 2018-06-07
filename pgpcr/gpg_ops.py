@@ -73,7 +73,8 @@ class GPGKey:
         k = self._callgpg(["--export-secret-subkeys"],
                           dir+"/"+self.fpr+".subsec")
 
-    def listkeys(self):
+    @property
+    def keys(self):
         keys = []
         for k in self._master.subkeys:
             s = k.fpr
@@ -98,7 +99,8 @@ class GPGKey:
     def revokeuid(self, uid):
         self._ctx.key_revoke_uid(self._master, uid)
 
-    def listuids(self):
+    @property
+    def uids(self):
         return [x.uid for x in self._master.uids]
 
 # Check if a directory contains gpg backups
