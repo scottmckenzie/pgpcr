@@ -76,6 +76,10 @@ class GPGKey:
         keys = []
         for k in self._master.subkeys:
             s = k.fpr
+            if k.fpr == self.masterfpr():
+                s += " (Master)"
+                keys.append(s)
+                continue
             if k.can_certify:
                 s += " (Certification)"
             if k.can_sign:
