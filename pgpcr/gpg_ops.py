@@ -92,7 +92,11 @@ class GPGKey:
             keys.append(s)
         return keys
 
+    def adduid(self, uid):
+        self._ctx.key_add_uid(self._master, uid)
 
+    def revokeuid(self, uid):
+        self._ctx.key_revoke_uid(self._master, uid)
 
 
 
