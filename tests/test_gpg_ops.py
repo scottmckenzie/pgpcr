@@ -1,7 +1,7 @@
 import tempfile
 import unittest
 from pgpcr import gpg_ops
-
+from tests.filetest import cmpfiles
 
 class GPGOpsTestGenCall(unittest.TestCase):
     def setUp(self):
@@ -55,8 +55,7 @@ class GPGOpsTestKey(unittest.TestCase):
         self.tmp.cleanup()
 
     def _cmpfiles(self, a, b, name):
-        with open(a+"/"+name, "rb") as f1, open(b+"/"+name, "rb") as f2:
-            self.assertEqual(f1.read(), f2.read())
+        cmpfiles(self, a+"/"+name, b+"/"+name)
 
     def test_export(self):
         self.gk.export(self.tmp.name)
