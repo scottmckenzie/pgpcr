@@ -239,8 +239,13 @@ Week 4
  - [x] Allow for more than three subkeys
 	- Perhaps the users subkeys have expired
 	- No need for an artificial limitation
- - [ ] Save key back to disk
+ - [x] Save key back to disk
+	- Unecessary reformatting for now
+ - [x] Use directories consistently
+	- Import to root of temporary directory
+	- export to gpg / key fingerprint
  - [ ] Add UIDs
+ - [ ] Don't unecessarily reformat a disk
 
 Evaluation Period 1 / Week 5
 ============================
