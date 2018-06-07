@@ -13,15 +13,6 @@ class GPGKey:
         self._subalgo = "rsa2048"
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
-            for k in self._master.subkeys:
-                if k.can_certify:
-                    continue
-                if k.can_sign:
-                    self._subsig = k
-                elif k.can_encrypt:
-                    self._subenc = k
-                elif k.can_authenticate:
-                    self._subauth = k
 
     def genmaster(self, userid):
         genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
@@ -29,12 +20,12 @@ class GPGKey:
         self._master = self._ctx.get_key(genkey.fpr)
 
     def gensub(self):
-        self._subsig = self._ctx.create_subkey(self._master, sign=True,
-                                               algorithm=self._subalgo)
-        self._subenc = self._ctx.create_subkey(self._master, encrypt=True,
-                                               algorithm=self._subalgo)
-        self._subauth = self._ctx.create_subkey(self._master, authenticate=True,
-                                                algorithm=self._subalgo)
+        self._ctx.create_subkey(self._master, sign=True,
+                                algorithm=self._subalgo)
+        self._ctx.create_subkey(self._master, encrypt=True,
+                                algorithm=self._subalgo)
+        self._ctx.create_subkey(self._master, authenticate=True,
+                                algorithm=self._subalgo)
 
     def setprogress(self, progress, hook=None):
         self._ctx.set_progress_cb(progress, hook)
@@ -82,9 +73,20 @@ class GPGKey:
                           dir+"/"+self.masterfpr()+".subsec")
 
     def listkeys(self):
-        return [self.masterfpr(), self._subsig.fpr+" (signing)",
-                self._subenc.fpr+" (encryption)",
-                self._subauth.fpr+" (authentication)"]
+        keys = []
+        for k in self._master.subkeys:
+            s = k.fpr
+            if k.can_certify:
+                s += " (Certification)"
+            if k.can_sign:
+                s += " (Signing)"
+            if k.can_encrypt:
+                s += " (Encryption)"
+            if k.can_authenticate:
+                s += " (Authentication)"
+            keys.append(s)
+        return keys
+
 
 
 

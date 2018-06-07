@@ -67,6 +67,12 @@ class GPGOpsTestKey(unittest.TestCase):
         self._cmpfiles(self.testkeydir, self.tmp.name,
                        self.gk.masterfpr()+".subsec")
 
+    def test_listkeys(self):
+        kl = ['074D3879D4609448DEF716F6C7B98BC88227953F (Certification) (Signing)',
+              'DE43E1D47D0ECADB711A62CE5A6BE3238D90C3D3 (Signing)',
+              'F351E19BF3F9C2E5392338104B4C747617C77194 (Encryption)',
+              '04E8C72E5513A1FB1D925ABA62E94671570D8082 (Authentication)']
+        self.assertEqual(kl, self.gk.listkeys())
 
 
 class GPGOpsUtils(unittest.TestCase):
