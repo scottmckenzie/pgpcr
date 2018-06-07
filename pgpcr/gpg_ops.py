@@ -1,13 +1,13 @@
 import gpg
 import os
-from shutil import copytree
+from distutils.dir_util import copy_tree
 from . import external
 
 class GPGKey:
 
     def __init__(self, home,  loadfpr=None, loaddir=None):
         if loaddir:
-            copytree(loaddir, home)
+            copy_tree(loaddir, home, verbose=0)
         self._ctx = gpg.Context(home_dir=home)
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
