@@ -4,12 +4,9 @@ from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt
 
 def new(screen, workdir):
     gk = gpg_ops.GPGKey(workdir.name)
-    ew = EntryWindow(screen, "New GPG Key", "Enter User Information",
-                     ["Name", "Email Address"])
-    if ew[0] != "ok":
+    uid = common.uid(screen, "New GPG Key")
+    if uid is None:
         return
-    name = ew[1][0]
-    email = ew[1][1]
     common.alert(screen, "Key Generation",
                  "GPG keys will now be generated. "
                  "Progress is estimated and this may take a while. "
@@ -18,7 +15,7 @@ def new(screen, workdir):
                             "Generating Master Key...", 40)
     gk.setprogress(_progress, mprog)
     try:
-        gk.genmaster(name+" <"+email+">")
+        gk.genmaster(uid)
     except gpg_ops.GPGMEError as g:
         screen = SnackScreen()
         common.error(screen, "Master Key generation error: "+str(g))
@@ -80,6 +77,7 @@ def load(screen, workdir):
         elif bcw == "revoke":
             revoke(screen, gk)
         elif bcw == "quit":
+            d.eject()
             running = False
 
 
