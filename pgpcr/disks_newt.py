@@ -1,5 +1,5 @@
 from snack import *
-from . import disks, common_newt, external
+from . import disks, common_newt as common, external
 from time import sleep
 from shutil import copy
 
@@ -7,7 +7,7 @@ from shutil import copy
 def pickdisks(screen, use):
     d = disks.getdisks()
     if d == []:
-        common_newt.alert(screen, "Disks",
+        common.alert(screen, "Disks",
                           "No removable storage connected. "
                           "Please connect some and press OK.")
         sleep(1)
@@ -27,19 +27,19 @@ def store(screen, workdir, name):
     try:
         b1 = setup(screen, "master key backup", "master backup")
         b1.backup(workdir, name)
-        common_newt.alert(screen, str(b1),
+        common.alert(screen, str(b1),
                           "Your backup to the above disk is now complete "
                                 "and the disk can be ejected.")
         b2 = setup(screen, "second master key backup", "master backup 2")
         b2.backup(workdir, name)
-        common_newt.alert(screen, str(b2),
+        common.alert(screen, str(b2),
                           "Your backup to the above disk is now complete "
                                 "and the disk can be ejected.")
     except disks.CopyError as e:
         s = " ".join(e)
-        common_newt.error(s)
+        common.error(s)
     except external.CalledProcessError as e:
-        common_newt.catchCPE(screen, e)
+        common.catchCPE(screen, e)
         store(screen, workdir, name)
 
 
@@ -52,9 +52,9 @@ def export(screen, gk):
         public.eject()
     except disks.CopyError as e:
         s = " ".join(e)
-        common_newt.error(s)
+        common.error(s)
     except external.CalledProcessError as e:
-        common_newt.catchCPE(screen, e)
+        common.catchCPE(screen, e)
         export(screen, gk)
 
 
@@ -67,7 +67,7 @@ def setup(screen, use, label):
         try:
             ret = disk.setup(label)
         except external.CalledProcessError as e:
-            common_newt.catchCPE(screen, e)
+            common.catchCPE(screen, e)
             setup(screen, use, label)
     else:
         disk = setup(screen, use, label)
@@ -80,5 +80,5 @@ def load(screen):
         d.mount()
         return d
     except external.CalledProcessError as e:
-        common_newt.catchCPE(screen, e)
+        common.catchCPE(screen, e)
         load(screen)
