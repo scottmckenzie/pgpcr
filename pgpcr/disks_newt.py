@@ -63,6 +63,13 @@ def export(screen, gk):
 
 def setup(screen, use, label):
     disk = pickdisks(screen, use)
+    if disk.label is not None and "PGPCR" in disk.label:
+        try:
+            disk.mount()
+            return disk
+        except external.CalledProcessError as e:
+            common.catchCPE(screen, e)
+
     danger = common.dangerConfirm(screen, "Warning",
                                   "Are you sure you want to use "+str(disk)+"?"
                                   " All the data currently on the device"
