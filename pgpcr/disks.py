@@ -78,8 +78,10 @@ class Disk:
         if not self.ismounted():
             return None
         else:
-            shutil.copytree(workdir.name, self.mountpoint+"/" +
-                            name, ignore=shutil.ignore_patterns("S.*"))
+            dest = self.mountpoint+"/"+name
+            shutil.rmtree(dest, ignore_errors=True)
+            shutil.copytree(workdir.name, dest,
+                            ignore=shutil.ignore_patterns("S.*"))
             self.eject()
 
     def _partition(self, label):
