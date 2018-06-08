@@ -60,10 +60,10 @@ def export(screen, gk):
 
 def setup(screen, use, label):
     disk = pickdisks(screen, use)
-    bcw = ButtonChoiceWindow(screen, "Warning",
+    danger = common.dangerConfirm(screen, "Warning",
                              "Are you sure you want to use "+str(disk)+"? "
                              "All the data currently on the device WILL BE WIPED!")
-    if bcw == "ok":
+    if danger:
         try:
             ret = disk.setup(label)
         except external.CalledProcessError as e:

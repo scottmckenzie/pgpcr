@@ -4,7 +4,8 @@ from snack import *
 import subprocess
 import tempfile
 import shutil
-from pgpcr import gpg_newt as gpg_ui, disks_newt as disks, smartcard_newt as smartcard_ui
+from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
+from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
 
 screen = SnackScreen()
 lang = ListboxChoiceWindow(screen, "Language", "Choose your language",
@@ -48,9 +49,8 @@ while running:
     elif ret == "quit":
         running = False
 
-ret = ButtonChoiceWindow(screen, "PGP Clean Room",
-                         "Would you like to shutdown the PGP Clean Room?",
-                         ["Yes", "No"])
+ret = common_ui.dangerConfirm(screen, "PGP Clean Room",
+                              "Would you like to shutdown the PGP Clean Room?")
 screen.finish()
-if ret == "yes":
+if ret:
     subprocess.run(["sudo", "shutdown", "now"])

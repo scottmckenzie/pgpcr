@@ -246,6 +246,9 @@ Week 4
 	- export to gpg / key fingerprint
  - [x] Add and revoke UIDs
  - [x] Tests for adding and revoking UIDs
+
+2018-06-08
+----------
  - [ ] Optionally backup to more than two disks
  - [ ] Optionally export public key again
  - [ ] Don't unecessarily reformat a disk
