@@ -25,16 +25,19 @@ def pickdisks(screen, use):
 
 def store(screen, workdir, name):
     try:
-        b1 = setup(screen, "master key backup", "master backup")
-        b1.backup(workdir, name)
-        common.alert(screen, str(b1),
-                          "Your backup to the above disk is now complete "
-                                "and the disk can be ejected.")
-        b2 = setup(screen, "second master key backup", "master backup 2")
-        b2.backup(workdir, name)
-        common.alert(screen, str(b2),
-                          "Your backup to the above disk is now complete "
-                                "and the disk can be ejected.")
+        i = 1
+        moredisks = True
+        while moredisks:
+            b = setup(screen, "master key backup", "master backup "+str(i))
+            b.backup(workdir, name)
+            common.alert(screen, str(b),
+                         "Your backup to the above disk is now complete "
+                         "and the disk can be ejected.")
+            i += 1
+            if i > 2:
+                moredisks = common.dangerConfirm(screen, "Backups",
+                                                 "Would you like to backup to "
+                                                 "another disk?")
     except disks.CopyError as e:
         s = " ".join(e)
         common.error(s)
