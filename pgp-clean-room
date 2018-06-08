@@ -48,6 +48,7 @@ while running:
             subprocess.run(["bash", "-l"])
     elif ret == "quit":
         running = False
+    workdir.cleanup()
 
 ret = common_ui.dangerConfirm(screen, "PGP Clean Room",
                               "Would you like to shutdown the PGP Clean Room?")
