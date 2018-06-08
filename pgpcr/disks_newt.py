@@ -28,7 +28,7 @@ def store(screen, workdir, name):
         i = 1
         moredisks = True
         while moredisks:
-            b = setup(screen, "master key backup", "master backup "+str(i))
+            b = setup(screen, "master key backup", "PGPCR Backup "+str(i))
             b.backup(workdir, name)
             common.alert(screen, str(b),
                          "Your backup to the above disk is now complete "
@@ -48,7 +48,7 @@ def store(screen, workdir, name):
 
 def export(screen, gk):
     try:
-        public = setup(screen, "public key export", "public export")
+        public = setup(screen, "public key export", "PGPCR Export")
         copy("/etc/pgpcr/import.sh", public.mountpoint)
         gk.export(public.mountpoint)
         gk.exportsubkeys(public.mountpoint)
