@@ -47,7 +47,9 @@ def alert(screen, title, msg):
 def error(screen, msg):
     alert(screen, "Error", msg)
 
-
+def dangerConfirm(screen, title, msg):
+    return ButtonChoiceWindow(screen, title, msg, [("No", False),
+                                                   ("Yes", True)])
 def NotImplementedYet(screen):
     alert(screen, "Not Implemented Yet",
           "This feature has not yet been implemented")

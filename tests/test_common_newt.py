@@ -13,6 +13,9 @@ class commonNewtTest(unittest.TestCase):
     def test_alert(self):
         common_newt.alert(self.screen, "test", "test alert")
 
+    def test_dangerConfirm(self):
+        d = common_newt.dangerConfirm(self.screen, "TEST", "Press NO")
+        self.assertTrue(not d)
     def test_progress(self):
         prog = common_newt.Progress(
             self.screen, "Test Progress", "This is a test", 100)
