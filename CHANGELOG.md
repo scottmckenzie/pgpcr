@@ -251,8 +251,8 @@ Week 4
 ----------
  - [x] Consistent UI for dangerous operations
  - [x] Optionally backup to more than two disks
+ - [x] Don't unecessarily reformat a disk
  - [ ] Optionally export public key after load
- - [ ] Don't unecessarily reformat a disk
 
 Evaluation Period 1 / Week 5
 ============================
