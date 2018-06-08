@@ -249,8 +249,9 @@ Week 4
 
 2018-06-08
 ----------
- - [ ] Optionally backup to more than two disks
- - [ ] Optionally export public key again
+ - [x] Consistent UI for dangerous operations
+ - [x] Optionally backup to more than two disks
+ - [ ] Optionally export public key after load
  - [ ] Don't unecessarily reformat a disk
 
 Evaluation Period 1 / Week 5
