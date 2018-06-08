@@ -31,6 +31,9 @@ def new(screen, workdir):
         return
     screen = SnackScreen()
     common.alert(screen, "Key Generation", "Key Generation Complete!")
+    save(screen, workdir, gk)
+
+def save(screen, workdir, gk)
     disks_newt.store(screen, workdir, "gpg/"+gk.fpr)
     export = ButtonChoiceWindow(screen, "Key Export",
                                 "How would you like to export your key?",
@@ -86,7 +89,7 @@ def load(screen, workdir):
         elif bcw == "quit":
             d.eject()
             running = False
-    disks_newt.store(screen, workdir, "gpg/"+gk.fpr)
+    save(screen, workdir, gk)
 
 
 def sign(screen, gk, path):
