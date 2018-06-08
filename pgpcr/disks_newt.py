@@ -64,11 +64,12 @@ def export(screen, gk):
 def setup(screen, use, label):
     disk = pickdisks(screen, use)
     danger = common.dangerConfirm(screen, "Warning",
-                             "Are you sure you want to use "+str(disk)+"? "
-                             "All the data currently on the device WILL BE WIPED!")
+                                  "Are you sure you want to use "+str(disk)+"?"
+                                  " All the data currently on the device"
+                                  " WILL BE WIPED!")
     if danger:
         try:
-            ret = disk.setup(label)
+            disk.setup(label)
         except external.CalledProcessError as e:
             common.catchCPE(screen, e)
             setup(screen, use, label)
