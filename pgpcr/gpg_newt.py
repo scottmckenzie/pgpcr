@@ -90,6 +90,7 @@ def load(screen, workdir):
 
 
 def sign(screen, gk, path):
+    #TODO: Load, confirm and sign any keys listed in the signing directory
     common.NotImplementedYet(screen)
 
 def revokekey(screen, gk):
@@ -117,4 +118,5 @@ def revuid(screen, gk):
     common.alert(screen, gk.fpr, "Removed "+uids[lcw[1]]+" from your key")
 
 def importkey(screen, workdir):
+    #TODO: Import keys from secret key or .gnupg backups
     common.NotImplementedYet(screen)
