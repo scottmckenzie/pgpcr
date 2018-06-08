@@ -33,7 +33,7 @@ def new(screen, workdir):
     common.alert(screen, "Key Generation", "Key Generation Complete!")
     save(screen, workdir, gk)
 
-def save(screen, workdir, gk)
+def save(screen, workdir, gk):
     disks_newt.store(screen, workdir, "gpg/"+gk.fpr)
     export = ButtonChoiceWindow(screen, "Key Export",
                                 "How would you like to export your key?",
