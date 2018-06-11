@@ -8,48 +8,51 @@ padding = (0, 0, 0, 1)
 def new_password(screen):
     pass1 = Entry(20, password=1)
     pass2 = Entry(20, password=1)
-    ew = EntryWindow(screen, "Password", "Enter your password",
-                     [("Password:", pass1), ("Password (again):", pass2)])
+    ew = EntryWindow(screen, _("Password"), _("Enter your password"),
+                     [(_("Password")+":", pass1),
+                      (_("Password")+_("(again)")+":", pass2)
+                     ])
     if pass1.value() != pass2.value():
-        error("Passwords do not match!")
+        error(_("Passwords do not match!"))
         return password()
     elif pass1.value() == "":
-        error("Password cannot be empty!")
+        error(_("Password cannot be empty!"))
         return password()
     return pass1.value()
 
 
 def password(hint, desc, prev_bad, screen):
     if hint is None:
-        hint = "Password"
+        hint = _("Password")
     if desc is None:
-        desc = "Enter your password"
+        desc = _("Enter your password")
     p = Entry(20, password=1)
-    label = "Password"
+    label = _("Password")
     if prev_bad:
-        label += " (again)"
+        label += " "+_("(again)")
     label += ":"
     ew = EntryWindow(screen, hint, desc, [(label, p)], allowCancel=0)
     return p.value()
 
 def uid(screen, purpose):
-    ew = EntryWindow(screen, purpose, "Enter User Information",
-                     ["Name", "Email Address"])
+    ew = EntryWindow(screen, purpose, _("Enter User Information"),
+                     [_("Name"), _("Email Address")],
+                     buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")])
     if ew[0] != "ok":
         return None
     else:
         return ew[1][0]+" <"+ew[1][1]+">"
 
 def alert(screen, title, msg):
-    ButtonChoiceWindow(screen, title, msg, ["Ok"])
+    ButtonChoiceWindow(screen, title, msg, [_("Ok")])
 
 
 def error(screen, msg):
-    alert(screen, "Error", msg)
+    alert(screen, _("Error"), msg)
 
 def dangerConfirm(screen, title, msg):
-    return ButtonChoiceWindow(screen, title, msg, [("No", False),
-                                                   ("Yes", True)])
+    return ButtonChoiceWindow(screen, title, msg, [(_("No"), False),
+                                                   (_("Yes"), True)])
 def NotImplementedYet(screen):
     alert(screen, "Not Implemented Yet",
           "This feature has not yet been implemented")

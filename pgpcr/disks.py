@@ -40,7 +40,7 @@ class Disk:
         else:
             s = self.model+" "+self.size
         if self.ismounted():
-            s = "[IN USE] "+s
+            s = _("[IN USE]")+" "+s
         return s
 
     def _getchildren(self):

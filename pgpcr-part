@@ -8,16 +8,17 @@ from time import sleep
 from pgpcr import common_newt
 
 if len(sys.argv) <= 1:
-	print("Need a disk to partition!")
+	print(_("Need a disk to partition!"))
 	sys.exit(1)
-prog = common_newt.Progress(None, "Disk Setup: "+sys.argv[1], "Setting up...", 4)
+prog = common_newt.Progress(None, _("Disk Setup")+": "+sys.argv[1],
+                            _("Setting up")+"...", 4)
 log = open("/home/pgp/pgpcr-part.log", "a")
 log.write(sys.argv[1]+"\n")
 dev = parted.getDevice(sys.argv[1])
-prog.setText("Formatting Disk...")
+prog.setText(_("Formatting Disk..."))
 disk = parted.freshDisk(dev, "msdos")
 prog.inc()
-prog.setText("Partitioning...")
+prog.setText(_("Partitioning")+"...")
 geo = parted.Geometry(device=dev, start=1, length=dev.getLength()-1)
 fs = parted.FileSystem(type="ext4", geometry=geo)
 part = parted.Partition(disk=disk, type=parted.PARTITION_NORMAL, fs=fs, geometry=geo)
@@ -28,7 +29,7 @@ prog.inc()
 # Sometimes the system needs a bit to figure out partitions
 sleep(1)
 prog.inc()
-prog.setText("Creating Filesystem...")
+prog.setText(_("Creating Filesystem")+"...")
 mkfs = ["mkfs.ext4", "-F", part.path]
 if len(sys.argv) >= 3:
 	mkfs.extend(["-L", sys.argv[2]])

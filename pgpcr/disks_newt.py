@@ -7,14 +7,14 @@ from shutil import copy
 def pickdisks(screen, use):
     d = disks.getdisks()
     if d == []:
-        common.alert(screen, "Disks",
-                          "No removable storage connected. "
-                          "Please connect some and press OK.")
+        common.alert(screen, _("Disks"),
+                          _("No removable storage connected."
+                          " Please connect some and press OK."))
         sleep(1)
         return pickdisks(screen, use)
     dlist = [str(x) for x in d]
-    lcw = ListboxChoiceWindow(screen, "Disks", "Pick your "+use+" disk", dlist,
-                              buttons=[("Refresh", "refresh")])
+    lcw = ListboxChoiceWindow(screen, _("Disks"), _("Pick your %s disk") % use,
+                              dlist, buttons=[(_("Refresh"), "refresh")])
     if lcw[0] is None or lcw[0] == "ok":
         return d[lcw[1]]
     elif lcw[0] == "refresh":
@@ -28,16 +28,16 @@ def store(screen, workdir, name):
         i = 1
         moredisks = True
         while moredisks:
-            b = setup(screen, "master key backup", "PGPCR Backup "+str(i))
+            b = setup(screen, _("master key backup"), "PGPCR Backup "+str(i))
             b.backup(workdir, name)
             common.alert(screen, str(b),
-                         "Your backup to the above disk is now complete "
-                         "and the disk can be ejected.")
+                         _("Your backup to the above disk is now complete "
+                         "and the disk can be ejected."))
             i += 1
             if i > 2:
-                moredisks = common.dangerConfirm(screen, "Backups",
-                                                 "Would you like to backup to "
-                                                 "another disk?")
+                moredisks = common.dangerConfirm(screen, _("Backups"),
+                                                 _("Would you like to backup"
+                                                   "  to another disk?"))
     except disks.CopyError as e:
         s = " ".join(e)
         common.error(s)
@@ -48,7 +48,7 @@ def store(screen, workdir, name):
 
 def export(screen, gk):
     try:
-        public = setup(screen, "public key export", "PGPCR Export")
+        public = setup(screen, _("public key export"), "PGPCR Export")
         copy("/etc/pgpcr/import.sh", public.mountpoint)
         gk.export(public.mountpoint)
         gk.exportsubkeys(public.mountpoint)
@@ -70,10 +70,10 @@ def setup(screen, use, label):
         except external.CalledProcessError as e:
             common.catchCPE(screen, e)
 
-    danger = common.dangerConfirm(screen, "Warning",
+    danger = common.dangerConfirm(screen, _("Warning",
                                   "Are you sure you want to use "+str(disk)+"?"
                                   " All the data currently on the device"
-                                  " WILL BE WIPED!")
+                                  " WILL BE WIPED!"))
     if danger:
         try:
             disk.setup(label)
@@ -86,7 +86,7 @@ def setup(screen, use, label):
 
 
 def load(screen):
-    d = pickdisks(screen, "master key backup")
+    d = pickdisks(screen, _("master key backup"))
     try:
         d.mount()
         return d
