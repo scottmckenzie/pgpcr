@@ -50,6 +50,10 @@ def alert(screen, title, msg):
 def error(screen, msg):
     alert(screen, _("Error"), msg)
 
+def confirm(screen, title, msg):
+    return ButtonChoiceWindow(screen, title, msg, [(_("Yes"), True),
+                                                   (_("No"), False)])
+
 def dangerConfirm(screen, title, msg):
     return ButtonChoiceWindow(screen, title, msg, [(_("No"), False),
                                                    (_("Yes"), True)])
