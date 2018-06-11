@@ -3,7 +3,7 @@ from pgpcr import external
 import unittest
 import os
 import tempfile
-from tests.filetest import cmpfiles
+from tests.helpers import cmpfiles
 
 class externalProcessTest(unittest.TestCase):
 

@@ -1,7 +1,7 @@
 import tempfile
 import unittest
 from pgpcr import gpg_ops
-from tests.filetest import cmpfiles
+from tests.helpers import cmpfiles
 
 class GPGOpsTestGenCall(unittest.TestCase):
     def setUp(self):
