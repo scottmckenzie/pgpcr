@@ -100,3 +100,24 @@ def catchCPE(screen, e):
         alert(screen, s, e.stderr)
     else:
         error(screen, s)
+
+# A ListboxChoiceWindow without the buttons
+# Mostly borrowed from snack.py
+def listmenu(screen, title, text, items, help=None):
+    height = len(items)
+    t = TextboxReflowed(width, text)
+    l = Listbox(height, returnExit = 1)
+    count = 0
+    for item in items:
+        if type(item) == tuple:
+            (text, key) = item
+        else:
+            text = item
+            key = count
+        l.append(text, key)
+        count = count + 1
+    g = GridFormHelp(screen, title, help, 1, 2)
+    g.add(t, 0, 0)
+    g.add(l, 0, 1, padding = (0, 1, 0, 1))
+    g.runOnce()
+    return l.current()
