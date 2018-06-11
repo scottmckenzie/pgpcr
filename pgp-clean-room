@@ -21,7 +21,8 @@ while running:
                              _("What do you wish to do?"),
                              [(_("New GPG Key"), "new gpg"),
                               (_("Load GPG Key"), "load gpg"),
-                              (_("Advanced"), "adv")
+                              (_("Advanced"), "adv"),
+                              (_("Quit"), "quit")
                              ])
 
     workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
