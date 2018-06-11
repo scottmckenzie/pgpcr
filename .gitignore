@@ -10,3 +10,4 @@ debian/pgp-clean-room.postrm.debhelper
 debian/pgp-clean-room.prerm.debhelper
 debian/pgp-clean-room.substvars
 debian/pgp-clean-room/
+po/POTFILES.in
