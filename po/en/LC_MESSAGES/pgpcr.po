@@ -1,0 +1,2 @@
+# This file is here to allow compile_catalog to work even without any translations
+#, fuzzy
