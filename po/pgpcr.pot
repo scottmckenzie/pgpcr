@@ -2,13 +2,14 @@
 # Copyright (C) 2018 Jacob Adams
 # This file is distributed under the same license as the PGP Clean Room
 # project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PGP Clean Room 0.1\n"
 "Report-Msgid-Bugs-To: tookmund@gmail.com\n"
-"POT-Creation-Date: 2018-06-11 16:20-0400\n"
+"POT-Creation-Date: 2018-06-11 18:17-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,16 +26,16 @@ msgstr ""
 msgid "What do you wish to do?"
 msgstr ""
 
-#: pgp-clean-room:22 pgpcr/gpg_newt.py:7
-msgid "New GPG Key"
+#: pgp-clean-room:22
+msgid "Generate a New GPG Master Key"
 msgstr ""
 
 #: pgp-clean-room:23
-msgid "Load GPG Key"
+msgid "Load a GPG Master Key from USB"
 msgstr ""
 
 #: pgp-clean-room:24
-msgid "Advanced"
+msgid "Advanced Options"
 msgstr ""
 
 #: pgp-clean-room:25 pgpcr/gpg_newt.py:81
@@ -138,12 +139,12 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: pgpcr/common_newt.py:54
-msgid "No"
+#: pgpcr/common_newt.py:54 pgpcr/common_newt.py:59
+msgid "Yes"
 msgstr ""
 
-#: pgpcr/common_newt.py:55
-msgid "Yes"
+#: pgpcr/common_newt.py:55 pgpcr/common_newt.py:58
+msgid "No"
 msgstr ""
 
 #: pgpcr/disks.py:43
@@ -189,6 +190,10 @@ msgstr ""
 
 #: pgpcr/disks_newt.py:74
 msgid "Warning"
+msgstr ""
+
+#: pgpcr/gpg_newt.py:7
+msgid "New GPG Key"
 msgstr ""
 
 #: pgpcr/gpg_newt.py:10 pgpcr/gpg_newt.py:14 pgpcr/gpg_newt.py:23
