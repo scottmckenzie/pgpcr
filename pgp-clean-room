@@ -9,10 +9,10 @@ from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
 
 screen = SnackScreen()
-lang = ListboxChoiceWindow(screen, "Language", "Choose your language",
-                           [("English", "en")], buttons=["Ok"])
+lang = common_ui.listmenu(screen, "Language", "Choose your language",
+                [("English", "en")])
 
-gettext.install("pgpcr", codeset=lang[1])
+gettext.install("pgpcr", codeset=lang)
 
 running = True
 while running:
