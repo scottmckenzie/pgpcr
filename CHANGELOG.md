@@ -261,7 +261,7 @@ Evaluation Period 1 / Week 5
 ----------
  - [x] Clean up boot menu
  - [x] Drop user back to the main menu if they don't want to shutdown
- - [ ] Prepare interface for translation
+ - [x] Prepare interface for translation
 	- Should do this ASAP as it's only going to get more difficult as more is added to the project
  - [ ] More explanatory interface
  - [ ] Key signing
