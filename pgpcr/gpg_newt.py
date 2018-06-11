@@ -73,22 +73,25 @@ def load(screen, workdir):
     gk = gpg_ops.GPGKey(workdir.name, key, d.mountpoint+"/gpg/"+key)
     running = True
     while running:
-        bcw = ButtonChoiceWindow(screen, key, _("What would you like to do?"),
-                                 [(_("Sign Keys"), "sign"),
-                                  (_("Add UID"), "adduid"),
-                                  (_("Revoke UID"), "revuid"),
-                                  (_("Revoke Keys"), "revkeys"),
+        lm = common.listmenu(screen, key, _("What would you like to do?"),
+                                 [(_("Sign GPG Public Keys"), "sign"),
+                                  (_("Associate a UID with your master key"),
+                                     "adduid"),
+                                  (_("Revoke a UID associated with your master"
+                                     " key"), "revuid"),
+                                  (_("Revoke your master key or a subkey"),
+                                     "revkeys"),
                                   (_("Quit"), "quit")
                                  ])
-        if bcw == "sign":
+        if lm == "sign":
             sign(screen, gk, d.mountpoint)
-        elif bcw == "adduid":
+        elif lm == "adduid":
             adduid(screen, gk)
-        elif bcw == "revuid":
+        elif lm == "revuid":
             revuid(screen, gk)
-        elif bcw == "revkey":
+        elif lm == "revkey":
             revokekey(screen, gk)
-        elif bcw == "quit":
+        elif lm == "quit":
             d.eject()
             running = False
     save(screen, workdir, gk)
