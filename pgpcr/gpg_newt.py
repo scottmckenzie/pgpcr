@@ -30,7 +30,7 @@ def new(screen, workdir):
     sprog.gk = gk
     gk.setprogress(_progress, sprog)
     try:
-        gk.gensub()
+        gk.gensub(sprog.setText)
     except gpg_ops.GPGMEError as g:
         screen = SnackScreen()
         common.error(screen, _("Subkey generation error")+": "+str(g))
