@@ -152,6 +152,5 @@ def importkey(screen, workdir):
     common.NotImplementedYet(screen)
 
 def _status(hook, keyword, args):
-    print(keyword)
     with open("/home/pgp/status.log", "a") as f:
-        f.write("%s %s" % keyword, args)
+        f.write("%s %s" % str(keyword), str(args))
