@@ -117,9 +117,11 @@ class GPGKey:
     def redraw(self):
         r = self._ctx.get_ctx_flag("redraw")
         if r != "":
+            self._ctx.set_ctx_flag("redraw", "")
             return True
         else:
             return False
+
 
 # Check if a directory contains gpg backups
 # If so return a list of keys backed up
