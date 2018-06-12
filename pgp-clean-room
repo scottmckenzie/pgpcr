@@ -15,6 +15,10 @@ lang = common_ui.listmenu(screen, "Language", "Choose your language",
 
 gettext.install("pgpcr", codeset=lang)
 
+common_ui.alert(screen, _("Boot Media"), _("As long as this computer has at"
+                " least 1 GB of RAM, you can now remove the boot media, as the"
+                " entire filesystem has been loaded into RAM."))
+
 running = True
 while running:
     screen = SnackScreen()

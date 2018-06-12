@@ -268,6 +268,10 @@ Evaluation Period 1 / Week 5
 	- Not sure how best to present this information
  - [x] Show key algorithms and allow user to set them
  - [x] Use unifont like the Debian Installer
+
+2018-06-12
+----------
+ - [x] Indicate boot media can be removed
  - [ ] Key signing
  - [ ] Key revocation
  - [ ] Key expiration
