@@ -272,6 +272,11 @@ Evaluation Period 1 / Week 5
 2018-06-12
 ----------
  - [x] Indicate boot media can be removed
+ - [x] Use GPGME's redraw flag to redraw progress bars after pinentry
+ - [x] Ensure tty1 is owned by pgp to prevent pinentry problems
+	- Haven't seen any since I enforced this
+ - [ ] Experiment with status callback
+	- Can't stop it from generating revocation certificates and the like but perhaps we can at least alert the user
  - [ ] Key signing
  - [ ] Key revocation
  - [ ] Key expiration
