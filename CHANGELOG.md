@@ -273,6 +273,7 @@ Evaluation Period 1 / Week 5
 ----------
  - [x] Indicate boot media can be removed
  - [x] Use GPGME's redraw flag to redraw progress bars after pinentry
+	- Much better than it was but still not perfect
  - [x] Ensure tty1 is owned by pgp to prevent pinentry problems
 	- Haven't seen any since I enforced this
  - [ ] Experiment with status callback
