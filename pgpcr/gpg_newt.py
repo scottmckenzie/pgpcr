@@ -4,6 +4,7 @@ from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt
 
 def new(screen, workdir):
     gk = gpg_ops.GPGKey(workdir.name)
+    gk.setstatus(_status)
     uid = common.uid(screen, _("New GPG Key"))
     if uid is None:
         return
@@ -149,3 +150,8 @@ def revuid(screen, gk):
 def importkey(screen, workdir):
     #TODO: Import keys from secret key or .gnupg backups
     common.NotImplementedYet(screen)
+
+def _status(hook, keyword, args):
+    print(keyword)
+    with open("/home/pgp/status.log", "a") as f:
+        f.write("%s %s" % keyword, args)
