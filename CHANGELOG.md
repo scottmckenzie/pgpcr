@@ -276,8 +276,13 @@ Evaluation Period 1 / Week 5
 	- Much better than it was but still not perfect
  - [x] Ensure tty1 is owned by pgp to prevent pinentry problems
 	- Haven't seen any since I enforced this
- - [ ] Experiment with status callback
+	- This is definitely the cause and sometimes it is still not set correctly, despite chown
+ - [x] Experiment with status callback
 	- Can't stop it from generating revocation certificates and the like but perhaps we can at least alert the user
+	- Does not alert of revocation certificate so doesn't help in this case
+ - [x] Setup gettext in pgpcr-part
+ - [x] Refresh disk labels when converted to string
+ - [x] Add status callback to subkey generation
  - [ ] Key signing
  - [ ] Key revocation
  - [ ] Key expiration
