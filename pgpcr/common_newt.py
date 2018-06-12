@@ -65,6 +65,9 @@ def NotImplementedYet(screen):
 class Progress:
     def __init__(self, screen, title, text, total, current=0):
         self.screen = SnackScreen() if screen is None else screen
+        self._create(title, text, total, current)
+
+    def _create(self, title, text, total, current):
         self.current = current
         self.g = GridFormHelp(self.screen, title, None, 1, 2)
         self.t = TextboxReflowed(width, text)
@@ -73,6 +76,12 @@ class Progress:
         self.g.add(self.t, 0, 0, padding=padding)
         self.g.add(self.p, 0, 1, padding=padding)
         self.refresh()
+        self._title = title
+        self._text = text
+        self._total = total
+
+    def recreate(self):
+        self._create(self._title, self._text, self._total, self.current)
 
     def set(self, prog):
         self.current = prog
