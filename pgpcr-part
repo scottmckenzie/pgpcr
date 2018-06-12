@@ -3,9 +3,14 @@
 # Parition a given device and give it the specified label
 # Must be run as root
 
-import parted, sys, subprocess
+import parted
+import sys
+import subprocess
+import gettext
 from time import sleep
 from pgpcr import common_newt
+
+gettext.install("pgpcr")
 
 if len(sys.argv) <= 1:
 	print(_("Need a disk to partition!"))
