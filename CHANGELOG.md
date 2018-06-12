@@ -263,7 +263,11 @@ Evaluation Period 1 / Week 5
  - [x] Drop user back to the main menu if they don't want to shutdown
  - [x] Prepare interface for translation
 	- Should do this ASAP as it's only going to get more difficult as more is added to the project
- - [ ] More explanatory interface
+ - [x] More explanatory interface
+	- Initial steps taken, but will do more thinking on this.
+	- Not sure how best to present this information
+ - [x] Show key algorithms and allow user to set them
+ - [x] Use unifont like the Debian Installer
  - [ ] Key signing
  - [ ] Key revocation
  - [ ] Key expiration
