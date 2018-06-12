@@ -34,6 +34,7 @@ class Disk:
         self.mountpoint = None
 
     def __str__(self):
+        self.label = self._getlabel()
         s = ""
         if self.label is not None:
             s = self.label
@@ -100,3 +101,4 @@ class Disk:
     def eject(self):
         external.process(["sync"])
         external.process(["sudo", "umount", self.mountpoint])
+        self.mountpoint = None
