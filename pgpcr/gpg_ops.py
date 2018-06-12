@@ -38,6 +38,7 @@ class GPGKey:
         self._ctx.set_passphrase_cb(password, hook)
 
     def setstatus(self, status, hook=None):
+        self._ctx.set_ctx_flag("full-status", "1")
         self._ctx.set_status_cb(status, hook)
 
     def setalgorithms(self, master, sub):
