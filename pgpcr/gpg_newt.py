@@ -16,6 +16,7 @@ def new(screen, workdir):
                  " You will be prompted for your password several times."))
     mprog = common.Progress(screen, _("Key Generation"),
                             _("Generating Master Key")+"...", 40)
+    mprog.gk = gk
     gk.setprogress(_progress, mprog)
     try:
         gk.genmaster(uid)
@@ -25,6 +26,7 @@ def new(screen, workdir):
         return
     sprog = common.Progress(screen, _("Key Generation"),
                             _("Generating Sub Keys")+"...", 60)
+    sprog.gk = gk
     gk.setprogress(_progress, sprog)
     try:
         gk.gensub()
@@ -71,6 +73,9 @@ def save(screen, workdir, gk):
 def _progress(what, type, current, total, prog):
     if what == "primegen":
         prog.inc()
+    if prog.gk.redraw:
+        prog.screen = SnackScreen()
+        prog.recreate()
 
 
 def load(screen, workdir):
