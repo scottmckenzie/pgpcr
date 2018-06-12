@@ -151,8 +151,8 @@ def importkey(screen, workdir):
     #TODO: Import keys from secret key or .gnupg backups
     common.NotImplementedYet(screen)
 
-def _status(hook, keyword, args):
+def _status(hook, keyword, args=None):
     if keyword is None and args is None:
         return
     with open("/home/pgp/status.log", "a") as f:
-        f.write("%s %s" % str(keyword), str(args))
+        f.write("%s %s %s\n" % str(keyword), str(args), str(hook))
