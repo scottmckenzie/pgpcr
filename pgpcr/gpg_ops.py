@@ -37,6 +37,9 @@ class GPGKey:
     def setpassword(self, password, hook=None):
         self._ctx.set_passphrase_cb(password, hook)
 
+    def setstatus(self, status, hook=None):
+        self._ctx.set_status_cb(status, hook)
+
     def setalgorithms(self, master, sub):
         if master is not None:
             self._masteralgo = master
@@ -108,6 +111,14 @@ class GPGKey:
     @property
     def uids(self):
         return [x.uid for x in self._master.uids]
+
+    @property
+    def redraw(self):
+        r = self._ctx.get_ctx_flag("redraw")
+        if r != "":
+            return True
+        else:
+            return False
 
 # Check if a directory contains gpg backups
 # If so return a list of keys backed up
