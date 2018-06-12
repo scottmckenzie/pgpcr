@@ -15,7 +15,7 @@ screen = SnackScreen()
 
 def excepthook(t, v, tb):
     SnackScreen().finish()
-    traceback.print_exc()
+    traceback.print_exception(t, v, tb)
 
 sys.excepthook = excepthook
 lang = common_ui.listmenu(screen, "Language", "Choose your language",
