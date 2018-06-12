@@ -8,6 +8,7 @@ import gettext
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
 
+subprocess.run(["setfont", "/usr/share/consolefonts/Unifont-APL8x16.psf.gz"])
 screen = SnackScreen()
 lang = common_ui.listmenu(screen, "Language", "Choose your language",
                 [("English", "en")])
