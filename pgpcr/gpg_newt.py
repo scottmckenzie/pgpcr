@@ -7,6 +7,9 @@ def new(screen, workdir):
     uid = common.uid(screen, _("New GPG Key"))
     if uid is None:
         return
+    k = keyalgos(screen, gk)
+    if not k:
+        return
     common.alert(screen, _("Key Generation"),
                  _("GPG keys will now be generated."
                  " Progress is estimated and this may take a while."
@@ -32,6 +35,19 @@ def new(screen, workdir):
     screen = SnackScreen()
     common.alert(screen, _("Key Generation"), _("Key Generation Complete!"))
     save(screen, workdir, gk)
+
+def keyalgos(screen, gk):
+    ew = EntryWindow(screen, _("GPG Key Algorithms"), _("Pick the algorithms"
+                    " you would like to use for your new key. If you're"
+                    " unsure, the defaults are well chosen and should work for"
+                    " most people"),
+                    [(_("Master Key"), gk._masteralgo),
+                     (_("Subkey"), gk._subalgo)
+                    ], buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")])
+    if ew[0] != "ok":
+        return False
+    gk.setalgorithms(ew[1][0], ew[1][1])
+    return True
 
 def save(screen, workdir, gk):
     disks_newt.store(screen, workdir, "gpg/"+gk.fpr)
