@@ -71,9 +71,9 @@ def setup(screen, use, label):
             common.catchCPE(screen, e)
 
     danger = common.dangerConfirm(screen, _("Warning",
-                                  "Are you sure you want to use "+str(disk)+"?"
+                                  "Are you sure you want to use %s?"
                                   " All the data currently on the device"
-                                  " WILL BE WIPED!"))
+                                  " WILL BE WIPED!" % str(disk)))
     if danger:
         try:
             disk.setup(label)
