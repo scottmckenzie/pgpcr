@@ -75,6 +75,7 @@ def _progress(what, type, current, total, prog):
     if what == "primegen":
         prog.inc()
     if prog.gk.redraw:
+        prog.screen.finish()
         prog.screen = SnackScreen()
         prog.recreate()
 
@@ -151,8 +152,8 @@ def importkey(screen, workdir):
     #TODO: Import keys from secret key or .gnupg backups
     common.NotImplementedYet(screen)
 
-def _status(hook, keyword, args=None):
+def _status(keyword, args, hook=None):
     if keyword is None and args is None:
         return
     with open("/home/pgp/status.log", "a") as f:
-        f.write("%s %s %s\n" % str(keyword), str(args), str(hook))
+        f.write("{!s}({!s})\n".format(keyword, args))
