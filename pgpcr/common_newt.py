@@ -130,3 +130,27 @@ def listmenu(screen, title, text, items, help=None):
     g.add(l, 0, 1, padding = (0, 1, 0, 1))
     g.runOnce()
     return l.current()
+
+def CheckboxChoiceWindow(screen, title, text, items, buttons = ('Ok', 'Cancel'),
+                      width = 40, scroll = 0, height = -1, help = None):
+
+    if (height == -1): height = len(items)
+    bb = ButtonBar(screen, buttons)
+    t = TextboxReflowed(width, text)
+    c = CheckboxTree(height, scroll)
+    count = 0
+    for item in items:
+        if type(item) == tuple:
+            (text, key) = item
+        else:
+            text = item
+            key = count
+        c.append(text, key)
+        count += 1
+
+    g = GridFormHelp(screen, title, help, 1, 3)
+    g.add(t, 0, 0)
+    g.add(c, 0, 1)
+    g.add(bb, 0, 2,  growx = 1, padding = (0, 1, 0, 1))
+    rc = g.runOnce()
+    return (bb.buttonPressed(rc), c.getSelection())
