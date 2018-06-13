@@ -283,6 +283,10 @@ Evaluation Period 1 / Week 5
  - [x] Setup gettext in pgpcr-part
  - [x] Refresh disk labels when converted to string
  - [x] Add status callback to subkey generation
+
+2018-06-13
+----------
+ - [x] Move folder format checking to its own module
  - [ ] Key signing
  - [ ] Key revocation
  - [ ] Key expiration

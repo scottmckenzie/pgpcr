@@ -125,14 +125,4 @@ class GPGKey:
         else:
             return False
 
-
-# Check if a directory contains gpg backups
-# If so return a list of keys backed up
-def backups(path):
-    if "gpg" not in os.listdir(path):
-        return None
-    else:
-        return os.listdir(path+"/gpg")
-
-
 GPGMEError = gpg.errors.GPGMEError

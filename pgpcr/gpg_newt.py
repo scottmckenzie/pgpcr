@@ -1,5 +1,5 @@
 from snack import *
-from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt
+from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt, fmt
 
 
 def new(screen, workdir):
@@ -82,7 +82,7 @@ def _progress(what, type, current, total, prog):
 
 def load(screen, workdir):
     d = disks_newt.load(screen)
-    dirs = gpg_ops.backups(d.mountpoint)
+    dirs = fmt.backups(d.mountpoint)
     if dirs is None:
         common.error(screen, _("This disk does not contain a master key"
                                " backup."))
