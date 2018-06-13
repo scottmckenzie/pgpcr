@@ -287,6 +287,8 @@ Evaluation Period 1 / Week 5
 2018-06-13
 ----------
  - [x] Move folder format checking to its own module
+ - [x] Extensive testing with checkboxes for keysigning
+	- Quite poorly documented unfortunately
  - [ ] Key signing
  - [ ] Key revocation
  - [ ] Key expiration
