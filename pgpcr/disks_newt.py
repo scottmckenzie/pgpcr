@@ -84,8 +84,8 @@ def setup(screen, use, label):
     return disk
 
 
-def load(screen):
-    d = pickdisks(screen, _("master key backup"))
+def mountdisk(screen, use):
+    d = pickdisks(screen, use)
     try:
         d.mount()
         return d
