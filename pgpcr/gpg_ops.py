@@ -129,4 +129,23 @@ class GPGKey:
         else:
             return False
 
+    def _import(self, keyfile):
+        keydata = gpg.Data(file=keyfile)
+        self._ctx.op_import(keydata)
+        result = self._ctx.op_import_result()
+        return result.imports
+
+    def signkey(self, folder, keyfile):
+        pending = folder+"/signing/pending"
+        done = folder+"/signing/done"
+        try:
+            os.mkdir(done)
+        except FileExistsError:
+            pass
+        keys = self._import(pending+"/"+keyfile)
+        for k in keys:
+            sk = self._ctx.get_key(k.fpr)
+            self._ctx.key_sign(sk)
+            self.export(done, sk.fpr, keyfile)
+
 GPGMEError = gpg.errors.GPGMEError
