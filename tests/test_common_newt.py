@@ -2,6 +2,7 @@ from pgpcr import common_newt
 import unittest
 import snack
 from time import sleep
+import tests.helpers
 
 class commonNewtTest(unittest.TestCase):
     def setUp(self):
@@ -23,6 +24,11 @@ class commonNewtTest(unittest.TestCase):
             prog.set(i)
             prog.setText(str(i))
             sleep(0.01)
+
+    def test_checkboxchoicewindow(self):
+        common_newt.CheckboxChoiceWindow(self.screen, "Test Checkboxes",
+                                               "This is a test",
+                                               ["one", "two", "three"])
 
     def test_CatchCPE(self):
         e = _cpetest()
