@@ -3,7 +3,7 @@ import os
 import subprocess
 import unittest
 from pgpcr import gpg_ops
-from tests.helpers import cmpfiles
+from tests.helpers import cmpfiles, copy
 
 class GPGOpsTestGenCall(unittest.TestCase):
     def setUp(self):
@@ -42,7 +42,6 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.gk.gensub(print)
 
 class GPGOpsTestKey(unittest.TestCase):
-
 
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -85,22 +84,29 @@ class GPGOpsTestKey(unittest.TestCase):
         # Currently fails despite removing uid
         #self.assertNotIn(addtest, self.gk.uids)
 
+    # Checking signatures doesn't work for some reason
+    # So we do it manually
+    def _checkkey(self, keyfile):
+        with open(keyfile) as f:
+            sb = subprocess.run(["gpg", "--list-packets"], stdin=f,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            return sb.stdout.decode()
+
     def test_signkey(self):
         keyfile = self.testsign+".pub"
-        with open(self.datadir+"/signing/pending/"+keyfile) as f:
-            sb = subprocess.run(["gpg", "--list-packets"], stdin=f,
-                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            self.assertNotIn(self.testkeyfpr, sb.stdout.decode())
+        keyimport = self.datadir+"/signing/pending/"+keyfile
+        copy(keyimport, self.tmp.name)
+        self.assertNotIn(self.testkeyfpr, self._checkkey(keyimport))
+
         self.gk.signkey(self.datadir, keyfile)
+
+        self.assertEqual(os.path.exists(keyimport), 0)
         keyexport = self.datadir+"/signing/done/"+keyfile
         self.assertEqual(os.path.exists(keyexport), 1)
-        # Checking signatures doesn't work for some reason
-        # So we do it manually
-        with open(keyexport) as f:
-            sb = subprocess.run(["gpg", "--list-packets"], stdin=f,
-                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            self.assertIn(self.testkeyfpr, sb.stdout.decode())
+        self.assertIn(self.testkeyfpr, self._checkkey(keyexport))
+
         os.remove(keyexport)
+        copy(self.tmp.name+"/"+keyfile, keyimport)
 
 if __name__ == "__main__":
     unittest.main()
