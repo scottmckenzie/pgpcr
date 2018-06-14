@@ -114,7 +114,7 @@ def load(screen, workdir):
             adduid(screen, gk)
         elif lm == "revuid":
             revuid(screen, gk)
-        elif lm == "revkey":
+        elif lm == "revkeys":
             revokekey(screen, gk)
         elif lm == "quit":
             d.eject()
@@ -126,8 +126,9 @@ def sign(screen, gk, path):
     s = disks_newt.mountdisk(screen, _("keys to sign disk"))
     keys = fmt.signing(s.mountpoint)
     if keys is None:
-        common.alert(_("There are no keys to sign on this disk. Please be sure"
-                     " they are in the signing/pending folder."))
+        common.alert(screen, _("Key Signing"),
+                     _("There are no keys to sign on this disk. Please be sure"
+                       " they are in the signing/pending folder."))
         sign(screen, gk, path)
         return
     rw = common.CheckboxChoiceWindow(screen, _("Key Signing"), _("Which keys"
