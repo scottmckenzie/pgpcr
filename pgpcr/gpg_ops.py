@@ -147,5 +147,6 @@ class GPGKey:
             sk = self._ctx.get_key(k.fpr)
             self._ctx.key_sign(sk)
             self.export(done, sk.fpr, keyfile)
+            os.remove(pending+"/"+keyfile)
 
 GPGMEError = gpg.errors.GPGMEError
