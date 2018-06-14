@@ -87,6 +87,10 @@ class GPGOpsTestKey(unittest.TestCase):
 
     def test_signkey(self):
         keyfile = self.testsign+".pub"
+        with open(self.datadir+"/signing/pending/"+keyfile) as f:
+            sb = subprocess.run(["gpg", "--list-packets"], stdin=f,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            self.assertNotIn(self.testkeyfpr, sb.stdout.decode())
         self.gk.signkey(self.datadir, keyfile)
         keyexport = self.datadir+"/signing/done/"+keyfile
         self.assertEqual(os.path.exists(keyexport), 1)
