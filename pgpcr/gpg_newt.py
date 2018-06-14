@@ -96,6 +96,8 @@ def load(screen, workdir):
     gk = gpg_ops.GPGKey(workdir.name, key, d.mountpoint+"/gpg/"+key)
     running = True
     while running:
+        screen.finish()
+        screen = SnackScreen()
         lm = common.listmenu(screen, key, _("What would you like to do?"),
                                  [(_("Sign GPG Public Keys"), "sign"),
                                   (_("Associate a UID with your master key"),
@@ -144,11 +146,14 @@ def sign(screen, gk, path):
 
 def revokekey(screen, gk):
     keys = gk.keys
-    lcw = ListboxChoiceWindow(screen, gk.fpr,
-                              _("Which key do you want to revoke?"), keys)
-    #TODO: Revoke a key given a fingerprint
-    key = keys[lcw[1]]
-    common.NotImplementedYet(screen)
+    ccw = CheckboxChoiceWindow(screen, gk.fpr,
+                              _("Which key(s) do you want to revoke?"), keys)
+    for k in ccw[1]:
+        gk.revokekey(k)
+        if gk.redraw:
+            screen.finish()
+            screen = SnackScreen()
+        common.alert(screen, k, _("Revoked %s") % k)
 
 def adduid(screen, gk):
     uid = common.uid(screen, _("Add UID")+" "+gk.fpr)
