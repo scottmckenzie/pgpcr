@@ -290,7 +290,11 @@ Evaluation Period 1 / Week 5
  - [x] Extensive testing with checkboxes for keysigning
 	- Quite poorly documented unfortunately
  - [x] Use documented format for export
- - [ ] Key signing
+ - [x] Key signing
+ - [ ] Optional signature expiry date?
+	- I have no idea if people use this
+ - [ ] Remove pending keys once they are signed
+ - [ ] Display first UID along with fingerprints
  - [ ] Key revocation
  - [ ] Key expiration
 

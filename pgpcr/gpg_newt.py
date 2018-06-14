@@ -121,8 +121,26 @@ def load(screen, workdir):
 
 
 def sign(screen, gk, path):
-    #TODO: Load, confirm and sign any keys listed in the signing directory
-    common.NotImplementedYet(screen)
+    s = disks_newt.mountdisk(screen, _("keys to sign disk"))
+    keys = fmt.signing(s.mountpoint)
+    if keys is None:
+        common.alert(_("There are no keys to sign on this disk. Please be sure"
+                     " they are in the signing/pending folder."))
+        sign(screen, gk, path)
+        return
+    rw = common.CheckboxChoiceWindow(screen, _("Key Signing"), _("Which keys"
+                                     " do you want to sign?"), keys,
+                                     buttons = ((_("Ok"), "ok"),
+                                               (_("Cancel"), "cancel")))
+    if rw[0] == "cancel":
+        return
+    for k in rw[1]:
+        gk.signkey(s.mountpoint, k)
+        if gk.redraw:
+            screen.finish()
+            screen = SnackScreen()
+        common.alert(screen, _("Key signing"), _("Signed %s") % k)
+    s.eject()
 
 def revokekey(screen, gk):
     keys = gk.keys
