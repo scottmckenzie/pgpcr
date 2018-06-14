@@ -154,4 +154,10 @@ class GPGKey:
             self.export(done, sk.fpr, keyfile)
             os.remove(pending+"/"+keyfile)
 
+    def revokekey(self, fpr):
+        revcert = self._ctx.home_dir+"/"+fpr+".rev"
+        self._callgpg(["--gen-revoke", fpr], revcert)
+        self._import(revcert)
+        os.remove(revcert)
+
 GPGMEError = gpg.errors.GPGMEError
