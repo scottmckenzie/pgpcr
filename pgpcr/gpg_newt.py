@@ -147,8 +147,9 @@ def sign(screen, gk, path):
 
 def revokekey(screen, gk):
     keys = gk.keys
-    ccw = CheckboxChoiceWindow(screen, gk.fpr,
-                              _("Which key(s) do you want to revoke?"), keys)
+    ccw = common.CheckboxChoiceWindow(screen, gk.fpr,
+                                      _("Which key(s) do you want to revoke?"),
+                                      keys)
     for k in ccw[1]:
         gk.revokekey(k)
         if gk.redraw:
