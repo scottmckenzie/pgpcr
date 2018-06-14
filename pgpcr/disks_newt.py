@@ -96,4 +96,4 @@ def mountdisk(screen, use):
         return d
     except external.CalledProcessError as e:
         common.catchCPE(screen, e)
-        load(screen)
+        mountdisk(screen, use)
