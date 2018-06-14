@@ -129,6 +129,12 @@ class GPGKey:
         else:
             return False
 
+    def __str__(self):
+        s = str(self.uids[0])
+        s += " "
+        s += self.fpr[-17:]
+        return s
+
     def _import(self, keyfile):
         keydata = gpg.Data(file=keyfile)
         self._ctx.op_import(keydata)
