@@ -151,10 +151,10 @@ def revokekey(screen, gk):
                                       _("Which key(s) do you want to revoke?"),
                                       keys)
     for k in ccw[1]:
+        screen.finish()
+        k = k.split(" ")[0]
         gk.revokekey(k)
-        if gk.redraw:
-            screen.finish()
-            screen = SnackScreen()
+        screen = SnackScreen()
         common.alert(screen, k, _("Revoked %s") % k)
 
 def adduid(screen, gk):
