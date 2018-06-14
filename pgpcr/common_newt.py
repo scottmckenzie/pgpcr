@@ -141,11 +141,9 @@ def CheckboxChoiceWindow(screen, title, text, items, buttons = ('Ok', 'Cancel'),
     count = 0
     for item in items:
         if type(item) == tuple:
-            (text, key) = item
+            c.append(*item)
         else:
-            text = item
-            key = count
-        c.append(text, key)
+            c.append(item)
         count += 1
 
     g = GridFormHelp(screen, title, help, 1, 3)
