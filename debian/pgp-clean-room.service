@@ -6,7 +6,6 @@ Conflicts=getty@tty1.service
 [Service]
 User=pgp
 Type=simple
-ExecStartPre=+/bin/chown pgp /dev/tty1
 ExecStart=/usr/bin/pgp-clean-room
 TTYPath=/dev/tty1
 StandardInput=tty-force
