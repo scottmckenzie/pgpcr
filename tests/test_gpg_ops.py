@@ -39,7 +39,7 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.gk.genmaster("Test <test@example.com>")
         print("\nGenerated master key", self.gk.fpr)
         print("Generating subkeys...")
-        self.gk.gensub(print)
+        self.gk.genseasubs(print)
 
 class GPGOpsTestKey(unittest.TestCase):
 

@@ -22,16 +22,18 @@ class GPGKey:
     def _refreshmaster(self):
         self._master = self._ctx.get_key(self._master.fpr)
 
-    def gensub(self, status):
+    def gensub(self, sign=False, encrypt=False, authenticate=False):
+        return self._ctx.create_subkey(self._master, algorithm=self._subalgo,
+                                       sign=sign, encrypt=encrypt,
+                                       authenticate=authenticate)
+
+    def genseasubs(self, status):
         status(_("Generating signing subkey")+"...")
-        self._ctx.create_subkey(self._master, sign=True,
-                                algorithm=self._subalgo)
+        self.gensub(sign=True)
         status(_("Generating encryption subkey")+"...")
-        self._ctx.create_subkey(self._master, encrypt=True,
-                                algorithm=self._subalgo)
+        self.gensub(encrypt=True)
         status(_("Generating authentication subkey")+"...")
-        self._ctx.create_subkey(self._master, authenticate=True,
-                                algorithm=self._subalgo)
+        self.gensub(authenticate=True)
         self._refreshmaster()
 
     def setprogress(self, progress, hook=None):
