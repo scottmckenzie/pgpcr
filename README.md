@@ -58,6 +58,6 @@ Running
 Known Issues
 ------------
 
-Occasionally, initial key creation fails with "Pinentry: Permission Denied"
+Occasionally, initial key creation fails with ["Pinentry: Permission Denied"](https://salsa.debian.org/tookmund-guest/pgpcr/issues/9)
 
-The only solution I've found so far is to reboot. It's annoying but I'm working on it.
+Restarting the service with ```sudo systemctl restart pgp-clean-room``` should fix it.
