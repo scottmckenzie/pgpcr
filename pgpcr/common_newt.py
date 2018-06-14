@@ -131,9 +131,8 @@ def listmenu(screen, title, text, items, help=None):
     g.runOnce()
     return l.current()
 
-def CheckboxChoiceWindow(screen, title, text, items,
-                         buttons = ((_("Ok"), "ok"), (_("Cancel"), "cancel")),
-                         width = 40, scroll = 0, height = -1, help = None):
+def CheckboxChoiceWindow(screen, title, text, items, buttons = ('Ok', 'Cancel'),
+                      width = 40, scroll = 0, height = -1, help = None):
 
     if (height == -1): height = len(items)
     bb = ButtonBar(screen, buttons)
