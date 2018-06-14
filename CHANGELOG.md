@@ -291,11 +291,21 @@ Evaluation Period 1 / Week 5
 	- Quite poorly documented unfortunately
  - [x] Use documented format for export
  - [x] Key signing
- - [ ] Optional signature expiry date?
-	- I have no idea if people use this
- - [ ] Remove pending keys once they are signed
+
+2018-06-14
+----------
+ - [x] Remove pending keys once they are signed
  - [ ] Display first UID along with fingerprints
- - [ ] Key revocation
+	- We have a \_\_str\_\_ for this but not sure where to use it
+ - [x] Key revocation
+	- For now this requires interacting with GPG directly which is less than ideal
+	- Will look into what other applications do for this
+	- Can only revoke master key for now
+ - [x] Fix ```Pinentry: Permission Denied```
+	- See [#8](https://salsa.debian.org/tookmund-guest/pgpcr/issues/8) and [#9](https://salsa.debian.org/tookmund-guest/pgpcr/issues/9)
+ - [ ] Look into writing simple GPGME c tools for subkey revocation and expiration
+	- op_interact doesn't work with the python bindings currently
+	- Could be used in other projects
  - [ ] Key expiration
 
 Week 6
@@ -387,3 +397,6 @@ Would like to do these if I have time but we'll see how this goes
  - [ ] Better import UI
  - [ ] Store multiple keys on one disks
 	- Basically just don't always reformat?
+ - [ ] Optional signature expiry date?
+	- I have no idea if people use this
+ - [ ] Pick key algorithms from a list
