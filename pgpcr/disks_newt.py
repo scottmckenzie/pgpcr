@@ -2,7 +2,7 @@ from snack import *
 from . import disks, common_newt as common, external
 from time import sleep
 from shutil import copy
-
+from os import mkdir
 
 def pickdisks(screen, use):
     d = disks.getdisks()
@@ -50,8 +50,13 @@ def export(screen, gk):
     try:
         public = setup(screen, _("public key export"), "PGPCR Export")
         copy("/etc/pgpcr/import.sh", public.mountpoint)
-        gk.export(public.mountpoint)
-        gk.exportsubkeys(public.mountpoint)
+        try:
+            mkdir(public.mountpoint+"/public")
+            mkdir(public.mountpoint+"/private")
+        except FileExistsError:
+            pass
+        gk.export(public.mountpoint+"/public")
+        gk.exportsubkeys(public.mountpoint+"/private")
         public.eject()
     except disks.CopyError as e:
         s = " ".join(e)

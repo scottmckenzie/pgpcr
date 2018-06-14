@@ -6,7 +6,9 @@ gpg/${FINGERPRINT} 			-- GnuPG home directory for private key identified by ${FI
 
 Public Export
 =============
-public/${FINGERPRINT}.asc 		-- Ascii-armored public key
+public/${FINGERPRINT}.pub		-- Ascii-armored public key
+
+private/${FINGERPRINT}.subsec		-- Optional secret subkey export
 
 signing/pending/${FINGERPRINT}.asc 	-- Key to be signed
 
