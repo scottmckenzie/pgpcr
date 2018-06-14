@@ -67,9 +67,13 @@ class GPGKey:
             with open(file, "wb") as f:
                 f.write(self._readdata(data))
 
-    def export(self, dir):
-        d = self._export(self.fpr, file=dir +
-                         "/"+self.fpr+".pub")
+    def export(self, dir, fpr=None, name=None):
+        if fpr is None:
+            fpr = self.fpr
+        if name is None:
+            name = fpr+".pub"
+        d = self._export(fpr, file=dir +
+                         "/"+name)
 
     def _callgpg(self, args, file):
         os.environ["GNUPGHOME"] = self._ctx.engine_info.home_dir
