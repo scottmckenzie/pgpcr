@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gpg --import ./*.pub ./*.subsec
+gpg --import ./public/*.pub ./private/*.subsec
