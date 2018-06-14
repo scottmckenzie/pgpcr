@@ -58,13 +58,12 @@ class GPGKey:
         data.seek(0, os.SEEK_SET)
         return data.read()
 
-    def _export(self, pattern, mode=0, file=None):
+    def _export(self, pattern, mode=0, outfile=None):
         # 0 is the normal mode
-        open(file, "wb").close()
         data = gpg.Data()
         self._ctx.op_export(pattern, mode, data)
-        if file is not None:
-            with open(file, "wb") as f:
+        if outfile is not None:
+            with open(outfile, "wb") as f:
                 f.write(self._readdata(data))
 
     def export(self, dir, fpr=None, name=None):
@@ -72,14 +71,14 @@ class GPGKey:
             fpr = self.fpr
         if name is None:
             name = fpr+".pub"
-        d = self._export(fpr, file=dir +
+        d = self._export(fpr, outfile=dir +
                          "/"+name)
 
-    def _callgpg(self, args, file):
+    def _callgpg(self, args, outfile):
         os.environ["GNUPGHOME"] = self._ctx.engine_info.home_dir
         gpgargv = [self._ctx.engine_info.file_name]
         gpgargv.extend(args)
-        ret = external.processtofile(gpgargv, file)
+        external.processtofile(gpgargv, outfile)
 
     def exportsubkeys(self, dir):
         # Exporting only the secret subkeys isn't directly available
