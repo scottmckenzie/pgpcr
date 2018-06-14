@@ -1,4 +1,6 @@
 import tempfile
+import os
+import subprocess
 import unittest
 from pgpcr import gpg_ops
 from tests.helpers import cmpfiles
@@ -45,8 +47,10 @@ class GPGOpsTestKey(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         # Directory where the test key is stored
-        self.testkeydir = "tests/data/testkey"
+        self.datadir = "tests/data"
+        self.testkeydir = self.datadir+"/testkey"
         self.testkeyfpr = "074D3879D4609448DEF716F6C7B98BC88227953F"
+        self.testsign = "0x3F90059E1AFDDD53"
         self.gk = gpg_ops.GPGKey(self.tmp.name,
                                  self.testkeyfpr, self.testkeydir)
 
@@ -80,6 +84,19 @@ class GPGOpsTestKey(unittest.TestCase):
         self.gk.revokeuid(addtest)
         # Currently fails despite removing uid
         #self.assertNotIn(addtest, self.gk.uids)
+
+    def test_signkey(self):
+        keyfile = self.testsign+".pub"
+        self.gk.signkey(self.datadir, keyfile)
+        keyexport = self.datadir+"/signing/done/"+keyfile
+        self.assertEqual(os.path.exists(keyexport), 1)
+        # Checking signatures doesn't work for some reason
+        # So we do it manually
+        with open(keyexport) as f:
+            sb = subprocess.run(["gpg", "--list-packets"], stdin=f,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            self.assertIn(self.testkeyfpr, sb.stdout.decode())
+        os.remove(keyexport)
 
 if __name__ == "__main__":
     unittest.main()
