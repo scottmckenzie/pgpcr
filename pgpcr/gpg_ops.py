@@ -161,3 +161,6 @@ class GPGKey:
                          self._master.fpr, fpr, str(reason), text])
 
 GPGMEError = gpg.errors.GPGMEError
+
+revoke_reasons = ["No reason specified", "Key has been compromised",
+                  "Key is superseded", "Key is no longer used"]
