@@ -38,7 +38,7 @@ git submodule init
 Install its dependencies:
 
 ```
-apt-get install live-build debootstrap growisofs rsync sudo
+apt-get install build-essential live-build debootstrap rsync sudo libgpgme-dev:i386 dh-python
 ```
 
 Run the build script:
