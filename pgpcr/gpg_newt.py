@@ -151,10 +151,18 @@ def revokekey(screen, gk):
                                       _("Which key(s) do you want to revoke?"),
                                       keys)
     for k in ccw[1]:
-        screen.finish()
-        k = k.split(" ")[0]
-        gk.revokekey(k)
-        screen = SnackScreen()
+        fpr = k.split(" ")[0]
+        buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")]
+        lcw = ListboxChoiceWindow(screen, fpr, _("Why do you want to revoke"
+                                  " %s") % k, gpg_ops.revoke_reasons,
+                                  buttons = buttons)
+        if lcw[0] == "cancel":
+            return
+        text = EntryWindow(screen, fpr, _("Why are you revoking this key?"),
+                [""], buttons = buttons)
+        if text[0] == "cancel":
+            return
+        gk.revokekey(fpr, lcw[1], text[1][0])
         common.alert(screen, k, _("Revoked %s") % k)
 
 def adduid(screen, gk):
