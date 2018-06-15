@@ -309,10 +309,12 @@ Evaluation Period 1 / Week 5
 
 2018-06-15
 ----------
- - [ ] Write simple GPGME c tools for subkey revocation and expiration
+ - [x] Write simple GPGME C tools for subkey revocation and expiration
 	- op_interact doesn't work with the python bindings currently
 	- Could be used in other projects
 	- Could also help with future keytocard stuff
+ - [x] Incorporate tools into build
+ - [ ] Rewrite revocation using new tools
  - [ ] Key expiration
 
 Week 6
