@@ -303,9 +303,16 @@ Evaluation Period 1 / Week 5
 	- Can only revoke master key for now
  - [x] Fix ```Pinentry: Permission Denied```
 	- See [#8](https://salsa.debian.org/tookmund-guest/pgpcr/issues/8) and [#9](https://salsa.debian.org/tookmund-guest/pgpcr/issues/9)
- - [ ] Look into writing simple GPGME c tools for subkey revocation and expiration
+ - [x] Look into writing simple GPGME c tools for subkey revocation and expiration
 	- op_interact doesn't work with the python bindings currently
 	- Could be used in other projects
+
+2018-06-15
+----------
+ - [ ] Write simple GPGME c tools for subkey revocation and expiration
+	- op_interact doesn't work with the python bindings currently
+	- Could be used in other projects
+	- Could also help with future keytocard stuff
  - [ ] Key expiration
 
 Week 6
