@@ -156,9 +156,20 @@ class GPGKey:
             self.export(done, sk.fpr, keyfile)
             os.remove(pending+"/"+keyfile)
 
+    def _deletectx(self):
+        self._fpr = self.fpr
+        self._home = self._ctx.engine_info.home_dir
+        del self._ctx
+
+    def _createctx(self):
+        self._ctx = gpg.Context(home_dir=self._home)
+        self._master = self._ctx.get_key(self._fpr)
+
     def revokekey(self, fpr, reason, text):
-        external.process(['revkey', self._ctx.engine_info.home_dir,
-                         self._master.fpr, fpr, str(reason), text])
+        self._deletectx()
+        external.process(["revkey", self._home, self._fpr, fpr, str(reason),
+            text], {"stdout": None})
+        self._createctx()
 
 GPGMEError = gpg.errors.GPGMEError
 
