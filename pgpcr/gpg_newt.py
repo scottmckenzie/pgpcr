@@ -162,7 +162,9 @@ def revokekey(screen, gk):
                 [""], buttons = buttons)
         if text[0] == "cancel":
             return
+        screen.finish()
         gk.revokekey(fpr, lcw[1], text[1][0])
+        screen = SnackScreen()
         common.alert(screen, k, _("Revoked %s") % k)
 
 def adduid(screen, gk):
