@@ -314,14 +314,15 @@ Evaluation Period 1 / Week 5
 	- Could be used in other projects
 	- Could also help with future keytocard stuff
  - [x] Incorporate tools into build
- - [ ] Rewrite revocation using new tools
- - [ ] Key expiration
+ - [x] Rewrite revocation using new tools
 
 Week 6
 ======
 
 2018-06-18
 ----------
+ - [ ] Key expiration
+ - [ ] After load, confirm before saving
  - [ ] Follow up on GPGME backport
  - [ ] Purchase another Yubikey for testing
 	- Other smartcards?
