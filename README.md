@@ -38,8 +38,9 @@ git submodule init
 Install its dependencies:
 
 ```
-apt-get install build-essential live-build debootstrap rsync sudo libgpgme-dev:i386 dh-python
+apt-get install build-essential live-build debootstrap rsync sudo libgpgme-dev:i386 dh-python python3-babel
 ```
+(Note that this will uninstall the amd64 version of libgpgme-dev if you have it installed.)
 
 Run the build script:
 ```
