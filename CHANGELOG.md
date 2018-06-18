@@ -321,11 +321,13 @@ Week 6
 
 2018-06-18
 ----------
+ - [x] Purchase another Yubikey for testing
+	- Also looking into a Nitrokey Start
+ - [x] Document translation
+ - [ ] op_interact
  - [ ] Key expiration
  - [ ] After load, confirm before saving
  - [ ] Follow up on GPGME backport
- - [ ] Purchase another Yubikey for testing
-	- Other smartcards?
  - [ ] Support for exporting to a smartcard
  - [ ] Generate GPG keys on a smartcard
 
