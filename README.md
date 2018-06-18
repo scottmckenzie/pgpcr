@@ -55,3 +55,28 @@ Running
  - Boot from this device
 	- Again, see the [Debian installation manual](https://www.debian.org/releases/stretch/i386/ch05s01.html.en)
  - Follow the instructions in the PGP Clean Room application that appears once the system boots
+
+Translations
+------------
+To update the template, run:
+```
+./setup.py extract_messages
+```
+### Adding New Translations
+Copy the template:
+```
+mkdir -p po/$LANG/LC_MESSAGES/
+cp po/pgpcr.pot po/$LANG/LC_MESSAGES/pgpcr.po
+```
+
+Add your translations to the po file.
+
+Add your translations to the install file by appending the line below to ```debian/pgp-clean-room.install```:
+```
+po/$LANG/LC_MESSAGES/$LANG.mo	/usr/share/locales/$LANG/LC_MESSAGES/
+```
+
+### Updating your translation
+```
+./setup.py update_catalog -l $LANG
+```
