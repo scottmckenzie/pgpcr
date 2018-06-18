@@ -324,7 +324,9 @@ Week 6
  - [x] Purchase another Yubikey for testing
 	- Also looking into a Nitrokey Start
  - [x] Document translation
- - [ ] op_interact
+ - [x] Try op_interact from Python3
+	- It doesn't have a proper wrapper yet so I filed a bug for it
+	- https://dev.gnupg.org/T4033
  - [ ] Key expiration
  - [ ] After load, confirm before saving
  - [ ] Follow up on GPGME backport
