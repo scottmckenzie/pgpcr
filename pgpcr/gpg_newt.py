@@ -82,7 +82,9 @@ def _progress(what, type, current, total, prog):
 
 def load(screen, workdir):
     d = disks_newt.mountdisk(screen, _("master key backup"))
-    dirs = fmt.backups(d.mountpoint)
+    dirs = None
+    if d is not None:
+        dirs = fmt.backups(d.mountpoint)
     if dirs is None:
         common.error(screen, _("This disk does not contain a master key"
                                " backup."))
