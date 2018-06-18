@@ -1,5 +1,6 @@
 import gpg
 import os
+import datetime
 from distutils.dir_util import copy_tree
 from . import external
 
@@ -170,6 +171,20 @@ class GPGKey:
         external.process(["revkey", self._home, self._fpr, fpr, str(reason),
             text], {"stdout": None})
         self._createctx()
+
+    def expirekey(self, fpr, datestr):
+        dl = datestr.split("-")
+        i = 0
+        for t in dl:
+            dl[i] = int(t)
+            i += 1
+        date = datetime.date(*dl)
+        delta = date - date.today()
+        self._deletectx()
+        external.process(["expirekey", self._home, self._fpr, fpr,
+            str(delta.days)], {"stdout": None})
+        self._createctx()
+        self._refreshmaster()
 
 GPGMEError = gpg.errors.GPGMEError
 

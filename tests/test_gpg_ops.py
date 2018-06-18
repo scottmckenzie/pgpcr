@@ -2,12 +2,18 @@ import tempfile
 import os
 import subprocess
 import unittest
+import datetime
 from pgpcr import gpg_ops
 from tests.helpers import cmpfiles, copy
 
 class GPGOpsTestGenCall(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
+        self.gk = gpg_ops.GPGKey(self.tmp.name)
+        # Generate smaller keys so the test doesn't take as long
+        self.gk.setalgorithms("rsa1024", "rsa1024")
+        self.gk.setprogress(self._progress)
+        self.gk.setpassword(self._password)
 
     def tearDown(self):
         self.tmp.cleanup()
@@ -30,16 +36,19 @@ class GPGOpsTestGenCall(unittest.TestCase):
         return p
 
     def test_callbacks_generation(self):
-        self.gk = gpg_ops.GPGKey(self.tmp.name)
-        self.gk.setprogress(self._progress)
-        self.gk.setpassword(self._password)
-        # Generate smaller keys so the test doesn't take as long
-        self.gk.setalgorithms("rsa1024", "rsa1024")
         print("\nGenerating masterkey...")
         self.gk.genmaster("Test <test@example.com>")
         print("\nGenerated master key", self.gk.fpr)
         print("Generating subkeys...")
         self.gk.genseasubs(print)
+
+    def test_expirekey(self):
+        self.gk.genmaster("Test <test@example.com>")
+        date = datetime.date(1, 1, 1).today()
+        date = date.replace(date.year+1)
+        self.gk.expirekey(self.gk.fpr, date.isoformat())
+        gke = date.fromtimestamp(self.gk._master.subkeys[0].expires)
+        self.assertEqual(gke, date)
 
 class GPGOpsTestKey(unittest.TestCase):
 
