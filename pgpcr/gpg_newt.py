@@ -106,6 +106,9 @@ def load(screen, workdir):
                                      " key"), "revuid"),
                                   (_("Revoke your master key or a subkey"),
                                      "revkeys"),
+                                  (_("Change the expiration date on your"
+                                      " master key or a subkey"),
+                                      "expirekeys"),
                                   (_("Quit"), "quit")
                                  ])
         if lm == "sign":
@@ -116,6 +119,8 @@ def load(screen, workdir):
             revuid(screen, gk)
         elif lm == "revkeys":
             revokekey(screen, gk)
+        elif lm == "expirekeys":
+            expirekey(screen, gk)
         elif lm == "quit":
             d.eject()
             running = False
@@ -182,6 +187,20 @@ def revuid(screen, gk):
         return
     gk.revokeuid(uids[lcw[1]])
     common.alert(screen, gk.fpr, _("Removed %s from your key") % uids[lcw[1]])
+
+def expirekey(screen, gk):
+    lcw = ListboxChoiceWindow(screen, _("Key expiration"), _("Which key do you"
+        " want to expire?"), gk.keys, buttons = [(_("Ok"), "ok"), (_("Cancel"),
+        "cancel")])
+    if lcw[0] == "cancel":
+        return
+    fpr = gk.keys[lcw[1]].split(" ")[0]
+    ew = EntryWindow(screen, fpr, _("When do you want this key to expire?"
+        "(YYYY-MM-DD)"), [_("Expiration Date:")], buttons=[(_("Ok"), "ok"),
+            (_("Cancel"), "cancel")])
+    if ew[0] == "cancel":
+        return
+    gk.expirekey(fpr, ew[1][0])
 
 def importkey(screen, workdir):
     #TODO: Import keys from secret key or .gnupg backups
