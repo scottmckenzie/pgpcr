@@ -180,6 +180,8 @@ class GPGKey:
             i += 1
         date = datetime.date(*dl)
         delta = date - date.today()
+        if delta.days < 0:
+            raise ValueError
         self._deletectx()
         external.process(["expirekey", self._home, self._fpr, fpr,
             str(delta.days)], {"stdout": None})
