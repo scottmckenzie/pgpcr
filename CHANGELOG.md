@@ -327,7 +327,7 @@ Week 6
  - [x] Key expiration
  - [x] After load, confirm before saving
  - [x] Rewrite revocation and expiration in python
- - [ ] Follow up on GPGME backport
+ - [ ] Fix up revocation
  - [ ] Support for exporting to a smartcard
  - [ ] Generate GPG keys on a smartcard
 
