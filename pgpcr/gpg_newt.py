@@ -203,6 +203,7 @@ def expirekey(screen, gk):
     fpr = gk.keys[lcw[1]].split(" ")[0]
     invalid = True
     while invalid:
+        screen = SnackScreen()
         ew = EntryWindow(screen, fpr, _("When do you want this key to expire?"
             "(YYYY-MM-DD)"), [_("Expiration Date:")], buttons=[(_("Ok"), "ok"),
             (_("Cancel"), "cancel")])
@@ -214,20 +215,12 @@ def expirekey(screen, gk):
         except external.CalledProcessError as e:
             common.catchCPE(screen, e)
             continue
-        except ValueError:
-            screen = SnackScreen()
-            common.error(screen, _("Please enter a valid date in the future,"
-                " or the current date to expire the key immediately."))
-            screen.finish()
+        except (ValueError, TypeError):
+            common.error(SnackScreen(), _("Please enter a valid date in the"
+                " future."))
             continue
-        except TypeError:
-            screen = SnackScreen()
-            common.error(screen, _("Please Enter a valid date"))
-            screen.finish()
-        screen = SnackScreen()
-        common.alert(screen, fpr, _("Changed expiration date on %s")
+        common.alert(SnackScreen(), fpr, _("Changed expiration date on %s")
                 % fpr)
-        screen.finish()
         invalid = False
 
 
