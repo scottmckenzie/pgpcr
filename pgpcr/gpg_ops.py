@@ -1,8 +1,7 @@
 import gpg
 import os
-import datetime
 from distutils.dir_util import copy_tree
-from . import external
+from . import external, gpg_interact
 
 class GPGKey:
 
@@ -157,38 +156,16 @@ class GPGKey:
             self.export(done, sk.fpr, keyfile)
             os.remove(pending+"/"+keyfile)
 
-    def _deletectx(self):
-        self._fpr = self.fpr
-        self._home = self._ctx.engine_info.home_dir
-        del self._ctx
-
-    def _createctx(self):
-        self._ctx = gpg.Context(home_dir=self._home)
-        self._master = self._ctx.get_key(self._fpr)
-
     def revokekey(self, fpr, reason, text):
-        self._deletectx()
-        external.process(["revkey", self._home, self._fpr, fpr, str(reason),
-            text], {"stdout": None})
-        self._createctx()
+        gpg_interact.revokekey(self, fpr, reason, text)
+        self._refreshmaster()
 
     def expirekey(self, fpr, datestr):
-        dl = datestr.split("-")
-        i = 0
-        for t in dl:
-            dl[i] = int(t)
-            i += 1
-        date = datetime.date(*dl)
-        delta = date - date.today()
-        if delta.days < 0:
-            raise ValueError
-        self._deletectx()
-        external.process(["expirekey", self._home, self._fpr, fpr,
-            str(delta.days)], {"stdout": None})
-        self._createctx()
+        gpg_interact.expirekey(self, fpr, datestr)
         self._refreshmaster()
 
 GPGMEError = gpg.errors.GPGMEError
 
 revoke_reasons = ["No reason specified", "Key has been compromised",
                   "Key is superseded", "Key is no longer used"]
+
