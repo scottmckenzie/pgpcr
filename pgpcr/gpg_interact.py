@@ -10,7 +10,7 @@ class _Interact:
             if fpr == sk.fpr:
                 return
         self.keynum += 1
-        raise ValueError
+        raise NoKeyError
 
 class _Revoke(_Interact):
     def __init__(self, master, fpr, code, text):
@@ -109,4 +109,6 @@ def keytocard(gk, fpr, slot, overwrite=False):
     gk._ctx.interact(gk._master, _keytocard, fnc_value=kc)
 
 class OverwriteError(Exception):
+    pass
+class NoKeyError(ValueError):
     pass
