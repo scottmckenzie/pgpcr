@@ -99,6 +99,11 @@ class Smartcard:
     def defaultpins(self):
         return ["123456", "12345678"]
 
+    @property
+    def slots(self):
+        if vendor == "Yubico":
+            return ["Signing", "Encryption", "Authentication"]
+
 sexopt = ["m", "f", "u"]
 
 class _Interact:
