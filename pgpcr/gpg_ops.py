@@ -23,9 +23,11 @@ class GPGKey:
         self._master = self._ctx.get_key(self._master.fpr)
 
     def gensub(self, sign=False, encrypt=False, authenticate=False):
-        return self._ctx.create_subkey(self._master, algorithm=self._subalgo,
+        sk = self._ctx.create_subkey(self._master, algorithm=self._subalgo,
                                        sign=sign, encrypt=encrypt,
                                        authenticate=authenticate)
+        self._refreshmaster()
+        return sk
 
     def genseasubs(self, status):
         status(_("Generating signing subkey")+"...")
