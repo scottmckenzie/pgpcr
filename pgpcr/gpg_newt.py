@@ -212,9 +212,6 @@ def expirekey(screen, gk):
         screen.finish()
         try:
             gk.expirekey(fpr, ew[1][0])
-        except external.CalledProcessError as e:
-            common.catchCPE(screen, e)
-            continue
         except (ValueError, TypeError):
             common.error(SnackScreen(), _("Please enter a valid date in the"
                 " future."))
