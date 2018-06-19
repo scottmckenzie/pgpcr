@@ -4,6 +4,8 @@ import os
 def getsmartcard(gk):
     return Smartcard(gk._ctx, gk._master)
 
+class NoSmartcardError(Exception):
+    pass
 
 class Smartcard:
     def __init__(self, ctx, key):
@@ -23,7 +25,7 @@ class Smartcard:
         props = data.read()
         proplist = props.decode().split("\n")
         if proplist[0] == "AID:::":
-            raise ValueError("No smartcard connected")
+            raise NoSmartCardError
         self.reader = " ".join(proplist[0].split(":")[1].split(" ")[:3])
         self.vendor = proplist[2].split(":")[2]
         self.serial = proplist[3].split(":")[1]
