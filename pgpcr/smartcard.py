@@ -92,6 +92,9 @@ class Smartcard:
         inter = _Genkeys(uid, backup)
         self._ctx.interact(self._key, _cardgenkeys,
                 flags=gpg.constants.INTERACT_CARD, fnc_value=inter)
+    @property
+    def defaultpins(self):
+        return ["123456", "12345678"]
 
 sexopt = ["m", "f", "u"]
 
