@@ -332,9 +332,9 @@ Week 6
 ----------
  - [x] Fix up revocation
  - [x] Smartcard properties
- - [ ] Smartcard keytocard
- - [ ] Smartcard generate keys on card
+ - [x] Smartcard keytocard
  - [ ] Support for exporting to a smartcard
+ - [ ] Smartcard generate keys on card
  - [ ] Generate GPG keys on a smartcard
 
 Week 7
