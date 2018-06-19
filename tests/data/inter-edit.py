@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 #
 # Copyright (C) 2016 g10 Code GmbH
 # Copyright (C) 2005 Igor Belyi <belyi@users.sourceforge.net>
