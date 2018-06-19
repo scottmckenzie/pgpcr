@@ -104,6 +104,9 @@ class Smartcard:
         if vendor == "Yubico":
             return ["Signing", "Encryption", "Authentication"]
 
+    def __str__(self):
+        return self.reader+" "+self.serial
+
 sexopt = ["m", "f", "u"]
 
 class _Interact:
