@@ -30,7 +30,7 @@ import gpg
 #name = sys.argv[1]
 name = "074D3879D4609448DEF716F6C7B98BC88227953F"
 
-with gpg.Context(home_dir="data/testkey") as c:
+with gpg.Context(home_dir="testkey") as c:
     keys = list(c.keylist(name))
     if len(keys) == 0:
         sys.exit("No key matching {}.".format(name))
