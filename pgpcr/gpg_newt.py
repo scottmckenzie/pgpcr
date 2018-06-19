@@ -127,7 +127,10 @@ def load(screen, workdir):
         elif lm == "quit":
             d.eject()
             running = False
-    save(screen, workdir, gk)
+    confirm = common.confirm(screen, _("Save"), _("Do you want to save the"
+        " changes you've made?"))
+    if confirm:
+        save(screen, workdir, gk)
 
 
 def sign(screen, gk, path):
