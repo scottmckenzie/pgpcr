@@ -51,6 +51,13 @@ class GPGOpsTestGenCall(unittest.TestCase):
         gke = date.fromtimestamp(self.gk._master.subkeys[0].expires)
         self.assertEqual(gke, date)
 
+    def test_revokekey(self):
+        self.gk.gensub(authenticate=True)
+        print(self.gk._master.subkeys)
+        sk = self.gk._master.subkeys[1]
+        self.gk.revokekey(sk.fpr, "0", "test")
+        self.assertNotIn(sk, self.gk._master.subkeys)
+
 class GPGOpsTestKey(unittest.TestCase):
 
     def setUp(self):
