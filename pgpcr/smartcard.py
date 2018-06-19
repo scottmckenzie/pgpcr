@@ -1,7 +1,133 @@
+import gpg
+import os
 
-def getsmartcards():
-    return []
+def getsmartcard(gk):
+    return Smartcard(gk._ctx, gk._master)
 
 
 class Smartcard:
-    pass
+    def __init__(self, ctx, key):
+        self._ctx = ctx
+        self._key = key
+        self._getprop()
+        self.new = False
+        if self.name == "":
+            self.new = True
+
+    def _getprop(self):
+        data = gpg.Data()
+        self._ctx.interact(self._key, lambda status, args: "quit"
+                if status == "GET_LINE" else None, data,
+                gpg.constants.INTERACT_CARD)
+        data.seek(0, os.SEEK_SET)
+        props = data.read()
+        proplist = props.decode().split("\n")
+        if proplist[0] == "AID:::":
+            raise ValueError("No smartcard connected")
+        self.reader = " ".join(proplist[0].split(":")[1].split(" ")[:3])
+        self.serial = proplist[3].split(":")[1]
+        self._name = proplist[4].split(":")[1:3]
+        self._lang = proplist[5].split(":")[1]
+        self._sex = proplist[6].split(":")[1]
+        self._url = proplist[7].split(":")[1]
+        self._login = proplist[8].split(":")[1]
+
+    def _setprop(self, prop, value):
+        inter = _Property(prop, value)
+        self._ctx.interact(self._key, _cardsetprop,
+                flags=gpg.constants.INTERACT_CARD, fnc_value=inter)
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, val):
+        l = val.split(" ")
+        self._setprop("name", l)
+        self._getprop()
+
+    @property
+    def lang(self):
+        return self._lang
+
+    @lang.setter
+    def lang(self, val):
+        self._setprop("lang", val)
+        self._getprop()
+
+    @property
+    def sex(self):
+        return self._sex
+
+    @sex.setter
+    def sex(self, val):
+        if val not in sexopt:
+            raise ValueError("Sex must be either Male, Female, or Unknown")
+        self._setprop("sex", val)
+        self._getprop()
+
+    @property
+    def url(self):
+        return self._url
+
+    @url.setter
+    def url(self, val):
+        self._setprop("url", val)
+        self._getprop()
+
+    @property
+    def login(self):
+        return self._login
+
+    @login.setter
+    def login(self, val):
+        self._setprop("login", val)
+        self._getprop()
+
+
+sexopt = ["m", "f", "u"]
+
+class _Interact:
+    def __init__(self):
+        self.step = 0
+
+class _Property(_Interact):
+    def __init__(self, prop, val):
+        super().__init__()
+        self.prop = prop
+        self.val = val
+
+def _cardsetprop(status, args, inter):
+    if "GET_LINE" not in status:
+        return None
+    ret = ""
+    if inter.step == 0:
+        ret = "admin"
+    elif inter.step == 1:
+        ret = inter.prop
+    elif inter.step == 2:
+        if args == "keygen.smartcard.surname":
+            ret = inter.val[1]
+            inter.step -= 1
+        elif args == "keygen.smartcard.givenname":
+            ret = inter.val[0]
+        else:
+            ret = inter.val
+    elif inter.step == 3:
+        return "quit"
+    inter.step += 1
+    return ret
+
+import tempfile
+from pgpcr.gpg_ops import GPGKey
+tmp = tempfile.TemporaryDirectory()
+gk = GPGKey(tmp.name)
+gk.genmaster("Test <test@example.com>")
+sc = getsmartcard(gk)
+print(sc.url)
+sc.url = "testurl"
+print(sc.url)
+print(sc.name)
+sc.name = "First Last"
+print(sc.name)
