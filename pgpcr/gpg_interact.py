@@ -32,6 +32,12 @@ class _Expire(_Interact):
             raise ValueError
         self.expire = delta.days
 
+class _KeytoCard(_Interact):
+    def __init__(self, master, fpr, slot, overwrite):
+        super().__init__(master, fpr)
+        self.slot = slot
+        self.overwrite = overwrite
+
 def _revokekey(status, args, rk):
     ret = ""
     if "GET" not in status:
@@ -77,3 +83,30 @@ def _expirekey(status, args, exp):
 def expirekey(gk, fpr, date):
     exp = _Expire(gk._master, fpr, date)
     gk._ctx.interact(gk._master, _expirekey, fnc_value=exp)
+
+def _keytocard(status, args, kc):
+    ret = ""
+    if "GET" not in status:
+        return None
+    if args == "cardedit.genkeys.replace_key":
+        if kc.overwrite:
+            return "yes"
+        else:
+            raise OverwriteError
+    elif kc.step == 0:
+        ret = "key %d" % kc.keynum
+    elif kc.step == 1:
+        ret = "keytocard"
+    elif kc.step == 2:
+        ret = kc.slot
+    elif kc.step == 3:
+        ret = "save"
+    kc.step += 1
+    return ret
+
+def keytocard(gk, fpr, slot, overwrite=False):
+    kc = _KeytoCard(gk._master, fpr, slot, overwrite)
+    gk._ctx.interact(gk._master, _keytocard, fnc_value=kc)
+
+class OverwriteError(Exception):
+    pass
