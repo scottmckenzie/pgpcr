@@ -86,6 +86,10 @@ class Smartcard:
         self._setprop("login", val)
         self._getprop()
 
+    def generate(self, uid, backup=False):
+        inter = _Genkeys(uid, backup)
+        self._ctx.interact(self._key, _cardgenkeys,
+                flags=gpg.constants.INTERACT_CARD, fnc_value=inter)
 
 sexopt = ["m", "f", "u"]
 
@@ -98,6 +102,12 @@ class _Property(_Interact):
         super().__init__()
         self.prop = prop
         self.val = val
+
+class _Genkeys(_Interact):
+    def __init__(self, uid, backup):
+        super().__init__()
+        self.uid = uid
+        self.backup = backup
 
 def _cardsetprop(status, args, inter):
     if "GET_LINE" not in status:
@@ -117,5 +127,16 @@ def _cardsetprop(status, args, inter):
             ret = inter.val
     elif inter.step == 3:
         return "quit"
+    inter.step += 1
+    return ret
+
+def _cardgenkeys(status, args, inter):
+    if "GET" not in status:
+        return None
+    ret = ""
+    if inter.step == 0:
+        ret = "generate"
+    #TODO: Doesn't seem like this works
+    raise NotImplementedError
     inter.step += 1
     return ret
