@@ -14,6 +14,9 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.gk.setalgorithms("rsa1024", "rsa1024")
         self.gk.setprogress(self._progress)
         self.gk.setpassword(self._password)
+        print("\nGenerating masterkey...")
+        self.gk.genmaster("Test <test@example.com>")
+        print("\nGenerated master key", self.gk.fpr)
 
     def tearDown(self):
         self.tmp.cleanup()
@@ -35,15 +38,11 @@ class GPGOpsTestGenCall(unittest.TestCase):
         p = input("Please supply %s' password%s:" % (hint, why))
         return p
 
-    def test_callbacks_generation(self):
-        print("\nGenerating masterkey...")
-        self.gk.genmaster("Test <test@example.com>")
-        print("\nGenerated master key", self.gk.fpr)
-        print("Generating subkeys...")
+    def test_subkey_generation(self):
+        print("\nGenerating subkeys...")
         self.gk.genseasubs(print)
 
     def test_expirekey(self):
-        self.gk.genmaster("Test <test@example.com>")
         date = datetime.date(1, 1, 1).today()
         date = date.replace(date.year+1, 5)
         print("\nExpiring...")
