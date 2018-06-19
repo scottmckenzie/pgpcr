@@ -2,7 +2,10 @@ import gpg
 import os
 
 def getsmartcard(gk):
-    return Smartcard(gk._ctx, gk._master)
+    try:
+        return Smartcard(gk._ctx, gk._master)
+    except NoSmartcardError:
+        return None
 
 class NoSmartcardError(Exception):
     pass
