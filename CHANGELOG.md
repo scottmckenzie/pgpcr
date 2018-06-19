@@ -327,7 +327,13 @@ Week 6
  - [x] Key expiration
  - [x] After load, confirm before saving
  - [x] Rewrite revocation and expiration in python
- - [ ] Fix up revocation
+
+2018-06-19
+----------
+ - [x] Fix up revocation
+ - [x] Smartcard properties
+ - [ ] Smartcard keytocard
+ - [ ] Smartcard generate keys on card
  - [ ] Support for exporting to a smartcard
  - [ ] Generate GPG keys on a smartcard
 
