@@ -41,18 +41,19 @@ def _revokekey(status, args, rk):
     elif rk.step == 1:
         ret = "revkey"
     elif rk.step == 2:
-        pass
-    elif rk.step == 3:
+        ret = "yes"
+    elif rk.step == 2:
         ret = rk.code
-    elif rk.step == 4:
+    elif rk.step == 3:
         ret = rk.text
+    elif rk.step == 4:
+        pass
     elif rk.step == 5:
-        pass
-    elif rk.step == 6:
-        pass
-    elif rk.step == 7:
+        ret = "yes"
+    elif rk.step == 4:
         ret = "save"
     rk.step += 1
+    print(status, ret)
     return ret
 
 def revokekey(gk, fpr, code, text):
