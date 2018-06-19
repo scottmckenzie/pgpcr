@@ -25,6 +25,7 @@ class Smartcard:
         if proplist[0] == "AID:::":
             raise ValueError("No smartcard connected")
         self.reader = " ".join(proplist[0].split(":")[1].split(" ")[:3])
+        self.vendor = proplist[2].split(":")[2]
         self.serial = proplist[3].split(":")[1]
         self._name = proplist[4].split(":")[1:3]
         self._lang = proplist[5].split(":")[1]
@@ -131,3 +132,4 @@ print(sc.url)
 print(sc.name)
 sc.name = "First Last"
 print(sc.name)
+print(sc.vendor)
