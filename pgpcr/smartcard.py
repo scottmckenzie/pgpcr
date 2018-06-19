@@ -119,17 +119,3 @@ def _cardsetprop(status, args, inter):
         return "quit"
     inter.step += 1
     return ret
-
-import tempfile
-from pgpcr.gpg_ops import GPGKey
-tmp = tempfile.TemporaryDirectory()
-gk = GPGKey(tmp.name)
-gk.genmaster("Test <test@example.com>")
-sc = getsmartcard(gk)
-print(sc.url)
-sc.url = "testurl"
-print(sc.url)
-print(sc.name)
-sc.name = "First Last"
-print(sc.name)
-print(sc.vendor)
