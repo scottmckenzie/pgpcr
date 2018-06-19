@@ -53,5 +53,7 @@ with gpg.Context(home_dir="testkey") as c:
             return input()
         except EOFError:
             return "quit"
-
-    c.interact(key, edit_fnc, sink=sys.stdout)
+    flags = 0
+    if len(sys.argv) == 2:
+        flags = gpg.constants.INTERACT_CARD
+    c.interact(key, edit_fnc, flags=flags, sink=sys.stdout)
