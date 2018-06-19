@@ -324,11 +324,9 @@ Week 6
  - [x] Purchase another Yubikey for testing
 	- Also looking into a Nitrokey Start
  - [x] Document translation
- - [x] Try op_interact from Python3
-	- It doesn't have a proper wrapper yet so I filed a bug for it
-	- https://dev.gnupg.org/T4033
- - [ ] Key expiration
- - [ ] After load, confirm before saving
+ - [x] Key expiration
+ - [x] After load, confirm before saving
+ - [x] Rewrite revocation and expiration in python
  - [ ] Follow up on GPGME backport
  - [ ] Support for exporting to a smartcard
  - [ ] Generate GPG keys on a smartcard
