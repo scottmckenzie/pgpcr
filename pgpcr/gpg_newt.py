@@ -1,5 +1,6 @@
 from snack import *
-from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt, fmt
+from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt
+from . import fmt, external
 
 
 def new(screen, workdir):
@@ -197,12 +198,35 @@ def expirekey(screen, gk):
     if lcw[0] == "cancel":
         return
     fpr = gk.keys[lcw[1]].split(" ")[0]
-    ew = EntryWindow(screen, fpr, _("When do you want this key to expire?"
-        "(YYYY-MM-DD)"), [_("Expiration Date:")], buttons=[(_("Ok"), "ok"),
+    invalid = True
+    while invalid:
+        ew = EntryWindow(screen, fpr, _("When do you want this key to expire?"
+            "(YYYY-MM-DD)"), [_("Expiration Date:")], buttons=[(_("Ok"), "ok"),
             (_("Cancel"), "cancel")])
-    if ew[0] == "cancel":
-        return
-    gk.expirekey(fpr, ew[1][0])
+        if ew[0] == "cancel":
+            return
+        screen.finish()
+        try:
+            gk.expirekey(fpr, ew[1][0])
+        except external.CalledProcessError as e:
+            common.catchCPE(screen, e)
+            continue
+        except ValueError:
+            screen = SnackScreen()
+            common.error(screen, _("Please enter a valid date in the future,"
+                " or the current date to expire the key immediately."))
+            screen.finish()
+            continue
+        except TypeError:
+            screen = SnackScreen()
+            common.error(screen, _("Please Enter a valid date"))
+            screen.finish()
+        screen = SnackScreen()
+        common.alert(screen, fpr, _("Changed expiration date on %s")
+                % fpr)
+        screen.finish()
+        invalid = False
+
 
 def importkey(screen, workdir):
     #TODO: Import keys from secret key or .gnupg backups
