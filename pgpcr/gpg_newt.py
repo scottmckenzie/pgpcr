@@ -1,7 +1,9 @@
 from snack import *
 from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt
 from . import fmt, external
+import logging
 
+_log = logging.getLogger(__name__)
 
 def new(screen, workdir):
     gk = gpg_ops.GPGKey(workdir.name)
@@ -228,5 +230,4 @@ def importkey(screen, workdir):
 def _status(keyword, args, hook=None):
     if keyword is None and args is None:
         return
-    with open("/home/pgp/status.log", "a") as f:
-        f.write("{!s}({!s})\n".format(keyword, args))
+    log.info("{!s}({!s})\n".format(keyword, args))
