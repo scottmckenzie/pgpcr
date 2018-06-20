@@ -12,7 +12,7 @@ def pickcard(screen, gk):
         sleep(1)
         return pickcard(screen, gk)
     card = common.confirm(screen, _("Smartcard"), _("Is this your card?")+"\n"
-            str(s))
+            ""+str(s))
     if card:
         return s
     return pickcard(screen)
