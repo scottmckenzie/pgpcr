@@ -333,7 +333,13 @@ Week 6
  - [x] Fix up revocation
  - [x] Smartcard properties
  - [x] Smartcard keytocard
- - [ ] Support for exporting to a smartcard
+ - [x] Initial support for exporting to a smartcard
+
+2018-06-20
+----------
+ - [x] Logging
+ - [ ] Clean up exporting to smartcard code
+ - [ ] Pick key algorithms from a list
  - [ ] Smartcard generate keys on card
  - [ ] Generate GPG keys on a smartcard
 
@@ -401,7 +407,6 @@ Would like to do these if I have time but we'll see how this goes
 	- Time based? amount of randomness gathered?
  - [ ] GPGME General Error
 	- Getting these randomly during key generation
- - [ ] Pinentry: Permission Denied
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
  - [ ] Secure the Live Environment as much as possible
