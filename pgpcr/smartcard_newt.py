@@ -6,7 +6,7 @@ from . import smartcard, common_newt as common
 def pickcard(screen, gk):
     s = smartcard.getsmartcard(gk)
     if s is None:
-        common.alert(_("Smartcards"),
+        common.alert(screen, _("Smartcards"),
                      _("No smartcards detected."
                        " Please connect one and press Ok."))
         sleep(1)
