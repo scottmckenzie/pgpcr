@@ -101,7 +101,7 @@ class Smartcard:
 
     @property
     def slots(self):
-        if vendor == "Yubico":
+        if self.vendor == "Yubico":
             return ["Signing", "Encryption", "Authentication"]
 
     def __str__(self):
