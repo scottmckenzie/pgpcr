@@ -2,9 +2,11 @@ from . import external
 import json
 import shutil
 import os
+import logging
 
 CopyError = shutil.Error
 
+_log = logging.getLogger(__name__)
 
 def getdisks():
     j = lsblk(["-p", "-d", "-o", "tran,name,model,size,serial"])
@@ -14,12 +16,12 @@ def getdisks():
             d.append(Disk(x))
     return d
 
-
 def lsblk(options):
     com = ["lsblk"]
     com.extend(options)
     com.append("--json")
     p = external.process(com)
+    _log.debug(p.stdout)
     return json.loads(p.stdout)["blockdevices"]
 
 
