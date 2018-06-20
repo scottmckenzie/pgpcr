@@ -1,4 +1,5 @@
 from snack import *
+from time import sleep
 from . import smartcard, common_newt as common
 
 
