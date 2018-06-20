@@ -40,8 +40,6 @@ log = logging.getLogger("pgpcr")
 log.setLevel(logging.INFO)
 fh = logging.FileHandler("/home/pgp/pgpcr.log")
 fh.setLevel(logging.INFO)
-formatter = logging.Formatter("%(name):%(levelname):%(message)")
-fh.setFormatter(formatter)
 log.addHandler(fh)
 
 running = True
