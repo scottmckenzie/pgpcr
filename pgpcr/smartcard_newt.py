@@ -1,6 +1,6 @@
 from snack import *
 from time import sleep
-from . import smartcard, common_newt as common
+from . import smartcard, common_newt as common, gpg_interact
 
 
 def pickcard(screen, gk):
