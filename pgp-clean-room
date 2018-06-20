@@ -64,10 +64,13 @@ while running:
         gpg_ui.load(screen, workdir)
     elif ret == "adv":
         adv = ListboxChoiceWindow(screen, _("Advanced options"),
-                                  _("These options are for users who know what they are doing"),
+                                  _("These options are for users who know what"
+                                  " they are doing"),
                                   [(_("Generate Key on Smartcard"), "gen"),
                                    (_("Import existing key"), "import"),
-                                   (_("Run shell"), "shell")
+                                   (_("Set Smartcard properties"), "setsmart"),
+                                   (_("Set Smartcard PINs"), "setpins"),
+                                   (_("Run shell"), "shell"),
                                   ])
         if adv[0] == "cancel":
             continue
@@ -75,6 +78,9 @@ while running:
             smartcard_ui.generate(screen, workdir)
         elif adv[1] == "import":
             gpg_ui.importkey(screen, workdir)
+        elif adv[1] == "setsmart":
+            smart = smartcard_ui.pickcard(screen)
+            smartcard_ui.setup(screen, smart)
         elif adv[1] == "shell":
             screen.finish()
             subprocess.run(["bash", "-l"])
