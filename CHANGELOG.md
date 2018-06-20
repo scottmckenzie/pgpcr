@@ -338,7 +338,12 @@ Week 6
 2018-06-20
 ----------
  - [x] Logging
- - [ ] Clean up exporting to smartcard code
+ - [x] Clean up exporting to smartcard code
+ - [x] Set smartcard properties if it's new
+ - [ ] Set key properties in advanced menu
+	- Requires a GPG Key...
+ - [ ] Show user the default PIN and admin PIN
+ - [ ] Allow user to set pin on smartcard
  - [ ] Pick key algorithms from a list
  - [ ] Smartcard generate keys on card
  - [ ] Generate GPG keys on a smartcard
