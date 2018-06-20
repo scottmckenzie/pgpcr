@@ -13,7 +13,7 @@ class _Interact:
         for sk in master.subkeys:
             if fpr == sk.fpr:
                 return
-        self.keynum += 1
+            self.keynum += 1
         raise NoKeyError
 
 class _Revoke(_Interact):
