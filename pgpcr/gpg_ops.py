@@ -167,7 +167,7 @@ class GPGKey:
         self._refreshmaster()
 
     def keytocard(self, fpr, slot, overwrite=False):
-        gpg_interact(self, fpr, slot, overwrite)
+        gpg_interact.keytocard(self, fpr, slot, overwrite)
         self._refreshmaster()
 
 GPGMEError = gpg.errors.GPGMEError
