@@ -1,14 +1,14 @@
 import gpg
 import os
 
+class NoSmartcardError(Exception):
+    pass
+
 def getsmartcard(gk):
     try:
         return Smartcard(gk._ctx, gk._master)
     except NoSmartcardError:
         return None
-
-class NoSmartcardError(Exception):
-    pass
 
 class Smartcard:
     def __init__(self, ctx, key):
@@ -28,7 +28,7 @@ class Smartcard:
         props = data.read()
         proplist = props.decode().split("\n")
         if proplist[0] == "AID:::":
-            raise NoSmartCardError
+            raise NoSmartcardError
         self.reader = " ".join(proplist[0].split(":")[1].split(" ")[:3])
         self.vendor = proplist[2].split(":")[2]
         self.serial = proplist[3].split(":")[1]
