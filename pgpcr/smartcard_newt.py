@@ -56,8 +56,7 @@ def setup(screen, smart):
                 "cancel")])
     if ew[0] == "cancel":
         return
-    #TODO: Name may need to be internationalized
-    smart.name = ew[1][0].split(" ")
+    smart.name = ew[1][0]
     smart.lang = ew[1][1]
     smart.sex = ew[1][2]
     smart.login = ew[1][3]
