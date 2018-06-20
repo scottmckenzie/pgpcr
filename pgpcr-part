@@ -7,6 +7,7 @@ import parted
 import sys
 import subprocess
 import gettext
+from os import environ
 from time import sleep
 from pgpcr import common_newt
 
@@ -17,7 +18,7 @@ if len(sys.argv) <= 1:
 	sys.exit(1)
 prog = common_newt.Progress(None, _("Disk Setup")+": "+sys.argv[1],
                             _("Setting up")+"...", 4)
-log = open("/home/pgp/pgpcr-part.log", "a")
+log = open(environ["HOME"]+"/pgpcr-part.log", "a")
 log.write(sys.argv[1]+"\n")
 dev = parted.getDevice(sys.argv[1])
 prog.setText(_("Formatting Disk")+"...")

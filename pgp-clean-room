@@ -38,7 +38,7 @@ common_ui.alert(screen, _("Boot Media"), _("As long as this computer has at"
 
 log = logging.getLogger("pgpcr")
 log.setLevel(logging.INFO)
-fh = logging.FileHandler("/home/pgp/pgpcr.log")
+fh = logging.FileHandler(os.environ["HOME"]+"/pgpcr.log")
 fh.setLevel(logging.INFO)
 log.addHandler(fh)
 
