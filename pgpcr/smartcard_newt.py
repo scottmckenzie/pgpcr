@@ -3,14 +3,14 @@ from time import sleep
 from . import smartcard, common_newt as common
 
 
-def pickcard(screen):
-    s = smartcard.getsmartcard()
+def pickcard(screen, gk):
+    s = smartcard.getsmartcard(gk)
     if s is None:
         common.alert(_("Smartcards"),
                      _("No smartcards detected."
                        " Please connect one and press Ok."))
         sleep(1)
-        return pickcard(screen)
+        return pickcard(screen, gk)
     card = common.confirm(screen, _("Smartcard"), _("Is this your card?")+"\n"
             str(s))
     if card:
@@ -19,7 +19,7 @@ def pickcard(screen):
 
 
 def export(screen, gk):
-    smart = pickcard(screen)
+    smart = pickcard(screen, gk)
     keys = gk.keys
     ccw = common.CheckboxChoiceWindow(screen, gk.fpr,
                                       _("Which key(s) do you want to export?"),
