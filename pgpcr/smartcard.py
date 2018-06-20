@@ -16,7 +16,7 @@ class Smartcard:
         self._key = key
         self._getprop()
         self.new = False
-        if self.name == "":
+        if self.name == ["", ""]:
             self.new = True
 
     def _getprop(self):
