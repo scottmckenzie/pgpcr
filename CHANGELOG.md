@@ -342,8 +342,9 @@ Week 6
  - [x] Set smartcard properties if it's new
  - [ ] Set key properties in advanced menu
 	- Requires a GPG Key...
- - [ ] Show user the default PIN and admin PIN
- - [ ] Allow user to set pin on smartcard
+ - [x] Show user the default PIN and admin PIN
+ - [ ] Allow user to set PIN on smartcard
+ - [ ] Always export public key to USB
  - [ ] Pick key algorithms from a list
  - [ ] Smartcard generate keys on card
  - [ ] Generate GPG keys on a smartcard
