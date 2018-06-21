@@ -30,6 +30,9 @@ def export(screen, gk):
                 +smart.defaultpins[1]+"\n"+_("PIN: ")+smart.defaultpins[0])
         if ns:
             setup(screen, smart)
+            if gk.redraw:
+                screen.finish()
+                screen = SnackScreen()
     keys = gk.keys
     ccw = common.CheckboxChoiceWindow(screen, gk.fpr,
                                       _("Which key(s) do you want to export?"),
@@ -52,6 +55,9 @@ def export(screen, gk):
                 "it?"))
             if overwrite:
                 gk.keytocard(fpr, slot, True)
+        if gk.redraw:
+            screen.finish()
+            screen = SnackScreen()
 
 def setup(screen, smart):
     ew = EntryWindow(screen, _("New Smartcard"), _("Setup your new smartcard"),
