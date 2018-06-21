@@ -23,7 +23,11 @@ class GPGKey:
         self._master = self._ctx.get_key(self._master.fpr)
 
     def gensub(self, sign=False, encrypt=False, authenticate=False):
-        sk = self._ctx.create_subkey(self._master, algorithm=self._subalgo,
+        algo = self._subalgo
+        if encrypt and algo == "ed25519":
+            # Special algorithm needed for ed25519 encryption subkeys
+            algo = "cv25519"
+        sk = self._ctx.create_subkey(self._master, algorithm=algo,
                                        sign=sign, encrypt=encrypt,
                                        authenticate=authenticate)
         self._refreshmaster()
