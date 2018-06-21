@@ -230,4 +230,4 @@ def importkey(screen, workdir):
 def _status(keyword, args, hook=None):
     if keyword is None and args is None:
         return
-    log.info("{!s}({!s})\n".format(keyword, args))
+    _log.info("{!s}({!s})\n".format(keyword, args))
