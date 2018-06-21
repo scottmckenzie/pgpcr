@@ -349,7 +349,9 @@ Week 6
  - [x] Smartcard set PINs
  - [x] Allow user to set PIN on smartcard
  - [x] Always export public key to USB
- - [ ] Pick key algorithms from a list
+ - [x] Pick key algorithms from a list
+ - [x] Support ECC
+	- 25519 requires an [odd hack](https://salsa.debian.org/tookmund-guest/pgpcr/commit/8baf9ae429f461b2fd004d6d6173201fa6192e70), will have to look into why
  - [ ] Smartcard catch errors
  - [ ] Smartcard generate keys on card
  - [ ] Generate GPG keys on a smartcard
