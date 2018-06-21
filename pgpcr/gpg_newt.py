@@ -43,16 +43,21 @@ def new(screen, workdir):
     save(screen, workdir, gk)
 
 def keyalgos(screen, gk):
-    ew = EntryWindow(screen, _("GPG Key Algorithms"), _("Pick the algorithms"
-                    " you would like to use for your new key. If you're"
-                    " unsure, the defaults are well chosen and should work for"
-                    " most people"),
-                    [(_("Master Key"), gk._masteralgo),
-                     (_("Subkey"), gk._subalgo)
-                    ], buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")])
-    if ew[0] != "ok":
+    mlcw = ListboxChoiceWindow(screen, _("Master Key Algorithm"),_("Pick the"
+        " algorithm you would like to use for your new master key. If you're"
+        " unsure, the defaults are well chosen and should work for"
+        " most people"), gpg_ops.master_algos,
+        buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")])
+    if mlcw[0] == "cancel":
         return False
-    gk.setalgorithms(ew[1][0], ew[1][1])
+    slcw = ListboxChoiceWindow(screen, _("Subkey Algorithm"),_("Pick the"
+        " algorithm you would like to use for your new subkeys. If you're"
+        " unsure, the defaults are well chosen and should work for"
+        " most people"), gpg_ops.sub_algos,
+        buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")])
+    if slcw[0] == "cancel":
+        return False
+    gk.setalgorithms(gpg_ops.master_algos[mlcw[1]], gpg_ops.sub_algos[slcw[1]])
     return True
 
 def save(screen, workdir, gk):
