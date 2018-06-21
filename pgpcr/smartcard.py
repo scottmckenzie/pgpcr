@@ -197,6 +197,8 @@ def _setadminpin(status, args, inter):
     elif inter.step == 2:
         ret = "3"
     elif inter.step == 3:
+        ret = "q"
+    elif inter.step == 4:
         ret = "quit"
     _log.info("Set Admin PIN %d %s" % (inter.step, ret))
     inter.step += 1
