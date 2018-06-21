@@ -178,7 +178,5 @@ GPGMEError = gpg.errors.GPGMEError
 
 revoke_reasons = ["No reason specified", "Key has been compromised",
                   "Key is superseded", "Key is no longer used"]
-master_algos = ["rsa4096", "ed25519", "rsa3072", "nistp521", "nistp384",
-        "rsa2048"]
-sub_algos = ["rsa2048", "rsa4096", "ed25519", "rsa3072", "nistp521",
-        "nistp384"]
+master_algos = ["rsa4096", "ed25519", "rsa3072", "rsa2048"]
+sub_algos = ["rsa2048", "rsa4096", "ed25519", "rsa3072"]
