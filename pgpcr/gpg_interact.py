@@ -110,7 +110,7 @@ def _keytocard(status, args, kc):
         ret = str(kc.slot)
     elif kc.step == 3:
         ret = "save"
-    kc.log.info("%d: %s" % (kc.step, ret))
+    kc.log.info("%d %s" % (kc.step, ret))
     kc.step += 1
     return ret
 
