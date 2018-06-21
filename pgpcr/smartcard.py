@@ -107,6 +107,15 @@ class Smartcard:
     def __str__(self):
         return self.reader+" "+self.serial
 
+    def setPIN(self):
+        self._ctx.interact(self._key, _setpin,
+                flags=gpg.constants.INTERACT_CARD, fnc_value=_Interact())
+
+    def setAdminPIN(self):
+        self._ctx.interact(self._key, _setadminpin,
+                flags=gpg.constants.INTERACT_CARD, fnc_value=_Interact())
+
+
 sexopt = ["m", "f", "u"]
 
 class _Interact:
@@ -154,5 +163,29 @@ def _cardgenkeys(status, args, inter):
         ret = "generate"
     #TODO: Doesn't seem like this works
     raise NotImplementedError
+    inter.step += 1
+    return ret
+
+def _setpin(status, args, inter):
+    if "GET_LINE" not in status:
+        return None
+    ret = ""
+    if inter.step == 0:
+        ret = "passwd"
+    elif inter.step == 1:
+        ret = "save"
+    inter.step += 1
+    return ret
+
+def _setadminpin(status, args, inter):
+    if "GET_LINE" not in status:
+        return None
+    ret = ""
+    if inter.step == 0:
+        ret = "passwd"
+    elif inter.step == 1:
+        ret = "3"
+    elif inter.step == 2:
+        ret = "save"
     inter.step += 1
     return ret
