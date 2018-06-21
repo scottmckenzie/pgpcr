@@ -1,5 +1,8 @@
 import gpg
 import os
+import logging
+
+_log = logging.getLogger(__name__)
 
 class NoSmartcardError(Exception):
     pass
@@ -26,6 +29,7 @@ class Smartcard:
                 gpg.constants.INTERACT_CARD)
         data.seek(0, os.SEEK_SET)
         props = data.read()
+        _log.debug(props)
         proplist = props.decode().split("\n")
         if proplist[0] == "AID:::":
             raise NoSmartcardError
@@ -135,6 +139,7 @@ class _Genkeys(_Interact):
         self.backup = backup
 
 def _cardsetprop(status, args, inter):
+    _log.info("%s(%s)" % (status, args))
     if "GET_LINE" not in status:
         return None
     ret = ""
@@ -152,6 +157,7 @@ def _cardsetprop(status, args, inter):
             ret = inter.val
     elif inter.step == 3:
         return "quit"
+    log.info("%d %s" % (inter.step, ret))
     inter.step += 1
     return ret
 
@@ -167,6 +173,7 @@ def _cardgenkeys(status, args, inter):
     return ret
 
 def _setpin(status, args, inter):
+    _log.info("%s(%s)" % (status, args))
     if "GET_LINE" not in status:
         return None
     ret = ""
@@ -174,10 +181,12 @@ def _setpin(status, args, inter):
         ret = "passwd"
     elif inter.step == 1:
         ret = "save"
+    log.info("%d %s" % (inter.step, ret))
     inter.step += 1
     return ret
 
 def _setadminpin(status, args, inter):
+    _log.info("%s(%s)" % (status, args))
     if "GET_LINE" not in status:
         return None
     ret = ""
@@ -187,5 +196,6 @@ def _setadminpin(status, args, inter):
         ret = "3"
     elif inter.step == 2:
         ret = "save"
+    log.info("%d %s" % (inter.step, ret))
     inter.step += 1
     return ret
