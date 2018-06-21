@@ -4,13 +4,13 @@ import logging
 
 _log = logging.getLogger(__name__)
 
-class NoSmartcardError(Exception):
+class NoSmartcardDetected(Exception):
     pass
 
 def getsmartcard(gk):
     try:
         return Smartcard(gk._ctx, gk._master)
-    except NoSmartcardError:
+    except NoSmartcardDetected:
         return None
 
 class Smartcard:
@@ -32,7 +32,7 @@ class Smartcard:
         _log.debug(props)
         proplist = props.decode().split("\n")
         if proplist[0] == "AID:::":
-            raise NoSmartcardError
+            raise NoSmartcardDetected
         self.reader = " ".join(proplist[0].split(":")[1].split(" ")[:3])
         self.vendor = proplist[2].split(":")[2]
         self.serial = proplist[3].split(":")[1]
