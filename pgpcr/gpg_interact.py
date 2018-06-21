@@ -9,7 +9,6 @@ class _Interact:
         self.step = 0
         self.fpr = fpr
         self.keynum = 0
-        self.log = _log
         for sk in master.subkeys:
             if fpr == sk.fpr:
                 return
@@ -43,7 +42,7 @@ class _KeytoCard(_Interact):
         self.overwrite = overwrite
 
 def _revokekey(status, args, rk):
-    rk.log.info("%s(%s)" % (status, args))
+    _log.info("%s(%s)" % (status, args))
     ret = ""
     if "GET" not in status:
         return None
@@ -63,7 +62,7 @@ def _revokekey(status, args, rk):
         ret = "yes"
     elif rk.step == 7:
         ret = "save"
-    rk.log.info("%d: %s" % (rk.step, ret))
+    _log.info("%d: %s" % (rk.step, ret))
     rk.step += 1
     return ret
 
@@ -72,7 +71,7 @@ def revokekey(gk, fpr, code, text):
     gk._ctx.interact(gk._master, _revokekey, fnc_value=rk)
 
 def _expirekey(status, args, exp):
-    exp.log.info("%s(%s)" % (status, args))
+    _log.info("%s(%s)" % (status, args))
     ret = ""
     if "GET" not in status:
         return None
@@ -84,7 +83,7 @@ def _expirekey(status, args, exp):
         ret = str(exp.expire)
     elif exp.step == 3:
         ret = "save"
-    exp.log.info("%d: %s" % (exp.step, ret))
+    _log.info("%d: %s" % (exp.step, ret))
     exp.step += 1
     return ret
 
@@ -93,7 +92,7 @@ def expirekey(gk, fpr, date):
     gk._ctx.interact(gk._master, _expirekey, fnc_value=exp)
 
 def _keytocard(status, args, kc):
-    kc.log.info("%s(%s)" % (status, args))
+    _log.info("%s(%s)" % (status, args))
     ret = ""
     if "GET" not in status:
         return None
@@ -110,7 +109,7 @@ def _keytocard(status, args, kc):
         ret = str(kc.slot)
     elif kc.step == 3:
         ret = "save"
-    kc.log.info("%d %s" % (kc.step, ret))
+    _log.info("%d %s" % (kc.step, ret))
     kc.step += 1
     return ret
 
