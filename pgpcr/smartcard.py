@@ -157,7 +157,7 @@ def _cardsetprop(status, args, inter):
             ret = inter.val
     elif inter.step == 3:
         return "quit"
-    _log.info("%d %s" % (inter.step, ret))
+    _log.info("Set Property %s %d %s" % (inter.prop, inter.step, ret))
     inter.step += 1
     return ret
 
@@ -181,7 +181,7 @@ def _setpin(status, args, inter):
         ret = "passwd"
     elif inter.step == 1:
         ret = "save"
-    _log.info("%d %s" % (inter.step, ret))
+    _log.info("Set PIN %d %s" % (inter.step, ret))
     inter.step += 1
     return ret
 
@@ -196,6 +196,6 @@ def _setadminpin(status, args, inter):
         ret = "3"
     elif inter.step == 2:
         ret = "save"
-    _log.info("%d %s" % (inter.step, ret))
+    _log.info("Set Admin PIN %d %s" % (inter.step, ret))
     inter.step += 1
     return ret

@@ -62,7 +62,7 @@ def _revokekey(status, args, rk):
         ret = "yes"
     elif rk.step == 7:
         ret = "save"
-    _log.info("%d: %s" % (rk.step, ret))
+    _log.info("Revoke Key %d %s" % (rk.step, ret))
     rk.step += 1
     return ret
 
@@ -83,7 +83,7 @@ def _expirekey(status, args, exp):
         ret = str(exp.expire)
     elif exp.step == 3:
         ret = "save"
-    _log.info("%d: %s" % (exp.step, ret))
+    _log.info("Expire Key %d %s" % (exp.step, ret))
     exp.step += 1
     return ret
 
@@ -109,7 +109,7 @@ def _keytocard(status, args, kc):
         ret = str(kc.slot)
     elif kc.step == 3:
         ret = "save"
-    _log.info("%d %s" % (kc.step, ret))
+    _log.info("Keytocard %d %s" % (kc.step, ret))
     kc.step += 1
     return ret
 
