@@ -58,21 +58,21 @@ def keyalgos(screen, gk):
 def save(screen, workdir, gk):
     disks_newt.store(screen, workdir, "gpg/"+gk.fpr)
     export = ButtonChoiceWindow(screen, _("Key Export"),
-                                _("How would you like to export your key?"),
+                                _("How would you like to export your"
+                                " subkeys?"),
                                 [(_("External Storage"), "storage"),
                                 (_("Smartcard"), "smartcard")])
+    secret = False
     if export == "storage":
-        disks_newt.export(screen, gk)
+        secret = True
     elif export == "smartcard":
         smartcard_newt.export(screen, gk)
+    disks_newt.export(screen, gk, secret)
     common.alert(screen, _("New Key Creation Complete"),
                  _("You can now store your backups in a safe place"))
-    if export == "storage":
-        common.alert(screen, _("IMPORTANT"),
-                     _("Don't forget to import your new key to your main"
-                       " computer by running import.sh from your public export"
-                       " disk."))
-
+    common.alert(screen, _("IMPORTANT"),
+        _("Don't forget to import your new key to your main"
+            " computer by running import.sh from your public export disk."))
 
 def _progress(what, type, current, total, prog):
     if what == "primegen":
