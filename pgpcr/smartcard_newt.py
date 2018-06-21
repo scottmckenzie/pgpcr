@@ -52,7 +52,7 @@ def export(screen, gk):
         except gpg_interact.OverwriteError:
             overwrite = common.dangerConfirm(screen, _("Overwrite?"),
                 _("There is already a key in slot %d. Do you want to overwrite"
-                "it?"))
+                " it?") % slot)
             if overwrite:
                 gk.keytocard(fpr, slot, True)
         if gk.redraw:
