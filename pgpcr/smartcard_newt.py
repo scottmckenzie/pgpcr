@@ -1,9 +1,11 @@
 from snack import *
 from time import sleep
-from . import smartcard, common_newt as common, gpg_interact
+from . import smartcard, common_newt as common, gpg_interact, gpg_ops
 
-
-def pickcard(screen, gk):
+def pickcard(screen, gk=None):
+    if gk is None:
+        gk = gpg_ops.GPGKey("")
+        gk._master = None
     s = smartcard.getsmartcard(gk)
     if s is None:
         common.alert(screen, _("Smartcards"),
@@ -23,6 +25,9 @@ def export(screen, gk):
     if smart.new:
         ns = common.confirm(screen, _("New Smartcard"), _("This appears to be"
         " a new smartcard. Would you like to set it up?"))
+        common.alert(screen, _("Default PINs"),
+                _("The default PINs on your device are:")+"\n"+_("Admin PIN: ")
+                +smart.defaultpins[1]+"\n"+_("PIN: ")+smart.defaultpins[0])
         if ns:
             setup(screen, smart)
     keys = gk.keys
