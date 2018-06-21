@@ -64,9 +64,8 @@ def setup(screen, smart):
         " the user and admin PINs on your smartcard."))
     smart.setPIN()
     smart.setAdminPIN()
-    if gk.redraw:
-        screen.finish()
-        screen = SnackScreen()
+    screen.finish()
+    screen = SnackScreen()
     ew = EntryWindow(screen, _("New Smartcard"), _("Setup your new smartcard"),
             [_("Name of cardholder"), _("Language Preference"),
                 _("Sex (m/f/u)"), _("Login Data")],
