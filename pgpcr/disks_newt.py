@@ -46,17 +46,22 @@ def store(screen, workdir, name):
         store(screen, workdir, name)
 
 
-def export(screen, gk):
+def export(screen, gk, secret=False):
     try:
-        public = setup(screen, _("public key export"), "PGPCR Export")
+        label = _("public key export")
+        if secret:
+            label = _("subkey and public key export")
+        public = setup(screen, label, "PGPCR Export")
         copy("/etc/pgpcr/import.sh", public.mountpoint)
         try:
             mkdir(public.mountpoint+"/public")
-            mkdir(public.mountpoint+"/private")
+            if secret:
+                mkdir(public.mountpoint+"/private")
         except FileExistsError:
             pass
         gk.export(public.mountpoint+"/public")
-        gk.exportsubkeys(public.mountpoint+"/private")
+        if secret:
+            gk.exportsubkeys(public.mountpoint+"/private")
         public.eject()
     except disks.CopyError as e:
         s = " ".join(e)
