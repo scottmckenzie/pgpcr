@@ -180,7 +180,7 @@ def _setpin(status, args, inter):
     if inter.step == 0:
         ret = "passwd"
     elif inter.step == 1:
-        ret = "save"
+        ret = "quit"
     _log.info("Set PIN %d %s" % (inter.step, ret))
     inter.step += 1
     return ret
@@ -195,7 +195,7 @@ def _setadminpin(status, args, inter):
     elif inter.step == 1:
         ret = "3"
     elif inter.step == 2:
-        ret = "save"
+        ret = "quit"
     _log.info("Set Admin PIN %d %s" % (inter.step, ret))
     inter.step += 1
     return ret
