@@ -61,12 +61,8 @@ def export(screen, gk):
 
 def setup(screen, smart):
     common.alert(screen, _("Set PIN"), _("You will first be asked to set"
-        " the user PIN on your smartcard."))
+        " the user and Admin PINs on your smartcard."))
     smart.setPIN()
-    screen.finish()
-    screen = SnackScreen()
-    common.alert(screen, _("Set Admin PIN"), _("You will now be asked to set"
-        " the admin PIN on your smartcard."))
     smart.setAdminPIN()
     screen.finish()
     screen = SnackScreen()
