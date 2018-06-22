@@ -352,7 +352,8 @@ Week 6
  - [x] Pick key algorithms from a list
  - [x] Support ECC
 	- 25519 requires an [odd hack](https://salsa.debian.org/tookmund-guest/pgpcr/commit/8baf9ae429f461b2fd004d6d6173201fa6192e70), will have to look into why
- - [ ] Smartcard catch errors
+	- NIST curves don't work for any subkeys but encryption, disabling for now
+ - [x] Smartcard catch errors
  - [ ] Smartcard generate keys on card
  - [ ] Generate GPG keys on a smartcard
 
