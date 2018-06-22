@@ -57,9 +57,9 @@ def export(screen, gk):
             if overwrite:
                 try:
                     gk.keytocard(fpr, slot, True)
-                except gpg_interact.SmartcardError as e:
+                except smartcard.SmartcardError as e:
                     common.error(screen, str(e))
-        except gpg_interact.SmartcardError as e:
+        except smartcard.SmartcardError as e:
             common.error(screen, str(e))
         if gk.redraw:
             screen.finish()

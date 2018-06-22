@@ -1,7 +1,6 @@
 import gpg
 import datetime
 import logging
-from .smartcard import SmartcardError
 
 _log = logging.getLogger(__name__)
 
