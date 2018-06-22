@@ -15,99 +15,105 @@ class SmartcardError(Exception):
 
 def getsmartcard(gk):
     try:
-        return Smartcard(gk._ctx, gk._master)
+        return Smartcard()
     except NoSmartcardDetected:
         return None
 
 class Smartcard:
-    def __init__(self, ctx, key):
-        self._ctx = ctx
-        self._key = key
-        self._getprop()
+    def __init__(self):
+        self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN)
         self.new = False
-        if self.name == ["", ""]:
+        if self.name is None:
             self.new = True
 
-    def _getprop(self):
-        data = gpg.Data()
-        self._ctx.interact(self._key, lambda status, args: "quit"
-                if status == "GET_LINE" else None, data,
-                gpg.constants.INTERACT_CARD)
-        data.seek(0, os.SEEK_SET)
-        props = data.read()
-        _log.debug(props)
-        proplist = props.decode().split("\n")
-        if proplist[0] == "AID:::":
-            raise NoSmartcardDetected
-        self.reader = " ".join(proplist[0].split(":")[1].split(" ")[:3])
-        self.vendor = proplist[2].split(":")[2]
-        self.serial = proplist[3].split(":")[1]
-        self._name = proplist[4].split(":")[1:3]
-        self._lang = proplist[5].split(":")[1]
-        self._sex = proplist[6].split(":")[1]
-        self._url = proplist[7].split(":")[1]
-        self._login = proplist[8].split(":")[1]
+    def _scd(self, command):
+        com = "SCD "
+        com += command
+        err = self._assuan.assuan_transact(com, status_cb=self._assuanstatus)
+        if err:
+            raise SmartcardError(str(err))
+        return (self.__status, self.__args)
 
-    def _setprop(self, prop, value):
-        inter = _Property(prop, value)
-        self._ctx.interact(self._key, _cardsetprop,
-                flags=gpg.constants.INTERACT_CARD, fnc_value=inter)
-        if not inter.success:
-            raise SmartcardError(_("Failed to set property %s to %s")
-                    % (prop, value))
+    def _assuanstatus(self, status, args):
+        self.__status = status
+        self.__args = args
+
+    def _getattr(self, attr):
+        status, args = self._scd("GETATTR "+attr)
+        if args == "":
+            return None
+        return args
+
+    def _setattr(self, attr, value):
+        self._scd("SETATTR "+attr+" "+value)
 
     @property
     def name(self):
-        return self._name
+        l = self._getattr("DISP-NAME")
+        if l is None:
+            return l
+        return l.split("<<")
 
     @name.setter
     def name(self, val):
         l = val.split(" ")
-        self._setprop("name", l)
-        self._getprop()
+        l = "<<".join(l)
+        self._setattr("DISP-NAME", l)
 
     @property
     def lang(self):
-        return self._lang
+        return self._getattr("DISP-LANG")
 
     @lang.setter
     def lang(self, val):
-        self._setprop("lang", val)
-        self._getprop()
+        self._setattr("DISP-LANG", val)
 
     @property
     def sex(self):
-        return self._sex
+        return sexopt[int(self._getattr("DISP-SEX"))]
 
     @sex.setter
     def sex(self, val):
-        if val not in sexopt:
+        if val is not None and val not in sexopt:
             raise ValueError("Sex must be either Male, Female, or Unknown")
-        self._setprop("sex", val)
-        self._getprop()
+        valnum = sexopt.index(val)
+        self._setprop("sex", str(valnum))
 
     @property
     def url(self):
-        return self._url
+        return self._getattr("PUBKEY-URL")
 
     @url.setter
     def url(self, val):
-        self._setprop("url", val)
-        self._getprop()
+        self._setattr("PUBKEY-URL", val)
 
     @property
     def login(self):
-        return self._login
+        return self._getattr("LOGIN-DATA")
 
     @login.setter
     def login(self, val):
-        self._setprop("login", val)
-        self._getprop()
+        self._setattr("LOGIN-DATA", val)
 
-    def generate(self, uid, backup=False):
-        inter = _Genkeys(uid, backup)
-        self._ctx.interact(self._key, _cardgenkeys,
-                flags=gpg.constants.INTERACT_CARD, fnc_value=inter)
+    def generate(self, slot, force=False):
+        gen = "GENKEY "
+        if force:
+            gen += "--force "
+        gen += str(slot)
+        self._scd(gen)
+
+    @property
+    def serial(self):
+        pass
+
+    @property
+    def vendor(self):
+        pass
+
+    @property
+    def reader(self):
+        pass
+
     @property
     def defaultpins(self):
         return ["123456", "12345678"]
@@ -121,99 +127,13 @@ class Smartcard:
         return self.reader+" "+self.serial
 
     def setPIN(self):
-        self._ctx.interact(self._key, _setpin,
-                flags=gpg.constants.INTERACT_CARD, fnc_value=_Interact())
+        self._scd("PASSWD 1")
 
     def setAdminPIN(self):
-        self._ctx.interact(self._key, _setadminpin,
-                flags=gpg.constants.INTERACT_CARD, fnc_value=_Interact())
+        self._scd("PASSWD 3")
 
 
-sexopt = ["m", "f", "u"]
-
-class _Interact:
-    def __init__(self):
-        self.step = 0
-        self.success = False
-
-class _Property(_Interact):
-    def __init__(self, prop, val):
-        super().__init__()
-        self.prop = prop
-        self.val = val
-
-class _Genkeys(_Interact):
-    def __init__(self, uid, backup):
-        super().__init__()
-        self.uid = uid
-        self.backup = backup
-
-def _cardsetprop(status, args, inter):
-    _log.info("%s(%s)" % (status, args))
-    if status == "SC_OP_SUCCESS":
-        inter.success = True
-    if "GET_LINE" not in status:
-        return None
-    ret = ""
-    if inter.step == 0:
-        ret = "admin"
-    elif inter.step == 1:
-        ret = inter.prop
-    elif inter.step == 2:
-        if args == "keygen.smartcard.surname":
-            ret = inter.val[1]
-            inter.step -= 1
-        elif args == "keygen.smartcard.givenname":
-            ret = inter.val[0]
-        else:
-            ret = inter.val
-    elif inter.step == 3:
-        return "quit"
-    _log.info("Set Property %s %d %s" % (inter.prop, inter.step, ret))
-    inter.step += 1
-    return ret
-
-def _cardgenkeys(status, args, inter):
-    if status == "SC_OP_SUCCESS":
-        inter.success = True
-    if "GET" not in status:
-        return None
-    ret = ""
-    if inter.step == 0:
-        ret = "generate"
-    #TODO: Doesn't seem like this works
-    raise NotImplementedError
-    inter.step += 1
-    return ret
-
-def _setpin(status, args, inter):
-    _log.info("%s(%s)" % (status, args))
-    if "GET_LINE" not in status:
-        return None
-    ret = ""
-    if inter.step == 0:
-        ret = "passwd"
-    elif inter.step == 1:
-        ret = "quit"
-    _log.info("Set PIN %d %s" % (inter.step, ret))
-    inter.step += 1
-    return ret
-
-def _setadminpin(status, args, inter):
-    _log.info("%s(%s)" % (status, args))
-    if "GET_LINE" not in status:
-        return None
-    ret = ""
-    if inter.step == 0:
-        ret = "admin"
-    elif inter.step == 1:
-        ret = "passwd"
-    elif inter.step == 2:
-        ret = "3"
-    elif inter.step == 3:
-        ret = "q"
-    elif inter.step == 4:
-        ret = "quit"
-    _log.info("Set Admin PIN %d %s" % (inter.step, ret))
-    inter.step += 1
-    return ret
+sexopt = [None] * 10
+sexopt[1] = "m"
+sexopt[2] = "f"
+sexopt[9] = "u"
