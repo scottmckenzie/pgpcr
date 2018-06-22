@@ -6,8 +6,10 @@ def pickcard(screen, gk=None):
     if gk is None:
         gk = gpg_ops.GPGKey("")
         gk._master = None
-    s = smartcard.getsmartcard(gk)
-    if s is None:
+    s = None
+    try:
+        s = smartcard.Smartcard()
+    except smartcard.NoSmartcardDetected:
         common.alert(screen, _("Smartcards"),
                      _("No smartcards detected."
                        " Please connect one and press Ok."))
