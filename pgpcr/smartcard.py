@@ -13,12 +13,6 @@ class SmartcardError(Exception):
     def __str__(self):
         return self.msg
 
-def getsmartcard(gk):
-    try:
-        return Smartcard()
-    except NoSmartcardDetected:
-        return None
-
 class Smartcard:
     def __init__(self):
         self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN)
