@@ -54,7 +54,12 @@ def export(screen, gk):
                 _("There is already a key in slot %d. Do you want to overwrite"
                 " it?") % slot)
             if overwrite:
-                gk.keytocard(fpr, slot, True)
+                try:
+                    gk.keytocard(fpr, slot, True)
+                except gpg_interact.SmartcardError as e:
+                    common.error(screen, str(e))
+        except gpg_interact.SmartcardError as e:
+            common.error(screen, str(e))
         if gk.redraw:
             screen.finish()
             screen = SnackScreen()
@@ -73,10 +78,13 @@ def setup(screen, smart):
                 "cancel")])
     if ew[0] == "cancel":
         return
-    smart.name = ew[1][0]
-    smart.lang = ew[1][1]
-    smart.sex = ew[1][2]
-    smart.login = ew[1][3]
+    try:
+        smart.name = ew[1][0]
+        smart.lang = ew[1][1]
+        smart.sex = ew[1][2]
+        smart.login = ew[1][3]
+    except SmartcardError as e:
+        common.error(screen, str(e))
 
 def generate(screen, workdir):
     common.NotImplementedYet(screen)
