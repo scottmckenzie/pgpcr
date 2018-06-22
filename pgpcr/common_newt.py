@@ -8,7 +8,7 @@ padding = (0, 0, 0, 1)
 def new_password(screen):
     pass1 = Entry(20, password=1)
     pass2 = Entry(20, password=1)
-    ew = EntryWindow(screen, _("Password"), _("Enter your password"),
+    ew = EW(screen, _("Password"), _("Enter your password"),
                      [(_("Password")+":", pass1),
                       (_("Password")+_("(again)")+":", pass2)
                      ], buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")])
@@ -31,13 +31,12 @@ def password(hint, desc, prev_bad, screen):
     if prev_bad:
         label += " "+_("(again)")
     label += ":"
-    ew = EntryWindow(screen, hint, desc, [(label, p)], allowCancel=0)
+    ew = EW(screen, hint, desc, [(label, p)], allowCancel=0)
     return p.value()
 
 def uid(screen, purpose):
-    ew = EntryWindow(screen, purpose, _("Enter User Information"),
-                     [_("Name"), _("Email Address")],
-                     buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")])
+    ew = EW(screen, purpose, _("Enter User Information"),
+                     [_("Name"), _("Email Address")])
     if ew[0] != "ok":
         return None
     else:
@@ -161,3 +160,12 @@ def LCW(screen, title, text, items, buttons = None, width = 40, scroll = 0,
         buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")]
     return ListboxChoiceWindow(screen, title, text, items, buttons, width,
             scroll, height, help)
+
+def EW(screen, title, text, prompts, allowCancel = 1, width = 40,
+        entryWidth = 20, buttons = None, help = None):
+    if buttons is None:
+        buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")]
+    if buttons is None and not allowCancel:
+        buttons = [(_("Ok"), "ok")]
+    return EntryWindow(screen, title, text, prompts, allowCancel, width,
+            entryWidth, buttons, help)

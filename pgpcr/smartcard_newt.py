@@ -70,11 +70,9 @@ def setup(screen, smart):
     smart.setAdminPIN()
     screen.finish()
     screen = SnackScreen()
-    ew = EntryWindow(screen, _("New Smartcard"), _("Setup your new smartcard"),
+    ew = common.EW(screen, _("New Smartcard"), _("Setup your new smartcard"),
             [_("Name of cardholder"), _("Language Preference"),
-                _("Sex (m/f/u)"), _("Login Data")],
-            buttons = [(_("Ok"), "ok"), (_("Cancel"),
-                "cancel")])
+                _("Sex (m/f/u)"), _("Login Data")])
     if ew[0] == "cancel":
         return
     try:

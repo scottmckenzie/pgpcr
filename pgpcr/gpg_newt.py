@@ -170,8 +170,8 @@ def revokekey(screen, gk):
                 gpg_ops.revoke_reasons)
         if lcw[0] == "cancel":
             return
-        text = EntryWindow(screen, fpr, _("Why are you revoking this key?"),
-                [""], buttons = buttons)
+        text = common.EW(screen, fpr, _("Why are you revoking this key?"),
+                [""])
         if text[0] == "cancel":
             return
         screen.finish()
@@ -204,9 +204,8 @@ def expirekey(screen, gk):
     invalid = True
     while invalid:
         screen = SnackScreen()
-        ew = EntryWindow(screen, fpr, _("When do you want this key to expire?"
-            "(YYYY-MM-DD)"), [_("Expiration Date:")], buttons=[(_("Ok"), "ok"),
-            (_("Cancel"), "cancel")])
+        ew = common.EW(screen, fpr, _("When do you want this key to expire?"
+            "(YYYY-MM-DD)"), [_("Expiration Date:")])
         if ew[0] == "cancel":
             return
         screen.finish()
