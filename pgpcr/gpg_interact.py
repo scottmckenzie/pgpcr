@@ -117,9 +117,6 @@ def _keytocard(status, args, kc):
 def keytocard(gk, fpr, slot, overwrite=False):
     kc = _KeytoCard(gk._master, fpr, slot, overwrite)
     gk._ctx.interact(gk._master, _keytocard, fnc_value=kc)
-    if not kc.success:
-        raise SmartcardError(_("Failed to export key %s to slot %d")
-                % (fpr, slot))
 
 class OverwriteError(Exception):
     pass
