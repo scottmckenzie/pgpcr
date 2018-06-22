@@ -39,7 +39,6 @@ class _Expire(_Interact):
 class _KeytoCard(_Interact):
     def __init__(self, master, fpr, slot, overwrite):
         super().__init__(master, fpr)
-        self.success = False
         self.slot = slot
         self.overwrite = overwrite
 
@@ -96,8 +95,6 @@ def expirekey(gk, fpr, date):
 def _keytocard(status, args, kc):
     _log.info("%s(%s)" % (status, args))
     ret = ""
-    if status == "SC_OP_SUCCESS":
-        kc.success = True
     if "GET" not in status:
         return None
     if args == "cardedit.genkeys.replace_key":
