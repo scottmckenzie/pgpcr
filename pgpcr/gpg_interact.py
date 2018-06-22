@@ -1,6 +1,7 @@
 import gpg
 import datetime
 import logging
+from .smartcard import SmartcardError
 
 _log = logging.getLogger(__name__)
 
@@ -38,6 +39,7 @@ class _Expire(_Interact):
 class _KeytoCard(_Interact):
     def __init__(self, master, fpr, slot, overwrite):
         super().__init__(master, fpr)
+        self.success = False
         self.slot = slot
         self.overwrite = overwrite
 
@@ -94,6 +96,8 @@ def expirekey(gk, fpr, date):
 def _keytocard(status, args, kc):
     _log.info("%s(%s)" % (status, args))
     ret = ""
+    if status == "SC_OP_SUCCESS":
+        kc.success = True
     if "GET" not in status:
         return None
     if args == "cardedit.genkeys.replace_key":
@@ -116,6 +120,9 @@ def _keytocard(status, args, kc):
 def keytocard(gk, fpr, slot, overwrite=False):
     kc = _KeytoCard(gk._master, fpr, slot, overwrite)
     gk._ctx.interact(gk._master, _keytocard, fnc_value=kc)
+    if not kc.success:
+        raise SmartcardError(_("Failed to export key %s to slot %d")
+                % (fpr, slot))
 
 class OverwriteError(Exception):
     pass

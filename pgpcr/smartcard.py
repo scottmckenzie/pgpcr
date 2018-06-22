@@ -6,6 +6,12 @@ _log = logging.getLogger(__name__)
 
 class NoSmartcardDetected(Exception):
     pass
+class SmartcardError(Exception):
+    def __init__(self, msg=""):
+        self.msg = msg
+
+    def __str__(self):
+        return msg
 
 def getsmartcard(gk):
     try:
@@ -46,6 +52,9 @@ class Smartcard:
         inter = _Property(prop, value)
         self._ctx.interact(self._key, _cardsetprop,
                 flags=gpg.constants.INTERACT_CARD, fnc_value=inter)
+        if not inter.success:
+            raise SmartcardError(_("Failed to set property %s to %s")
+                    % (prop, value))
 
     @property
     def name(self):
@@ -125,6 +134,7 @@ sexopt = ["m", "f", "u"]
 class _Interact:
     def __init__(self):
         self.step = 0
+        self.success = False
 
 class _Property(_Interact):
     def __init__(self, prop, val):
@@ -140,6 +150,8 @@ class _Genkeys(_Interact):
 
 def _cardsetprop(status, args, inter):
     _log.info("%s(%s)" % (status, args))
+    if status == "SC_OP_SUCCESS":
+        inter.success = True
     if "GET_LINE" not in status:
         return None
     ret = ""
@@ -162,6 +174,8 @@ def _cardsetprop(status, args, inter):
     return ret
 
 def _cardgenkeys(status, args, inter):
+    if status == "SC_OP_SUCCESS":
+        inter.success = True
     if "GET" not in status:
         return None
     ret = ""
