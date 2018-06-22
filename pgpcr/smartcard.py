@@ -29,6 +29,7 @@ class Smartcard:
         return (self.__status, self.__args)
 
     def _assuanstatus(self, status, args):
+        _log.info("%s(%s)" % (status, args))
         self.__status = status
         self.__args = args
 
