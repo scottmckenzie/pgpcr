@@ -102,6 +102,7 @@ def load(screen, workdir):
         return
     key = dirs[lcw[1]]
     gk = gpg_ops.GPGKey(workdir.name, key, d.mountpoint+"/gpg/"+key)
+    gk.setstatus(_status)
     running = True
     while running:
         screen.finish()
