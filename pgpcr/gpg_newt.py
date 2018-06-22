@@ -148,9 +148,7 @@ def sign(screen, gk, path):
         sign(screen, gk, path)
         return
     rw = common.CheckboxChoiceWindow(screen, _("Key Signing"), _("Which keys"
-                                     " do you want to sign?"), keys,
-                                     buttons = ((_("Ok"), "ok"),
-                                               (_("Cancel"), "cancel")))
+                                     " do you want to sign?"), keys)
     if rw[0] == "cancel":
         return
     for k in rw[1]:
