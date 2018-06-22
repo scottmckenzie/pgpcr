@@ -154,3 +154,10 @@ def CheckboxChoiceWindow(screen, title, text, items, buttons = None,
     g.add(bb, 0, 2,  growx = 1, padding = (0, 1, 0, 1))
     rc = g.runOnce()
     return (bb.buttonPressed(rc), c.getSelection())
+
+def LCW(screen, title, text, items, buttons = None, width = 40, scroll = 0,
+        height = -1, help = None):
+    if buttons is None:
+        buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")]
+    return ListboxChoiceWindow(screen, title, text, items, buttons, width,
+            scroll, height, help)

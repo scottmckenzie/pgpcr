@@ -13,7 +13,7 @@ def pickdisks(screen, use):
         sleep(1)
         return pickdisks(screen, use)
     dlist = [str(x) for x in d]
-    lcw = ListboxChoiceWindow(screen, _("Disks"), _("Pick your %s disk") % use,
+    lcw = common.LCW(screen, _("Disks"), _("Pick your %s disk") % use,
                               dlist, buttons=[(_("Refresh"), "refresh")])
     if lcw[0] is None or lcw[0] == "ok":
         return d[lcw[1]]

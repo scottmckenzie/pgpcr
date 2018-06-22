@@ -40,9 +40,8 @@ def export(screen, gk):
     if ccw[0] == "cancel":
         return
     for k in ccw[1]:
-        lcw = ListboxChoiceWindow(screen, k, _("Which slot do you want to put"
-            " this key in?"), smart.slots, buttons = [(_("Ok"), "ok"),
-            (_("Cancel"), "cancel")])
+        lcw = common.LCW(screen, k, _("Which slot do you want to put"
+            " this key in?"), smart.slots)
         if lcw[0] == "cancel":
             continue
         slot = lcw[1]+1

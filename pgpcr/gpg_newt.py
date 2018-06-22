@@ -43,18 +43,16 @@ def new(screen, workdir):
     save(screen, workdir, gk)
 
 def keyalgos(screen, gk):
-    mlcw = ListboxChoiceWindow(screen, _("Master Key Algorithm"),_("Pick the"
+    mlcw = common.LCW(screen, _("Master Key Algorithm"),_("Pick the"
         " algorithm you would like to use for your new master key. If you're"
         " unsure, the defaults are well chosen and should work for"
-        " most people"), gpg_ops.master_algos,
-        buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")])
+        " most people"), gpg_ops.master_algos)
     if mlcw[0] == "cancel":
         return False
-    slcw = ListboxChoiceWindow(screen, _("Subkey Algorithm"),_("Pick the"
+    slcw = common.LCW(screen, _("Subkey Algorithm"),_("Pick the"
         " algorithm you would like to use for your new subkeys. If you're"
         " unsure, the defaults are well chosen and should work for"
-        " most people"), gpg_ops.sub_algos,
-        buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")])
+        " most people"), gpg_ops.sub_algos)
     if slcw[0] == "cancel":
         return False
     gk.setalgorithms(gpg_ops.master_algos[mlcw[1]], gpg_ops.sub_algos[slcw[1]])
@@ -98,7 +96,7 @@ def load(screen, workdir):
                                " backup."))
         d.eject()
         load(screen, workdir)
-    lcw = ListboxChoiceWindow(screen, _("Key Fingerprint"),
+    lcw = common.LCW(screen, _("Key Fingerprint"),
                               _("Please select your key."), dirs)
     if lcw[0] == "cancel":
         return
@@ -170,10 +168,8 @@ def revokekey(screen, gk):
                                       keys)
     for k in ccw[1]:
         fpr = k.split(" ")[0]
-        buttons=[(_("Ok"), "ok"), (_("Cancel"), "cancel")]
-        lcw = ListboxChoiceWindow(screen, fpr, _("Why do you want to revoke"
-                                  " %s") % k, gpg_ops.revoke_reasons,
-                                  buttons = buttons)
+        lcw = common.LCW(screen, fpr, _("Why do you want to revoke %s") % k,
+                gpg_ops.revoke_reasons)
         if lcw[0] == "cancel":
             return
         text = EntryWindow(screen, fpr, _("Why are you revoking this key?"),
@@ -194,7 +190,7 @@ def adduid(screen, gk):
 
 def revuid(screen, gk):
     uids = gk.uids
-    lcw = ListboxChoiceWindow(screen, gk.fpr, _("Which UID would you like to"
+    lcw = common.LCW(screen, gk.fpr, _("Which UID would you like to"
                               " revoke?"), uids)
     if lcw[0] == "cancel":
         return
@@ -202,9 +198,8 @@ def revuid(screen, gk):
     common.alert(screen, gk.fpr, _("Removed %s from your key") % uids[lcw[1]])
 
 def expirekey(screen, gk):
-    lcw = ListboxChoiceWindow(screen, _("Key expiration"), _("Which key do you"
-        " want to expire?"), gk.keys, buttons = [(_("Ok"), "ok"), (_("Cancel"),
-        "cancel")])
+    lcw = common.LCW(screen, _("Key expiration"), _("Which key do you"
+        " want to expire?"), gk.keys)
     if lcw[0] == "cancel":
         return
     fpr = gk.keys[lcw[1]].split(" ")[0]
