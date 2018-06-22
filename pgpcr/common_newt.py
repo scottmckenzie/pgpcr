@@ -11,7 +11,7 @@ def new_password(screen):
     ew = EntryWindow(screen, _("Password"), _("Enter your password"),
                      [(_("Password")+":", pass1),
                       (_("Password")+_("(again)")+":", pass2)
-                     ])
+                     ], buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")])
     if pass1.value() != pass2.value():
         error(_("Passwords do not match!"))
         return password()
@@ -44,7 +44,7 @@ def uid(screen, purpose):
         return ew[1][0]+" <"+ew[1][1]+">"
 
 def alert(screen, title, msg):
-    ButtonChoiceWindow(screen, title, msg, [_("Ok")])
+    ButtonChoiceWindow(screen, title, msg, [(_("Ok"), "ok")])
 
 
 def error(screen, msg):
@@ -131,9 +131,11 @@ def listmenu(screen, title, text, items, help=None):
     g.runOnce()
     return l.current()
 
-def CheckboxChoiceWindow(screen, title, text, items, buttons = ('Ok', 'Cancel'),
+def CheckboxChoiceWindow(screen, title, text, items, buttons = None,
                       width = 40, scroll = 0, height = -1, help = None):
 
+    if buttons is None:
+        buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")]
     if (height == -1): height = len(items)
     bb = ButtonBar(screen, buttons)
     t = TextboxReflowed(width, text)
