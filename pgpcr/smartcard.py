@@ -16,9 +16,17 @@ class SmartcardError(Exception):
 class Smartcard:
     def __init__(self):
         self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN)
+        err = self._assuan.assuan_transact("SCD LEARN --force",
+                status_cb=self._assuanlearn)
         self.new = False
         if self.name is None:
             self.new = True
+
+    def _assuanlearn(self, status, args):
+        if status == "READER":
+            self.reader = args.split(" ")[:3]
+            self.vendor = self.reader[0]
+            self.reader = " ".join(self.reader)
 
     def _scd(self, command):
         com = "SCD "
@@ -99,15 +107,8 @@ class Smartcard:
 
     @property
     def serial(self):
-        pass
+        return self._getattr("SERIALNO")
 
-    @property
-    def vendor(self):
-        pass
-
-    @property
-    def reader(self):
-        pass
 
     @property
     def defaultpins(self):
