@@ -362,16 +362,14 @@ Week 6
 	- Allows setting properties without a GPG key
  - [x] Better smartcard error handling
 	- Unable to catch keytocard errors still...
- - [ ] Smartcard generate keys on card
- - [ ] Generate GPG keys on a smartcard
 
 Week 7
 ======
 
 2018-06-25
 ----------
+ - [ ] Smartcard generate keys on card
  - [ ] Generate GPG keys on a smartcard
-	- Two weeks is a long time for developing support to generate keys on a smartcard, but this operation does not appear to be supported by GPGME
  - [ ] Help menus
 
 Week 8
