@@ -6,6 +6,10 @@ _log = logging.getLogger(__name__)
 
 class NoSmartcardDetected(Exception):
     pass
+class BadPIN(Exception):
+    pass
+class PINBlocked(BadPIN):
+    pass
 class SmartcardError(Exception):
     def __init__(self, msg=""):
         self.msg = msg
@@ -13,11 +17,23 @@ class SmartcardError(Exception):
     def __str__(self):
         return self.msg
 
+def _raiseerr(err):
+    if err.code_str == "Card Removed":
+        raise NoSmartcardDetected
+    elif err.code_str == "Bad PIN":
+        raise BadPIN
+    elif err.code_str == "PIN Blocked":
+        raise PINBlocked
+    else:
+        raise SmartcardError(str(err))
+
 class Smartcard:
     def __init__(self):
         self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN)
         err = self._assuan.assuan_transact("SCD LEARN --force",
                 status_cb=self._assuanlearn)
+        if err:
+            _raiseerr(err)
         self.new = False
         if self.name is None:
             self.new = True
