@@ -354,6 +354,14 @@ Week 6
 	- 25519 requires an [odd hack](https://salsa.debian.org/tookmund-guest/pgpcr/commit/8baf9ae429f461b2fd004d6d6173201fa6192e70), will have to look into why
 	- NIST curves don't work for any subkeys but encryption, disabling for now
  - [x] Smartcard catch errors
+
+2018-06-22
+----------
+ - [x] Common methods for each window to simplify button translation
+ - [x] Rewrite smartcard properties to use Assuan commands instead of interact
+	- Allows setting properties without a GPG key
+ - [x] Better smartcard error handling
+	- Unable to catch keytocard errors still...
  - [ ] Smartcard generate keys on card
  - [ ] Generate GPG keys on a smartcard
 
@@ -364,6 +372,7 @@ Week 7
 ----------
  - [ ] Generate GPG keys on a smartcard
 	- Two weeks is a long time for developing support to generate keys on a smartcard, but this operation does not appear to be supported by GPGME
+ - [ ] Help menus
 
 Week 8
 ======
