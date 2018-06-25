@@ -15,7 +15,7 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.gk.setprogress(self._progress)
         self.gk.setpassword(self._password)
         print("\nGenerating masterkey...")
-        self.gk.genmaster("Test <test@example.com>")
+        self.gk.genmaster("Test <test@example.com>", None)
         print("\nGenerated master key", self.gk.fpr)
 
     def tearDown(self):

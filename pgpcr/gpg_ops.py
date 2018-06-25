@@ -14,9 +14,10 @@ class GPGKey:
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
 
-    def genmaster(self, userid):
+    def genmaster(self, userid, passphrase=True):
         genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
-                                      sign=True, certify=True, passphrase=True)
+                                      sign=True, certify=True,
+                                      passphrase=passphrase)
         self._master = self._ctx.get_key(genkey.fpr)
 
     def _refreshmaster(self):
