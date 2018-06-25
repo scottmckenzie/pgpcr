@@ -2,10 +2,7 @@ from snack import *
 from time import sleep
 from . import smartcard, common_newt as common, gpg_interact, gpg_ops
 
-def pickcard(screen, gk=None):
-    if gk is None:
-        gk = gpg_ops.GPGKey("")
-        gk._master = None
+def pickcard(screen):
     s = None
     try:
         s = smartcard.Smartcard()
@@ -14,7 +11,7 @@ def pickcard(screen, gk=None):
                      _("No smartcards detected."
                        " Please connect one and press Ok."))
         sleep(1)
-        return pickcard(screen, gk)
+        return pickcard(screen)
     card = common.confirm(screen, _("Smartcard"), _("Is this your smartcard?")+
             "\n"+str(s))
     if card:
@@ -23,7 +20,7 @@ def pickcard(screen, gk=None):
 
 
 def export(screen, gk):
-    smart = pickcard(screen, gk)
+    smart = pickcard(screen)
     if smart.new:
         ns = common.confirm(screen, _("New Smartcard"), _("This appears to be"
         " a new smartcard. Would you like to set it up?"))
@@ -86,7 +83,7 @@ def setup(screen, smart):
         common.error(screen, str(e))
 
 def generate(screen, workdir):
-    smart = pickcard(screen, gk)
+    smart = pickcard(screen)
     slot = 1
     for s in smart.slots:
         gen = common.dangerConfirm(screen, _("Generate Key"), _("Do you want"
