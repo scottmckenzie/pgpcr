@@ -368,8 +368,18 @@ Week 7
 
 2018-06-25
 ----------
- - [ ] Smartcard generate keys on card
- - [ ] Generate GPG keys on a smartcard
+ - [x] Only run interactive tests if they are explicitly enabled
+ - [x] Smartcard generate keys on card
+ - [x] Generate GPG keys on a smartcard
+ - [x] Raise better exceptions when disk mounting fails
+ - [x] Fix smartcard "IPC connect failed" errors
+	- Have to use gpgconf to create socketdirs when not using the default GNUPGHOME
+	- Not totally fixed as /run/$uid isn't created automatically
+ - [ ] Use a proper login process through getty
+	- Rolling our own login process was causing too many bugs, even if it was initially simpler
+	- Not quite done with this, will fix up tomorrow
+	- Requires more research
+ - [ ] Import key from other backups
  - [ ] Help menus
 
 Week 8
