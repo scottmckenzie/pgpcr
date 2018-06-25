@@ -9,6 +9,10 @@ import sys
 import traceback
 import os
 import logging
+
+# Set GPGMEDEBUG before importing gpg
+os.environ["GPGMEDEBUG"] = "9:"+os.environ["HOME"]+"/gpgme.log"
+
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
 
