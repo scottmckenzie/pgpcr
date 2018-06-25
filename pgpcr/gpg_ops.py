@@ -137,6 +137,10 @@ class GPGKey:
         else:
             return False
 
+    @property
+    def homedir(self):
+        return self._ctx.engine_info.home_dir
+
     def __str__(self):
         s = str(self.uids[0])
         s += " "
