@@ -5,7 +5,7 @@ from time import sleep
 from os import environ
 import tests.helpers
 
-@unittest.skipIf("PGPCRINTERACT" not in environ.keys(), "Interactive tests"
+@unittest.skipUnless("PGPCRINTERACT" in environ.keys(), "Interactive tests"
         " disabled. Set PGPCRINTERACT to enable them")
 class commonNewtTest(unittest.TestCase):
     def setUp(self):
