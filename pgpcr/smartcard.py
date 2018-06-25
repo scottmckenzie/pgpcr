@@ -32,10 +32,17 @@ def _raiseerr(err):
         raise SmartcardError(str(err))
 
 class Smartcard:
-    def __init__(self):
-        self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN)
-        err = self._assuan.assuan_transact("SCD LEARN --force",
+    def __init__(self, homedir=None):
+        self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN,
+                home_dir=homedir)
+        if homedir is not None:
+            _log.info(homedir)
+        try:
+            err = self._assuan.assuan_transact("SCD LEARN --force",
                 status_cb=self._assuanlearn)
+        except gpg.errors.GPGMEError as e:
+            raise SmartcardError(str(e))
+
         if err:
             _raiseerr(err)
         self.new = False

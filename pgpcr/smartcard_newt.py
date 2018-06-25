@@ -2,25 +2,25 @@ from snack import *
 from time import sleep
 from . import smartcard, common_newt as common, gpg_interact, gpg_ops
 
-def pickcard(screen):
+def pickcard(screen, homedir):
     s = None
     try:
-        s = smartcard.Smartcard()
+        s = smartcard.Smartcard(homedir)
     except smartcard.NoSmartcardDetected:
         common.alert(screen, _("Smartcards"),
                      _("No smartcards detected."
                        " Please connect one and press Ok."))
         sleep(1)
-        return pickcard(screen)
+        return pickcard(screen, homedir)
     card = common.confirm(screen, _("Smartcard"), _("Is this your smartcard?")+
             "\n"+str(s))
     if card:
         return s
-    return pickcard(screen)
+    return pickcard(screen, homedir)
 
 
 def export(screen, gk):
-    smart = pickcard(screen)
+    smart = pickcard(screen, gk.homedir)
     if smart.new:
         ns = common.confirm(screen, _("New Smartcard"), _("This appears to be"
         " a new smartcard. Would you like to set it up?"))
