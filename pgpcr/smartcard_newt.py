@@ -86,4 +86,23 @@ def setup(screen, smart):
         common.error(screen, str(e))
 
 def generate(screen, workdir):
-    common.NotImplementedYet(screen)
+    smart = pickcard(screen, gk)
+    slot = 1
+    for s in smart.slots:
+        gen = common.dangerConfirm(screen, _("Generate Key"), _("Do you want"
+            " to generate a key in slot %d: %s?") % (slot, s))
+        if gen:
+            try:
+                smart.generate(slot)
+        except smartcard.OverwriteError:
+            overwrite = common.dangerConfirm(screen, _("Overwrite?"),
+                _("There is already a key in slot %d. Do you want to overwrite"
+                " it?") % slot)
+            if overwrite:
+                try:
+                    smart.generate(slot, True)
+                except smartcard.BadPIN:
+                    common.error(screen, _("Incorrect PIN"))
+                except smartcard.SmartcardError as e:
+                    common.error(screen, str(e))
+        i += 1
