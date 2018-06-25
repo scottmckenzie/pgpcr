@@ -13,6 +13,15 @@ class GPGKey:
         self._subalgo = "rsa2048"
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
+        # Ensure a gpg-agent is running and a socketdir is created
+        os.environ["GNUPGHOME"] = self.homedir
+        external.process(["gpgconf", "--launch", "gpg-agent"])
+        external.process(["gpgconf", "--create-socketdir"])
+
+    def __del__(self):
+        os.environ.pop("GNUPGHOME", None)
+        external.process(["gpgconf", "--kill", "gpg-agent"])
+        external.process(["gpgconf", "--remove-socketdir"])
 
     def genmaster(self, userid, passphrase=True):
         genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
@@ -84,7 +93,6 @@ class GPGKey:
                          "/"+name)
 
     def _callgpg(self, args, outfile):
-        os.environ["GNUPGHOME"] = self._ctx.engine_info.home_dir
         gpgargv = [self._ctx.engine_info.file_name]
         gpgargv.extend(args)
         external.processtofile(gpgargv, outfile)
