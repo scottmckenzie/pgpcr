@@ -101,4 +101,6 @@ def mountdisk(screen, use):
         return d
     except external.CalledProcessError as e:
         common.catchCPE(screen, e)
-        mountdisk(screen, use)
+    except disks.NotMountable:
+        common.error(screen, _("No mountable partitions found on this disk"))
+    mountdisk(screen, use)

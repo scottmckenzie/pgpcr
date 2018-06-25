@@ -24,7 +24,8 @@ def lsblk(options):
     _log.debug(p.stdout)
     return json.loads(p.stdout)["blockdevices"]
 
-
+class NotMountable(Exception):
+    pass
 class Disk:
 
     def __init__(self, blkdev):
@@ -92,10 +93,13 @@ class Disk:
             ["sudo", "pgpcr-part", self.path, label], {"stdout": None})
 
     def mount(self):
+        children = self._getchildren()
+        if children is None:
+            raise NotMountable
         mountdir = "/mnt/"+self.serial
         external.process(["sudo", "mkdir", "-p", mountdir])
         external.process(
-            ["sudo", "mount", self._getchildren()[0]["name"], mountdir])
+            ["sudo", "mount", children[0]["name"], mountdir])
         self.mountpoint = mountdir
         chown = external.process(
             ["sudo", "chown", "-R", str(os.getuid()), mountdir])
