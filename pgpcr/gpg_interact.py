@@ -1,6 +1,7 @@
 import gpg
 import datetime
 import logging
+from . import smartcard
 
 _log = logging.getLogger(__name__)
 
@@ -100,7 +101,7 @@ def _keytocard(status, args, kc):
         if kc.overwrite:
             return "yes"
         else:
-            raise OverwriteError
+            raise smartcard.OverwriteError
     elif kc.step == 0:
         ret = "key %d" % kc.keynum
     elif kc.step == 1:
@@ -117,7 +118,5 @@ def keytocard(gk, fpr, slot, overwrite=False):
     kc = _KeytoCard(gk._master, fpr, slot, overwrite)
     gk._ctx.interact(gk._master, _keytocard, fnc_value=kc)
 
-class OverwriteError(Exception):
-    pass
 class NoKeyError(ValueError):
     pass

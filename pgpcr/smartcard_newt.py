@@ -50,7 +50,7 @@ def export(screen, gk):
         fpr = k.split(" ")[0]
         try:
             gk.keytocard(fpr, slot)
-        except gpg_interact.OverwriteError:
+        except smartcard.OverwriteError:
             overwrite = common.dangerConfirm(screen, _("Overwrite?"),
                 _("There is already a key in slot %d. Do you want to overwrite"
                 " it?") % slot)

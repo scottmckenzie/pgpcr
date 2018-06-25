@@ -10,6 +10,8 @@ class BadPIN(Exception):
     pass
 class PINBlocked(BadPIN):
     pass
+class OverwriteError(Exception):
+    pass
 class SmartcardError(Exception):
     def __init__(self, msg=""):
         self.msg = msg
@@ -24,6 +26,8 @@ def _raiseerr(err):
         raise BadPIN
     elif err.code_str == "PIN Blocked":
         raise PINBlocked
+    elif err.code_str == "File Exists":
+        raise OverwriteError
     else:
         raise SmartcardError(str(err))
 
@@ -49,7 +53,7 @@ class Smartcard:
         com += command
         err = self._assuan.assuan_transact(com, status_cb=self._assuanstatus)
         if err:
-            raise SmartcardError(str(err))
+            _raiseerr(err)
         return (self.__status, self.__args)
 
     def _assuanstatus(self, status, args):
