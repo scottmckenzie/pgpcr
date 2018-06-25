@@ -2,8 +2,11 @@ from pgpcr import common_newt
 import unittest
 import snack
 from time import sleep
+from os import environ
 import tests.helpers
 
+@unittest.skipIf("PGPCRINTERACT" not in environ.keys(), "Interactive tests"
+        " disabled. Set PGPCRINTERACT to enable them")
 class commonNewtTest(unittest.TestCase):
     def setUp(self):
         self.screen = snack.SnackScreen()

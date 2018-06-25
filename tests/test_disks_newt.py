@@ -3,8 +3,11 @@ import unittest
 from unittest.mock import patch
 import snack
 import tempfile
+from os import environ
 import tests.disks_mock
 
+@unittest.skipIf("PGPCRINTERACT" not in environ.keys(), "Interactive tests"
+        " disabled. Set PGPCRINTERACT to enable them")
 class testDisksNewt(unittest.TestCase):
     def setUp(self):
         self.screen = snack.SnackScreen()
