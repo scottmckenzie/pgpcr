@@ -94,15 +94,15 @@ def generate(screen, workdir):
         if gen:
             try:
                 smart.generate(slot)
-        except smartcard.OverwriteError:
-            overwrite = common.dangerConfirm(screen, _("Overwrite?"),
-                _("There is already a key in slot %d. Do you want to overwrite"
-                " it?") % slot)
-            if overwrite:
-                try:
-                    smart.generate(slot, True)
-                except smartcard.BadPIN:
-                    common.error(screen, _("Incorrect PIN"))
-                except smartcard.SmartcardError as e:
-                    common.error(screen, str(e))
-        i += 1
+            except smartcard.OverwriteError:
+                overwrite = common.dangerConfirm(screen, _("Overwrite?"),
+                    _("There is already a key in slot %d. Do you want to overwrite"
+                    " it?") % slot)
+                if overwrite:
+                    try:
+                        smart.generate(slot, True)
+                    except smartcard.BadPIN:
+                        common.error(screen, _("Incorrect PIN"))
+                    except smartcard.SmartcardError as e:
+                        common.error(screen, str(e))
+    i += 1
