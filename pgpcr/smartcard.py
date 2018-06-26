@@ -41,8 +41,7 @@ class Smartcard:
             err = self._assuan.assuan_transact("SCD LEARN --force",
                 status_cb=self._assuanlearn)
         except gpg.errors.GPGMEError as e:
-            raise SmartcardError(str(e))
-
+            err = e
         if err:
             _raiseerr(err)
         self.new = False
