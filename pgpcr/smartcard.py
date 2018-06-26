@@ -136,8 +136,13 @@ class Smartcard:
         self._scd(gen)
 
     @property
-    def serial(self):
+    def fullserial(self):
         return self._getattr("SERIALNO")
+
+    @property
+    def serial(self):
+        s = self.fullserial[-12:]
+        return s.strip("0")
 
 
     @property
