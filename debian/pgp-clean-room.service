@@ -23,16 +23,14 @@ Before=rescue.service
 ConditionPathExists=/dev/tty0
 
 [Service]
-# the VT is cleared by TTYVTDisallocate
 ExecStart=-/sbin/agetty --autologin pgpcr --noclear tty1 $TERM
 Type=idle
-Restart=always
+Restart=no
 RestartSec=0
 UtmpIdentifier=tty1
 TTYPath=/dev/tty1
 TTYReset=yes
 TTYVHangup=yes
-TTYVTDisallocate=yes
 KillMode=process
 IgnoreSIGPIPE=no
 SendSIGHUP=yes
