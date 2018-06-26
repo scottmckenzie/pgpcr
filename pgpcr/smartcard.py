@@ -12,6 +12,8 @@ class PINBlocked(BadPIN):
     pass
 class OverwriteError(Exception):
     pass
+class SocketNotFound(Exception):
+    pass
 class SmartcardError(Exception):
     def __init__(self, msg=""):
         self.msg = msg
@@ -28,6 +30,8 @@ def _raiseerr(err):
         raise PINBlocked
     elif err.code_str == "File Exists":
         raise OverwriteError
+    elif err.code_str == "IPC connect call failed":
+        raise SocketNotFound
     else:
         raise SmartcardError(str(err))
 
