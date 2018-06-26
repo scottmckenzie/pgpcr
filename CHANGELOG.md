@@ -375,10 +375,21 @@ Week 7
  - [x] Fix smartcard "IPC connect failed" errors
 	- Have to use gpgconf to create socketdirs when not using the default GNUPGHOME
 	- Not totally fixed as /run/$uid isn't created automatically
- - [ ] Use a proper login process through getty
+ - [x] Research a proper login process
 	- Rolling our own login process was causing too many bugs, even if it was initially simpler
-	- Not quite done with this, will fix up tomorrow
-	- Requires more research
+
+
+2018-06-26
+----------
+ - [x] ~~Use a proper login process through getty~~
+	- ~~Added a second user for the clean room application~~
+ - Removed the above as it added complexity without actually solving the problem
+ - [x] Fake a user session
+	- Not created in the live CD for some reason
+	- Assuan engine still checks the base ```/run/user/1000/gnupg``` directory
+ - [x] Move working directory to .gnupg
+	- Assuan is much happier this way
+	- Doesn't really matter since this is a live CD anyway
  - [ ] Import key from other backups
  - [ ] Help menus
 
