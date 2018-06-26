@@ -1,7 +1,10 @@
 import gpg
 import os
+import logging
 from distutils.dir_util import copy_tree
 from . import external, gpg_interact
+
+_log = logging.getLogger(__name__)
 
 class GPGKey:
 
@@ -19,9 +22,12 @@ class GPGKey:
         external.process(["gpgconf", "--create-socketdir"])
 
     def __del__(self):
-        os.environ.pop("GNUPGHOME", None)
-        external.process(["gpgconf", "--kill", "gpg-agent"])
-        external.process(["gpgconf", "--remove-socketdir"])
+        try:
+            external.process(["gpgconf", "--kill", "gpg-agent"])
+            os.environ.pop("GNUPGHOME", None)
+            external.process(["gpgconf", "--remove-socketdir"])
+        except external.CalledProcessError as e:
+            _log.warn(e.stderr)
 
     def genmaster(self, userid, passphrase=True):
         genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
