@@ -19,13 +19,15 @@ class GPGKey:
         # Ensure a gpg-agent is running and a socketdir is created
         os.environ["GNUPGHOME"] = self.homedir
         external.process(["gpgconf", "--launch", "gpg-agent"])
-        external.process(["gpgconf", "--create-socketdir"])
+        if self.homedir != defaulthome:
+            external.process(["gpgconf", "--create-socketdir"])
 
     def __del__(self):
         try:
             external.process(["gpgconf", "--kill", "gpg-agent"])
             os.environ.pop("GNUPGHOME", None)
-            external.process(["gpgconf", "--remove-socketdir"])
+            if self.homedir != defaulthome:
+                external.process(["gpgconf", "--remove-socketdir"])
         except external.CalledProcessError as e:
             _log.warn(e.stderr)
 
@@ -199,3 +201,4 @@ revoke_reasons = ["No reason specified", "Key has been compromised",
                   "Key is superseded", "Key is no longer used"]
 master_algos = ["rsa4096", "ed25519", "rsa3072", "rsa2048"]
 sub_algos = ["rsa2048", "rsa4096", "ed25519", "rsa3072"]
+defaulthome = os.environ["HOME"]+"/.gnupg"
