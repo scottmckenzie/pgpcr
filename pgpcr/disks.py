@@ -84,7 +84,7 @@ class Disk:
         else:
             dest = self.mountpoint+"/"+name
             shutil.rmtree(dest, ignore_errors=True)
-            shutil.copytree(workdir.name, dest,
+            shutil.copytree(workdir, dest,
                             ignore=shutil.ignore_patterns("S.*"))
             self.eject()
 

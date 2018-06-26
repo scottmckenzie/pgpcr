@@ -56,13 +56,14 @@ while running:
                               (_("Quit"), "quit")
                              ])
 
-    workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
+    tmp = tempfile.TemporaryDirectory(prefix="pgpcr")
+    workdir = tmp.name
     socketdir = "/run/user/"+str(os.getuid())
     subprocess.run(["sudo", "mkdir", "-p", socketdir])
     subprocess.run(["sudo", "chown", str(os.getuid()), socketdir])
     if ret is not None and ret.endswith("gpg"):
-        shutil.copyfile("/etc/pgpcr/gpg.conf", workdir.name+"/gpg.conf")
-        shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir.name+"/gpg-agent.conf")
+        shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
+        shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
         subprocess.run(["gpgconf", "--kill", "gpg-agent"])
     if ret == "new gpg":
         gpg_ui.new(screen, workdir)
@@ -95,7 +96,7 @@ while running:
                                       _("Would you like to shutdown the PGP Clean Room?"))
         if ret:
             running = False
-    workdir.cleanup()
+    tmp.cleanup()
 
 screen.finish()
 subprocess.run(["sudo", "shutdown", "now"])

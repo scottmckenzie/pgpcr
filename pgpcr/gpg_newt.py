@@ -6,7 +6,7 @@ import logging
 _log = logging.getLogger(__name__)
 
 def new(screen, workdir):
-    gk = gpg_ops.GPGKey(workdir.name)
+    gk = gpg_ops.GPGKey(workdir)
     gk.setstatus(_status)
     uid = common.uid(screen, _("New GPG Key"))
     if uid is None:
@@ -101,7 +101,7 @@ def load(screen, workdir):
     if lcw[0] == "cancel":
         return
     key = dirs[lcw[1]]
-    gk = gpg_ops.GPGKey(workdir.name, key, d.mountpoint+"/gpg/"+key)
+    gk = gpg_ops.GPGKey(workdir, key, d.mountpoint+"/gpg/"+key)
     gk.setstatus(_status)
     running = True
     while running:
