@@ -57,6 +57,9 @@ while running:
                              ])
 
     workdir = tempfile.TemporaryDirectory(prefix="pgpcr")
+    socketdir = "/run/user/"+str(os.getuid())
+    subprocess.run(["sudo", "mkdir", "-p", socketdir])
+    subprocess.run(["sudo", "chown", str(os.getuid()), socketdir])
     if ret is not None and ret.endswith("gpg"):
         shutil.copyfile("/etc/pgpcr/gpg.conf", workdir.name+"/gpg.conf")
         shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir.name+"/gpg-agent.conf")
