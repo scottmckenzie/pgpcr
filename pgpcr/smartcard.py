@@ -22,7 +22,7 @@ class SmartcardError(Exception):
         return self.msg
 
 def _raiseerr(err):
-    if err.code_str == "Card Removed":
+    if err.code_str == "Card Removed" or err.code_str == "No such device":
         raise NoSmartcardDetected
     elif err.code_str == "Bad PIN":
         raise BadPIN
