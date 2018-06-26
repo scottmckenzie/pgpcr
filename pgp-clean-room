@@ -81,7 +81,7 @@ while running:
         if adv[0] == "cancel":
             continue
         if adv[1] == "gen":
-            smartcard_ui.generate(screen, workdir)
+            smartcard_ui.generate(screen)
         elif adv[1] == "import":
             gpg_ui.importkey(screen, workdir)
         elif adv[1] == "setsmart":

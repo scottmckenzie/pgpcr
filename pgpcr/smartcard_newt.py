@@ -82,7 +82,7 @@ def setup(screen, smart):
     except SmartcardError as e:
         common.error(screen, str(e))
 
-def generate(screen, workdir):
+def generate(screen):
     smart = pickcard(screen)
     slot = 1
     for s in smart.slots:
