@@ -2,16 +2,16 @@
 
 from snack import *
 import subprocess
-import tempfile
 import shutil
 import gettext
 import sys
 import traceback
 import os
 import logging
-
+import shutil
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
+from pgpcr.gpg_ops import defaulthome
 
 subprocess.run(["setfont", "/usr/share/consolefonts/Unifont-APL8x16.psf.gz"])
 screen = SnackScreen()
@@ -56,11 +56,13 @@ while running:
                               (_("Quit"), "quit")
                              ])
 
-    tmp = tempfile.TemporaryDirectory(prefix="pgpcr")
-    workdir = tmp.name
-    socketdir = "/run/user/"+str(os.getuid())
-    subprocess.run(["sudo", "mkdir", "-p", socketdir])
-    subprocess.run(["sudo", "chown", str(os.getuid()), socketdir])
+    workdir = defaulthome
+    if not os.path.exists(workdir):
+        os.mkdir(workdir)
+    if workdir != defaulthome:
+        socketdir = "/run/user/"+str(os.getuid())
+        subprocess.run(["sudo", "mkdir", "-p", socketdir])
+        subprocess.run(["sudo", "chown", str(os.getuid()), socketdir])
     if ret is not None and ret.endswith("gpg"):
         shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
         shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
@@ -96,7 +98,7 @@ while running:
                                       _("Would you like to shutdown the PGP Clean Room?"))
         if ret:
             running = False
-    tmp.cleanup()
+    shutil.rmtree(workdir)
 
 screen.finish()
 subprocess.run(["sudo", "shutdown", "now"])
