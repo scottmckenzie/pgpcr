@@ -6,17 +6,10 @@
 #  (at your option) any later version.
 
 [Unit]
-Description=Getty on %I
-Documentation=man:agetty(8) man:systemd-getty-generator(8)
-Documentation=http://0pointer.de/blog/projects/serial-console.html
+Description=PGP Clean Room
 After=systemd-user-sessions.service plymouth-quit-wait.service
-After=rc-local.service
-
-# If additional gettys are spawned during boot then we should make
-# sure that this is synchronized before getty.target, even though
-# getty.target didn't actually pull it in.
-Before=getty.target
-IgnoreOnIsolate=yes
+After=multi-user.target
+Conflicts=getty@tty1.service
 
 # IgnoreOnIsolate causes issues with sulogin, if someone isolates
 # rescue.target or starts rescue.service from multi-user.target or
@@ -31,12 +24,12 @@ ConditionPathExists=/dev/tty0
 
 [Service]
 # the VT is cleared by TTYVTDisallocate
-ExecStart=-/sbin/agetty --autologin pgpcr --noclear %I $TERM
+ExecStart=-/sbin/agetty --autologin pgpcr --noclear tty1 $TERM
 Type=idle
 Restart=always
 RestartSec=0
-UtmpIdentifier=%I
-TTYPath=/dev/%I
+UtmpIdentifier=tty1
+TTYPath=/dev/tty1
 TTYReset=yes
 TTYVHangup=yes
 TTYVTDisallocate=yes
@@ -49,5 +42,4 @@ SendSIGHUP=yes
 Environment=LANG= LANGUAGE= LC_CTYPE= LC_NUMERIC= LC_TIME= LC_COLLATE= LC_MONETARY= LC_MESSAGES= LC_PAPER= LC_NAME= LC_ADDRESS= LC_TELEPHONE= LC_MEASUREMENT= LC_IDENTIFICATION=
 
 [Install]
-WantedBy=getty.target
-DefaultInstance=tty1
+WantedBy=multi-user.target
