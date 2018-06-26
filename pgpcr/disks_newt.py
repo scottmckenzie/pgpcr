@@ -37,7 +37,7 @@ def store(screen, workdir, name):
             if i > 2:
                 moredisks = common.dangerConfirm(screen, _("Backups"),
                                                  _("Would you like to backup"
-                                                   "  to another disk?"))
+                                                   " to another disk?"))
     except disks.CopyError as e:
         s = " ".join(e)
         common.error(s)
