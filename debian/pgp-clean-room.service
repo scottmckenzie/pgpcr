@@ -1,43 +1,17 @@
-#  This file is part of systemd.
-#
-#  systemd is free software; you can redistribute it and/or modify it
-#  under the terms of the GNU Lesser General Public License as published by
-#  the Free Software Foundation; either version 2.1 of the License, or
-#  (at your option) any later version.
-
 [Unit]
 Description=PGP Clean Room
-After=systemd-user-sessions.service plymouth-quit-wait.service
 After=multi-user.target
 Conflicts=getty@tty1.service
 
-# IgnoreOnIsolate causes issues with sulogin, if someone isolates
-# rescue.target or starts rescue.service from multi-user.target or
-# graphical.target.
-Conflicts=rescue.service
-Before=rescue.service
-
-# On systems without virtual consoles, don't start any getty. Note
-# that serial gettys are covered by serial-getty@.service, not this
-# unit.
-ConditionPathExists=/dev/tty0
-
 [Service]
-ExecStart=-/sbin/agetty --autologin pgpcr --noclear tty1 $TERM
-Type=idle
-Restart=no
-RestartSec=0
-UtmpIdentifier=tty1
+User=pgp
+Type=simple
+ExecStart=/usr/bin/pgp-clean-room
 TTYPath=/dev/tty1
-TTYReset=yes
-TTYVHangup=yes
-KillMode=process
-IgnoreSIGPIPE=no
-SendSIGHUP=yes
-
-# Unset locale for the console getty since the console has problems
-# displaying some internationalized messages.
-Environment=LANG= LANGUAGE= LC_CTYPE= LC_NUMERIC= LC_TIME= LC_COLLATE= LC_MONETARY= LC_MESSAGES= LC_PAPER= LC_NAME= LC_ADDRESS= LC_TELEPHONE= LC_MEASUREMENT= LC_IDENTIFICATION=
+StandardInput=tty-force
+StandardOutput=inherit
+StandardError=inherit
+Environment=GPGME_DEBUG=9:/home/pgp/gpgme.log XDG_RUNTIME_DIR=/home/pgp
 
 [Install]
 WantedBy=multi-user.target
