@@ -140,7 +140,7 @@ def load(screen, workdir):
 
 
 def sign(screen, gk, path):
-    s = disks_newt.mountdisk(screen, _("keys to sign disk"))
+    s = disks_newt.mountdisk(screen, _("keys to sign"))
     if s is None:
         return
     keys = fmt.signing(s.mountpoint)
