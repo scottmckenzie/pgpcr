@@ -390,6 +390,13 @@ Week 7
  - [x] Move working directory to .gnupg
 	- Assuan is much happier this way
 	- Doesn't really matter since this is a live CD anyway
+
+2018-06-27
+----------
+ - [ ] Work on solving ```Pinentry: Inappropriate ioctl for device``` [#10](https://salsa.debian.org/tookmund-guest/pgpcr/issues/10)
+ - [x] Add a simplified proper login
+	- More "correct" but doesn't seem to help anything
+ - [ ] Add a cancel button to pickdisk dialogs
  - [ ] Import key from other backups
  - [ ] Help menus
 
