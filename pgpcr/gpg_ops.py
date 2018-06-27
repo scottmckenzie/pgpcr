@@ -195,6 +195,12 @@ class GPGKey:
         gpg_interact.keytocard(self, fpr, slot, overwrite)
         self._refreshmaster()
 
+    def importbackup(self, backup):
+        if os.path.isfile(backup):
+            self._import(backup)
+        else:
+            self.__init__(self.homedir, loaddir=backup)
+
 GPGMEError = gpg.errors.GPGMEError
 
 revoke_reasons = ["No reason specified", "Key has been compromised",
