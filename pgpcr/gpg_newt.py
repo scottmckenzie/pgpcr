@@ -88,9 +88,9 @@ def _progress(what, type, current, total, prog):
 
 def load(screen, workdir):
     d = disks_newt.mountdisk(screen, _("master key backup"))
-    dirs = None
-    if d is not None:
-        dirs = fmt.backups(d.mountpoint)
+    if d is None:
+        return
+    dirs = fmt.backups(d.mountpoint)
     if dirs is None:
         common.error(screen, _("This disk does not contain a master key"
                                " backup."))
@@ -141,6 +141,8 @@ def load(screen, workdir):
 
 def sign(screen, gk, path):
     s = disks_newt.mountdisk(screen, _("keys to sign disk"))
+    if s is None:
+        return
     keys = fmt.signing(s.mountpoint)
     if keys is None:
         common.alert(screen, _("Key Signing"),

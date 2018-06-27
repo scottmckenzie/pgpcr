@@ -14,7 +14,8 @@ def pickdisks(screen, use):
         return pickdisks(screen, use)
     dlist = [str(x) for x in d]
     lcw = common.LCW(screen, _("Disks"), _("Pick your %s disk") % use,
-                              dlist, buttons=[(_("Refresh"), "refresh")])
+                              dlist, buttons=[(_("Refresh"), "refresh"),
+                                  (_("Cancel"), "cancel")])
     if lcw[0] is None or lcw[0] == "ok":
         return d[lcw[1]]
     elif lcw[0] == "refresh":
@@ -28,7 +29,21 @@ def store(screen, workdir, name):
         i = 1
         moredisks = True
         while moredisks:
-            b = setup(screen, _("master key backup"), "PGPCR Backup "+str(i))
+            setupFail = True
+            b = None
+            while setupFail:
+                b = setup(screen, _("master key backup ")+str(i),
+                        "PGPCR Backup "+str(i))
+                if b is None:
+                    skip = common.dangerConfirm(screen, _("Danger!"),
+                            _("Are you sure you don't want to make any more"
+                                " backups?"))
+                    if skip:
+                        setupFail = False
+                else:
+                    setupFail = False
+            if b is None:
+                return
             b.backup(workdir, name)
             common.alert(screen, str(b),
                          _("Your backup to the above disk is now complete "
@@ -73,6 +88,8 @@ def export(screen, gk, secret=False):
 
 def setup(screen, use, label):
     disk = pickdisks(screen, use)
+    if disk is None:
+        return
     if disk.label is not None and "PGPCR" in disk.label:
         try:
             disk.mount()
@@ -96,6 +113,8 @@ def setup(screen, use, label):
 
 def mountdisk(screen, use):
     d = pickdisks(screen, use)
+    if d is None:
+        return
     try:
         d.mount()
         return d
