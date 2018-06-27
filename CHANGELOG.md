@@ -464,4 +464,4 @@ Would like to do these if I have time but we'll see how this goes
 	- Basically just don't always reformat?
  - [ ] Optional signature expiry date?
 	- I have no idea if people use this
- - [ ] Pick key algorithms from a list
+ - [ ] Memory wipe like TAILS
