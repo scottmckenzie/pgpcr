@@ -224,8 +224,21 @@ def expirekey(screen, gk):
 
 
 def importkey(screen, workdir):
-    #TODO: Import keys from secret key or .gnupg backups
-    common.NotImplementedYet(screen)
+    ew = common.EW(screen, _("Import existing key"), _("Please mount an"
+        " existing key backup, either an exported secret key or .gnupg and"
+        " enter the path to it below"), ["Key Location"])
+    if ew[0] == "cancel":
+        return
+    gk = gpg_ops.GPGKey(workdir)
+    kl = gk.importbackup(ew[1][0])
+    lcw = common.LCW(screen, _("Master Key"), _("Which key is your master"
+        " key?"), kl)
+    if lcw[0] == "cancel":
+        return
+    gk.setmaster(kl[lcw[1]])
+    save(screen, workdir, gk)
+
+
 
 def _status(keyword, args, hook=None):
     if keyword is None and args is None:
