@@ -11,7 +11,7 @@ TTYPath=/dev/tty1
 StandardInput=tty-force
 StandardOutput=inherit
 StandardError=inherit
-Environment=GPGME_DEBUG=9:/home/pgp/gpgme.log XDG_RUNTIME_DIR=/home/pgp
+Environment=GPGME_DEBUG=9:/home/pgp/gpgme.log GPG_TTY=/dev/tty1
 
 [Install]
 WantedBy=multi-user.target
