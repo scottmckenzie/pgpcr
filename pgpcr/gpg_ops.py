@@ -169,6 +169,9 @@ class GPGKey:
         result = self._ctx.op_import_result()
         return result.imports
 
+    def setmaster(self, fpr):
+        self._master = self._ctx.get_key(fpr)
+
     def signkey(self, folder, keyfile):
         pending = folder+"/signing/pending"
         done = folder+"/signing/done"
@@ -200,6 +203,8 @@ class GPGKey:
             self._import(backup)
         else:
             self.__init__(self.homedir, loaddir=backup)
+        kl = list(self._ctx.keylist(secret=True))
+        return [x.fpr for x in kl]
 
 GPGMEError = gpg.errors.GPGMEError
 
