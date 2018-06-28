@@ -1,11 +1,13 @@
 import unittest
 from os import environ
 from pgpcr.smartcard import *
+import subprocess
 
 @unittest.skipUnless("PGPCRINTERACT" in environ.keys(), "Interactive tests"
         " disabled. Set PGPCRINTERACT to enable them")
 class SmartcardTest(unittest.TestCase):
     def setUp(self):
+        subprocess.run(["gpgconf", "--launch", "gpg-agent"])
         self.smart = Smartcard()
 
     def test_properties(self):
