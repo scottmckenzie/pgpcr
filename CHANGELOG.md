@@ -396,8 +396,10 @@ Week 7
  - [ ] Work on solving ```Pinentry: Inappropriate ioctl for device``` [#10](https://salsa.debian.org/tookmund-guest/pgpcr/issues/10)
  - [x] Add a simplified proper login
 	- More "correct" but doesn't seem to help anything
- - [ ] Add a cancel button to pickdisk dialogs
- - [ ] Import key from other backups
+ - [x] Add a cancel button to pickdisk dialogs
+	- Update pickdisk users to support this as well
+ - [x] Import key from other backups
+	- Exported secret key file or GNUPGHOME folder
  - [ ] Help menus
 
 Week 8
