@@ -408,6 +408,12 @@ Week 7
 	- Better as a while loop
  - [x] Add tests for smartcard
 	- Fails often, not totally sure why
+ - [x] Add translatable help line
+ - [x] Split key algorithm selection into algorithm and size
+	- Makes adding more algorithms significantly easier
+ - [x] Add back ECC for master keys
+	- Still need to sort out subkeys [#11](https://salsa.debian.org/tookmund-guest/pgpcr/issues/11)
+ - [x] Add support for cancelling disk export
  - [ ] Help menus
 
 Week 8
