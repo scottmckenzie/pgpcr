@@ -2,6 +2,7 @@ import gpg
 import os
 import logging
 from distutils.dir_util import copy_tree
+from collections import OrderedDict
 from . import external, gpg_interact
 
 _log = logging.getLogger(__name__)
@@ -215,6 +216,14 @@ GPGMEError = gpg.errors.GPGMEError
 
 revoke_reasons = ["No reason specified", "Key has been compromised",
                   "Key is superseded", "Key is no longer used"]
-master_algos = ["rsa4096", "ed25519", "rsa3072", "rsa2048"]
-sub_algos = ["rsa2048", "rsa4096", "ed25519", "rsa3072"]
+master_algos = OrderedDict([
+    ("rsa", ["4096", "3072", "2048"]),
+    ("ed25519", None),
+    ("nistp", ["521", "384", "256"]),
+    ("brainpoolP", ["512r1", "384r1", "256r1"])
+    ])
+sub_algos = OrderedDict([
+    ("rsa", ["2048", "4096", "3072"]),
+    ("ed25519", None)
+    ])
 defaulthome = os.environ["HOME"]+"/.gnupg"
