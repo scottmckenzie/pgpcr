@@ -400,6 +400,12 @@ Week 7
 	- Update pickdisk users to support this as well
  - [x] Import key from other backups
 	- Exported secret key file or GNUPGHOME folder
+
+2018-06-28
+----------
+ - [x] Catch import errors
+ - [x] Remove unecessary recursion in pickdisks
+	- Better as a while loop
  - [ ] Help menus
 
 Week 8
