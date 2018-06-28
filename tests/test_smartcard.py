@@ -11,6 +11,7 @@ class SmartcardTest(unittest.TestCase):
         self.smart = Smartcard()
 
     def test_properties(self):
+        print()
         print(self.smart.name)
         print(self.smart.login)
         print(self.smart.sex)
@@ -19,6 +20,7 @@ class SmartcardTest(unittest.TestCase):
         print(self.smart.serial)
 
     def test_set_properties(self):
+        print()
         self.smart.name = "Test Name"
         print(self.smart.name)
         self.smart.url = "https://example.com"
