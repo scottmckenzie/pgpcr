@@ -406,6 +406,8 @@ Week 7
  - [x] Catch import errors
  - [x] Remove unecessary recursion in pickdisks
 	- Better as a while loop
+ - [x] Add tests for smartcard
+	- Fails often, not totally sure why
  - [ ] Help menus
 
 Week 8
