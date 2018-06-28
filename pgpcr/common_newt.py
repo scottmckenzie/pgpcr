@@ -106,6 +106,7 @@ class Progress:
         self.refresh()
 
     def setText(self, text):
+        self._text = text
         self.t.setText(text)
         self.refresh()
 
