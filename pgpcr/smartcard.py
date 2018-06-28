@@ -107,9 +107,9 @@ class Smartcard:
 
     @sex.setter
     def sex(self, val):
-        if val is not None and val not in sexopt:
+        if val is not None and val not in sexopt.keys():
             raise ValueError("Sex must be either Male, Female, or Unknown")
-        valnum = sexopt.index(val)
+        valnum = sexopt.keys()[sexopt.values().index(val)]
         self._setprop("sex", str(valnum))
 
     @property
@@ -164,7 +164,7 @@ class Smartcard:
         self._scd("PASSWD 3")
 
 
-sexopt = [None] * 10
+sexopt = {}
 sexopt[1] = "m"
 sexopt[2] = "f"
 sexopt[9] = "u"
