@@ -67,7 +67,16 @@ def export(screen, gk, secret=False):
         label = _("public key export")
         if secret:
             label = _("subkey and public key export")
-        public = setup(screen, label, "PGPCR Export")
+        publicFail = True
+        while publicFail:
+            public = setup(screen, label, "PGPCR Export")
+            if public is None:
+                exp = common.dangerConfirm(screen, _("Public Key Export"),
+                        _("Are you sure you don't want to export your key?"))
+                if exp:
+                    return
+            else:
+                publicFail = False
         copy("/etc/pgpcr/import.sh", public.mountpoint)
         try:
             mkdir(public.mountpoint+"/public")
