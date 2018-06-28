@@ -8,6 +8,8 @@ padding = (0, 0, 0, 1)
 def screen():
     s = SnackScreen()
     s.helpCallback(helpCallback)
+    s.pushHelpLine(_("  <F1> Help   |   <Tab>/<Alt-Tab> between elements   |"
+        "   <Space> selects   |   <F12> next screen"))
     return s
 
 def helpCallback(screen, text):
