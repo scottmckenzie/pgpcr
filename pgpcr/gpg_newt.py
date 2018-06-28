@@ -25,7 +25,7 @@ def new(screen, workdir):
     try:
         gk.genmaster(uid)
     except gpg_ops.GPGMEError as g:
-        screen = SnackScreen()
+        screen = common.screen()
         common.error(screen, _("Master Key generation error")+": "+str(g))
         return
     sprog = common.Progress(screen, _("Key Generation"),
@@ -35,10 +35,10 @@ def new(screen, workdir):
     try:
         gk.genseasubs(sprog.setText)
     except gpg_ops.GPGMEError as g:
-        screen = SnackScreen()
+        screen = common.screen()
         common.error(screen, _("Subkey generation error")+": "+str(g))
         return
-    screen = SnackScreen()
+    screen = common.screen()
     common.alert(screen, _("Key Generation"), _("Key Generation Complete!"))
     save(screen, workdir, gk)
 
@@ -82,7 +82,7 @@ def _progress(what, type, current, total, prog):
         prog.inc()
     if prog.gk.redraw:
         prog.screen.finish()
-        prog.screen = SnackScreen()
+        prog.screen = common.screen()
         prog.recreate()
 
 
@@ -106,7 +106,7 @@ def load(screen, workdir):
     running = True
     while running:
         screen.finish()
-        screen = SnackScreen()
+        screen = common.screen()
         lm = common.listmenu(screen, key, _("What would you like to do?"),
                                  [(_("Sign GPG Public Keys"), "sign"),
                                   (_("Associate a UID with your master key"),
@@ -158,7 +158,7 @@ def sign(screen, gk, path):
         gk.signkey(s.mountpoint, k)
         if gk.redraw:
             screen.finish()
-            screen = SnackScreen()
+            screen = common.screen()
         common.alert(screen, _("Key signing"), _("Signed %s") % k)
     s.eject()
 
@@ -179,7 +179,7 @@ def revokekey(screen, gk):
             return
         screen.finish()
         gk.revokekey(fpr, lcw[1], text[1][0])
-        screen = SnackScreen()
+        screen = common.screen()
         common.alert(screen, k, _("Revoked %s") % k)
 
 def adduid(screen, gk):
@@ -206,7 +206,7 @@ def expirekey(screen, gk):
     fpr = gk.keys[lcw[1]].split(" ")[0]
     invalid = True
     while invalid:
-        screen = SnackScreen()
+        screen = common.screen()
         ew = common.EW(screen, fpr, _("When do you want this key to expire?"
             "(YYYY-MM-DD)"), [_("Expiration Date:")])
         if ew[0] == "cancel":
@@ -215,10 +215,10 @@ def expirekey(screen, gk):
         try:
             gk.expirekey(fpr, ew[1][0])
         except (ValueError, TypeError):
-            common.error(SnackScreen(), _("Please enter a valid date in the"
+            common.error(common.screen(), _("Please enter a valid date in the"
                 " future."))
             continue
-        common.alert(SnackScreen(), fpr, _("Changed expiration date on %s")
+        common.alert(common.screen(), fpr, _("Changed expiration date on %s")
                 % fpr)
         invalid = False
 

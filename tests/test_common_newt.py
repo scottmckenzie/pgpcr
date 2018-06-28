@@ -9,7 +9,7 @@ import tests.helpers
         " disabled. Set PGPCRINTERACT to enable them")
 class commonNewtTest(unittest.TestCase):
     def setUp(self):
-        self.screen = snack.SnackScreen()
+        self.screen = common_newt.screen()
 
     def tearDown(self):
         self.screen.finish()
@@ -30,8 +30,7 @@ class commonNewtTest(unittest.TestCase):
 
     def test_checkboxchoicewindow(self):
         common_newt.CheckboxChoiceWindow(self.screen, "Test Checkboxes",
-                                               "This is a test",
-                                               ["one", "two", "three"])
+                "This is a test", ["one", "two", "three"], help="test help")
 
     def test_CatchCPE(self):
         e = _cpetest()

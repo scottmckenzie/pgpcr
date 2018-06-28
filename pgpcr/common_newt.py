@@ -5,6 +5,14 @@ width = 40
 padding = (0, 0, 0, 1)
 
 
+def screen():
+    s = SnackScreen()
+    s.helpCallback(helpCallback)
+    return s
+
+def helpCallback(screen, text):
+    alert(screen, _("Help"), text)
+
 def new_password(screen):
     pass1 = Entry(20, password=1)
     pass2 = Entry(20, password=1)
@@ -63,7 +71,7 @@ def NotImplementedYet(screen):
 
 class Progress:
     def __init__(self, screen, title, text, total, current=0):
-        self.screen = SnackScreen() if screen is None else screen
+        self.screen = screen() if screen is None else screen
         self._create(title, text, total, current)
 
     def _create(self, title, text, total, current):

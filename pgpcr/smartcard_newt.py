@@ -31,7 +31,7 @@ def export(screen, gk):
             setup(screen, smart)
             if gk.redraw:
                 screen.finish()
-                screen = SnackScreen()
+                screen = common.screen()
     keys = gk.keys
     ccw = common.CheckboxChoiceWindow(screen, gk.fpr,
                                       _("Which key(s) do you want to export?"),
@@ -60,7 +60,7 @@ def export(screen, gk):
             common.error(screen, str(e))
         if gk.redraw:
             screen.finish()
-            screen = SnackScreen()
+            screen = common.screen()
 
 def setup(screen, smart):
     common.alert(screen, _("Set PIN"), _("You will first be asked to set"
@@ -68,7 +68,7 @@ def setup(screen, smart):
     smart.setPIN()
     smart.setAdminPIN()
     screen.finish()
-    screen = SnackScreen()
+    screen = common.screen()
     ew = common.EW(screen, _("New Smartcard"), _("Setup your new smartcard"),
             [_("Name of cardholder"), _("Language Preference"),
                 _("Sex (m/f/u)"), _("Login Data")])
