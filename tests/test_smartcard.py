@@ -3,8 +3,8 @@ from os import environ
 from pgpcr.smartcard import *
 import subprocess
 
-@unittest.skipUnless("PGPCRINTERACT" in environ.keys(), "Interactive tests"
-        " disabled. Set PGPCRINTERACT to enable them")
+@unittest.skipUnless("PGPCRSMARTCARD" in environ.keys(), "Smartcard tests"
+        " disabled. Set PGPCRSMARTCARD to enable them")
 class SmartcardTest(unittest.TestCase):
     def setUp(self):
         subprocess.run(["gpgconf", "--launch", "gpg-agent"])
