@@ -43,19 +43,40 @@ def new(screen, workdir):
     save(screen, workdir, gk)
 
 def keyalgos(screen, gk):
+    masteralgolist = list(gpg_ops.master_algos.keys())
     mlcw = common.LCW(screen, _("Master Key Algorithm"),_("Pick the"
         " algorithm you would like to use for your new master key. If you're"
         " unsure, the defaults are well chosen and should work for"
-        " most people"), gpg_ops.master_algos)
+        " most people"), masteralgolist)
     if mlcw[0] == "cancel":
         return False
+    masteralgo = masteralgolist[mlcw[1]]
+    mastersizes = gpg_ops.master_algos[masteralgo]
+    if mastersizes is not None:
+        mks = common.LCW(screen, _("Master Key Size"), _("Pick the size of"
+            " your new master key. If you're unsure the defaults are well"
+            " chosen and should work for most people"), mastersizes)
+        if mks[0] == "cancel":
+            return False
+        masteralgo += mastersizes[mks[1]]
+    subalgolist = list(gpg_ops.sub_algos.keys())
     slcw = common.LCW(screen, _("Subkey Algorithm"),_("Pick the"
         " algorithm you would like to use for your new subkeys. If you're"
         " unsure, the defaults are well chosen and should work for"
-        " most people"), gpg_ops.sub_algos)
+        " most people"), subalgolist)
     if slcw[0] == "cancel":
         return False
-    gk.setalgorithms(gpg_ops.master_algos[mlcw[1]], gpg_ops.sub_algos[slcw[1]])
+    subalgo = subalgolist[slcw[1]]
+    subsizes = gpg_ops.sub_algos[subalgo]
+    if subsizes is not None:
+        sks = common.LCW(screen, _("Master Key Size"), _("Pick the size of"
+            " your new master key. If you're unsure the defaults are well"
+            " chosen and should work for most people"), subsizes)
+        if sks[0] == "cancel":
+            return False
+        subalgo += subsizes[sks[1]]
+
+    gk.setalgorithms(masteralgo, subalgo)
     return True
 
 def save(screen, workdir, gk):
