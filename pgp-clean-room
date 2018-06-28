@@ -33,6 +33,8 @@ gettext.install("pgpcr", codeset=lang)
 
 os.environ["LANGUAGE"] = lang
 
+from pgpcr import helptext
+
 common_ui.alert(screen, _("Boot Media"), _("As long as this computer has at"
                 " least 1 GB of RAM, you can now remove the boot media, as the"
                 " entire filesystem has been loaded into RAM."))
@@ -57,7 +59,7 @@ while running:
                               (_("Load a GPG Master Key from USB"), "load gpg"),
                               (_("Advanced Options"), "adv"),
                               (_("Quit"), "quit")
-                             ])
+                             ], help=helptext.mainMenu)
 
     workdir = defaulthome
     if not os.path.exists(workdir):
