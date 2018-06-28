@@ -199,6 +199,8 @@ class GPGKey:
         self._refreshmaster()
 
     def importbackup(self, backup):
+        if not os.path.exists(backup):
+            raise ValueError(_("No valid backup found at '%s'") % backup)
         if os.path.isfile(backup):
             self._import(backup)
         else:
