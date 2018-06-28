@@ -5,23 +5,24 @@ from shutil import copy
 from os import mkdir
 
 def pickdisks(screen, use):
-    d = disks.getdisks()
-    if d == []:
-        common.alert(screen, _("Disks"),
-                          _("No removable storage connected."
-                          " Please connect some and press OK."))
-        sleep(1)
-        return pickdisks(screen, use)
-    dlist = [str(x) for x in d]
-    lcw = common.LCW(screen, _("Disks"), _("Pick your %s disk") % use,
-                              dlist, buttons=[(_("Refresh"), "refresh"),
-                                  (_("Cancel"), "cancel")])
-    if lcw[0] is None or lcw[0] == "ok":
-        return d[lcw[1]]
-    elif lcw[0] == "refresh":
-        return pickdisks(screen, use)
-    else:
-        return None
+    while True:
+        d = disks.getdisks()
+        if d == []:
+            common.alert(screen, _("Disks"),
+                    _("No removable storage connected."
+                        " Please connect some and press OK."))
+            sleep(1)
+            continue
+        dlist = [str(x) for x in d]
+        lcw = common.LCW(screen, _("Disks"), _("Pick your %s disk") % use,
+                dlist, buttons=[(_("Refresh"), "refresh"),
+                    (_("Cancel"), "cancel")])
+        if lcw[0] is None or lcw[0] == "ok":
+            return d[lcw[1]]
+        elif lcw[0] == "refresh":
+            continue
+        else:
+            return None
 
 
 def store(screen, workdir, name):
