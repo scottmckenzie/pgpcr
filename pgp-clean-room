@@ -52,7 +52,7 @@ log.info("GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
 
 running = True
 while running:
-    screen = common.screen()
+    screen = common_ui.screen()
     ret = common_ui.listmenu(screen, _("Welcome to the PGP Clean Room!"),
                              _("What do you wish to do?"),
                              [(_("Generate a New GPG Master Key"), "new gpg"),
