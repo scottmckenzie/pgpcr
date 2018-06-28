@@ -204,6 +204,9 @@ class GPGKey:
         else:
             self.__init__(self.homedir, loaddir=backup)
         kl = list(self._ctx.keylist(secret=True))
+        if len(kl) == 1:
+            self.setmaster(kl[0])
+            return None
         return [x.fpr for x in kl]
 
 GPGMEError = gpg.errors.GPGMEError

@@ -231,11 +231,12 @@ def importkey(screen, workdir):
         return
     gk = gpg_ops.GPGKey(workdir)
     kl = gk.importbackup(ew[1][0])
-    lcw = common.LCW(screen, _("Master Key"), _("Which key is your master"
-        " key?"), kl)
-    if lcw[0] == "cancel":
-        return
-    gk.setmaster(kl[lcw[1]])
+    if kl is not None:
+        lcw = common.LCW(screen, _("Master Key"), _("Which key is your master"
+            " key?"), kl)
+        if lcw[0] == "cancel":
+            return
+        gk.setmaster(kl[lcw[1]])
     save(screen, workdir, gk)
 
 
