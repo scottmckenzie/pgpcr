@@ -70,6 +70,11 @@ def NotImplementedYet(screen):
     alert(screen, "Not Implemented Yet",
           "This feature has not yet been implemented")
 
+def redraw(s, doIt):
+    if doIt:
+        s.finish()
+        s = screen()
+    return s
 
 class Progress:
     def __init__(self, screen, title, text, total, current=0):

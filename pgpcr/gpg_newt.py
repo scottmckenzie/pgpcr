@@ -177,9 +177,7 @@ def sign(screen, gk, path):
         return
     for k in rw[1]:
         gk.signkey(s.mountpoint, k)
-        if gk.redraw:
-            screen.finish()
-            screen = common.screen()
+        screen = common.redraw(screen, gk.redraw)
         common.alert(screen, _("Key Signing"), _("Signed %s") % k)
     s.eject()
 
