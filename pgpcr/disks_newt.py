@@ -33,7 +33,7 @@ def store(screen, workdir, name):
             setupFail = True
             b = None
             while setupFail:
-                b = setup(screen, _("master key backup ")+str(i),
+                b = setup(screen, _("master key backup")+" "+str(i),
                         "PGPCR Backup "+str(i))
                 if b is None:
                     skip = common.dangerConfirm(screen, _("Danger!"),

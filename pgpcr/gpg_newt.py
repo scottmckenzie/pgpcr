@@ -180,7 +180,7 @@ def sign(screen, gk, path):
         if gk.redraw:
             screen.finish()
             screen = common.screen()
-        common.alert(screen, _("Key signing"), _("Signed %s") % k)
+        common.alert(screen, _("Key Signing"), _("Signed %s") % k)
     s.eject()
 
 def revokekey(screen, gk):
