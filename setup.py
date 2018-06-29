@@ -2,6 +2,7 @@
 
 from setuptools import setup
 from setuptools.command.build_py import build_py
+from tests import helpers
 
 class BuildCommand(build_py):
     def run(self):
