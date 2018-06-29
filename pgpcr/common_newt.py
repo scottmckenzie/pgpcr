@@ -82,8 +82,8 @@ def redraw(s, doIt):
     return s
 
 class Progress:
-    def __init__(self, screen, title, text, total, current=0):
-        self.screen = screen() if screen is None else screen
+    def __init__(self, s, title, text, total, current=0):
+        self.screen = screen() if s is None else s
         self._create(title, text, total, current)
 
     def _create(self, title, text, total, current):
