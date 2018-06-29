@@ -423,6 +423,8 @@ Week 7
 ----------
  - [x] Inform user of what keys are being generated, as per [#5](https://salsa.debian.org/tookmund-guest/pgpcr/issues/5)
 	- Still can't do anything to inform the user about generating the revocation certificate
+ - [x] Check logs to see if system has actually been loaded to RAM [#3](https://salsa.debian.org/tookmund-guest/pgpcr/issues/3)
+ - [x] Test generating ECC subkeys with GPGME C api, for [#11](https://salsa.debian.org/tookmund-guest/pgpcr/issues/11)
  - [ ] Help menus
 
 Week 8
