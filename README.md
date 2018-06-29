@@ -62,11 +62,11 @@ To update the template, run:
 ```
 ./setup.py extract_messages
 ```
+
 ### Adding New Translations
-Copy the template:
+Add a catalog for your language:
 ```
-mkdir -p po/$LANG/LC_MESSAGES/
-cp po/pgpcr.pot po/$LANG/LC_MESSAGES/pgpcr.po
+./setup.py init_catalog -l $LANG
 ```
 
 Add your translations to the po file.
@@ -76,7 +76,11 @@ Add your translations to the install file by appending the line below to ```debi
 po/$LANG/LC_MESSAGES/$LANG.mo	/usr/share/locales/$LANG/LC_MESSAGES/
 ```
 
+Add your translation to the language selection menu in ```pgp-clean-room```.
+
 ### Updating your translation
 ```
 ./setup.py update_catalog -l $LANG
 ```
+
+Then manually inspect the file and update it.
