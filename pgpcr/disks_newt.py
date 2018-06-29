@@ -64,14 +64,14 @@ def store(screen, workdir, name):
 
 def export(screen, gk, secret=False):
     try:
-        label = _("public key export")
+        label = _("Public Key Export")
         if secret:
-            label = _("subkey and public key export")
+            label = _("Subkey and Public Key Export")
         publicFail = True
         while publicFail:
             public = setup(screen, label, "PGPCR Export")
             if public is None:
-                exp = common.dangerConfirm(screen, _("Public Key Export"),
+                exp = common.dangerConfirm(screen, label,
                         _("Are you sure you don't want to export your key?"))
                 if exp:
                     return

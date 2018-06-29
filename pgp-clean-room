@@ -82,7 +82,7 @@ while running:
     elif ret == "load gpg":
         gpg_ui.load(screen, workdir)
     elif ret == "adv":
-        adv = common_ui.LCW(screen, _("Advanced options"),
+        adv = common_ui.LCW(screen, _("Advanced Options"),
                                   _("These options are for users who know what"
                                   " they are doing"),
                                   [(_("Generate Key on Smartcard"), "gen"),
