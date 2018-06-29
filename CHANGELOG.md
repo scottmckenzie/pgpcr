@@ -425,6 +425,8 @@ Week 7
 	- Still can't do anything to inform the user about generating the revocation certificate
  - [x] Check logs to see if system has actually been loaded to RAM [#3](https://salsa.debian.org/tookmund-guest/pgpcr/issues/3)
  - [x] Test generating ECC subkeys with GPGME C api, for [#11](https://salsa.debian.org/tookmund-guest/pgpcr/issues/11)
+ - [x] Investigate pinentry issues
+	- Have a much better idea of what's going on now, even if I don't yet know how to fix it.
  - [ ] Help menus
 
 Week 8
@@ -432,6 +434,8 @@ Week 8
 
 2018-07-02
 ----------
+ - [ ] Ensure gpg-agent is started before doing smartcard operations
+ - [ ] Continue investigating Pinentry issues
  - [ ] Test everything
  - [ ] Overflow for anything not finished on schedule
 
