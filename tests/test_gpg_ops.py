@@ -12,8 +12,6 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.gk = gpg_ops.GPGKey(self.tmp.name)
         # Generate smaller keys so the test doesn't take as long
         self.gk.setalgorithms("rsa1024", "rsa1024")
-        self.gk.setprogress(self._progress)
-        self.gk.setpassword(self._password)
         print("\nGenerating masterkey...")
         self.gk.genmaster("Test <test@example.com>", None)
         print("\nGenerated master key", self.gk.fpr)
@@ -39,9 +37,15 @@ class GPGOpsTestGenCall(unittest.TestCase):
         p = input("Please supply %s' password%s:" % (hint, why))
         return p
 
-    def test_subkey_generation(self):
+    def _explain(self, data, title, text):
+        print(title, text, sep="\n")
+        return True
+
+    def test_subkey_generation_and_progress_callback(self):
+        self.gk.setprogress(self._progress)
         print("\nGenerating subkeys...")
-        self.gk.genseasubs(print, lambda x,y,z: print(y, z), lambda x,y: None, None)
+        self.gk.genseasubs(print, self._explain, lambda x,y: False, None)
+        self.assertEqual(len(self.gk._master.subkeys), 4)
 
     def test_expirekey(self):
         date = datetime.date(1, 1, 1).today()
