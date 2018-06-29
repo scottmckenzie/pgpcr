@@ -5,7 +5,7 @@ Conflicts=getty@tty1.service
 
 [Service]
 Type=idle
-ExecStart=-/sbin/agetty -a pgpcr -i -o '-p -f \u' --noclear tty1 $TERM
+ExecStart=-/sbin/agetty -a pgpcr -i -o '-p -f \\u' --noclear tty1 $TERM
 TTYPath=/dev/tty1
 StandardInput=tty-force
 StandardOutput=inherit
