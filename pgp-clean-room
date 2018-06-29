@@ -21,10 +21,6 @@ def excepthook(t, v, tb):
 
 sys.excepthook = excepthook
 
-# Manually chown our TTY
-tty = os.ttyname(sys.stdout.fileno())
-subprocess.run(["sudo", "chown", str(os.getuid()), tty])
-
 screen = SnackScreen()
 lang = common_ui.listmenu(screen, "Language", "Choose your language",
                 [("English", "en")])
