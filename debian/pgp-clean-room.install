@@ -3,4 +3,4 @@ pgpcr-part	/usr/sbin/
 gpg.conf	/etc/pgpcr/
 gpg-agent.conf	/etc/pgpcr/
 import.sh	/etc/pgpcr/
-#po/en/LC_MESSAGES/en.mo	/usr/share/locales/en/LC_MESSAGES/
+#po/en/LC_MESSAGES/pgpcr.mo	/usr/share/locale/en/LC_MESSAGES/

@@ -29,9 +29,14 @@ screen = SnackScreen()
 lang = common_ui.listmenu(screen, "Language", "Choose your language",
                 [("English", "en")])
 
-gettext.install("pgpcr", codeset=lang)
-
 os.environ["LANGUAGE"] = lang
+
+tran = gettext.translation("pgpcr", "/usr/share/locale/", [lang],
+        fallback=True)
+tran.install()
+if type(tran) is gettext.NullTranslations:
+    common_ui.error(screen, "Translation for "+lang+" not found! Falling"
+            "back to English")
 
 from pgpcr import helptext
 
