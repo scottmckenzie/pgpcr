@@ -66,6 +66,11 @@ def confirm(screen, title, msg):
 def dangerConfirm(screen, title, msg):
     return ButtonChoiceWindow(screen, title, msg, [(_("No"), False),
                                                    (_("Yes"), True)])
+
+def ContinueSkipAbort(screen, title, msg):
+    return ButtonChoiceWindow(screen, title, msg, [(_("Continue"), True),
+        (_("Skip"), False), (_("Abort"), None)])
+
 def NotImplementedYet(screen):
     alert(screen, "Not Implemented Yet",
           "This feature has not yet been implemented")
