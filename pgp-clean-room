@@ -40,9 +40,11 @@ if type(tran) is gettext.NullTranslations and lang != "en":
 
 from pgpcr import helptext
 
-common_ui.alert(screen, _("Boot Media"), _("As long as this computer has at"
-                " least 1 GB of RAM, you can now remove the boot media, as the"
-                " entire filesystem has been loaded into RAM."))
+with open("/var/log/live/boot.log") as f:
+    r = f.read()
+    if "Warning: Not enough free memory" not in r:
+        common_ui.alert(screen, _("Boot Media"), _("You can now remove the"
+        " boot media, as the entire filesystem has been loaded into RAM."))
 
 log = logging.getLogger("pgpcr")
 log.setLevel(logging.INFO)
