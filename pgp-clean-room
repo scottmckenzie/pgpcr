@@ -34,7 +34,7 @@ os.environ["LANGUAGE"] = lang
 tran = gettext.translation("pgpcr", "/usr/share/locale/", [lang],
         fallback=True)
 tran.install()
-if type(tran) is gettext.NullTranslations:
+if type(tran) is gettext.NullTranslations and lang != "en":
     common_ui.error(screen, "Translation for "+lang+" not found! Falling"
             "back to English")
 
