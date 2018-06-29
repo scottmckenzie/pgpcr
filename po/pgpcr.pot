@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PGP Clean Room 0.1\n"
 "Report-Msgid-Bugs-To: tookmund@gmail.com\n"
-"POT-Creation-Date: 2018-06-28 17:24-0400\n"
+"POT-Creation-Date: 2018-06-28 20:27-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,73 +18,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.4.0\n"
 
-#: pgp-clean-room:38
+#: pgp-clean-room:43
 msgid "Boot Media"
 msgstr ""
 
-#: pgp-clean-room:38
+#: pgp-clean-room:43
 msgid ""
 "As long as this computer has at least 1 GB of RAM, you can now remove the"
 " boot media, as the entire filesystem has been loaded into RAM."
 msgstr ""
 
-#: pgp-clean-room:56
+#: pgp-clean-room:62
 msgid "Welcome to the PGP Clean Room!"
 msgstr ""
 
-#: pgp-clean-room:57
+#: pgp-clean-room:63
 msgid "What do you wish to do?"
 msgstr ""
 
-#: pgp-clean-room:58
+#: pgp-clean-room:64
 msgid "Generate a New GPG Master Key"
 msgstr ""
 
-#: pgp-clean-room:59
+#: pgp-clean-room:65
 msgid "Load a GPG Master Key from USB"
 msgstr ""
 
-#: pgp-clean-room:60
+#: pgp-clean-room:66 pgp-clean-room:86
 msgid "Advanced Options"
 msgstr ""
 
-#: pgp-clean-room:61 pgpcr/gpg_newt.py:142
+#: pgp-clean-room:67 pgpcr/gpg_newt.py:142
 msgid "Quit"
 msgstr ""
 
-#: pgp-clean-room:80
-msgid "Advanced options"
-msgstr ""
-
-#: pgp-clean-room:81
+#: pgp-clean-room:87
 msgid "These options are for users who know what they are doing"
 msgstr ""
 
-#: pgp-clean-room:83
+#: pgp-clean-room:89
 msgid "Generate Key on Smartcard"
 msgstr ""
 
-#: pgp-clean-room:84 pgpcr/gpg_newt.py:251
+#: pgp-clean-room:90 pgpcr/gpg_newt.py:251
 msgid "Import existing key"
 msgstr ""
 
-#: pgp-clean-room:85
+#: pgp-clean-room:91
 msgid "Set Smartcard properties"
 msgstr ""
 
-#: pgp-clean-room:86
+#: pgp-clean-room:92
 msgid "Set Smartcard PINs"
 msgstr ""
 
-#: pgp-clean-room:87
+#: pgp-clean-room:93
 msgid "Run shell"
 msgstr ""
 
-#: pgp-clean-room:102
+#: pgp-clean-room:108
 msgid "PGP Clean Room"
 msgstr ""
 
-#: pgp-clean-room:103
+#: pgp-clean-room:109
 msgid "Would you like to shutdown the PGP Clean Room?"
 msgstr ""
 
@@ -198,8 +194,8 @@ msgstr ""
 msgid "Refresh"
 msgstr ""
 
-#: pgpcr/disks_newt.py:36
-msgid "master key backup "
+#: pgpcr/disks_newt.py:36 pgpcr/gpg_newt.py:111
+msgid "master key backup"
 msgstr ""
 
 #: pgpcr/disks_newt.py:39
@@ -223,15 +219,11 @@ msgid "Would you like to backup to another disk?"
 msgstr ""
 
 #: pgpcr/disks_newt.py:67
-msgid "public key export"
+msgid "Public Key Export"
 msgstr ""
 
 #: pgpcr/disks_newt.py:69
-msgid "subkey and public key export"
-msgstr ""
-
-#: pgpcr/disks_newt.py:74
-msgid "Public Key Export"
+msgid "Subkey and Public Key Export"
 msgstr ""
 
 #: pgpcr/disks_newt.py:75
@@ -353,10 +345,6 @@ msgid ""
 "import.sh from your public export disk."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:111
-msgid "master key backup"
-msgstr ""
-
 #: pgpcr/gpg_newt.py:116
 msgid "This disk does not contain a master key backup."
 msgstr ""
@@ -405,7 +393,7 @@ msgstr ""
 msgid "keys to sign"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:169 pgpcr/gpg_newt.py:174
+#: pgpcr/gpg_newt.py:169 pgpcr/gpg_newt.py:174 pgpcr/gpg_newt.py:183
 msgid "Key Signing"
 msgstr ""
 
@@ -417,10 +405,6 @@ msgstr ""
 
 #: pgpcr/gpg_newt.py:174
 msgid "Which keys do you want to sign?"
-msgstr ""
-
-#: pgpcr/gpg_newt.py:183
-msgid "Key signing"
 msgstr ""
 
 #: pgpcr/gpg_newt.py:183
