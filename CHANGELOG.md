@@ -418,6 +418,11 @@ Week 7
 	- The previous approach did not work at all and failed silently
  - [x] Update translations and combine a few strings
  - [x] Simplify the process of makng new translations
+
+2018-06-29
+----------
+ - [x] Inform user of what keys are being generated, as per [#5](https://salsa.debian.org/tookmund-guest/pgpcr/issues/5)
+	- Still can't do anything to inform the user about generating the revocation certificate
  - [ ] Help menus
 
 Week 8
