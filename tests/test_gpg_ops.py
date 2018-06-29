@@ -41,7 +41,7 @@ class GPGOpsTestGenCall(unittest.TestCase):
 
     def test_subkey_generation(self):
         print("\nGenerating subkeys...")
-        self.gk.genseasubs(print)
+        self.gk.genseasubs(print, lambda x,y,z: print(y, z), lambda x,y: None, None)
 
     def test_expirekey(self):
         date = datetime.date(1, 1, 1).today()

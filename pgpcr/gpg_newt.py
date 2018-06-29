@@ -33,7 +33,8 @@ def new(screen, workdir):
     sprog.gk = gk
     gk.setprogress(_progress, sprog)
     try:
-        gk.genseasubs(sprog.setText)
+        gk.genseasubs(sprog.setText, common.ContinueSkipAbort, common.redraw,
+                screen)
     except gpg_ops.GPGMEError as g:
         screen = common.screen()
         common.error(screen, _("Subkey generation error")+": "+str(g))
