@@ -58,6 +58,20 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.gk.revokekey(sk.fpr, "0", "test")
         self.assertNotIn(sk, self.gk._master.subkeys)
 
+    def test_curve25519_subkeys(self):
+        self.gk.setalgorithms(None, "ed25519")
+        self.gk.gensub(sign=True)
+        self.gk.gensub(encrypt=True)
+        self.gk.gensub(authenticate=True)
+
+    @unittest.expectedFailure
+    def test_nistp_subkeys(self):
+        self.gk.setalgorithms(None, "nistp384")
+        self.gk.gensub(sign=True)
+        self.gk.gensub(encrypt=True)
+        self.gk.gensub(authenticate=True)
+
+
 class GPGOpsTestKey(unittest.TestCase):
 
     def setUp(self):
