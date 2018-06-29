@@ -30,7 +30,7 @@ class GPGKey:
             if self.homedir != defaulthome:
                 external.process(["gpgconf", "--remove-socketdir"])
         except external.CalledProcessError as e:
-            _log.warning(e.stderr)
+            _log.debug(e.stderr)
 
     def genmaster(self, userid, passphrase=True):
         genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
