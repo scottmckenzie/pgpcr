@@ -52,13 +52,36 @@ class GPGKey:
         self._refreshmaster()
         return sk
 
-    def genseasubs(self, status):
-        status(_("Generating signing subkey")+"...")
-        self.gensub(sign=True)
-        status(_("Generating encryption subkey")+"...")
-        self.gensub(encrypt=True)
-        status(_("Generating authentication subkey")+"...")
-        self.gensub(authenticate=True)
+    def genseasubs(self, status, explain, redraw, data):
+        s = explain(data, _("Signing Subkey"), _("A signing subkey will now be"
+            " generated. This is used to  ensure what you send across the"
+            " Internet, like emails or Debian packages, has not been tampered"
+            " with."))
+        if s is None:
+            return
+        if s:
+            status(_("Generating signing subkey")+"...")
+            self.gensub(sign=True)
+            data = redraw(data, self.redraw)
+        e = explain(data, _("Encryption Subkey"), _("An encryption subkey will"
+            " now be generated. This is used to protect your data, like emails"
+            " or backups, from being viewed by anyone else."))
+        if e is None:
+            self._refreshmaster()
+            return
+        if e:
+            status(_("Generating encryption subkey")+"...")
+            self.gensub(encrypt=True)
+            data = redraw(data, self.redraw)
+        a = explain(data, _("Authentication Subkey"), _("An authentication"
+            " subkey will now be generated. This is used to prove your"
+            " identity and can be used as an ssh key."))
+        if a is None:
+            self._refreshmaster()
+            return
+        if a:
+            status(_("Generating authentication subkey")+"...")
+            self.gensub(authenticate=True)
         self._refreshmaster()
 
     def setprogress(self, progress, hook=None):
