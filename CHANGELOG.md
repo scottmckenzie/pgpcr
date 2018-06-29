@@ -414,6 +414,10 @@ Week 7
  - [x] Add back ECC for master keys
 	- Still need to sort out subkeys [#11](https://salsa.debian.org/tookmund-guest/pgpcr/issues/11)
  - [x] Add support for cancelling disk export
+ - [x] Test translations and fix up mistakes
+	- The previous approach did not work at all and failed silently
+ - [x] Update translations and combine a few strings
+ - [x] Simplify the process of makng new translations
  - [ ] Help menus
 
 Week 8
