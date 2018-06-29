@@ -78,8 +78,8 @@ def setup(screen, smart):
     except SmartcardError as e:
         common.error(screen, str(e))
 
-def generate(screen):
-    smart = pickcard(screen)
+def generate(screen, workdir):
+    smart = pickcard(screen, workdir)
     slot = 1
     for s in smart.slots:
         gen = common.dangerConfirm(screen, _("Generate Key"), _("Do you want"
