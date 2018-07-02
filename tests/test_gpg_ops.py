@@ -4,6 +4,7 @@ import subprocess
 import unittest
 import datetime
 from pgpcr import gpg_ops
+from pgpcr.external import CalledProcessError
 from tests.helpers import cmpfiles, copy
 
 class GPGOpsTestGenCall(unittest.TestCase):
@@ -143,5 +144,14 @@ class GPGOpsTestKey(unittest.TestCase):
         os.remove(keyexport)
         copy(self.tmp.name+"/"+keyfile, keyimport)
 
+    def test_gen_revoke(self):
+        try:
+            self.gk.genrevoke()
+        except CalledProcessError as e:
+            print(e.stderr)
+            raise e
+        # Can't compare files because they change slightly every time
+        #self._cmpfiles(self.tmp.name, self.datadir,
+                #"074D3879D4609448DEF716F6C7B98BC88227953F.rev")
 if __name__ == "__main__":
     unittest.main()
