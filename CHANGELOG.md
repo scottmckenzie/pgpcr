@@ -441,6 +441,8 @@ Week 8
  - [x] Confirm that the user wants to use a given disk
  - [x] Memory wipe like TAILS
 	- Page poisoning enabled
+ - [x] Reenable keysigning test
+	- Was broken for a while, but seems to work now
  - [ ] Continue investigating Pinentry issues
 	- For some reason gpg-agent just isn't passing pinentry the TTY name
  - [ ] Help popups
