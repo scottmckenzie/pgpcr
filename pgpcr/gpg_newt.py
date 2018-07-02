@@ -28,6 +28,17 @@ def new(screen, workdir):
         screen = common.screen()
         common.error(screen, _("Master Key generation error")+": "+str(g))
         return
+    screen = common.redraw(screen, gk.redraw)
+    common.alert(screen, _("Revocation certificate"), _("A revocation"
+        " certificate will now be generated. You will be asked for your"
+        " password."))
+    try:
+        gk.genrevoke()
+    except gpg_ops.GPGMEError as g:
+        screen = common.screen()
+        common.error(screen, _("Revocation certificate generation error")+":"
+                " "+str(g))
+        return
     sprog = common.Progress(screen, _("Key Generation"),
                             _("Generating Sub Keys")+"...", 60)
     sprog.gk = gk
