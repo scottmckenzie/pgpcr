@@ -61,7 +61,8 @@ class GPGKey:
         return sk
 
     def genseasubs(self, status, explain, redraw, data):
-        data = redraw(data, self.redraw)
+        # Force a redraw
+        data = redraw(data, True)
         s = explain(data, _("Signing Subkey"), _("A signing subkey will now be"
             " generated. This is used to  ensure what you send across the"
             " Internet, like emails or Debian packages, has not been tampered"
