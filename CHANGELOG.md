@@ -435,6 +435,7 @@ Week 8
 ----------
  - [x] Add support for ECC subkeys, solving [#11](https://salsa.debian.org/tookmund-guest/pgpcr/issues/11)
  - [x] Ensure gpg-agent is started before doing smartcard operations
+ - [x] Generate revocation certificate manually so we can alert the user, solving [#12](https://salsa.debian.org/tookmund-guest/pgpcr/issues/12)
  - [ ] Continue investigating Pinentry issues
  - [ ] Help popups
  - [ ] Test everything
