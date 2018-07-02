@@ -11,7 +11,7 @@ import logging
 import shutil
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
-from pgpcr.gpg_ops import defaulthome
+from pgpcr.gpg_ops import defaulthome, setupworkdir
 
 subprocess.run(["setfont", "/usr/share/consolefonts/Unifont-APL8x16.psf.gz"])
 
@@ -72,10 +72,7 @@ while running:
         socketdir = "/run/user/"+str(os.getuid())
         subprocess.run(["sudo", "mkdir", "-p", socketdir])
         subprocess.run(["sudo", "chown", str(os.getuid()), socketdir])
-    if ret is not None and ret.endswith("gpg"):
-        shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
-        shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
-        subprocess.run(["gpgconf", "--kill", "gpg-agent"])
+    setupworkdir(workdir)
     if ret == "new gpg":
         gpg_ui.new(screen, workdir)
     elif ret == "load gpg":

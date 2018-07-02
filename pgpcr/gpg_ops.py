@@ -2,9 +2,9 @@ import gpg
 import os
 import logging
 import tempfile
+import shutil
 from distutils.dir_util import copy_tree
 from collections import OrderedDict
-from shutil import copy
 from . import external, gpg_interact
 
 _log = logging.getLogger(__name__)
@@ -132,7 +132,7 @@ class GPGKey:
         if name is None:
             name = fpr+".pub"
         if self.revcert is not None:
-            copy(self.revcert, dir)
+            shutil.copy(self.revcert, dir)
         d = self._export(fpr, outfile=dir +
                          "/"+name)
 
@@ -275,7 +275,18 @@ sub_algos = OrderedDict([
     ])
 defaulthome = os.environ["HOME"]+"/.gnupg"
 
-def launchagent(homedir):
+def _agent(homedir, opt):
     if homedir is not None:
         os.environ["GNUPGHOME"] = homedir
-    external.process(["gpgconf", "--launch", "gpg-agent"])
+    external.process(["gpgconf", opt, "gpg-agent"])
+
+def launchagent(homedir):
+    _agent(homedir, "--launch")
+
+def killagent(homedir):
+    _agent(homedir, "--kill")
+
+def setupworkdir(workdir):
+        shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
+        shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
+        killagent(workdir)
