@@ -427,15 +427,16 @@ Week 7
  - [x] Test generating ECC subkeys with GPGME C api, for [#11](https://salsa.debian.org/tookmund-guest/pgpcr/issues/11)
  - [x] Investigate pinentry issues
 	- Have a much better idea of what's going on now, even if I don't yet know how to fix it.
- - [ ] Help menus
 
 Week 8
 ======
 
 2018-07-02
 ----------
- - [ ] Ensure gpg-agent is started before doing smartcard operations
+ - [x] Add support for ECC subkeys, solving [#11](https://salsa.debian.org/tookmund-guest/pgpcr/issues/11)
+ - [x] Ensure gpg-agent is started before doing smartcard operations
  - [ ] Continue investigating Pinentry issues
+ - [ ] Help popups
  - [ ] Test everything
  - [ ] Overflow for anything not finished on schedule
 
