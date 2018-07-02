@@ -46,6 +46,11 @@ class GPGKey:
         if encrypt and algo == "ed25519":
             # Special algorithm needed for ed25519 encryption subkeys
             algo = "cv25519"
+        if "brainpool" in algo or "nistp" in algo:
+            # Workaround for GPGME bug
+            # https://lists.gnupg.org/pipermail/gnupg-users/2018-July/060755.html
+            if sign or authenticate:
+                algo += "/ecdsa"
         sk = self._ctx.create_subkey(self._master, algorithm=algo,
                                        sign=sign, encrypt=encrypt,
                                        authenticate=authenticate)
