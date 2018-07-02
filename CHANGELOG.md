@@ -436,7 +436,11 @@ Week 8
  - [x] Add support for ECC subkeys, solving [#11](https://salsa.debian.org/tookmund-guest/pgpcr/issues/11)
  - [x] Ensure gpg-agent is started before doing smartcard operations
  - [x] Generate revocation certificate manually so we can alert the user, solving [#12](https://salsa.debian.org/tookmund-guest/pgpcr/issues/12)
+ - [x] Confirm that the user wants to use a given disk
+ - [x] Memory wipe like TAILS
+	- Page poisoning enabled
  - [ ] Continue investigating Pinentry issues
+	- For some reason gpg-agent just isn't passing pinentry the TTY name
  - [ ] Help popups
  - [ ] Test everything
  - [ ] Overflow for anything not finished on schedule
@@ -487,14 +491,11 @@ Misc
 Would like to do these if I have time but we'll see how this goes
  - [ ] Figure out when progress_cb is called with primegen
 	- Time based? amount of randomness gathered?
- - [ ] GPGME General Error
-	- Getting these randomly during key generation
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
  - [ ] Secure the Live Environment as much as possible
 	- Minimize local packages, remove device drivers for anything that's not keyboard/mouse/storage/graphics
- - [ ] Prepare application for translation
-	- Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
+ - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Alternative UI (Qt, GTK, etc)
  - [ ] Add the option to print key backups and revocation certificates
  - [ ] Run all tests in a virtual machine
@@ -504,4 +505,3 @@ Would like to do these if I have time but we'll see how this goes
 	- Basically just don't always reformat?
  - [ ] Optional signature expiry date?
 	- I have no idea if people use this
- - [ ] Memory wipe like TAILS
