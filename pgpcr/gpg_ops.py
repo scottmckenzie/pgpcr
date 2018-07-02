@@ -252,6 +252,8 @@ master_algos = OrderedDict([
     ])
 sub_algos = OrderedDict([
     ("rsa", ["2048", "4096", "3072"]),
-    ("ed25519", None)
+    ("ed25519", None),
+    ("nistp", ["521", "384", "256"]),
+    ("brainpoolP", ["512r1", "384r1", "256r1"])
     ])
 defaulthome = os.environ["HOME"]+"/.gnupg"
