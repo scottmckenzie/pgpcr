@@ -1,8 +1,10 @@
 import gpg
 import os
 import logging
+import tempfile
 from distutils.dir_util import copy_tree
 from collections import OrderedDict
+from shutil import copy
 from . import external, gpg_interact
 
 _log = logging.getLogger(__name__)
@@ -15,6 +17,7 @@ class GPGKey:
         self._ctx = gpg.Context(home_dir=home)
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
+        self.revcert = None
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
         # Ensure a gpg-agent is running and a socketdir is created
@@ -127,6 +130,8 @@ class GPGKey:
             fpr = self.fpr
         if name is None:
             name = fpr+".pub"
+        if self.revcert is not None:
+            copy(self.revcert, dir)
         d = self._export(fpr, outfile=dir +
                          "/"+name)
 
@@ -243,6 +248,13 @@ class GPGKey:
             self.setmaster(kl[0])
             return None
         return [x.fpr for x in kl]
+
+    def genrevoke(self):
+        self.revcert = self.homedir+"/"+self.fpr+".rev"
+        with tempfile.NamedTemporaryFile() as f:
+            f.write("y\n0\nGeneral Revocation Certificate\n\ny\n\n".encode())
+            f.flush()
+            self._callgpg(["--gen-revoke", self.fpr], self.revcert, f.name)
 
 GPGMEError = gpg.errors.GPGMEError
 
