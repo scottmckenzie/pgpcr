@@ -130,10 +130,13 @@ class GPGKey:
         d = self._export(fpr, outfile=dir +
                          "/"+name)
 
-    def _callgpg(self, args, outfile):
-        gpgargv = [self._ctx.engine_info.file_name]
+    def _callgpg(self, args, outfile, infile=None):
+        gpgargv = [self._ctx.engine_info.file_name, "--no-tty", "--yes",
+                "--status-fd", "2", "--output", outfile]
+        if infile is not None:
+            gpgargv.extend(["--command-file", infile])
         gpgargv.extend(args)
-        external.processtofile(gpgargv, outfile)
+        external.run(gpgargv, stderr=external.PIPE, check=True)
 
     def exportsubkeys(self, dir):
         # Exporting only the secret subkeys isn't directly available
