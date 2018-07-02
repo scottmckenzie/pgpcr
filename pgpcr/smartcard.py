@@ -1,6 +1,7 @@
 import gpg
 import os
 import logging
+from pgpcr import gpg_ops
 
 _log = logging.getLogger(__name__)
 
@@ -37,6 +38,7 @@ def _raiseerr(err):
 
 class Smartcard:
     def __init__(self, homedir=None):
+        gpg_ops.launchagent(homedir)
         self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN,
                 home_dir=homedir)
         if homedir is not None:
