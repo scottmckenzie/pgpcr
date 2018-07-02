@@ -252,6 +252,8 @@ Week 4
  - [x] Consistent UI for dangerous operations
  - [x] Optionally backup to more than two disks
  - [x] Don't unecessarily reformat a disk
+ - [x] Store multiple keys on one disks
+	- Basically just don't always reformat?
  - [x] Export public key after load
 
 Evaluation Period 1 / Week 5
@@ -501,7 +503,5 @@ Would like to do these if I have time but we'll see how this goes
  - [ ] Run all tests in a virtual machine
 	- kvm?
  - [ ] Better import UI
- - [ ] Store multiple keys on one disks
-	- Basically just don't always reformat?
  - [ ] Optional signature expiry date?
 	- I have no idea if people use this
