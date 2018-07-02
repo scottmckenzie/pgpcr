@@ -18,7 +18,14 @@ def pickdisks(screen, use):
                 dlist, buttons=[(_("Refresh"), "refresh"),
                     (_("Cancel"), "cancel")])
         if lcw[0] is None or lcw[0] == "ok":
-            return d[lcw[1]]
+            disk = d[lcw[1]]
+            danger = common.dangerConfirm(screen, _("Warning"), _("Are you"
+                " sure you want to use disk %s (%s)?") % (str(disk),
+                    disk.path))
+            if danger:
+                return disk
+            else:
+                continue
         elif lcw[0] == "refresh":
             continue
         else:
