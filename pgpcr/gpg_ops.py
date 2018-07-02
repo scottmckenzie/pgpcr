@@ -258,3 +258,8 @@ sub_algos = OrderedDict([
     ("brainpoolP", ["512r1", "384r1", "256r1"])
     ])
 defaulthome = os.environ["HOME"]+"/.gnupg"
+
+def launchagent(homedir):
+    if homedir is not None:
+        os.environ["GNUPGHOME"] = homedir
+    external.process(["gpgconf", "--launch", "gpg-agent"])
