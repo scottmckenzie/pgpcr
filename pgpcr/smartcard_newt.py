@@ -75,7 +75,7 @@ def setup(screen, smart):
         smart.lang = ew[1][1]
         smart.sex = ew[1][2]
         smart.login = ew[1][3]
-    except SmartcardError as e:
+    except smartcard.SmartcardError as e:
         common.error(screen, str(e))
 
 def generate(screen, workdir):
