@@ -50,7 +50,8 @@ class GPGKey:
             # Special algorithm needed for ed25519 encryption subkeys
             algo = "cv25519"
         if "brainpool" in algo or "nistp" in algo:
-            # Workaround for GPGME bug
+            # Workaround for GPG bug
+            # https://dev.gnupg.org/T4052
             # https://lists.gnupg.org/pipermail/gnupg-users/2018-July/060755.html
             if sign or authenticate:
                 algo += "/ecdsa"

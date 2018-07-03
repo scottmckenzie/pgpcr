@@ -445,6 +445,11 @@ Week 8
 	- Was broken for a while, but seems to work now
  - [ ] Continue investigating Pinentry issues
 	- For some reason gpg-agent just isn't passing pinentry the TTY name
+
+2018-07-03
+----------
+ - [x] Reported ECC subkey bug against gpg
+	- https://dev.gnupg.org/T4052
  - [ ] Help popups
  - [ ] Test everything
  - [ ] Overflow for anything not finished on schedule
