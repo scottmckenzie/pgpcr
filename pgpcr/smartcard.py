@@ -112,7 +112,7 @@ class Smartcard:
     def sex(self, val):
         if val is not None and val not in sexopt.keys():
             raise ValueError("Sex must be either Male, Female, or Unknown")
-        self._setattr("sex", str(sexopt[val]))
+        self._setattr("DISP-SEX", str(sexopt[val]))
 
     @property
     def url(self):
