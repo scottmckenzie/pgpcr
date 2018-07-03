@@ -95,7 +95,10 @@ while running:
             gpg_ui.importkey(screen, workdir)
         elif adv[1] == "setsmart":
             smart = smartcard_ui.pickcard(screen, workdir)
-            smartcard_ui.setup(screen, smart)
+            smartcard_ui.setproperties(screen, smart)
+        elif adv[1] == "setpins":
+            smart = smartcard_ui.pickcard(screen, workdir)
+            smartcard_ui.setpins(screen, smart)
         elif adv[1] == "shell":
             screen.finish()
             subprocess.run(["bash", "-l"])
