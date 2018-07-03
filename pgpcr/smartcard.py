@@ -105,7 +105,7 @@ class Smartcard:
 
     @property
     def sex(self):
-        return sexopt[int(self._getattr("DISP-SEX"))]
+        return sexoptsm[int(self._getattr("DISP-SEX"))]
 
     @sex.setter
     def sex(self, val):
@@ -166,3 +166,6 @@ class Smartcard:
 
 
 sexopt = {"m": 1, "f": 2, "u": 9}
+sexoptsm = {}
+for k, v in sexopt.items():
+    sexoptsm[v] = k
