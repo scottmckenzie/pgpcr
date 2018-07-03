@@ -457,6 +457,10 @@ Week 8
  - [x] Patch pinentry to fix [#10](https://salsa.debian.org/tookmund-guest/pgpcr/issues/10)
 	- The issue lies with gpg-agent not setting GPG_TTY for some reason
 	- Getting it from pinetry fixes the problem, but its not the best solution
+ - [x] Split smartcard setup into pins and properties
+	- Fix up advanced menu to use these new functions
+ - [x] Set sex and name correctly on smartcard
+	- Property support hadn't been tested much and it did not work correctly
  - [ ] Help popups
  - [ ] Test everything
  - [ ] Overflow for anything not finished on schedule
