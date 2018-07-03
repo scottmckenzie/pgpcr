@@ -113,6 +113,8 @@ def save(screen, workdir, gk):
 def _progress(what, type, current, total, prog):
     if what == "primegen":
         prog.inc()
+    else:
+        _log.info(what, type, current, total)
     if prog.gk.redraw:
         prog.screen.finish()
         prog.screen = common.screen()
