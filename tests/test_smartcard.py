@@ -21,7 +21,7 @@ class SmartcardTest(unittest.TestCase):
 
     def test_set_properties(self):
         print()
-        self.smart.name = "Test Name"
+        self.smart.name = "First Last"
         print(self.smart.name)
         self.smart.url = "https://example.com"
         print(self.smart.url)
