@@ -92,6 +92,7 @@ class Smartcard:
     @name.setter
     def name(self, val):
         l = val.split(" ")
+        l[0], l[1] = l[1], l[0]
         l = "<<".join(l)
         self._setattr("DISP-NAME", l)
 
