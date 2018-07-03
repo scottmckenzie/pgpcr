@@ -450,6 +450,13 @@ Week 8
 ----------
  - [x] Reported ECC subkey bug against gpg
 	- https://dev.gnupg.org/T4052
+ - [x] Add proper package versioning
+ - [x] Add build script
+ - [ ] Isolate pinentry issue
+	- Can't seem to do this.
+ - [x] Patch pinentry to fix [#10](https://salsa.debian.org/tookmund-guest/pgpcr/issues/10)
+	- The issue lies with gpg-agent not setting GPG_TTY for some reason
+	- Getting it from pinetry fixes the problem, but its not the best solution
  - [ ] Help popups
  - [ ] Test everything
  - [ ] Overflow for anything not finished on schedule
