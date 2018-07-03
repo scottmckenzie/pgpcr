@@ -59,12 +59,18 @@ def export(screen, gk):
         screen = common.redraw(screen, gk.redraw)
 
 def setup(screen, smart):
-    common.alert(screen, _("Set PIN"), _("You will first be asked to set"
+    setpins(screen, smart)
+    screen.finish()
+    screen = common.screen()
+    setproperties(screen, smart)
+
+def setpins(screen, smart):
+    common.alert(screen, _("Set PIN"), _("You will now be asked to set"
         " the user and Admin PINs on your smartcard."))
     smart.setPIN()
     smart.setAdminPIN()
-    screen.finish()
-    screen = common.screen()
+
+def setproperties(screen, smart):
     ew = common.EW(screen, _("New Smartcard"), _("Setup your new smartcard"),
             [_("Name of cardholder"), _("Language Preference"),
                 _("Sex (m/f/u)"), _("Login Data")])
