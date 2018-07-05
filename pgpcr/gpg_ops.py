@@ -25,9 +25,8 @@ class GPGKey:
         # Ensure a gpg-agent is running and a socketdir is created
         if home is not None:
             os.environ["GNUPGHOME"] = self.homedir
-        external.process(["gpgconf", "--launch", "gpg-agent"])
-        if self.homedir != defaulthome:
             external.process(["gpgconf", "--create-socketdir"])
+        external.process(["gpgconf", "--launch", "gpg-agent"])
 
     def __del__(self):
         try:
