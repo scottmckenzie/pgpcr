@@ -23,13 +23,14 @@ class SmartcardError(Exception):
         return self.msg
 
 def _raiseerr(err):
+    _log.info("Smartcard Error: err.code_str")
     if err.code_str == "Card Removed" or err.code_str == "No such device":
         raise NoSmartcardDetected
     elif err.code_str == "Bad PIN":
         raise BadPIN
     elif err.code_str == "PIN Blocked":
         raise PINBlocked
-    elif err.code_str == "File Exists":
+    elif err.code_str == "File exists":
         raise OverwriteError
     elif err.code_str == "IPC connect call failed":
         raise SocketNotFound
