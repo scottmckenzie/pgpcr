@@ -104,4 +104,4 @@ def generate(screen, workdir):
                         common.error(screen, _("Incorrect PIN"))
                     except smartcard.SmartcardError as e:
                         common.error(screen, str(e))
-    i += 1
+        slot += 1
