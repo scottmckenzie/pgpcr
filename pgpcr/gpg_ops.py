@@ -200,7 +200,8 @@ class GPGKey:
         h = self._ctx.engine_info.home_dir
         if h is None:
             return defaulthome
-        else return h
+        else:
+            return h
 
     def __str__(self):
         s = str(self.uids[0])
