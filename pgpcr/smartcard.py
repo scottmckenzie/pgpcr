@@ -50,7 +50,7 @@ class Smartcard(context.Context):
             _log.info(homedir)
         try:
             err = self._ctx.assuan_transact("SCD LEARN --force",
-                status_cb=self._ctxlearn)
+                status_cb=self._assuanlearn)
         except gpg.errors.GPGMEError as e:
             err = e
         if err:
@@ -68,7 +68,7 @@ class Smartcard(context.Context):
     def _scd(self, command):
         com = "SCD "
         com += command
-        err = self._ctx.assuan_transact(com, status_cb=self._ctxstatus)
+        err = self._ctx.assuan_transact(com, status_cb=self._assuanstatus)
         if err:
             _raiseerr(err)
         return (self.__status, self.__args)
