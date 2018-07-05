@@ -11,7 +11,7 @@ import logging
 import shutil
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
-from pgpcr.gpg_ops import defaulthome, setupworkdir
+from pgpcr.context import defaulthome, setupworkdir
 
 subprocess.run(["setfont", "/usr/share/consolefonts/Unifont-APL8x16.psf.gz"])
 
