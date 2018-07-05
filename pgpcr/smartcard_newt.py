@@ -60,8 +60,7 @@ def export(screen, gk):
 
 def setup(screen, smart):
     setpins(screen, smart)
-    screen.finish()
-    screen = common.screen()
+    screen = common.redraw(screen, smart.redraw)
     setproperties(screen, smart)
 
 def setpins(screen, smart):
@@ -88,6 +87,7 @@ def generate(screen, workdir):
     smart = pickcard(screen, workdir)
     slot = 1
     for s in smart.slots:
+        screen = common.redraw(screen, smart.redraw)
         gen = common.dangerConfirm(screen, _("Generate Key"), _("Do you want"
             " to generate a key in \nslot %d: %s?") % (slot, s))
         if gen:
