@@ -2,7 +2,7 @@ import gpg
 import os
 import logging
 import tempfile
-import shutil
+from shutil import copy
 from distutils.dir_util import copy_tree
 from collections import OrderedDict
 from . import external, gpg_interact, context
@@ -135,7 +135,7 @@ class GPGKey(context.Context):
         if name is None:
             name = fpr+".pub"
         if self.revcert is not None:
-            shutil.copy(self.revcert, dir)
+            copy(self.revcert, dir)
         d = self._export(fpr, outfile=dir +
                          "/"+name)
 
@@ -265,7 +265,3 @@ sub_algos = OrderedDict([
     ])
 
 
-def setupworkdir(workdir):
-        shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
-        shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
-        killagent(workdir)

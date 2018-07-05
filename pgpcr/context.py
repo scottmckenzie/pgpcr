@@ -1,4 +1,5 @@
 import os
+import shutil
 from pgpcr import external
 
 class Context:
@@ -31,3 +32,8 @@ def launchagent(homedir):
 
 def killagent(homedir):
     _agent(homedir, "--kill")
+
+def setupworkdir(workdir):
+    shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
+    shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
+    killagent(workdir)
