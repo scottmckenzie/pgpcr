@@ -20,8 +20,8 @@ def pickdisks(screen, use):
         if lcw[0] is None or lcw[0] == "ok":
             disk = d[lcw[1]]
             danger = common.dangerConfirm(screen, _("Warning"), _("Are you"
-                " sure you want to use disk %s (%s)?") % (str(disk),
-                    disk.path))
+                " sure you want to use this disk?"
+                "\n%s (%s)") % (str(disk), disk.path))
             if danger:
                 return disk
             else:
@@ -115,8 +115,10 @@ def setup(screen, use, label):
             common.catchCPE(screen, e)
 
     danger = common.dangerConfirm(screen, _("Warning"), _("Are you sure you"
-                                  " want to use %s? All the data currently on"
-                                  " the device WILL BE WIPED!" % str(disk)))
+                                  " want to use this disk?"
+                                  "\n%s"
+                                  "\nAll the data currently on the disk"
+                                  " WILL BE WIPED!") % str(disk))
     if danger:
         try:
             disk.setup(label)
