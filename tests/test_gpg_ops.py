@@ -138,10 +138,9 @@ class GPGOpsTestKey(unittest.TestCase):
         self.assertEqual(os.path.exists(keyimport), 0)
         keyexport = self.datadir+"/signing/done/"+keyfile
         self.assertEqual(os.path.exists(keyexport), 1)
-        self.assertIn(self.testkeyfpr, self._checkkey(keyexport))
-
-        os.remove(keyexport)
         copy(self.tmp.name+"/"+keyfile, keyimport)
+        self.assertIn(self.testkeyfpr, self._checkkey(keyexport))
+        os.remove(keyexport)
 
     def test_gen_revoke(self):
         try:
