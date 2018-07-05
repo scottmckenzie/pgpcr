@@ -39,6 +39,8 @@ def _raiseerr(err):
 class Smartcard:
     def __init__(self, homedir=None):
         gpg_ops.launchagent(homedir)
+        if homedir == gpg_ops.defaulthome:
+            homedir = None
         self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN,
                 home_dir=homedir)
         if homedir is not None:

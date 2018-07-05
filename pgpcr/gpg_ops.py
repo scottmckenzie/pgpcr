@@ -14,6 +14,8 @@ class GPGKey:
     def __init__(self, home,  loadfpr=None, loaddir=None):
         if loaddir:
             copy_tree(loaddir, home, verbose=0)
+        if home == defaulthome:
+            home = None
         self._ctx = gpg.Context(home_dir=home)
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
@@ -21,7 +23,8 @@ class GPGKey:
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
         # Ensure a gpg-agent is running and a socketdir is created
-        os.environ["GNUPGHOME"] = self.homedir
+        if home is not None:
+            os.environ["GNUPGHOME"] = self.homedir
         external.process(["gpgconf", "--launch", "gpg-agent"])
         if self.homedir != defaulthome:
             external.process(["gpgconf", "--create-socketdir"])
