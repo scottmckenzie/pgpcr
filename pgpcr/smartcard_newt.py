@@ -89,7 +89,7 @@ def generate(screen, workdir):
     slot = 1
     for s in smart.slots:
         gen = common.dangerConfirm(screen, _("Generate Key"), _("Do you want"
-            " to generate a key in slot %d: %s?") % (slot, s))
+            " to generate a key in \nslot %d: %s?") % (slot, s))
         if gen:
             try:
                 smart.generate(slot)
