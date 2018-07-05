@@ -5,16 +5,16 @@ import tempfile
 import shutil
 from distutils.dir_util import copy_tree
 from collections import OrderedDict
-from . import external, gpg_interact
+from . import external, gpg_interact, context
 
 _log = logging.getLogger(__name__)
 
-class GPGKey:
+class GPGKey(context.Context):
 
     def __init__(self, home,  loadfpr=None, loaddir=None):
         if loaddir:
             copy_tree(loaddir, home, verbose=0)
-        if home == defaulthome:
+        if home == context.defaulthome:
             home = None
         self._ctx = gpg.Context(home_dir=home)
         self._masteralgo = "rsa4096"
@@ -32,7 +32,7 @@ class GPGKey:
         try:
             external.process(["gpgconf", "--kill", "gpg-agent"])
             os.environ.pop("GNUPGHOME", None)
-            if self.homedir != defaulthome:
+            if self.homedir != context.defaulthome:
                 external.process(["gpgconf", "--remove-socketdir"])
         except external.CalledProcessError as e:
             _log.debug(e.stderr)
@@ -186,23 +186,6 @@ class GPGKey:
     def uids(self):
         return [x.uid for x in self._master.uids]
 
-    @property
-    def redraw(self):
-        r = self._ctx.get_ctx_flag("redraw")
-        if r != "":
-            self._ctx.set_ctx_flag("redraw", "")
-            return True
-        else:
-            return False
-
-    @property
-    def homedir(self):
-        h = self._ctx.engine_info.home_dir
-        if h is None:
-            return defaulthome
-        else:
-            return h
-
     def __str__(self):
         s = str(self.uids[0])
         s += " "
@@ -280,18 +263,7 @@ sub_algos = OrderedDict([
     ("nistp", ["521", "384", "256"]),
     ("brainpoolP", ["512r1", "384r1", "256r1"])
     ])
-defaulthome = os.environ["HOME"]+"/.gnupg"
 
-def _agent(homedir, opt):
-    if homedir is not None:
-        os.environ["GNUPGHOME"] = homedir
-    external.process(["gpgconf", opt, "gpg-agent"])
-
-def launchagent(homedir):
-    _agent(homedir, "--launch")
-
-def killagent(homedir):
-    _agent(homedir, "--kill")
 
 def setupworkdir(workdir):
         shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
