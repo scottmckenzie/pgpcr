@@ -461,6 +461,20 @@ Week 8
 	- Fix up advanced menu to use these new functions
  - [x] Set sex and name correctly on smartcard
 	- Property support hadn't been tested much and it did not work correctly
+
+2018-07-04
+----------
+ - National holiday, so I took the day off.
+
+2018-07-05
+----------
+ - [x] Pass the default homedir as None to fix [#10](https://salsa.debian.org/tookmund-guest/pgpcr/issues/10)
+ - [x] Ask for given name and surname not just name for smartcard properties
+ - [x] Ensure GPGKey.homedir is never None
+ - [x] Format disk labels better in alerts
+ - [x] Export reusable functionality of GPGKey as Context parent class
+	- So that Smartcard can use redraw and homedir
+	- Also move gpg agent handling to context
  - [ ] Help popups
  - [ ] Test everything
  - [ ] Overflow for anything not finished on schedule
