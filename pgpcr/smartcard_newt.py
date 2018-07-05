@@ -72,15 +72,15 @@ def setpins(screen, smart):
 
 def setproperties(screen, smart):
     ew = common.EW(screen, _("New Smartcard"), _("Setup your new smartcard"),
-            [_("Name of cardholder"), _("Language Preference"),
-                _("Sex (m/f/u)"), _("Login Data")])
+            [_("Given Name of Cardholder"), _("Surname of Cardholder"),
+                _("Language Preference"), _("Sex (m/f/u)"), _("Login Data")])
     if ew[0] == "cancel":
         return
     try:
-        smart.name = ew[1][0]
-        smart.lang = ew[1][1]
-        smart.sex = ew[1][2]
-        smart.login = ew[1][3]
+        smart.name = ew[1][0]+" "+ew[1][1]
+        smart.lang = ew[1][2]
+        smart.sex = ew[1][3]
+        smart.login = ew[1][4]
     except smartcard.SmartcardError as e:
         common.error(screen, str(e))
 
