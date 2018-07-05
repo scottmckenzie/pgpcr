@@ -1,7 +1,7 @@
 import gpg
 import os
 import logging
-from pgpcr import gpg_ops
+from pgpcr import context
 
 _log = logging.getLogger(__name__)
 
@@ -39,18 +39,18 @@ def _raiseerr(err):
     else:
         raise SmartcardError(str(err))
 
-class Smartcard:
+class Smartcard(context.Context):
     def __init__(self, homedir=None):
-        gpg_ops.launchagent(homedir)
-        if homedir == gpg_ops.defaulthome:
+        context.launchagent(homedir)
+        if homedir == context.defaulthome:
             homedir = None
-        self._assuan = gpg.Context(protocol=gpg.constants.protocol.ASSUAN,
+        self._ctx = gpg.Context(protocol=gpg.constants.protocol.ASSUAN,
                 home_dir=homedir)
         if homedir is not None:
             _log.info(homedir)
         try:
-            err = self._assuan.assuan_transact("SCD LEARN --force",
-                status_cb=self._assuanlearn)
+            err = self._ctx.assuan_transact("SCD LEARN --force",
+                status_cb=self._ctxlearn)
         except gpg.errors.GPGMEError as e:
             err = e
         if err:
@@ -68,7 +68,7 @@ class Smartcard:
     def _scd(self, command):
         com = "SCD "
         com += command
-        err = self._assuan.assuan_transact(com, status_cb=self._assuanstatus)
+        err = self._ctx.assuan_transact(com, status_cb=self._ctxstatus)
         if err:
             _raiseerr(err)
         return (self.__status, self.__args)
