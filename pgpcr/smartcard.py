@@ -148,8 +148,7 @@ class Smartcard(context.Context):
 
     @property
     def serial(self):
-        s = self.fullserial[-12:]
-        return s.strip("0")
+        return self.fullserial[-12:-4]
 
 
     @property
