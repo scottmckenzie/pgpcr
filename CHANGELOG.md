@@ -483,6 +483,10 @@ Week 8
  - [x] Remove help popup
 	- Unused for now
 	- Will add back if I find a good use for them
+ - [x] Pinentry: Operation Cancelled
+ - [x] Catch invalid values for smartcard properties
+ - [x] Update translations template
+ - [x] Move build instructions to the parent repository
  - [ ] Test everything
 
 Evaluation Period 2 / Week 9
