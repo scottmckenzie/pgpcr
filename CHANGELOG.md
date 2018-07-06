@@ -476,9 +476,14 @@ Week 8
 	- So that Smartcard can use redraw and homedir
 	- Also move gpg agent handling to context
  - [x] Form validation
- - [ ] Help popups
+
+2018-07-06
+----------
+ - [x] Update automated testing to account for new interface changes
+ - [x] Remove help popup
+	- Unused for now
+	- Will add back if I find a good use for them
  - [ ] Test everything
- - [ ] Overflow for anything not finished on schedule
 
 Evaluation Period 2 / Week 9
 ============================
