@@ -16,6 +16,11 @@ Run the build script:
 ./build.sh
 ```
 
+Dependencies
+------------
+```
+apt-get install debhelper devscripts gnupg libgpgme-dev:i386 dh-python python3-babel python3-setuptools python3-all python3-gpg
+```
 
 Translations
 ------------
