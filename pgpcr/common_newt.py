@@ -5,7 +5,7 @@ width = 40
 padding = (0, 0, 0, 1)
 
 
-def screen():
+def Screen():
     s = SnackScreen()
     s.helpCallback(helpCallback)
     s.pushHelpLine(_("   <Tab>/<Alt-Tab> between elements   |"
@@ -79,15 +79,15 @@ def NotImplementedYet(screen):
     alert(screen, "Not Implemented Yet",
           "This feature has not yet been implemented")
 
-def redraw(s, doIt):
+def redraw(screen, doIt):
     if doIt:
-        s.finish()
-        s = screen()
-    return s
+        screen.finish()
+        screen = Screen()
+    return screen
 
 class Progress:
     def __init__(self, s, title, text, total, current=0):
-        self.screen = screen() if s is None else s
+        self.screen = Screen() if s is None else s
         self._create(title, text, total, current)
 
     def _create(self, title, text, total, current):
