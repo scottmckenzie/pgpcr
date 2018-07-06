@@ -9,7 +9,7 @@ def Screen():
     s = SnackScreen()
     s.helpCallback(helpCallback)
     s.pushHelpLine(_("   <Tab>/<Alt-Tab> between elements   |"
-        "   <Space> check box   |   <Enter> next screen"))
+        "   <Space> checks box   |   <Enter> selects"))
     return s
 
 def helpCallback(screen, text):
