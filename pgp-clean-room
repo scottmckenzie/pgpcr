@@ -34,8 +34,6 @@ if type(tran) is gettext.NullTranslations and lang != "en":
     common_ui.error(screen, "Translation for "+lang+" not found! Falling"
             "back to English")
 
-from pgpcr import helptext
-
 with open("/var/log/live/boot.log") as f:
     r = f.read()
     if "Warning: Not enough free memory" not in r:
@@ -63,7 +61,7 @@ while running:
                               (_("Load a GPG Master Key from USB"), "load gpg"),
                               (_("Advanced Options"), "adv"),
                               (_("Quit"), "quit")
-                             ], help=helptext.mainMenu)
+                             ])
 
     workdir = defaulthome
     if not os.path.exists(workdir):
