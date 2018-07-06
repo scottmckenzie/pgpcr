@@ -1,5 +1,5 @@
 from snack import *
-from . import external
+from . import external, valid
 
 width = 40
 padding = (0, 0, 0, 1)
@@ -45,12 +45,16 @@ def password(hint, desc, prev_bad, screen):
     return p.value()
 
 def uid(screen, purpose):
-    ew = EW(screen, purpose, _("Enter User Information"),
-                     [_("Name"), _("Email Address")])
-    if ew[0] != "ok":
-        return None
-    else:
-        return ew[1][0]+" <"+ew[1][1]+">"
+    while True:
+        ew = EW(screen, purpose, _("Enter User Information"),
+                [_("Name"), _("Email Address")])
+        if ew[0] != "ok":
+            return None
+        else:
+            if valid.email(ew[1][1]):
+                return ew[1][0]+" <"+ew[1][1]+">"
+            else:
+                error(screen, _("You must supply a valid email address"))
 
 def alert(screen, title, msg):
     ButtonChoiceWindow(screen, title, msg, [(_("Ok"), "ok")])

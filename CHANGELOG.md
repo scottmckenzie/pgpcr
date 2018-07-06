@@ -475,6 +475,7 @@ Week 8
  - [x] Export reusable functionality of GPGKey as Context parent class
 	- So that Smartcard can use redraw and homedir
 	- Also move gpg agent handling to context
+ - [x] Form validation
  - [ ] Help popups
  - [ ] Test everything
  - [ ] Overflow for anything not finished on schedule
