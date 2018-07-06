@@ -1,4 +1,10 @@
-from os import listdir
+import os
+
+def listdir(path):
+    ld = os.listdir(path)
+    ld.sort()
+    return ld
+
 # Check if a directory contains gpg backups
 # If so return a list of keys backed up
 def backups(path):

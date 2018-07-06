@@ -7,5 +7,5 @@ class Fmt(unittest.TestCase):
 
     def test_backups(self):
         b = fmt.backups(self.data)
-        self.assertEqual(b, ["CAFEBABE", "B000DEAD", "DEADBEEF"])
+        self.assertEqual(b, ["B000DEAD", "CAFEBABE", "DEADBEEF"])
 
