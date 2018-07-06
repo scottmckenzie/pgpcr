@@ -22,33 +22,42 @@ def new(screen, workdir):
                             _("Generating Master Key")+"...", 40)
     mprog.gk = gk
     gk.setprogress(_progress, mprog)
-    try:
-        gk.genmaster(uid)
-    except gpg_ops.GPGMEError as g:
-        screen = common.Screen()
-        common.error(screen, _("Master Key generation error")+": "+str(g))
-        return
+    while True:
+        try:
+            gk.genmaster(uid)
+        except gpg_ops.GPGMEError as g:
+            cont = common.catchGPGMEErr(_("Master Key generation"), g)
+            if cont:
+                continue
+            return
+        break
     screen = common.redraw(screen, gk.redraw)
     common.alert(screen, _("Revocation certificate"), _("A revocation"
         " certificate will now be generated. You will be asked for your"
         " password."))
-    try:
-        gk.genrevoke()
-    except gpg_ops.GPGMEError as g:
-        screen = common.Screen()
-        common.error(screen, _("Revocation certificate generation error")+":"
-        return
+    while True:
+        try:
+            gk.genrevoke()
+        except gpg_ops.GPGMEError as g:
+            c = common.catchGPGMEErr(_("Revocation certificate generation"), g)
+            if c:
+                continue
+            return
+        break
     sprog = common.Progress(screen, _("Key Generation"),
                             _("Generating Sub Keys")+"...", 60)
     sprog.gk = gk
     gk.setprogress(_progress, sprog)
-    try:
-        gk.genseasubs(sprog.setText, common.ContinueSkipAbort, common.redraw,
-                screen)
-    except gpg_ops.GPGMEError as g:
-        screen = common.Screen()
-        common.error(screen, _("Subkey generation error")+": "+str(g))
-        return
+    while True:
+        try:
+            gk.genseasubs(sprog.setText, common.ContinueSkipAbort,
+                    common.redraw, screen)
+        except gpg_ops.GPGMEError as g:
+            cancel = common.catchGPGMEErr(_("Subkey generation"), str(g))
+            if not cancel:
+                continue
+            return
+        break
     screen = common.Screen()
     common.alert(screen, _("Key Generation"), _("Key Generation Complete!"))
     save(screen, workdir, gk)

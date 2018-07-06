@@ -134,6 +134,18 @@ def catchCPE(screen, e):
     else:
         error(screen, s)
 
+def catchGPGMEErr(what, g):
+    screen = Screen()
+    if g.code_str == "Operation cancelled":
+        cancel = dangerConfirm(screen, what, _("Are you sure you want to"
+        " cancel")+" "+what+"?")
+        if cancel:
+            return False
+        return True
+    else:
+        error(screen, what+_("error")+": "+str(g))
+        return False
+
 # A ListboxChoiceWindow without the buttons
 # Mostly borrowed from snack.py
 def listmenu(screen, title, text, items, help=None):
