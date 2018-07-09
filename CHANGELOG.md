@@ -494,6 +494,16 @@ Evaluation Period 2 / Week 9
 
 2018-07-09
 ----------
+ - [ ] Support setting yubikey touch operation
+	- Wasted a bunch of time trying to figure this out
+	- Requires low-level smartcard operations that I don't totally understand
+	- Will take another crack at this tomorrow
+ - [x] Begin PKI UI
+ - [ ] PKI/CA UI
+	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
+ - [ ] Secure the Live Environment as much as possible
+	- Minimize local packages, remove device drivers for anything that's not keyboard/mouse/storage/graphics
+	- USBGuard?
  - [ ] Call for testing from the wider Debian/FLOSS community
  - [ ] Create a Debian package for the pgp-clean-room application and submit it to mentors.d.o
 
@@ -535,10 +545,6 @@ Misc
 Would like to do these if I have time but we'll see how this goes
  - [ ] Figure out when progress_cb is called with primegen
 	- Time based? amount of randomness gathered?
- - [ ] PKI/CA UI
-	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
- - [ ] Secure the Live Environment as much as possible
-	- Minimize local packages, remove device drivers for anything that's not keyboard/mouse/storage/graphics
  - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Alternative UI (Qt, GTK, etc)
  - [ ] Add the option to print key backups and revocation certificates
