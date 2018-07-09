@@ -169,34 +169,6 @@ class Smartcard(context.Context):
     def setAdminPIN(self):
         self._scd("PASSWD 3")
 
-    # Based on yubitouch.sh https://github.com/a-dma/yubitouch
-    def yk_touch(self, operation, requirement):
-        _log.info(self.vendor+" "+operation+" "+str(requirement))
-        if self.vendor != "Yubico":
-            raise UnsupportedOperation
-        if operation == "sig":
-            DO = "D6"
-        elif operation == "dec":
-            DO = "D7"
-        elif operation == "aut":
-            DO = "D8"
-        else:
-            raise UnsupportedOperation
-        if requirement == False:
-            UIF = "00"
-        elif requirement == True:
-            UIF = "01"
-        elif requirement == None:
-            UIF = "02"
-        else:
-            raise UnsupportedOperation
-        self._scd("APDU 00 da 00 "+DO+" 02 "+UIF+" 20")
-
-    def yk_fixtouch(self):
-        for x in ["sig", "dec", "aut"]:
-            self.yk_touch(x, None)
-
-
 sexopt = {"m": 1, "f": 2, "u": 9}
 sexoptsm = {}
 for k, v in sexopt.items():

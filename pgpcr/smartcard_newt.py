@@ -89,23 +89,6 @@ def setproperties(screen, smart):
             common.error(screen, str(e))
             continue
         break
-    #yk_properties(screen, smart)
-
-def yk_properties(screen, smart):
-    if smart.vendor != "Yubico":
-        return
-    ccw = common.CheckboxChoiceWindow(screen, _("Yubikey Touch"), _("For which"
-        " operations would you like to require a touch of the smartcard"
-        " button?"), [(_("Signing"), "sig"), (_("Decryption"), "dec"),
-            (_("Authentication"), "aut")])
-    if ccw[0] == "cancel":
-        return
-    for op in ccw[1]:
-        smart.yk_touch(op, True)
-    fix = common.dangerConfirm(screen, _("Fix"), _("Would you like to make"
-        " these settings permanent?"))
-    if fix:
-        smart.yk_fixtouch()
 
 def generate(screen, workdir):
     smart = pickcard(screen, workdir)
