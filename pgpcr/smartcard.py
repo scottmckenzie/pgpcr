@@ -170,7 +170,7 @@ class Smartcard(context.Context):
         self._scd("PASSWD 3")
 
     # Based on yubitouch.sh https://github.com/a-dma/yubitouch
-    def yk_settouch(operation, requirement):
+    def yk_touch(self, operation, requirement):
         if self.vendor != "Yubico":
             raise UnsupportedOperation
         if operation == "sig":
@@ -190,6 +190,10 @@ class Smartcard(context.Context):
         else:
             raise UnsupportedOperation
         self._scd("APDU 00 da 00 "+DO+" 02 "+UIF+" 20")
+
+    def yk_fixtouch(self):
+        for x in ["sig", "dec", "aut"]:
+            self.yk_touch(x, None)
 
 
 sexopt = {"m": 1, "f": 2, "u": 9}
