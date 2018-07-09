@@ -63,7 +63,6 @@ while running:
                              [(_("Generate a New GPG Master Key"), "new gpg"),
                               (_("Load a GPG Master Key from USB"), "load gpg"),
                               (_("Advanced Options"), "adv"),
-                              (_("New CA"), "newca"),
                               (_("Quit"), "quit")
                              ])
 
@@ -79,10 +78,6 @@ while running:
         gpg_ui.new(screen, workdir)
     elif ret == "load gpg":
         gpg_ui.load(screen, workdir)
-    elif ret == "newca":
-        tmp = tempfile.TemporaryDirectory()
-        workdir = tmp.name
-        pki_ui.new(workdir)
     elif ret == "adv":
         adv = common_ui.LCW(screen, _("Advanced Options"),
                                   _("These options are for users who know what"
