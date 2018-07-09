@@ -171,6 +171,7 @@ class Smartcard(context.Context):
 
     # Based on yubitouch.sh https://github.com/a-dma/yubitouch
     def yk_touch(self, operation, requirement):
+        _log.info(self.vendor+" "+operation+" "+str(requirement))
         if self.vendor != "Yubico":
             raise UnsupportedOperation
         if operation == "sig":
@@ -183,9 +184,9 @@ class Smartcard(context.Context):
             raise UnsupportedOperation
         if requirement == False:
             UIF = "00"
-        if requirement == True:
+        elif requirement == True:
             UIF = "01"
-        if requirement == None:
+        elif requirement == None:
             UIF = "02"
         else:
             raise UnsupportedOperation
