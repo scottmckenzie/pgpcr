@@ -9,14 +9,17 @@ import traceback
 import os
 import logging
 import shutil
+import tempfile
 from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
+from pgpcr import pki_newt as pki_ui
 from pgpcr.context import defaulthome, setupworkdir
 
 subprocess.run(["setfont", "/usr/share/consolefonts/Unifont-APL8x16.psf.gz"])
 
 def excepthook(t, v, tb):
     SnackScreen().finish()
+    log.exceptiion("ERROR")
     traceback.print_exception(t, v, tb)
 
 sys.excepthook = excepthook
@@ -60,6 +63,7 @@ while running:
                              [(_("Generate a New GPG Master Key"), "new gpg"),
                               (_("Load a GPG Master Key from USB"), "load gpg"),
                               (_("Advanced Options"), "adv"),
+                              (_("New CA"), "newca"),
                               (_("Quit"), "quit")
                              ])
 
@@ -75,6 +79,10 @@ while running:
         gpg_ui.new(screen, workdir)
     elif ret == "load gpg":
         gpg_ui.load(screen, workdir)
+    elif ret == "newca":
+        tmp = tempfile.TemporaryDirectory()
+        workdir = tmp.name
+        pki_ui.new(workdir)
     elif ret == "adv":
         adv = common_ui.LCW(screen, _("Advanced Options"),
                                   _("These options are for users who know what"
