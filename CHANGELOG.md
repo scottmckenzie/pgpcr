@@ -499,6 +499,9 @@ Evaluation Period 2 / Week 9
 	- Requires low-level smartcard operations that I don't totally understand
 	- Will take another crack at this tomorrow
  - [x] Begin PKI UI
+ - [x] Clean up Git repo a bit
+	- It's still kinda a mess as it exists as a log of my work this summer
+	- Split yubikey touch and pki stuff into their own branches
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
  - [ ] Secure the Live Environment as much as possible
