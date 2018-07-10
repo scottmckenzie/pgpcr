@@ -149,7 +149,7 @@ def catchGPGMEErr(what, g):
 
 # A ListboxChoiceWindow without the buttons
 # Mostly borrowed from snack.py
-def listmenu(screen, title, text, items, help=None):
+def LCM(screen, title, text, items, help=None):
     height = len(items)
     t = TextboxReflowed(width, text)
     l = Listbox(height, returnExit = 1)
@@ -168,8 +168,8 @@ def listmenu(screen, title, text, items, help=None):
     g.runOnce()
     return l.current()
 
-def CheckboxChoiceWindow(screen, title, text, items, buttons = None,
-                      width = 40, scroll = 0, height = -1, help = None):
+def CCW(screen, title, text, items, buttons = None, width = 40, scroll = 0,
+        height = -1, help = None):
 
     if buttons is None:
         buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")]
@@ -207,3 +207,5 @@ def EW(screen, title, text, prompts, allowCancel = 1, width = 40,
         buttons = [(_("Ok"), "ok")]
     return EntryWindow(screen, title, text, prompts, allowCancel, width,
             entryWidth, buttons, help)
+
+BCW = ButtonChoiceWindow
