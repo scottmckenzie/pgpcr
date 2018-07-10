@@ -1,4 +1,3 @@
-from snack import *
 from time import sleep
 from shutil import copy
 from os import mkdir

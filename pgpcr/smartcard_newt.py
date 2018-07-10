@@ -1,4 +1,3 @@
-from snack import *
 from time import sleep
 from . import smartcard
 from . import newt

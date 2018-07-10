@@ -29,8 +29,8 @@ class newtTest(unittest.TestCase):
             sleep(0.01)
 
     def test_checkboxchoicewindow(self):
-        newt.CheckboxChoiceWindow(self.Screen, "Test Checkboxes",
-                "This is a test", ["one", "two", "three"], help="test help")
+        newt.CCW(self.Screen, "Test Checkboxes", "This is a test",
+                ["one", "two", "three"], help="test help")
 
     def test_CatchCPE(self):
         e = _cpetest()

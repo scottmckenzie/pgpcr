@@ -1,4 +1,3 @@
-from snack import *
 from . import gpg_ops
 from . import newt
 from . import disks_newt
@@ -104,7 +103,7 @@ def keyalgos(screen, gk):
 
 def save(screen, workdir, gk):
     disks_newt.store(screen, workdir, "gpg/"+gk.fpr, gpg_ops.ignore)
-    export = ButtonChoiceWindow(screen, _("Key Export"),
+    export = newt.BCW(screen, _("Key Export"),
                                 _("How would you like to export your"
                                 " subkeys?"),
                                 [(_("External Storage"), "storage"),
