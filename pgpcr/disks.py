@@ -102,11 +102,9 @@ class Disk:
             raise NotMountable
         mountdir = "/mnt/"+self.serial
         external.process(["sudo", "mkdir", "-p", mountdir])
-        external.process(
-            ["sudo", "mount", children[0]["name"], mountdir])
+        external.process(["sudo", "mount", children[0]["name"], mountdir])
         self.mountpoint = mountdir
-        chown = external.process(
-            ["sudo", "chown", "-R", str(os.getuid()), mountdir])
+        external.process(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
     def eject(self):
         external.process(["sync"])
