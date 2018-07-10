@@ -19,7 +19,7 @@ def new(screen, workdir):
                  " Progress is estimated and this may take a while."
                  " You will be prompted for your password several times."))
     mprog = common.Progress(screen, _("Key Generation"),
-                            _("Generating Master Key")+"...", 40)
+                            _("Generating Master Key...", 40)
     mprog.gk = gk
     gk.setprogress(_progress, mprog)
     while True:
@@ -45,7 +45,7 @@ def new(screen, workdir):
             return
         break
     sprog = common.Progress(screen, _("Key Generation"),
-                            _("Generating Sub Keys")+"...", 60)
+                            _("Generating Sub Keys...", 60)
     sprog.gk = gk
     gk.setprogress(_progress, sprog)
     while True:
