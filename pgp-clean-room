@@ -25,7 +25,10 @@ log.addHandler(fh)
 
 def excepthook(t, v, tb):
     SnackScreen().finish()
-    log.error(traceback.format_exc())
+    traceback.print_exception(t, v, tb)
+    exc = traceback.format_exception(t, v, tb)
+    for x in exc:
+        log.error(x)
 
 sys.excepthook = excepthook
 
