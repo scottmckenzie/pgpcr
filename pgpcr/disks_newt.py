@@ -32,7 +32,7 @@ def pickdisks(screen, use):
             return None
 
 
-def store(screen, workdir, name):
+def store(screen, workdir, name, ignore=None):
     try:
         i = 1
         moredisks = True
@@ -52,7 +52,7 @@ def store(screen, workdir, name):
                     setupFail = False
             if b is None:
                 return
-            b.backup(workdir, name)
+            b.backup(workdir, name, ignore)
             common.alert(screen, str(b),
                          _("Your backup to the above disk is now complete "
                          "and the disk can be ejected."))

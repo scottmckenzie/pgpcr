@@ -100,7 +100,7 @@ def keyalgos(screen, gk):
     return True
 
 def save(screen, workdir, gk):
-    disks_newt.store(screen, workdir, "gpg/"+gk.fpr)
+    disks_newt.store(screen, workdir, "gpg/"+gk.fpr, gpg_ops.ignore)
     export = ButtonChoiceWindow(screen, _("Key Export"),
                                 _("How would you like to export your"
                                 " subkeys?"),

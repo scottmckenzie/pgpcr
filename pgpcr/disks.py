@@ -26,6 +26,7 @@ def lsblk(options):
 
 class NotMountable(Exception):
     pass
+
 class Disk:
 
     def __init__(self, blkdev):
@@ -78,14 +79,17 @@ class Disk:
         self._partition(label)
         self.mount()
 
-    def backup(self, workdir, name):
+    def backup(self, workdir, name, ignore=None):
         if not self.ismounted():
             return None
         else:
+            if ignore is not None:
+                ig = shutil.ignore_patterns(ignore)
+            else:
+                ig = None
             dest = self.mountpoint+"/"+name
             shutil.rmtree(dest, ignore_errors=True)
-            shutil.copytree(workdir, dest,
-                            ignore=shutil.ignore_patterns("S.*"))
+            shutil.copytree(workdir, dest, ignore=ig)
             self.eject()
 
     def _partition(self, label):

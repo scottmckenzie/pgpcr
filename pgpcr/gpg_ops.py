@@ -266,4 +266,4 @@ sub_algos = OrderedDict([
     ("brainpoolP", ["512r1", "384r1", "256r1"])
     ])
 
-
+ignore = "S.*"
