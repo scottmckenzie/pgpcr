@@ -1,5 +1,5 @@
 from snack import *
-from . import disks, common_newt as common, external
+from . import disks, newt, external
 from time import sleep
 from shutil import copy
 from os import mkdir
@@ -8,18 +8,18 @@ def pickdisks(screen, use):
     while True:
         d = disks.getdisks()
         if d == []:
-            common.alert(screen, _("Disks"),
+            newt.alert(screen, _("Disks"),
                     _("No removable storage connected."
                         " Please connect some and press OK."))
             sleep(1)
             continue
         dlist = [str(x) for x in d]
-        lcw = common.LCW(screen, _("Disks"), _("Pick your %s disk") % use,
+        lcw = newt.LCW(screen, _("Disks"), _("Pick your %s disk") % use,
                 dlist, buttons=[(_("Refresh"), "refresh"),
                     (_("Cancel"), "cancel")])
         if lcw[0] is None or lcw[0] == "ok":
             disk = d[lcw[1]]
-            danger = common.dangerConfirm(screen, _("Warning"), _("Are you"
+            danger = newt.dangerConfirm(screen, _("Warning"), _("Are you"
                 " sure you want to use this disk?"
                 "\n%s (%s)") % (str(disk), disk.path))
             if danger:
@@ -43,7 +43,7 @@ def store(screen, workdir, name, ignore=None):
                 b = setup(screen, _("master key backup")+" "+str(i),
                         "PGPCR Backup "+str(i))
                 if b is None:
-                    skip = common.dangerConfirm(screen, _("Danger!"),
+                    skip = newt.dangerConfirm(screen, _("Danger!"),
                             _("Are you sure you don't want to make any more"
                                 " backups?"))
                     if skip:
@@ -53,19 +53,19 @@ def store(screen, workdir, name, ignore=None):
             if b is None:
                 return
             b.backup(workdir, name, ignore)
-            common.alert(screen, str(b),
+            newt.alert(screen, str(b),
                          _("Your backup to the above disk is now complete "
                          "and the disk can be ejected."))
             i += 1
             if i > 2:
-                moredisks = common.dangerConfirm(screen, _("Backups"),
+                moredisks = newt.dangerConfirm(screen, _("Backups"),
                                                  _("Would you like to backup"
                                                    " to another disk?"))
     except disks.CopyError as e:
         s = " ".join(e)
-        common.error(s)
+        newt.error(s)
     except external.CalledProcessError as e:
-        common.catchCPE(screen, e)
+        newt.catchCPE(screen, e)
         store(screen, workdir, name)
 
 
@@ -78,7 +78,7 @@ def export(screen, gk, secret=False):
         while publicFail:
             public = setup(screen, label, "PGPCR Export")
             if public is None:
-                exp = common.dangerConfirm(screen, label,
+                exp = newt.dangerConfirm(screen, label,
                         _("Are you sure you don't want to export your key?"))
                 if exp:
                     return
@@ -97,9 +97,9 @@ def export(screen, gk, secret=False):
         public.eject()
     except disks.CopyError as e:
         s = " ".join(e)
-        common.error(s)
+        newt.error(s)
     except external.CalledProcessError as e:
-        common.catchCPE(screen, e)
+        newt.catchCPE(screen, e)
         export(screen, gk)
 
 
@@ -112,9 +112,9 @@ def setup(screen, use, label):
             disk.mount()
             return disk
         except external.CalledProcessError as e:
-            common.catchCPE(screen, e)
+            newt.catchCPE(screen, e)
 
-    danger = common.dangerConfirm(screen, _("Warning"), _("Are you sure you"
+    danger = newt.dangerConfirm(screen, _("Warning"), _("Are you sure you"
                                   " want to use this disk?"
                                   "\n%s"
                                   "\nAll the data currently on the disk"
@@ -123,7 +123,7 @@ def setup(screen, use, label):
         try:
             disk.setup(label)
         except external.CalledProcessError as e:
-            common.catchCPE(screen, e)
+            newt.catchCPE(screen, e)
             setup(screen, use, label)
     else:
         disk = setup(screen, use, label)
@@ -138,7 +138,7 @@ def mountdisk(screen, use):
         d.mount()
         return d
     except external.CalledProcessError as e:
-        common.catchCPE(screen, e)
+        newt.catchCPE(screen, e)
     except disks.NotMountable:
-        common.error(screen, _("No mountable partitions found on this disk"))
+        newt.error(screen, _("No mountable partitions found on this disk"))
     mountdisk(screen, use)

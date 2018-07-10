@@ -1,5 +1,5 @@
 from snack import *
-from . import gpg_ops, common_newt as common, disks_newt, smartcard_newt
+from . import gpg_ops, newt, disks_newt, smartcard_newt
 from . import fmt, external
 import logging
 
@@ -8,17 +8,17 @@ _log = logging.getLogger(__name__)
 def new(screen, workdir):
     gk = gpg_ops.GPGKey(workdir)
     gk.setstatus(_status)
-    uid = common.uid(screen, _("New GPG Key"))
+    uid = newt.uid(screen, _("New GPG Key"))
     if uid is None:
         return
     k = keyalgos(screen, gk)
     if not k:
         return
-    common.alert(screen, _("Key Generation"),
+    newt.alert(screen, _("Key Generation"),
                  _("GPG keys will now be generated."
                  " Progress is estimated and this may take a while."
                  " You will be prompted for your password several times."))
-    mprog = common.Progress(screen, _("Key Generation"),
+    mprog = newt.Progress(screen, _("Key Generation"),
                             _("Generating Master Key...", 40))
     mprog.gk = gk
     gk.setprogress(_progress, mprog)
@@ -26,45 +26,45 @@ def new(screen, workdir):
         try:
             gk.genmaster(uid)
         except gpg_ops.GPGMEError as g:
-            cont = common.catchGPGMEErr(_("Master Key generation"), g)
+            cont = newt.catchGPGMEErr(_("Master Key generation"), g)
             if cont:
                 continue
             return
         break
-    screen = common.redraw(screen, gk.redraw)
-    common.alert(screen, _("Revocation certificate"), _("A revocation"
+    screen = newt.redraw(screen, gk.redraw)
+    newt.alert(screen, _("Revocation certificate"), _("A revocation"
         " certificate will now be generated. You will be asked for your"
         " password."))
     while True:
         try:
             gk.genrevoke()
         except gpg_ops.GPGMEError as g:
-            c = common.catchGPGMEErr(_("Revocation certificate generation"), g)
+            c = newt.catchGPGMEErr(_("Revocation certificate generation"), g)
             if c:
                 continue
             return
         break
-    sprog = common.Progress(screen, _("Key Generation"),
+    sprog = newt.Progress(screen, _("Key Generation"),
                             _("Generating Sub Keys...", 60))
     sprog.gk = gk
     gk.setprogress(_progress, sprog)
     while True:
         try:
-            gk.genseasubs(sprog.setText, common.ContinueSkipAbort,
-                    common.redraw, screen)
+            gk.genseasubs(sprog.setText, newt.ContinueSkipAbort,
+                    newt.redraw, screen)
         except gpg_ops.GPGMEError as g:
-            cancel = common.catchGPGMEErr(_("Subkey generation"), str(g))
+            cancel = newt.catchGPGMEErr(_("Subkey generation"), str(g))
             if not cancel:
                 continue
             return
         break
-    screen = common.Screen()
-    common.alert(screen, _("Key Generation"), _("Key Generation Complete!"))
+    screen = newt.Screen()
+    newt.alert(screen, _("Key Generation"), _("Key Generation Complete!"))
     save(screen, workdir, gk)
 
 def keyalgos(screen, gk):
     masteralgolist = list(gpg_ops.master_algos.keys())
-    mlcw = common.LCW(screen, _("Master Key Algorithm"),_("Pick the"
+    mlcw = newt.LCW(screen, _("Master Key Algorithm"),_("Pick the"
         " algorithm you would like to use for your new master key. If you're"
         " unsure, the defaults are well chosen and should work for"
         " most people"), masteralgolist)
@@ -73,14 +73,14 @@ def keyalgos(screen, gk):
     masteralgo = masteralgolist[mlcw[1]]
     mastersizes = gpg_ops.master_algos[masteralgo]
     if mastersizes is not None:
-        mks = common.LCW(screen, _("Master Key Size"), _("Pick the size of"
+        mks = newt.LCW(screen, _("Master Key Size"), _("Pick the size of"
             " your new master key. If you're unsure the defaults are well"
             " chosen and should work for most people"), mastersizes)
         if mks[0] == "cancel":
             return False
         masteralgo += mastersizes[mks[1]]
     subalgolist = list(gpg_ops.sub_algos.keys())
-    slcw = common.LCW(screen, _("Subkey Algorithm"),_("Pick the"
+    slcw = newt.LCW(screen, _("Subkey Algorithm"),_("Pick the"
         " algorithm you would like to use for your new subkeys. If you're"
         " unsure, the defaults are well chosen and should work for"
         " most people"), subalgolist)
@@ -89,7 +89,7 @@ def keyalgos(screen, gk):
     subalgo = subalgolist[slcw[1]]
     subsizes = gpg_ops.sub_algos[subalgo]
     if subsizes is not None:
-        sks = common.LCW(screen, _("Master Key Size"), _("Pick the size of"
+        sks = newt.LCW(screen, _("Master Key Size"), _("Pick the size of"
             " your new master key. If you're unsure the defaults are well"
             " chosen and should work for most people"), subsizes)
         if sks[0] == "cancel":
@@ -112,9 +112,9 @@ def save(screen, workdir, gk):
     elif export == "smartcard":
         smartcard_newt.export(screen, gk)
     disks_newt.export(screen, gk, secret)
-    common.alert(screen, _("New Key Creation Complete"),
+    newt.alert(screen, _("New Key Creation Complete"),
                  _("You can now store your backups in a safe place"))
-    common.alert(screen, _("IMPORTANT"),
+    newt.alert(screen, _("IMPORTANT"),
         _("Don't forget to import your new key to your main"
             " computer by running import.sh from your public export disk."))
 
@@ -125,7 +125,7 @@ def _progress(what, type, current, total, prog):
         _log.info(what, type, current, total)
     if prog.gk.redraw:
         prog.screen.finish()
-        prog.screen = common.Screen()
+        prog.screen = newt.Screen()
         prog.recreate()
 
 
@@ -135,11 +135,11 @@ def load(screen, workdir):
         return
     dirs = fmt.backups(d.mountpoint)
     if dirs is None:
-        common.error(screen, _("This disk does not contain a master key"
+        newt.error(screen, _("This disk does not contain a master key"
                                " backup."))
         d.eject()
         load(screen, workdir)
-    lcw = common.LCW(screen, _("Key Fingerprint"),
+    lcw = newt.LCW(screen, _("Key Fingerprint"),
                               _("Please select your key."), dirs)
     if lcw[0] == "cancel":
         return
@@ -149,8 +149,8 @@ def load(screen, workdir):
     running = True
     while running:
         screen.finish()
-        screen = common.Screen()
-        lm = common.listmenu(screen, key, _("What would you like to do?"),
+        screen = newt.Screen()
+        lm = newt.listmenu(screen, key, _("What would you like to do?"),
                                  [(_("Sign GPG Public Keys"), "sign"),
                                   (_("Associate a UID with your master key"),
                                      "adduid"),
@@ -176,7 +176,7 @@ def load(screen, workdir):
         elif lm == "quit":
             d.eject()
             running = False
-    confirm = common.confirm(screen, _("Save"), _("Do you want to save the"
+    confirm = newt.confirm(screen, _("Save"), _("Do you want to save the"
         " changes you've made?"))
     if confirm:
         save(screen, workdir, gk)
@@ -188,67 +188,67 @@ def sign(screen, gk, path):
         return
     keys = fmt.signing(s.mountpoint)
     if keys is None:
-        common.alert(screen, _("Key Signing"),
+        newt.alert(screen, _("Key Signing"),
                      _("There are no keys to sign on this disk. Please be sure"
                        " they are in the signing/pending folder."))
         sign(screen, gk, path)
         return
-    rw = common.CheckboxChoiceWindow(screen, _("Key Signing"), _("Which keys"
+    rw = newt.CheckboxChoiceWindow(screen, _("Key Signing"), _("Which keys"
                                      " do you want to sign?"), keys)
     if rw[0] == "cancel":
         return
     for k in rw[1]:
         gk.signkey(s.mountpoint, k)
-        screen = common.redraw(screen, gk.redraw)
-        common.alert(screen, _("Key Signing"), _("Signed %s") % k)
+        screen = newt.redraw(screen, gk.redraw)
+        newt.alert(screen, _("Key Signing"), _("Signed %s") % k)
     s.eject()
 
 def revokekey(screen, gk):
     keys = gk.keys
-    ccw = common.CheckboxChoiceWindow(screen, gk.fpr,
+    ccw = newt.CheckboxChoiceWindow(screen, gk.fpr,
                                       _("Which key(s) do you want to revoke?"),
                                       keys)
     for k in ccw[1]:
         fpr = k.split(" ")[0]
-        lcw = common.LCW(screen, fpr, _("Why do you want to revoke %s") % k,
+        lcw = newt.LCW(screen, fpr, _("Why do you want to revoke %s") % k,
                 gpg_ops.revoke_reasons)
         if lcw[0] == "cancel":
             return
-        text = common.EW(screen, fpr, _("Why are you revoking this key?"),
+        text = newt.EW(screen, fpr, _("Why are you revoking this key?"),
                 [""])
         if text[0] == "cancel":
             return
         screen.finish()
         gk.revokekey(fpr, lcw[1], text[1][0])
-        screen = common.Screen()
-        common.alert(screen, k, _("Revoked %s") % k)
+        screen = newt.Screen()
+        newt.alert(screen, k, _("Revoked %s") % k)
 
 def adduid(screen, gk):
-    uid = common.uid(screen, _("Add UID")+" "+gk.fpr)
+    uid = newt.uid(screen, _("Add UID")+" "+gk.fpr)
     if uid is None:
         return
     gk.adduid(uid)
-    common.alert(screen, gk.fpr, _("Added %s to your key") % uid)
+    newt.alert(screen, gk.fpr, _("Added %s to your key") % uid)
 
 def revuid(screen, gk):
     uids = gk.uids
-    lcw = common.LCW(screen, gk.fpr, _("Which UID would you like to"
+    lcw = newt.LCW(screen, gk.fpr, _("Which UID would you like to"
                               " revoke?"), uids)
     if lcw[0] == "cancel":
         return
     gk.revokeuid(uids[lcw[1]])
-    common.alert(screen, gk.fpr, _("Removed %s from your key") % uids[lcw[1]])
+    newt.alert(screen, gk.fpr, _("Removed %s from your key") % uids[lcw[1]])
 
 def expirekey(screen, gk):
-    lcw = common.LCW(screen, _("Key expiration"), _("Which key do you"
+    lcw = newt.LCW(screen, _("Key expiration"), _("Which key do you"
         " want to expire?"), gk.keys)
     if lcw[0] == "cancel":
         return
     fpr = gk.keys[lcw[1]].split(" ")[0]
     invalid = True
     while invalid:
-        screen = common.Screen()
-        ew = common.EW(screen, fpr, _("When do you want this key to expire?"
+        screen = newt.Screen()
+        ew = newt.EW(screen, fpr, _("When do you want this key to expire?"
             "(YYYY-MM-DD)"), [_("Expiration Date:")])
         if ew[0] == "cancel":
             return
@@ -256,10 +256,10 @@ def expirekey(screen, gk):
         try:
             gk.expirekey(fpr, ew[1][0])
         except (ValueError, TypeError):
-            common.error(common.Screen(), _("Please enter a valid date in the"
+            newt.error(newt.Screen(), _("Please enter a valid date in the"
                 " future."))
             continue
-        common.alert(common.Screen(), fpr, _("Changed expiration date on %s")
+        newt.alert(newt.Screen(), fpr, _("Changed expiration date on %s")
                 % fpr)
         invalid = False
 
@@ -268,7 +268,7 @@ def importkey(screen, workdir):
     gk = gpg_ops.GPGKey(workdir)
     importFail = True
     while importFail:
-        ew = common.EW(screen, _("Import existing key"), _("Please mount an"
+        ew = newt.EW(screen, _("Import existing key"), _("Please mount an"
             " existing key backup, either an exported secret key or .gnupg and"
             " enter the path to it below"), ["Key Location"])
         if ew[0] == "cancel":
@@ -277,11 +277,11 @@ def importkey(screen, workdir):
         try:
             kl = gk.importbackup(ew[1][0])
         except ValueError as e:
-            common.error(screen, str(e))
+            newt.error(screen, str(e))
             continue
         importFail = False
         if kl is not None:
-            lcw = common.LCW(screen, _("Master Key"),
+            lcw = newt.LCW(screen, _("Master Key"),
                     _("Which key is your master key?"), kl)
             if lcw[0] == "cancel":
                 return

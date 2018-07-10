@@ -9,14 +9,14 @@ import subprocess
 import gettext
 from os import environ
 from time import sleep
-from pgpcr import common_newt
+from pgpcr import newt
 
 gettext.install("pgpcr")
 
 if len(sys.argv) <= 1:
 	print(_("Need a disk to partition!"))
 	sys.exit(1)
-prog = common_newt.Progress(None, _("Disk Setup")+": "+sys.argv[1],
+prog = newt.Progress(None, _("Disk Setup")+": "+sys.argv[1],
                             _("Setting up...", 4))
 log = open(environ["HOME"]+"/pgpcr-part.log", "a")
 log.write(sys.argv[1]+"\n")

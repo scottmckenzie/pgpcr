@@ -1,4 +1,4 @@
-from pgpcr import common_newt
+from pgpcr import newt
 import unittest
 import snack
 from time import sleep
@@ -7,21 +7,21 @@ import tests.helpers
 
 @unittest.skipUnless("PGPCRINTERACT" in environ.keys(), "Interactive tests"
         " disabled. Set PGPCRINTERACT to enable them")
-class commonNewtTest(unittest.TestCase):
+class newtTest(unittest.TestCase):
     def setUp(self):
-        self.screen = common_newt.screen()
+        self.screen = newt.screen()
 
     def tearDown(self):
         self.screen.finish()
 
     def test_alert(self):
-        common_newt.alert(self.screen, "test", "test alert")
+        newt.alert(self.screen, "test", "test alert")
 
     def test_dangerConfirm(self):
-        d = common_newt.dangerConfirm(self.screen, "TEST", "Press NO")
+        d = newt.dangerConfirm(self.screen, "TEST", "Press NO")
         self.assertTrue(not d)
     def test_progress(self):
-        prog = common_newt.Progress(
+        prog = newt.Progress(
             self.screen, "Test Progress", "This is a test", 100)
         for i in range(100):
             prog.set(i)
@@ -29,13 +29,13 @@ class commonNewtTest(unittest.TestCase):
             sleep(0.01)
 
     def test_checkboxchoicewindow(self):
-        common_newt.CheckboxChoiceWindow(self.screen, "Test Checkboxes",
+        newt.CheckboxChoiceWindow(self.screen, "Test Checkboxes",
                 "This is a test", ["one", "two", "three"], help="test help")
 
     def test_CatchCPE(self):
         e = _cpetest()
         self.assertIsInstance(e.stderr, bytes)
-        common_newt.catchCPE(self.screen, e)
+        newt.catchCPE(self.screen, e)
 
 
 class _cpetest:
