@@ -1,8 +1,10 @@
 from snack import *
-from . import disks, newt, external
 from time import sleep
 from shutil import copy
 from os import mkdir
+from . import disks
+from . import newt
+from . import external
 
 def pickdisks(screen, use):
     while True:

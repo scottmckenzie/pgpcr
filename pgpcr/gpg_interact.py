@@ -1,4 +1,3 @@
-import gpg
 import datetime
 import logging
 from . import smartcard

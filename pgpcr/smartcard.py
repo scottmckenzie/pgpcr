@@ -1,5 +1,4 @@
 import gpg
-import os
 import logging
 from pgpcr import context
 

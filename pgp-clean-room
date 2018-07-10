@@ -8,10 +8,9 @@ import sys
 import traceback
 import os
 import logging
-import shutil
-import tempfile
-from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
-from pgpcr import newt as ui, smartcard_newt as smartcard_ui
+from pgpcr import gpg_newt as gpg_ui
+from pgpcr import newt as ui
+from pgpcr import smartcard_newt as smartcard_ui
 from pgpcr.context import defaulthome, setupworkdir
 
 

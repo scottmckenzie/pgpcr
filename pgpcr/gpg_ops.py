@@ -5,7 +5,9 @@ import tempfile
 from shutil import copy
 from distutils.dir_util import copy_tree
 from collections import OrderedDict
-from . import external, gpg_interact, context
+from . import external
+from . import gpg_interact
+from . import context
 
 _log = logging.getLogger(__name__)
 

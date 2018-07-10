@@ -1,6 +1,9 @@
 from snack import *
-from . import gpg_ops, newt, disks_newt, smartcard_newt
-from . import fmt, external
+from . import gpg_ops
+from . import newt
+from . import disks_newt
+from . import smartcard_newt
+from . import fmt
 import logging
 
 _log = logging.getLogger(__name__)

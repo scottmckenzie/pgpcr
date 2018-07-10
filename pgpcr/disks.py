@@ -1,8 +1,8 @@
-from . import external
 import json
 import shutil
 import os
 import logging
+from . import external
 
 CopyError = shutil.Error
 

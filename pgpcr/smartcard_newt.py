@@ -1,6 +1,7 @@
 from snack import *
 from time import sleep
-from . import smartcard, newt, gpg_interact, gpg_ops
+from . import smartcard
+from . import newt
 
 def pickcard(screen, homedir):
     s = None
