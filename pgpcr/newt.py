@@ -19,7 +19,7 @@ def helpCallback(screen, text):
 def new_password(screen):
     pass1 = Entry(20, password=1)
     pass2 = Entry(20, password=1)
-    ew = EW(screen, _("Password"), _("Enter your password"),
+    EW(screen, _("Password"), _("Enter your password"),
                      [(_("Password")+":", pass1),
                       (_("Password")+_("(again)")+":", pass2)
                      ], buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")])
@@ -42,7 +42,7 @@ def password(hint, desc, prev_bad, screen):
     if prev_bad:
         label += " "+_("(again)")
     label += ":"
-    ew = EW(screen, hint, desc, [(label, p)], allowCancel=0)
+    EW(screen, hint, desc, [(label, p)], allowCancel=0)
     return p.value()
 
 def uid(screen, purpose):

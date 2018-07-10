@@ -185,7 +185,7 @@ class GPGKey(context.Context):
         # Exporting only the secret subkeys isn't directly available
         # so we have to call gpg directly
         # gpg --export-secret-subkeys
-        k = self._callgpg(["--export-secret-subkeys"],
+        self._callgpg(["--export-secret-subkeys"],
                           exportdir+"/"+self.fpr+".subsec")
 
     def adduid(self, uid):
