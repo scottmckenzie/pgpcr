@@ -43,9 +43,6 @@ class GPGKey(context.Context):
                                       passphrase=passphrase)
         self._master = self._ctx.get_key(genkey.fpr)
 
-    def _refreshmaster(self):
-        self._master = self._ctx.get_key(self._master.fpr)
-
     def gensub(self, sign=False, encrypt=False, authenticate=False):
         algo = self._subalgo
         if encrypt and algo == "ed25519":
@@ -62,6 +59,62 @@ class GPGKey(context.Context):
                                        authenticate=authenticate)
         self._refreshmaster()
         return sk
+
+    def _refreshmaster(self):
+        self._master = self._ctx.get_key(self._master.fpr)
+
+    def setmaster(self, fpr):
+        self._master = self._ctx.get_key(fpr)
+
+    @property
+    def fpr(self):
+        return self._master.fpr
+
+    @property
+    def uids(self):
+        return [x.uid for x in self._master.uids]
+
+    def __str__(self):
+        s = str(self.uids[0])
+        s += " "
+        s += self.fpr[-17:]
+        return s
+
+    @property
+    def keys(self):
+        keys = []
+        for k in self._master.subkeys:
+            s = k.fpr
+            if k.fpr == self.fpr:
+                s += " "+_("(Master)")
+                keys.append(s)
+                continue
+            if k.can_certify:
+                s += " "+_("(Certification)")
+            if k.can_sign:
+                s += " "+_("(Signing)")
+            if k.can_encrypt:
+                s += " "+_("(Encryption)")
+            if k.can_authenticate:
+                s += " "+_("(Authentication)")
+            keys.append(s)
+        return keys
+
+    def setprogress(self, progress, hook=None):
+        self._ctx.set_progress_cb(progress, hook)
+
+    def setpassword(self, password, hook=None):
+        self._ctx.set_passphrase_cb(password, hook)
+
+    def setstatus(self, status, hook=None):
+        self._ctx.set_ctx_flag("full-status", "1")
+        self._ctx.set_status_cb(status, hook)
+
+    def setalgorithms(self, master, sub):
+        if master is not None:
+            self._masteralgo = master
+        if sub is not None:
+            self._subalgo = sub
 
     def genseasubs(self, status, explain, redraw, data):
         # Force a redraw
@@ -96,26 +149,6 @@ class GPGKey(context.Context):
             status(_("Generating authentication subkey")+"...")
             self.gensub(authenticate=True)
         self._refreshmaster()
-
-    def setprogress(self, progress, hook=None):
-        self._ctx.set_progress_cb(progress, hook)
-
-    def setpassword(self, password, hook=None):
-        self._ctx.set_passphrase_cb(password, hook)
-
-    def setstatus(self, status, hook=None):
-        self._ctx.set_ctx_flag("full-status", "1")
-        self._ctx.set_status_cb(status, hook)
-
-    def setalgorithms(self, master, sub):
-        if master is not None:
-            self._masteralgo = master
-        if sub is not None:
-            self._subalgo = sub
-
-    @property
-    def fpr(self):
-        return self._master.fpr
 
     def _readdata(self, data):
         data.seek(0, os.SEEK_SET)
@@ -154,26 +187,6 @@ class GPGKey(context.Context):
         k = self._callgpg(["--export-secret-subkeys"],
                           dir+"/"+self.fpr+".subsec")
 
-    @property
-    def keys(self):
-        keys = []
-        for k in self._master.subkeys:
-            s = k.fpr
-            if k.fpr == self.fpr:
-                s += " "+_("(Master)")
-                keys.append(s)
-                continue
-            if k.can_certify:
-                s += " "+_("(Certification)")
-            if k.can_sign:
-                s += " "+_("(Signing)")
-            if k.can_encrypt:
-                s += " "+_("(Encryption)")
-            if k.can_authenticate:
-                s += " "+_("(Authentication)")
-            keys.append(s)
-        return keys
-
     def adduid(self, uid):
         self._ctx.key_add_uid(self._master, uid)
         self._refreshmaster()
@@ -182,15 +195,6 @@ class GPGKey(context.Context):
         self._ctx.key_revoke_uid(self._master, uid)
         self._refreshmaster()
 
-    @property
-    def uids(self):
-        return [x.uid for x in self._master.uids]
-
-    def __str__(self):
-        s = str(self.uids[0])
-        s += " "
-        s += self.fpr[-17:]
-        return s
 
     def _import(self, keyfile):
         keydata = gpg.Data(file=keyfile)
@@ -198,8 +202,18 @@ class GPGKey(context.Context):
         result = self._ctx.op_import_result()
         return result.imports
 
-    def setmaster(self, fpr):
-        self._master = self._ctx.get_key(fpr)
+    def importbackup(self, backup):
+        if not os.path.exists(backup):
+            raise ValueError(_("No valid backup found at '%s'") % backup)
+        if os.path.isfile(backup):
+            self._import(backup)
+        else:
+            self.__init__(self.homedir, loaddir=backup)
+        kl = list(self._ctx.keylist(secret=True))
+        if len(kl) == 1:
+            self.setmaster(kl[0])
+            return None
+        return [x.fpr for x in kl]
 
     def signkey(self, folder, keyfile):
         pending = folder+"/signing/pending"
@@ -215,6 +229,13 @@ class GPGKey(context.Context):
             self.export(done, sk.fpr, keyfile)
             os.remove(pending+"/"+keyfile)
 
+    def genrevoke(self):
+        self.revcert = self.homedir+"/"+self.fpr+".rev"
+        with tempfile.NamedTemporaryFile() as f:
+            f.write("y\n0\nGeneral Revocation Certificate\n\ny\n\n".encode())
+            f.flush()
+            self._callgpg(["--gen-revoke", self.fpr], self.revcert, f.name)
+
     def revokekey(self, fpr, reason, text):
         gpg_interact.revokekey(self, fpr, reason, text)
         self._refreshmaster()
@@ -228,26 +249,6 @@ class GPGKey(context.Context):
     def keytocard(self, fpr, slot, overwrite=False):
         gpg_interact.keytocard(self, fpr, slot, overwrite)
         self._refreshmaster()
-
-    def importbackup(self, backup):
-        if not os.path.exists(backup):
-            raise ValueError(_("No valid backup found at '%s'") % backup)
-        if os.path.isfile(backup):
-            self._import(backup)
-        else:
-            self.__init__(self.homedir, loaddir=backup)
-        kl = list(self._ctx.keylist(secret=True))
-        if len(kl) == 1:
-            self.setmaster(kl[0])
-            return None
-        return [x.fpr for x in kl]
-
-    def genrevoke(self):
-        self.revcert = self.homedir+"/"+self.fpr+".rev"
-        with tempfile.NamedTemporaryFile() as f:
-            f.write("y\n0\nGeneral Revocation Certificate\n\ny\n\n".encode())
-            f.flush()
-            self._callgpg(["--gen-revoke", self.fpr], self.revcert, f.name)
 
 GPGMEError = gpg.errors.GPGMEError
 
@@ -266,4 +267,5 @@ sub_algos = OrderedDict([
     ("brainpoolP", ["512r1", "384r1", "256r1"])
     ])
 
+# Files to ignore when backing up gpg home directories
 ignore = "S.*"
