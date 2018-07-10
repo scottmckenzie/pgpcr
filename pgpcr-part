@@ -17,7 +17,7 @@ if len(sys.argv) <= 1:
 	print(_("Need a disk to partition!"))
 	sys.exit(1)
 prog = newt.Progress(None, _("Disk Setup")+": "+sys.argv[1],
-                            _("Setting up...", 4))
+                            _("Setting up..."), 4)
 log = open(environ["HOME"]+"/pgpcr-part.log", "a")
 log.write(sys.argv[1]+"\n")
 dev = parted.getDevice(sys.argv[1])
