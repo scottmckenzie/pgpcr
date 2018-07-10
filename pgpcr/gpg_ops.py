@@ -126,7 +126,7 @@ class GPGKey(context.Context):
         if s is None:
             return
         if s:
-            status(_("Generating signing subkey...")
+            status(_("Generating signing subkey..."))
             self.gensub(sign=True)
             data = redraw(data, self.redraw)
         e = explain(data, _("Encryption Subkey"), _("An encryption subkey will"
@@ -136,7 +136,7 @@ class GPGKey(context.Context):
             self._refreshmaster()
             return
         if e:
-            status(_("Generating encryption subkey...")
+            status(_("Generating encryption subkey..."))
             self.gensub(encrypt=True)
             data = redraw(data, self.redraw)
         a = explain(data, _("Authentication Subkey"), _("An authentication"
@@ -146,7 +146,7 @@ class GPGKey(context.Context):
             self._refreshmaster()
             return
         if a:
-            status(_("Generating authentication subkey...")
+            status(_("Generating authentication subkey..."))
             self.gensub(authenticate=True)
         self._refreshmaster()
 
