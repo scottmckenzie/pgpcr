@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PGP Clean Room 0.1\n"
 "Report-Msgid-Bugs-To: tookmund@gmail.com\n"
-"POT-Creation-Date: 2018-07-06 17:30-0400\n"
+"POT-Creation-Date: 2018-07-10 15:44-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,69 +18,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.4.0\n"
 
-#: pgp-clean-room:40
+#: pgp-clean-room:55
 msgid "Boot Media"
 msgstr ""
 
-#: pgp-clean-room:40
+#: pgp-clean-room:55
 msgid ""
 "You can now remove the boot media, as the entire filesystem has been "
 "loaded into RAM."
 msgstr ""
 
-#: pgp-clean-room:58
+#: pgp-clean-room:61
 msgid "Welcome to the PGP Clean Room!"
 msgstr ""
 
-#: pgp-clean-room:59
+#: pgp-clean-room:62
 msgid "What do you wish to do?"
 msgstr ""
 
-#: pgp-clean-room:60
+#: pgp-clean-room:63
 msgid "Generate a New GPG Master Key"
 msgstr ""
 
-#: pgp-clean-room:61
+#: pgp-clean-room:64
 msgid "Load a GPG Master Key from USB"
 msgstr ""
 
-#: pgp-clean-room:62 pgp-clean-room:79
+#: pgp-clean-room:65 pgp-clean-room:82
 msgid "Advanced Options"
 msgstr ""
 
-#: pgp-clean-room:63 pgpcr/gpg_newt.py:164
+#: pgp-clean-room:66 pgpcr/gpg_newt.py:164
 msgid "Quit"
 msgstr ""
 
-#: pgp-clean-room:80
+#: pgp-clean-room:83
 msgid "These options are for users who know what they are doing"
 msgstr ""
 
-#: pgp-clean-room:82
+#: pgp-clean-room:85
 msgid "Generate Key on Smartcard"
 msgstr ""
 
-#: pgp-clean-room:83 pgpcr/gpg_newt.py:271
+#: pgp-clean-room:86 pgpcr/gpg_newt.py:271
 msgid "Import existing key"
 msgstr ""
 
-#: pgp-clean-room:84
+#: pgp-clean-room:87
 msgid "Set Smartcard properties"
 msgstr ""
 
-#: pgp-clean-room:85
+#: pgp-clean-room:88
 msgid "Set Smartcard PINs"
 msgstr ""
 
-#: pgp-clean-room:86
+#: pgp-clean-room:89
 msgid "Run shell"
 msgstr ""
 
-#: pgp-clean-room:104
+#: pgp-clean-room:107
 msgid "PGP Clean Room"
 msgstr ""
 
-#: pgp-clean-room:105
+#: pgp-clean-room:108
 msgid "Would you like to shutdown the PGP Clean Room?"
 msgstr ""
 
@@ -93,19 +93,19 @@ msgid "Disk Setup"
 msgstr ""
 
 #: pgpcr-part:20
-msgid "Setting up"
+msgid "Setting up..."
 msgstr ""
 
 #: pgpcr-part:24
-msgid "Formatting Disk"
+msgid "Formatting Disk..."
 msgstr ""
 
 #: pgpcr-part:27
-msgid "Partitioning"
+msgid "Partitioning..."
 msgstr ""
 
 #: pgpcr-part:38
-msgid "Creating Filesystem"
+msgid "Creating Filesystem..."
 msgstr ""
 
 #: pgpcr/common_newt.py:11
@@ -197,7 +197,7 @@ msgstr ""
 msgid "error"
 msgstr ""
 
-#: pgpcr/disks.py:47
+#: pgpcr/disks.py:48
 msgid "[IN USE]"
 msgstr ""
 
@@ -293,7 +293,7 @@ msgid ""
 msgstr ""
 
 #: pgpcr/gpg_newt.py:22
-msgid "Generating Master Key"
+msgid "Generating Master Key..."
 msgstr ""
 
 #: pgpcr/gpg_newt.py:29
@@ -315,7 +315,7 @@ msgid "Revocation certificate generation"
 msgstr ""
 
 #: pgpcr/gpg_newt.py:48
-msgid "Generating Sub Keys"
+msgid "Generating Sub Keys..."
 msgstr ""
 
 #: pgpcr/gpg_newt.py:56
@@ -533,70 +533,70 @@ msgstr ""
 msgid "Which key is your master key?"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:69
+#: pgpcr/gpg_ops.py:89
+msgid "(Master)"
+msgstr ""
+
+#: pgpcr/gpg_ops.py:93
+msgid "(Certification)"
+msgstr ""
+
+#: pgpcr/gpg_ops.py:95
+msgid "(Signing)"
+msgstr ""
+
+#: pgpcr/gpg_ops.py:97
+msgid "(Encryption)"
+msgstr ""
+
+#: pgpcr/gpg_ops.py:99
+msgid "(Authentication)"
+msgstr ""
+
+#: pgpcr/gpg_ops.py:122
 msgid "Signing Subkey"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:69
+#: pgpcr/gpg_ops.py:122
 msgid ""
 "A signing subkey will now be generated. This is used to  ensure what you "
 "send across the Internet, like emails or Debian packages, has not been "
 "tampered with."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:76
-msgid "Generating signing subkey"
+#: pgpcr/gpg_ops.py:129
+msgid "Generating signing subkey..."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:79
+#: pgpcr/gpg_ops.py:132
 msgid "Encryption Subkey"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:79
+#: pgpcr/gpg_ops.py:132
 msgid ""
 "An encryption subkey will now be generated. This is used to protect your "
 "data, like emails or backups, from being viewed by anyone else."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:86
-msgid "Generating encryption subkey"
+#: pgpcr/gpg_ops.py:139
+msgid "Generating encryption subkey..."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:89
+#: pgpcr/gpg_ops.py:142
 msgid "Authentication Subkey"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:89
+#: pgpcr/gpg_ops.py:142
 msgid ""
 "An authentication subkey will now be generated. This is used to prove "
 "your identity and can be used as an ssh key."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:96
-msgid "Generating authentication subkey"
+#: pgpcr/gpg_ops.py:149
+msgid "Generating authentication subkey..."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:163
-msgid "(Master)"
-msgstr ""
-
-#: pgpcr/gpg_ops.py:167
-msgid "(Certification)"
-msgstr ""
-
-#: pgpcr/gpg_ops.py:169
-msgid "(Signing)"
-msgstr ""
-
-#: pgpcr/gpg_ops.py:171
-msgid "(Encryption)"
-msgstr ""
-
-#: pgpcr/gpg_ops.py:173
-msgid "(Authentication)"
-msgstr ""
-
-#: pgpcr/gpg_ops.py:234
+#: pgpcr/gpg_ops.py:207
 #, python-format
 msgid "No valid backup found at '%s'"
 msgstr ""
