@@ -32,7 +32,6 @@ def excepthook(t, v, tb):
 
 sys.excepthook = excepthook
 
-log.info(" LANGUAGE: "+lang)
 log.info(" GPGME_DEBUG: "+os.getenv("GPGME_DEBUG", "NOT SET"))
 log.info(" GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
 
@@ -44,6 +43,7 @@ lang = ui.listmenu(screen, "Language", "Choose your language",
                 [("English", "en")])
 
 os.environ["LANGUAGE"] = lang
+log.info(" LANGUAGE: "+lang)
 
 tran = gettext.translation("pgpcr", "/usr/share/locale/", [lang],
         fallback=True)
