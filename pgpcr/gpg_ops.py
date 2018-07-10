@@ -5,7 +5,7 @@ import tempfile
 from shutil import copy
 from distutils.dir_util import copy_tree
 from collections import OrderedDict
-from . import external, gpg_interact, context, valid
+from . import external, gpg_interact, context
 
 _log = logging.getLogger(__name__)
 
@@ -241,8 +241,6 @@ class GPGKey(context.Context):
         self._refreshmaster()
 
     def expirekey(self, fpr, datestr):
-        if not valid.date(datestr):
-            raise ValueError
         gpg_interact.expirekey(self, fpr, datestr)
         self._refreshmaster()
 

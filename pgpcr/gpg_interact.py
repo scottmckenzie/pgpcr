@@ -2,6 +2,7 @@ import gpg
 import datetime
 import logging
 from . import smartcard
+from . import valid
 
 _log = logging.getLogger(__name__)
 
@@ -25,6 +26,8 @@ class _Revoke(_Interact):
 class _Expire(_Interact):
     def __init__(self, master, fpr, datestr):
         super().__init__(master, fpr)
+        if not valid.date(datestr):
+            raise ValueError
         dl = datestr.split("-")
         i = 0
         for t in dl:
