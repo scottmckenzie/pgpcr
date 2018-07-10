@@ -9,33 +9,33 @@ import tests.helpers
         " disabled. Set PGPCRINTERACT to enable them")
 class newtTest(unittest.TestCase):
     def setUp(self):
-        self.screen = newt.screen()
+        self.Screen = newt.Screen()
 
     def tearDown(self):
-        self.screen.finish()
+        self.Screen.finish()
 
     def test_alert(self):
-        newt.alert(self.screen, "test", "test alert")
+        newt.alert(self.Screen, "test", "test alert")
 
     def test_dangerConfirm(self):
-        d = newt.dangerConfirm(self.screen, "TEST", "Press NO")
+        d = newt.dangerConfirm(self.Screen, "TEST", "Press NO")
         self.assertTrue(not d)
     def test_progress(self):
         prog = newt.Progress(
-            self.screen, "Test Progress", "This is a test", 100)
+            self.Screen, "Test Progress", "This is a test", 100)
         for i in range(100):
             prog.set(i)
             prog.setText(str(i))
             sleep(0.01)
 
     def test_checkboxchoicewindow(self):
-        newt.CheckboxChoiceWindow(self.screen, "Test Checkboxes",
+        newt.CheckboxChoiceWindow(self.Screen, "Test Checkboxes",
                 "This is a test", ["one", "two", "three"], help="test help")
 
     def test_CatchCPE(self):
         e = _cpetest()
         self.assertIsInstance(e.stderr, bytes)
-        newt.catchCPE(self.screen, e)
+        newt.catchCPE(self.Screen, e)
 
 
 class _cpetest:
