@@ -162,15 +162,14 @@ class GPGKey(context.Context):
             with open(outfile, "wb") as f:
                 f.write(self._readdata(data))
 
-    def export(self, dir, fpr=None, name=None):
+    def export(self, exportdir, fpr=None, name=None):
         if fpr is None:
             fpr = self.fpr
         if name is None:
             name = fpr+".pub"
         if self.revcert is not None:
-            copy(self.revcert, dir)
-        d = self._export(fpr, outfile=dir +
-                         "/"+name)
+            copy(self.revcert, exportdir)
+        self._export(fpr, outfile=exportdir+"/"+name)
 
     def _callgpg(self, args, outfile, infile=None):
         gpgargv = [self._ctx.engine_info.file_name, "--no-tty", "--yes",
@@ -180,12 +179,12 @@ class GPGKey(context.Context):
         gpgargv.extend(args)
         external.run(gpgargv, stderr=external.PIPE, check=True)
 
-    def exportsubkeys(self, dir):
+    def exportsubkeys(self, exportdir):
         # Exporting only the secret subkeys isn't directly available
         # so we have to call gpg directly
         # gpg --export-secret-subkeys
         k = self._callgpg(["--export-secret-subkeys"],
-                          dir+"/"+self.fpr+".subsec")
+                          exportdir+"/"+self.fpr+".subsec")
 
     def adduid(self, uid):
         self._ctx.key_add_uid(self._master, uid)
