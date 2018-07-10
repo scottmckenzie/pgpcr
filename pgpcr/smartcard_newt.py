@@ -34,12 +34,12 @@ def export(screen, gk):
     ccw = newt.CheckboxChoiceWindow(screen, gk.fpr,
                                       _("Which key(s) do you want to export?"),
                                       keys)
-    if ccw[0] == "cancel":
+    if ccw[0]:
         return
     for k in ccw[1]:
         lcw = newt.LCW(screen, k, _("Which slot do you want to put"
             " this key in?"), smart.slots)
-        if lcw[0] == "cancel":
+        if lcw[0]:
             continue
         slot = lcw[1]+1
         fpr = k.split(" ")[0]
@@ -75,7 +75,7 @@ def setproperties(screen, smart):
                 _("Setup your new smartcard"), [_("Given Name of Cardholder"),
                     _("Surname of Cardholder"), _("Language Preference"),
                     _("Sex (m/f/u)"), _("Login Data")])
-        if ew[0] == "cancel":
+        if ew[0]:
             return
         try:
             smart.name = ew[1][0]+" "+ew[1][1]

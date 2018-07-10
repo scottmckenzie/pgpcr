@@ -90,7 +90,7 @@ while running:
                                    (_("Set Smartcard PINs"), "setpins"),
                                    (_("Run shell"), "shell"),
                                   ])
-        if adv[0] == "cancel":
+        if adv[0]:
             continue
         if adv[1] == "gen":
             smartcard_ui.generate(screen, workdir)

@@ -70,7 +70,7 @@ def keyalgos(screen, gk):
         " algorithm you would like to use for your new master key. If you're"
         " unsure, the defaults are well chosen and should work for"
         " most people"), masteralgolist)
-    if mlcw[0] == "cancel":
+    if mlcw[0]:
         return False
     masteralgo = masteralgolist[mlcw[1]]
     mastersizes = gpg_ops.master_algos[masteralgo]
@@ -78,7 +78,7 @@ def keyalgos(screen, gk):
         mks = newt.LCW(screen, _("Master Key Size"), _("Pick the size of"
             " your new master key. If you're unsure the defaults are well"
             " chosen and should work for most people"), mastersizes)
-        if mks[0] == "cancel":
+        if mks[0]:
             return False
         masteralgo += mastersizes[mks[1]]
     subalgolist = list(gpg_ops.sub_algos.keys())
@@ -86,7 +86,7 @@ def keyalgos(screen, gk):
         " algorithm you would like to use for your new subkeys. If you're"
         " unsure, the defaults are well chosen and should work for"
         " most people"), subalgolist)
-    if slcw[0] == "cancel":
+    if slcw[0]:
         return False
     subalgo = subalgolist[slcw[1]]
     subsizes = gpg_ops.sub_algos[subalgo]
@@ -94,7 +94,7 @@ def keyalgos(screen, gk):
         sks = newt.LCW(screen, _("Master Key Size"), _("Pick the size of"
             " your new master key. If you're unsure the defaults are well"
             " chosen and should work for most people"), subsizes)
-        if sks[0] == "cancel":
+        if sks[0]:
             return False
         subalgo += subsizes[sks[1]]
 
@@ -143,7 +143,7 @@ def load(screen, workdir):
         load(screen, workdir)
     lcw = newt.LCW(screen, _("Key Fingerprint"),
                               _("Please select your key."), dirs)
-    if lcw[0] == "cancel":
+    if lcw[0]:
         return
     key = dirs[lcw[1]]
     gk = gpg_ops.GPGKey(workdir, key, d.mountpoint+"/gpg/"+key)
@@ -197,7 +197,7 @@ def sign(screen, gk, path):
         return
     rw = newt.CheckboxChoiceWindow(screen, _("Key Signing"), _("Which keys"
                                      " do you want to sign?"), keys)
-    if rw[0] == "cancel":
+    if rw[0]:
         return
     for k in rw[1]:
         gk.signkey(s.mountpoint, k)
@@ -214,11 +214,11 @@ def revokekey(screen, gk):
         fpr = k.split(" ")[0]
         lcw = newt.LCW(screen, fpr, _("Why do you want to revoke %s") % k,
                 gpg_ops.revoke_reasons)
-        if lcw[0] == "cancel":
+        if lcw[0]:
             return
         text = newt.EW(screen, fpr, _("Why are you revoking this key?"),
                 [""])
-        if text[0] == "cancel":
+        if text[0]:
             return
         screen.finish()
         gk.revokekey(fpr, lcw[1], text[1][0])
@@ -236,7 +236,7 @@ def revuid(screen, gk):
     uids = gk.uids
     lcw = newt.LCW(screen, gk.fpr, _("Which UID would you like to"
                               " revoke?"), uids)
-    if lcw[0] == "cancel":
+    if lcw[0]:
         return
     gk.revokeuid(uids[lcw[1]])
     newt.alert(screen, gk.fpr, _("Removed %s from your key") % uids[lcw[1]])
@@ -244,7 +244,7 @@ def revuid(screen, gk):
 def expirekey(screen, gk):
     lcw = newt.LCW(screen, _("Key expiration"), _("Which key do you"
         " want to expire?"), gk.keys)
-    if lcw[0] == "cancel":
+    if lcw[0]:
         return
     fpr = gk.keys[lcw[1]].split(" ")[0]
     invalid = True
@@ -252,7 +252,7 @@ def expirekey(screen, gk):
         screen = newt.Screen()
         ew = newt.EW(screen, fpr, _("When do you want this key to expire?"
             "(YYYY-MM-DD)"), [_("Expiration Date:")])
-        if ew[0] == "cancel":
+        if ew[0]:
             return
         screen.finish()
         try:
@@ -273,7 +273,7 @@ def importkey(screen, workdir):
         ew = newt.EW(screen, _("Import existing key"), _("Please mount an"
             " existing key backup, either an exported secret key or .gnupg and"
             " enter the path to it below"), ["Key Location"])
-        if ew[0] == "cancel":
+        if ew[0]:
             return
         kl = None
         try:
@@ -285,7 +285,7 @@ def importkey(screen, workdir):
         if kl is not None:
             lcw = newt.LCW(screen, _("Master Key"),
                     _("Which key is your master key?"), kl)
-            if lcw[0] == "cancel":
+            if lcw[0]:
                 return
             gk.setmaster(kl[lcw[1]])
     save(screen, workdir, gk)

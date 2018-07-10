@@ -112,7 +112,7 @@ def uid(screen, purpose):
     while True:
         ew = EW(screen, purpose, _("Enter User Information"),
                 [_("Name"), _("Email Address")])
-        if ew[0] != "ok":
+        if ew[0]:
             return None
         else:
             if valid.email(ew[1][1]):
