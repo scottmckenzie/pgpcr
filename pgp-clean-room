@@ -14,14 +14,27 @@ from pgpcr import gpg_newt as gpg_ui, disks_newt as disks
 from pgpcr import common_newt as common_ui, smartcard_newt as smartcard_ui
 from pgpcr.context import defaulthome, setupworkdir
 
-subprocess.run(["setfont", "/usr/share/consolefonts/Unifont-APL8x16.psf.gz"])
+
+log = logging.getLogger("pgpcr")
+log.setLevel(logging.INFO)
+fh = logging.FileHandler(os.environ["HOME"]+"/pgpcr.log")
+fh.setLevel(logging.INFO)
+formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:%(message)s")
+fh.setFormatter(formatter)
+log.addHandler(fh)
 
 def excepthook(t, v, tb):
     SnackScreen().finish()
-    log.exceptiion("ERROR")
-    traceback.print_exception(t, v, tb)
+    log.error(traceback.format_exc())
 
 sys.excepthook = excepthook
+
+log.info(" LANGUAGE: "+lang)
+log.info(" GPGME_DEBUG: "+os.getenv("GPGME_DEBUG", "NOT SET"))
+log.info(" GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
+
+subprocess.run(["setfont", "/usr/share/consolefonts/Unifont-APL8x16.psf.gz"])
+
 
 screen = SnackScreen()
 lang = common_ui.listmenu(screen, "Language", "Choose your language",
@@ -41,18 +54,6 @@ with open("/var/log/live/boot.log") as f:
     if "Warning: Not enough free memory" not in r:
         common_ui.alert(screen, _("Boot Media"), _("You can now remove the"
         " boot media, as the entire filesystem has been loaded into RAM."))
-
-log = logging.getLogger("pgpcr")
-log.setLevel(logging.INFO)
-fh = logging.FileHandler(os.environ["HOME"]+"/pgpcr.log")
-fh.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s:%(message)s")
-fh.setFormatter(formatter)
-log.addHandler(fh)
-
-log.info(" LANGUAGE: "+lang)
-log.info(" GPGME_DEBUG: "+os.getenv("GPGME_DEBUG", "NOT SET"))
-log.info(" GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
 
 running = True
 while running:
