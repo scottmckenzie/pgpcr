@@ -497,11 +497,30 @@ Evaluation Period 2 / Week 9
  - [ ] Support setting yubikey touch operation
 	- Wasted a bunch of time trying to figure this out
 	- Requires low-level smartcard operations that I don't totally understand
-	- Will take another crack at this tomorrow
  - [x] Begin PKI UI
  - [x] Clean up Git repo a bit
 	- It's still kinda a mess as it exists as a log of my work this summer
 	- Split yubikey touch and pki stuff into their own branches
+
+2018-07-10
+----------
+ - [x] Sort out locations for prebuilt versions
+	- Google Drive and Thomas's server
+ - [x] Refactor code
+	- Move gpg ignore pattern to gpg_ops
+	- Log exceptions and log earlier
+	- Reorganize GPGKey object
+	- Move date validation to _Expire object where it is used
+ - [x] Rename common_newt to newt
+ - [x] Use consistent naming conventions for creating windows with newt
+	- BCW for ButtonChoiceWindow
+	- CCW for CheckboxChoiceWindow
+	- LCM for listmenu
+ - [x] Move all direct snack usage to common_newt
+ - [x] Remove unused imports
+ - [x] Simplify checking for cancelled dialogs
+
+
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
  - [ ] Secure the Live Environment as much as possible
