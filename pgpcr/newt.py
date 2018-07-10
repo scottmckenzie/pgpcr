@@ -21,16 +21,16 @@ BCW = ButtonChoiceWindow
 def EW(screen, title, text, prompts, allowCancel = 1, width = 40,
         entryWidth = 20, buttons = None, help = None):
     if buttons is None:
-        buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")]
+        buttons = [(_("Ok"), None), (_("Cancel"), True)]
     if buttons is None and not allowCancel:
-        buttons = [(_("Ok"), "ok")]
+        buttons = [(_("Ok"), None)]
     return EntryWindow(screen, title, text, prompts, allowCancel, width,
             entryWidth, buttons, help)
 
 def LCW(screen, title, text, items, buttons = None, width = 40, scroll = 0,
         height = -1, help = None):
     if buttons is None:
-        buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")]
+        buttons = [(_("Ok"), None), (_("Cancel"), True)]
     return ListboxChoiceWindow(screen, title, text, items, buttons, width,
             scroll, height, help)
 
@@ -59,7 +59,7 @@ def CCW(screen, title, text, items, buttons = None, width = 40, scroll = 0,
         height = -1, help = None):
 
     if buttons is None:
-        buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")]
+        buttons = [(_("Ok"), None), (_("Cancel"), True)]
     if (height == -1): height = len(items)
     bb = ButtonBar(screen, buttons)
     t = TextboxReflowed(width, text)
@@ -85,7 +85,7 @@ def new_password(screen):
     EW(screen, _("Password"), _("Enter your password"),
                      [(_("Password")+":", pass1),
                       (_("Password")+_("(again)")+":", pass2)
-                     ], buttons = [(_("Ok"), "ok"), (_("Cancel"), "cancel")])
+                     ], buttons = [(_("Ok"), None), (_("Cancel"), True)])
     if pass1.value() != pass2.value():
         error(_("Passwords do not match!"))
         return password()
@@ -121,7 +121,7 @@ def uid(screen, purpose):
                 error(screen, _("You must supply a valid email address"))
 
 def alert(screen, title, msg):
-    BCW(screen, title, msg, [(_("Ok"), "ok")])
+    BCW(screen, title, msg, [(_("Ok"), None)])
 
 
 def error(screen, msg):
