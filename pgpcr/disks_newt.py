@@ -16,9 +16,9 @@ def pickdisks(screen, use):
             continue
         dlist = [str(x) for x in d]
         lcw = newt.LCW(screen, _("Disks"), _("Pick your %s disk") % use,
-                dlist, buttons=[(_("Refresh"), "refresh"),
-                    (_("Cancel"), "cancel")])
-        if lcw[0]:
+                dlist, buttons=[(_("Refresh"), False),
+                    (_("Cancel"), True)])
+        if lcw[0] is None:
             disk = d[lcw[1]]
             danger = newt.dangerConfirm(screen, _("Warning"), _("Are you"
                 " sure you want to use this disk?"
@@ -27,11 +27,11 @@ def pickdisks(screen, use):
                 return disk
             else:
                 continue
-        elif lcw[0] == "refresh":
-            continue
-        else:
+        elif lcw[0]:
             return None
-
+        else:
+            sleep(1)
+            continue
 
 def store(screen, workdir, name, ignore=None):
     try:
