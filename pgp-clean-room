@@ -34,7 +34,8 @@ sys.excepthook = excepthook
 log.info(" GPGME_DEBUG: "+os.getenv("GPGME_DEBUG", "NOT SET"))
 log.info(" GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
 
-subprocess.run(["setfont", "/usr/share/consolefonts/Unifont-APL8x16.psf.gz"])
+# Workaround for #18
+subprocess.run(["sudo", "/etc/console-setup/cached_setup_font.sh"])
 
 
 screen = SnackScreen()
