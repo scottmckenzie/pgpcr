@@ -152,7 +152,7 @@ def load(screen, workdir):
     while running:
         screen.finish()
         screen = newt.Screen()
-        lm = newt.listmenu(screen, key, _("What would you like to do?"),
+        lm = newt.LCM(screen, key, _("What would you like to do?"),
                                  [(_("Sign GPG Public Keys"), "sign"),
                                   (_("Associate a UID with your master key"),
                                      "adduid"),
@@ -195,7 +195,7 @@ def sign(screen, gk, path):
                        " they are in the signing/pending folder."))
         sign(screen, gk, path)
         return
-    rw = newt.CheckboxChoiceWindow(screen, _("Key Signing"), _("Which keys"
+    rw = newt.CCW(screen, _("Key Signing"), _("Which keys"
                                      " do you want to sign?"), keys)
     if rw[0]:
         return
@@ -207,8 +207,7 @@ def sign(screen, gk, path):
 
 def revokekey(screen, gk):
     keys = gk.keys
-    ccw = newt.CheckboxChoiceWindow(screen, gk.fpr,
-                                      _("Which key(s) do you want to revoke?"),
+    ccw = newt.CCW(screen, gk.fpr, _("Which key(s) do you want to revoke?"),
                                       keys)
     for k in ccw[1]:
         fpr = k.split(" ")[0]

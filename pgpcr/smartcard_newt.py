@@ -31,8 +31,7 @@ def export(screen, gk):
             setup(screen, smart)
             screen = newt.redraw(screen, gk.redraw)
     keys = gk.keys
-    ccw = newt.CheckboxChoiceWindow(screen, gk.fpr,
-                                      _("Which key(s) do you want to export?"),
+    ccw = newt.CCW(screen, gk.fpr, _("Which key(s) do you want to export?"),
                                       keys)
     if ccw[0]:
         return
