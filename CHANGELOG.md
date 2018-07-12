@@ -519,13 +519,28 @@ Evaluation Period 2 / Week 9
  - [x] Move all direct snack usage to common_newt
  - [x] Remove unused imports
  - [x] Simplify checking for cancelled dialogs
+ - [ ] Set font via console-setup instead of in pgp-clean-room
+	- Allows other consoles to use the much better Unifont over the default
+	- I don't know why this doesn't work.
+	- /lib/udev/rules.d/90-console-setup runs /etc/console-setup/cached_setup_font.sh which has the correct setfont command
+	- But the font is still not set
 
 
+2018-07-11
+----------
+ - [x] Run ```cached_setup_font``` manually
+	- Workaround for [#18](https://salsa.debian.org/tookmund-guest/pgpcr/issues/18)
+	- Should be setup by udev but isn't for some reason
+ - [x] Secure the Live Environment as much as possible
+	- Minimize local packages, remove device drivers for anything that's not keyboard/mouse/storage/graphics
+ - [x] Remove NFC and Bluetooth drivers
+ - [x] Shrunk the live image by 34MB
+ - [x] Disable APT caching
+
+	- USBGuard?
+ - [ ] Make sure to enable locales for translations
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
- - [ ] Secure the Live Environment as much as possible
-	- Minimize local packages, remove device drivers for anything that's not keyboard/mouse/storage/graphics
-	- USBGuard?
  - [ ] Call for testing from the wider Debian/FLOSS community
  - [ ] Create a Debian package for the pgp-clean-room application and submit it to mentors.d.o
 
