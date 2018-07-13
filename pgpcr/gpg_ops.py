@@ -39,9 +39,12 @@ class GPGKey(context.Context):
             _log.debug(e.stderr)
 
     def genmaster(self, userid, passphrase=True):
-        genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
-                                      sign=True, certify=True,
-                                      passphrase=passphrase)
+        try:
+            genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
+                    sign=True, certify=True, passphrase=passphrase)
+        except GPGMEError as e:
+            _pinentrycancel(e)
+
         self._master = self._ctx.get_key(genkey.fpr)
 
     def gensub(self, sign=False, encrypt=False, authenticate=False):
@@ -55,9 +58,11 @@ class GPGKey(context.Context):
             # https://lists.gnupg.org/pipermail/gnupg-users/2018-July/060755.html
             if sign or authenticate:
                 algo += "/ecdsa"
-        sk = self._ctx.create_subkey(self._master, algorithm=algo,
-                                       sign=sign, encrypt=encrypt,
-                                       authenticate=authenticate)
+        try:
+            sk = self._ctx.create_subkey(self._master, algorithm=algo,
+                    sign=sign, encrypt=encrypt, authenticate=authenticate)
+        except GPGMEError as e:
+            _pinentrycancel(e)
         self._refreshmaster()
         return sk
 
@@ -132,7 +137,10 @@ class GPGKey(context.Context):
             return
         if s:
             status(_("Generating signing subkey..."))
-            self.gensub(sign=True)
+            try:
+                self.gensub(sign=True)
+            except PinentryCancelled:
+                pass
             data = redraw(data, self.redraw)
         e = explain(data, _("Encryption Subkey"), _("An encryption subkey will"
             " now be generated. This is used to protect your data, like emails"
@@ -142,7 +150,10 @@ class GPGKey(context.Context):
             return
         if e:
             status(_("Generating encryption subkey..."))
-            self.gensub(encrypt=True)
+            try:
+                self.gensub(encrypt=True)
+            except PinentryCancelled:
+                pass
             data = redraw(data, self.redraw)
         a = explain(data, _("Authentication Subkey"), _("An authentication"
             " subkey will now be generated. This is used to prove your"
@@ -152,7 +163,10 @@ class GPGKey(context.Context):
             return
         if a:
             status(_("Generating authentication subkey..."))
-            self.gensub(authenticate=True)
+            try:
+                self.gensub(authenticate=True)
+            except PinentryCancelled:
+                pass
         self._refreshmaster()
 
     def _readdata(self, data):
@@ -189,11 +203,17 @@ class GPGKey(context.Context):
                           exportdir+"/"+self.fpr+".subsec")
 
     def adduid(self, uid):
-        self._ctx.key_add_uid(self._master, uid)
+        try:
+            self._ctx.key_add_uid(self._master, uid)
+        except GPGMEError as e:
+            _pinentrycancel(e)
         self._refreshmaster()
 
     def revokeuid(self, uid):
-        self._ctx.key_revoke_uid(self._master, uid)
+        try:
+            self._ctx.key_revoke_uid(self._master, uid)
+        except GPGMEError as e:
+            _pinentrycancel(e)
         self._refreshmaster()
 
 
@@ -226,7 +246,10 @@ class GPGKey(context.Context):
         keys = self._import(pending+"/"+keyfile)
         for k in keys:
             sk = self._ctx.get_key(k.fpr)
-            self._ctx.key_sign(sk)
+            try:
+                self._ctx.key_sign(sk)
+            except GPGMEError as e:
+                _pinentrycancel(e)
             self.export(done, sk.fpr, keyfile)
             os.remove(pending+"/"+keyfile)
 
@@ -243,6 +266,15 @@ class GPGKey(context.Context):
         self._refreshmaster()
 
 GPGMEError = gpg.errors.GPGMEError
+
+class PinentryCancel(Exception):
+    pass
+
+def _pinentrycancel(e):
+    if e.code_str == "Operation cancelled":
+        raise PinentryCancel
+    else:
+        raise e
 
 revoke_reasons = ["No reason specified", "Key has been compromised",
                   "Key is superseded", "Key is no longer used"]
