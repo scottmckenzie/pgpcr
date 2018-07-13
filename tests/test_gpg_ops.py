@@ -143,14 +143,5 @@ class GPGOpsTestKey(unittest.TestCase):
         self.assertIn(self.testkeyfpr, self._checkkey(keyexport))
         os.remove(keyexport)
 
-    def test_gen_revoke(self):
-        try:
-            self.gk.genrevoke()
-        except CalledProcessError as e:
-            print(e.stderr)
-            raise e
-        # Can't compare files because they change slightly every time
-        #self._cmpfiles(self.tmp.name, self.datadir,
-                #"074D3879D4609448DEF716F6C7B98BC88227953F.rev")
 if __name__ == "__main__":
     unittest.main()

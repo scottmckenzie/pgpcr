@@ -21,7 +21,6 @@ class GPGKey(context.Context):
         self._ctx = gpg.Context(home_dir=home)
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
-        self.revcert = None
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
         # Ensure a gpg-agent is running and a socketdir is created
@@ -71,6 +70,10 @@ class GPGKey(context.Context):
     @property
     def fpr(self):
         return self._master.fpr
+
+    @property
+    def revcert(self):
+        return self.homedir+"/openpgp-revocs.d/"+self.fpr+".rev"
 
     @property
     def uids(self):
@@ -169,15 +172,12 @@ class GPGKey(context.Context):
             fpr = self.fpr
         if name is None:
             name = fpr+".pub"
-        if self.revcert is not None:
-            copy(self.revcert, exportdir)
+        copy(self.revcert, exportdir)
         self._export(fpr, outfile=exportdir+"/"+name)
 
-    def _callgpg(self, args, outfile, infile=None):
+    def _callgpg(self, args, outfile):
         gpgargv = [self._ctx.engine_info.file_name, "--no-tty", "--yes",
                 "--status-fd", "2", "--output", outfile]
-        if infile is not None:
-            gpgargv.extend(["--command-file", infile])
         gpgargv.extend(args)
         external.run(gpgargv, stderr=external.PIPE, check=True)
 
@@ -229,13 +229,6 @@ class GPGKey(context.Context):
             self._ctx.key_sign(sk)
             self.export(done, sk.fpr, keyfile)
             os.remove(pending+"/"+keyfile)
-
-    def genrevoke(self):
-        self.revcert = self.homedir+"/"+self.fpr+".rev"
-        with tempfile.NamedTemporaryFile() as f:
-            f.write("y\n0\nGeneral Revocation Certificate\n\ny\n\n".encode())
-            f.flush()
-            self._callgpg(["--gen-revoke", self.fpr], self.revcert, f.name)
 
     def revokekey(self, fpr, reason, text):
         gpg_interact.revokekey(self, fpr, reason, text)

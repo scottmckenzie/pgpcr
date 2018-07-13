@@ -34,18 +34,10 @@ def new(screen, workdir):
             return
         break
     screen = newt.redraw(screen, gk.redraw)
-    newt.alert(screen, _("Revocation certificate"), _("A revocation"
-        " certificate will now be generated. You will be asked for your"
-        " password."))
-    while True:
-        try:
-            gk.genrevoke()
-        except gpg_ops.GPGMEError as g:
-            c = newt.catchGPGMEErr(_("Revocation certificate generation"), g)
-            if c:
-                continue
-            return
-        break
+    newt.alert(screen, _("Revocation certificate"), _("You will be prompted"
+        " for your password twice when you generate your first subkey. This is"
+        " so that a revocation certificate can be generated for your master"
+        " key"))
     sprog = newt.Progress(screen, _("Key Generation"),
                             _("Generating Sub Keys..."), 60)
     sprog.gk = gk
