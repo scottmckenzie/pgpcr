@@ -157,19 +157,22 @@ def load(screen, workdir):
                                       "expirekeys"),
                                   (_("Quit"), "quit")
                                  ])
-        if lm == "sign":
-            sign(screen, gk, d.mountpoint)
-        elif lm == "adduid":
-            adduid(screen, gk)
-        elif lm == "revuid":
-            revuid(screen, gk)
-        elif lm == "revkeys":
-            revokekey(screen, gk)
-        elif lm == "expirekeys":
-            expirekey(screen, gk)
-        elif lm == "quit":
-            d.eject()
-            running = False
+        try:
+            if lm == "sign":
+                sign(screen, gk, d.mountpoint)
+            elif lm == "adduid":
+                adduid(screen, gk)
+            elif lm == "revuid":
+                revuid(screen, gk)
+            elif lm == "revkeys":
+                revokekey(screen, gk)
+            elif lm == "expirekeys":
+                expirekey(screen, gk)
+            elif lm == "quit":
+                d.eject()
+                running = False
+        except gpg_ops.PinentryCancel:
+            continue
     confirm = newt.confirm(screen, _("Save"), _("Do you want to save the"
         " changes you've made?"))
     if confirm:
