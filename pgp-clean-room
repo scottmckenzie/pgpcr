@@ -34,10 +34,6 @@ sys.excepthook = excepthook
 log.info("GPGME_DEBUG: "+os.getenv("GPGME_DEBUG", "NOT SET"))
 log.info("GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
 
-# Workaround for #18
-subprocess.run(["sudo", "/etc/console-setup/cached_setup_font.sh"])
-
-
 screen = SnackScreen()
 lang = ui.LCM(screen, "Language", "Choose your language",
                 [("English", "en")])
