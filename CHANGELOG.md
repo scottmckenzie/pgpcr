@@ -549,18 +549,23 @@ Evaluation Period 2 / Week 9
 	- Probably just paranoia, but seems useful
 	- Increases image size by 1MB thanks to dbus though
 
- - [ ] Make sure to enable locales for translations
- - [ ] PKI/CA UI
-	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
- - [ ] Call for testing from the wider Debian/FLOSS community
- - [ ] Create a Debian package for the pgp-clean-room application and submit it to mentors.d.o
+2018-07-13
+----------
+ - [x] Use the automatic revocation certificate
+ - [x] Build font cache during image construction instead of creating it manually
+ - [x] Handle Pinentry cancellation
+ - [x] Test image extensively
 
 Week 10
 =======
 
 2018-07-16
 ----------
-TBD
+ - [ ] Display loaded key info
+	- [#20](https://salsa.debian.org/tookmund-guest/pgpcr/issues/20)
+ - [ ] Release Beta 2
+ - [ ] Call for testing from the wider Debian/FLOSS community
+ - [ ] Make sure to enable locales for translations
 
 Week 11
 =======
@@ -601,3 +606,6 @@ Would like to do these if I have time but we'll see how this goes
  - [ ] Better import UI
  - [ ] Optional signature expiry date?
 	- I have no idea if people use this
+ - [ ] PKI/CA UI
+	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
+ - [ ] Create a Debian package for the pgp-clean-room application and submit it to mentors.d.o
