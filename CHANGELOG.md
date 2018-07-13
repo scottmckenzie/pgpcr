@@ -537,7 +537,18 @@ Evaluation Period 2 / Week 9
  - [x] Shrunk the live image by 34MB
  - [x] Disable APT caching
 
-	- USBGuard?
+2018-07-12
+----------
+ - [x] Shrink the image more
+	- Lost another 25MB, down to 157MB
+ - [x] Remove APT
+	- 23 MB from that alone
+ - 40% reduction in image size over the past two days: 216MB to 134MB
+ - [x] Remove console-setup, use simplified console-font.service
+ - [x] USBGuard
+	- Probably just paranoia, but seems useful
+	- Increases image size by 1MB thanks to dbus though
+
  - [ ] Make sure to enable locales for translations
  - [ ] PKI/CA UI
 	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
