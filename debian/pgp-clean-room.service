@@ -1,6 +1,5 @@
 [Unit]
 Description=PGP Clean Room
-After=multi-user.target
 Conflicts=getty@tty1.service
 
 [Service]
@@ -13,4 +12,4 @@ StandardError=inherit
 Environment=GPGME_DEBUG=9:/home/pgp/gpgme.log GPG_TTY=/dev/tty1
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=getty.target
