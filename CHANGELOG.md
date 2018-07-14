@@ -555,14 +555,14 @@ Evaluation Period 2 / Week 9
  - [x] Build font cache during image construction instead of creating it manually
  - [x] Handle Pinentry cancellation
  - [x] Test image extensively
+ - [x] Display loaded key info
+	- [#20](https://salsa.debian.org/tookmund-guest/pgpcr/issues/20)
 
 Week 10
 =======
 
 2018-07-16
 ----------
- - [ ] Display loaded key info
-	- [#20](https://salsa.debian.org/tookmund-guest/pgpcr/issues/20)
  - [ ] Release Beta 2
  - [ ] Call for testing from the wider Debian/FLOSS community
  - [ ] Make sure to enable locales for translations
