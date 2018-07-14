@@ -110,6 +110,13 @@ class GPGKey(context.Context):
             keys.append(s)
         return keys
 
+    @property
+    def info(self):
+        s = "\n"
+        k = s.join(self.keys[1:])
+        u = s.join(self.uids)
+        return k+s+u
+
     def setprogress(self, progress, hook=None):
         self._ctx.set_progress_cb(progress, hook)
 

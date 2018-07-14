@@ -144,7 +144,7 @@ def load(screen, workdir):
     while running:
         screen.finish()
         screen = newt.Screen()
-        lm = newt.LCM(screen, key, _("What would you like to do?"),
+        lm = newt.LCM(screen, key, gk.info,
                                  [(_("Sign GPG Public Keys"), "sign"),
                                   (_("Associate a UID with your master key"),
                                      "adduid"),
