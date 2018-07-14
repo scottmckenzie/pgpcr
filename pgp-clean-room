@@ -107,7 +107,10 @@ while running:
                                       _("Would you like to shutdown the PGP Clean Room?"))
         if ret:
             running = False
-    shutil.rmtree(workdir)
+    try:
+        shutil.rmtree(workdir)
+    except:
+        pass
 
 screen.finish()
 subprocess.run(["sudo", "shutdown", "now"])
