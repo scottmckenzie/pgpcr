@@ -2,8 +2,7 @@ import gpg
 import os
 import logging
 import tempfile
-from shutil import copy
-from distutils.dir_util import copy_tree
+import shutil
 from collections import OrderedDict
 from . import external
 from . import gpg_interact
@@ -15,9 +14,14 @@ class GPGKey(context.Context):
 
     def __init__(self, home,  loadfpr=None, loaddir=None):
         if loaddir:
-            copy_tree(loaddir, home, verbose=0)
+            shutil.rmtree(home)
+            shutil.copytree(loaddir, home)
+        else:
+            context.setupworkdir(home)
         if home == context.defaulthome:
             home = None
+        else:
+            external.setuprundir()
         self._ctx = gpg.Context(home_dir=home)
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
@@ -195,7 +199,7 @@ class GPGKey(context.Context):
             fpr = self.fpr
         if name is None:
             name = fpr+".pub"
-        copy(self.revcert, exportdir)
+        shutil.copy(self.revcert, exportdir)
         self._export(fpr, outfile=exportdir+"/"+name)
 
     def _callgpg(self, args, outfile):
