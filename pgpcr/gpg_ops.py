@@ -95,6 +95,8 @@ class GPGKey(context.Context):
         keys = []
         for k in self._master.subkeys:
             s = k.fpr
+            if k.expires:
+                s += " ["+context.timestamp2iso(k.expires)+"]"
             if k.fpr == self.fpr:
                 s += " "+_("(Master)")
                 keys.append(s)
