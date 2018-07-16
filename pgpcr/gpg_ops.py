@@ -115,7 +115,7 @@ class GPGKey(context.Context):
     @property
     def info(self):
         s = "\n"
-        k = s.join(self.keys[1:])
+        k = s.join(self.keys)
         u = s.join(self.uids)
         return k+s+u
 
