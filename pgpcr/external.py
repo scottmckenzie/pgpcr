@@ -1,5 +1,6 @@
 from subprocess import *
 import sys
+import os
 
 
 def process(cmd, args={}):
@@ -28,3 +29,8 @@ def processtofile(cmd, file):
     with open(file, "wb") as f:
         args = {"stdout": f}
         return processb(cmd, args)
+
+def setuprundir():
+    socketdir = "/run/user/"+str(os.getuid())
+    run(["sudo", "mkdir", "-p", socketdir])
+    run(["sudo", "chown", str(os.getuid()), socketdir])
