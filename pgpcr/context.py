@@ -1,5 +1,6 @@
 import os
 import shutil
+import datetime
 from pgpcr import external
 
 class Context:
@@ -37,3 +38,7 @@ def setupworkdir(workdir):
     shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
     shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
     killagent(workdir)
+
+def timestamp2iso(ts):
+    d = datetime.datetime.fromtimestamp(int(ts))
+    return d.strftime("%Y-%m-%d")
