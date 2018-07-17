@@ -199,7 +199,8 @@ class GPGKey(context.Context):
             fpr = self.fpr
         if name is None:
             name = fpr+".pub"
-        shutil.copy(self.revcert, exportdir)
+        if fpr == self.fpr:
+            shutil.copy(self.revcert, exportdir)
         self._export(fpr, outfile=exportdir+"/"+name)
 
     def _callgpg(self, args, outfile):
