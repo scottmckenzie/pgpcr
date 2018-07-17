@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
 
-export PYBUILD_NAME=pgp-clean-room
+export PYBUILD_NAME=pgpcr
 %:
 	dh $@ --with python3 --buildsystem=pybuild

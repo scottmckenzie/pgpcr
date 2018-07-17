@@ -6,7 +6,17 @@ Build-Depends: dh-python, python3-setuptools, python3-all, debhelper (>= 11)
 Standards-Version: 4.1.4
 Homepage: https://salsa.debian.org/tookmund-guest/pgpcr
 
-Package: pgp-clean-room
+Package: python3-pgpcr
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}, python3-gpg (>= 1.11.1)
-Description: UNKNOWN
+Description: pgpcr python module
+
+Package: pgp-clean-room
+Architecture: all
+Depends: python3-pgpcr, pgpcr-utils
+Description: pgp-clean-room application
+
+Package: pgpcr-utils
+Architecture: all
+Depends: python3-pgpcr
+Description: PGP Clean Room Utilities

@@ -1,6 +1,1 @@
 pgp-clean-room	/usr/bin/
-pgpcr-part	/usr/sbin/
-gpg.conf	/etc/pgpcr/
-gpg-agent.conf	/etc/pgpcr/
-import.sh	/etc/pgpcr/
-#po/en/LC_MESSAGES/pgpcr.mo	/usr/share/locale/en/LC_MESSAGES/
