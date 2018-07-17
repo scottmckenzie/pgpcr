@@ -563,9 +563,15 @@ Week 10
 
 2018-07-16
 ----------
- - [ ] Release Beta 2
- - [ ] Call for testing from the wider Debian/FLOSS community
- - [ ] Make sure to enable locales for translations
+ - [x] Release Beta 2
+ - [x] Call for testing from the wider Debian/FLOSS community
+ - [x] Fix loading crash [#21](https://salsa.debian.org/tookmund-guest/pgpcr/issues/21)
+ - [x] Research how d-i sets its keyboard
+	- Looks to be overkill for what I want to do
+	- Requires a bunch of udebs and I can't seem to get them from the debian archive
+ - [x] Set keyboard layout
+ - [ ] Support signing lots of keys, like caff
+
 
 Week 11
 =======
@@ -596,6 +602,7 @@ Misc
 ====
 
 Would like to do these if I have time but we'll see how this goes
+ - [ ] Make sure to enable locales for translations
  - [ ] Figure out when progress_cb is called with primegen
 	- Time based? amount of randomness gathered?
  - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
