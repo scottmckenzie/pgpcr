@@ -2,21 +2,21 @@ Source: pgp-clean-room
 Maintainer: Jacob Adams <tookmund@gmail.com>
 Section: utils
 Priority: optional
-Build-Depends: dh-python, python3-setuptools, python3-all, debhelper (>= 11)
+Build-Depends: dh-python, python3-setuptools, python3-all, debhelper (>= 11), python3-babel
 Standards-Version: 4.1.4
 Homepage: https://salsa.debian.org/tookmund-guest/pgpcr
 
 Package: python3-pgpcr
 Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}, python3-gpg (>= 1.11.1)
+Depends: ${misc:Depends}, ${python3:Depends}, python3-gpg (>= 1.11.1), python3-newt
 Description: pgpcr python module
 
 Package: pgp-clean-room
 Architecture: all
-Depends: python3-pgpcr, pgpcr-utils
+Depends: ${misc:Depends}, ${python3:Depends}, python3-pgpcr, pgpcr-utils
 Description: pgp-clean-room application
 
 Package: pgpcr-utils
 Architecture: all
-Depends: python3-pgpcr, sudo
+Depends: ${misc:Depends}, ${python3:Depends}, python3-pgpcr, sudo
 Description: PGP Clean Room Utilities
