@@ -40,7 +40,7 @@ lang = ui.LCM(screen, "Language", "Choose your language",
 
 os.environ["LANGUAGE"] = lang
 log.info("LANGUAGE: "+lang)
-tran = tran.inittran(lang)
+tran = tran.init(lang)
 if not tran:
     ui.error(screen, "Translation for "+lang+" not found! Falling"
             "back to English")
