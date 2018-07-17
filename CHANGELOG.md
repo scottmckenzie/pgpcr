@@ -570,8 +570,17 @@ Week 10
 	- Looks to be overkill for what I want to do
 	- Requires a bunch of udebs and I can't seem to get them from the debian archive
  - [x] Set keyboard layout
- - [ ] Support signing lots of keys, like caff
 
+2018-07-17
+----------
+ - [x] Enable set keyboard layout
+	- Since we have to run setupcon anyway now, we just let it set the font for us.
+ - [x] Split translation into its own submodule of pgpcr
+ - [x] Split package up into three packages
+	- pgpcr-utils could be shipped in the debian archive
+ - [x] pgpcr-backup for backing up local keys
+ - [ ] Support signing lots of keys, like caff
+	- Began work on pgpcr-keysigning, which should do just that
 
 Week 11
 =======
