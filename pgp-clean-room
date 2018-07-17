@@ -53,8 +53,8 @@ keyboard = ui.confirm(screen, _("Keyboard Layout"), _("Would you like to"
 if not keyboard:
     screen.finish()
     subprocess.run(["sudo", "dpkg-reconfigure", "keyboard-configuration"])
-    subprocess.run(["sudo", "systemctl", "restart", "keyboard-setup"])
     screen = SnackScreen()
+subprocess.run(["sudo", "setupcon"])
 
 with open("/var/log/live/boot.log") as f:
     r = f.read()
