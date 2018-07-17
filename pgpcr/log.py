@@ -13,6 +13,7 @@ def init():
     log.addHandler(fh)
 
 def _excepthook(t, v, tb):
+    log = logging.getLogger("pgpcr")
     SnackScreen().finish()
     traceback.print_exception(t, v, tb)
     exc = traceback.format_exception(t, v, tb)
