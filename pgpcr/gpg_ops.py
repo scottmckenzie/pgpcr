@@ -15,7 +15,7 @@ class GPGKey(context.Context):
     def __init__(self, home,  loadfpr=None, loaddir=None):
         if loaddir:
             shutil.rmtree(home)
-            shutil.copytree(loaddir, home)
+            shutil.copytree(loaddir, home, ignore=ignore)
         else:
             context.setupworkdir(home)
         if home == context.defaulthome:
@@ -308,4 +308,4 @@ sub_algos = OrderedDict([
     ])
 
 # Files to ignore when backing up gpg home directories
-ignore = "S.*"
+ignore = shutil.ignore_patterns("S.*")
