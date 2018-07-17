@@ -5,11 +5,11 @@ __pycache__
 debian/.debhelper/
 debian/debhelper-build-stamp
 debian/files
-debian/pgp-clean-room.postinst.debhelper
-debian/pgp-clean-room.postrm.debhelper
-debian/pgp-clean-room.prerm.debhelper
-debian/pgp-clean-room.substvars
+debian/*.debhelper
+debian/*.substvars
 debian/pgp-clean-room/
+debian/pgpcr-utils/
+debian/python3-pgpcr/
 po/POTFILES.in
 po/*/LC_MESSAGES/*.mo
 tests/data/signing/done
