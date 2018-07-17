@@ -3,43 +3,25 @@
 from snack import SnackScreen
 import subprocess
 import shutil
-import sys
-import traceback
 import os
-import logging
 from pgpcr import gpg_newt as gpg_ui
 from pgpcr import newt as ui
 from pgpcr import smartcard_newt as smartcard_ui
 from pgpcr.context import defaulthome
 from pgpcr import tran
+from pgpcr import log
 
-
-log = logging.getLogger("pgpcr")
-log.setLevel(logging.INFO)
-fh = logging.FileHandler(os.environ["HOME"]+"/pgpcr.log")
-fh.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
-fh.setFormatter(formatter)
-log.addHandler(fh)
-
-def excepthook(t, v, tb):
-    SnackScreen().finish()
-    traceback.print_exception(t, v, tb)
-    exc = traceback.format_exception(t, v, tb)
-    for x in exc:
-        log.error(x)
-
-sys.excepthook = excepthook
-
-log.info("GPGME_DEBUG: "+os.getenv("GPGME_DEBUG", "NOT SET"))
-log.info("GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
+log.init()
+_log = log.getlog("pgpcr")
+_log.info("GPGME_DEBUG: "+os.getenv("GPGME_DEBUG", "NOT SET"))
+_log.info("GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
 
 screen = SnackScreen()
 lang = ui.LCM(screen, "Language", "Choose your language",
                 [("English", "en")])
 
 os.environ["LANGUAGE"] = lang
-log.info("LANGUAGE: "+lang)
+_log.info("LANGUAGE: "+lang)
 tran = tran.init(lang)
 if not tran:
     ui.error(screen, "Translation for "+lang+" not found! Falling"
