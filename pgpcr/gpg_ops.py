@@ -250,13 +250,15 @@ class GPGKey(context.Context):
             return None
         return [x.fpr for x in kl]
 
-    def signkey(self, folder, keyfile):
+    def _signkeyfolders(self, folder):
         pending = folder+"/signing/pending"
         done = folder+"/signing/done"
-        try:
-            os.mkdir(done)
-        except FileExistsError:
-            pass
+        os.makedirs(pending, exist_ok=True)
+        os.makedirs(done, exist_ok=True)
+        return (pending, done)
+
+    def signkey(self, folder, keyfile):
+        pending, done = self._signkeyfolders(folder)
         keys = self._import(pending+"/"+keyfile)
         for k in keys:
             sk = self._ctx.get_key(k.fpr)
