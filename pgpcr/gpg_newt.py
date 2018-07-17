@@ -260,18 +260,20 @@ def expirekey(screen, gk):
         invalid = False
 
 
-def importkey(screen, workdir):
+def importkey(screen, workdir, keyloc=None):
     gk = gpg_ops.GPGKey(workdir)
     importFail = True
     while importFail:
-        ew = newt.EW(screen, _("Import existing key"), _("Please mount an"
-            " existing key backup, either an exported secret key or .gnupg and"
-            " enter the path to it below"), ["Key Location"])
-        if ew[0]:
-            return
+        if keyloc is None:
+            ew = newt.EW(screen, _("Import existing key"), _("Please mount an"
+                " existing key backup, either an exported secret key or .gnupg"
+                " and enter the path to it below"), ["Key Location"])
+            if ew[0]:
+                return
+            keyloc = ew[1][0]
         kl = None
         try:
-            kl = gk.importbackup(ew[1][0])
+            kl = gk.importbackup(keyloc)
         except ValueError as e:
             newt.error(screen, str(e))
             continue
