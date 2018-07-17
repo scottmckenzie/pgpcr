@@ -18,5 +18,5 @@ Description: pgp-clean-room application
 
 Package: pgpcr-utils
 Architecture: all
-Depends: python3-pgpcr
+Depends: python3-pgpcr, sudo
 Description: PGP Clean Room Utilities
