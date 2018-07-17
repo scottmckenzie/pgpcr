@@ -1,1 +1,2 @@
 bin/pgpcr-part	/usr/sbin/
+bin/pgpcr-backup	/usr/bin

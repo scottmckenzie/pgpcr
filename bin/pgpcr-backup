@@ -1,0 +1,16 @@
+#!/usr/bin/python3
+# Backup your local keys in PGPCR format
+import tempfile
+from pgpcr import tran
+from pgpcr import newt
+from pgpcr import gpg_newt
+from pgpcr import context
+from pgpcr import log
+
+tran.init()
+log.init()
+
+screen = newt.Screen()
+tmp = tempfile.TemporaryDirectory()
+gpg_newt.importkey(screen, tmp.name, context.defaulthome)
+screen.finish()
