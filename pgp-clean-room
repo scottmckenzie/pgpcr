@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from snack import *
+from snack import SnackScreen
 import subprocess
 import shutil
 import gettext
@@ -47,6 +47,14 @@ tran.install()
 if type(tran) is gettext.NullTranslations and lang != "en":
     ui.error(screen, "Translation for "+lang+" not found! Falling"
             "back to English")
+
+keyboard = ui.confirm(screen, _("Keyboard Layout"), _("Would you like to"
+    " use the default keyboard layout (US QWERTY)"))
+if not keyboard:
+    screen.finish()
+    subprocess.run(["sudo", "dpkg-reconfigure", "keyboard-configuration"])
+    subprocess.run(["sudo", "systemctl", "restart", "keyboard-setup"])
+    screen = SnackScreen()
 
 with open("/var/log/live/boot.log") as f:
     r = f.read()
