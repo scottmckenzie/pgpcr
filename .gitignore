@@ -3,6 +3,7 @@ __pycache__
 *.egg-info
 .pybuild
 debian/.debhelper/
+debian/changelog
 debian/debhelper-build-stamp
 debian/files
 debian/*.debhelper
