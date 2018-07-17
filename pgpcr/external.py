@@ -32,5 +32,6 @@ def processtofile(cmd, file):
 
 def setuprundir():
     socketdir = "/run/user/"+str(os.getuid())
-    run(["sudo", "mkdir", "-p", socketdir])
-    run(["sudo", "chown", str(os.getuid()), socketdir])
+    if not os.path.exists(socketdir):
+        run(["sudo", "mkdir", "-p", socketdir])
+        run(["sudo", "chown", str(os.getuid()), socketdir])
