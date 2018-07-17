@@ -1,5 +1,6 @@
 #!/bin/sh
 
+rm -f ../pgp-clean-room* ../*.deb
 DATE=`date +%Y%m%d`
 COMMIT=`git describe --always`
 rm -f debian/changelog
