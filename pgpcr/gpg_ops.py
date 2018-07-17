@@ -12,7 +12,7 @@ _log = logging.getLogger(__name__)
 
 class GPGKey(context.Context):
 
-    def __init__(self, home,  loadfpr=None, loaddir=None):
+    def __init__(self, home=None,  loadfpr=None, loaddir=None):
         if loaddir:
             shutil.rmtree(home)
             shutil.copytree(loaddir, home, ignore=ignore)
