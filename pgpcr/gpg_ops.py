@@ -246,7 +246,7 @@ class GPGKey(context.Context):
             self.__init__(self.homedir, loaddir=backup)
         kl = list(self._ctx.keylist(secret=True))
         if len(kl) == 1:
-            self.setmaster(kl[0])
+            self.setmaster(kl[0].fpr)
             return None
         return [x.fpr for x in kl]
 
