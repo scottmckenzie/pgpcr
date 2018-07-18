@@ -40,6 +40,8 @@ def _raiseerr(err):
 
 class Smartcard(context.Context):
     def __init__(self, homedir=None):
+        self.__status = None
+        self.__args = None
         context.launchagent(homedir)
         if homedir == context.defaulthome:
             homedir = None
