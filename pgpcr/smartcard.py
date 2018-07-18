@@ -159,8 +159,7 @@ class Smartcard(context.Context):
 
     @property
     def slots(self):
-        if self.vendor == "Yubico":
-            return ["Signing", "Encryption", "Authentication"]
+        return ["Signing", "Encryption", "Authentication"]
 
     def __str__(self):
         return self.reader+" "+self.serial
