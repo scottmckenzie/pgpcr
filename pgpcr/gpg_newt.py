@@ -183,7 +183,7 @@ def sign(screen, gk, path):
     s = disks_newt.mountdisk(screen, _("keys to sign"))
     if s is None:
         return
-    keys = fmt.signing(s.mountpoint)
+    keys = fmt.signpending(s.mountpoint)
     if keys is None:
         newt.alert(screen, _("Key Signing"),
                      _("There are no keys to sign on this disk. Please be sure"

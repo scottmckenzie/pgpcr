@@ -13,7 +13,7 @@ def backups(path):
     else:
         return listdir(path+"/gpg")
 
-def signing(path):
+def signpending(path):
     if "signing" not in listdir(path):
         return None
     else:
@@ -21,3 +21,12 @@ def signing(path):
             return None
         else:
             return listdir(path+"/signing/pending")
+
+def signdone(path):
+    if "signing" not in listdir(path):
+        return None
+    else:
+        if "done" not in listdir(path+"/signing"):
+            return None
+        else:
+            return listdir(path+"/signing/done")
