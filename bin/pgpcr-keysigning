@@ -4,7 +4,6 @@ import tempfile
 from pgpcr import tran, log, newt
 from pgpcr import gpg_ops
 from pgpcr import disks_newt
-from pgpcr import gpg_newt
 
 tran.init()
 log.init()
