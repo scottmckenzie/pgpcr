@@ -8,16 +8,31 @@ from pgpcr import disks_newt
 tran.init()
 log.init()
 
-keys = None
-if len(sys.argv) > 1:
-    fprs = sys.argv[1:]
-else:
+def parseinput():
     fprs = sys.stdin.readlines()
     fprs = [x.strip() for x in fprs]
+    return fprs
+
+local = False
+if len(sys.argv) > 1:
+    if sys.argv[1] == "--local":
+        local = True
+    else:
+        fprs = sys.argv[1:]
+    if len(sys.argv) > 2:
+        fprs = sys.argv[2:]
+    else:
+        fprs = parseinput()
+else:
+    fprs = parseinput()
 
 screen = newt.Screen()
-tmp = tempfile.TemporaryDirectory()
-gk = gpg_ops.GPGKey(tmp.name)
+if not local:
+    tmp = tempfile.TemporaryDirectory()
+    workdir = tmp.name
+else:
+    workdir = None
+gk = gpg_ops.GPGKey(workdir)
 prog = newt.Progress(screen, _("Key Signing"), _("Finding Keys..."), 40)
 
 def _progress(what, type, current, total, prog):
@@ -36,7 +51,7 @@ for f in fprs:
     kl = []
     tries = 5
     while tries:
-        kl = gk.findkey(f)
+        kl = gk.findkey(f, local)
         if len(kl) == 0:
             prog.inc(5)
             tries -= 1
