@@ -290,7 +290,7 @@ class GPGKey(context.Context):
         return kl
 
     def importkey(self, key):
-        self._ctx.op_import_keys(key)
+        self._ctx.op_import_keys([key])
 
 
     def exporttosign(self, dest, fprs):
