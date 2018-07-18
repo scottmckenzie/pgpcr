@@ -582,6 +582,14 @@ Week 10
  - [ ] Support signing lots of keys, like caff
 	- Began work on pgpcr-keysigning, which should do just that
 
+2018-07-18
+----------
+ - [x] Sign keys from external keyservers
+ - [ ] Sign keys only found locally
+ - [ ] Sign keys from ksp file
+ - [ ] Send keys via email
+ - [ ] Generate and test keysigning
+
 Week 11
 =======
 
