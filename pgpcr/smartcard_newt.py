@@ -56,17 +56,18 @@ def export(screen, gk):
         except smartcard.SmartcardError as e:
             newt.error(screen, str(e))
         screen = newt.redraw(screen, gk.redraw)
+    if smart.new:
+        setpins(screen, smart)
 
 def setup(screen, smart):
-    setpins(screen, smart)
     screen = newt.redraw(screen, smart.redraw)
     setproperties(screen, smart)
 
 def setpins(screen, smart):
     newt.alert(screen, _("Set PIN"), _("You will now be asked to set"
-        " the user and Admin PINs on your smartcard."))
-    smart.setPIN()
+        " the Admin and user PINs on your smartcard."))
     smart.setAdminPIN()
+    smart.setPIN()
 
 def setproperties(screen, smart):
     while True:
