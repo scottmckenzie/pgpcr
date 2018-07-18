@@ -585,9 +585,15 @@ Week 10
 2018-07-18
 ----------
  - [x] Sign keys from external keyservers
- - [ ] Sign keys only found locally
- - [ ] Sign keys from ksp file
+ - [x] Move much of Misc to issues
+ - [x] Sign keys only found locally
  - [ ] Send keys via email
+	- Requires some rethinking
+
+2018-07-19
+----------
+ - [ ] Nitrokey support
+ - [ ] Sign keys from ksp file
  - [ ] Generate and test keysigning
 
 Week 11
