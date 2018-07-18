@@ -68,8 +68,11 @@ for f in fprs:
             gk.importkey(k)
 
 d = disks_newt.setup(screen, _("keys to sign"), "PGPCR Signing")
-screen.finish()
 if d is None:
+    screen.finish()
     sys.exit(0)
 gk.exporttosign(d.mountpoint, keys)
 d.eject()
+newt.alert(screen, _("Key Signing"),_("These keys have been exported to"
+    " %s") % str(d))
+screen.finish()
