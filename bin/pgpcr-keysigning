@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 import sys
+import tempfile
 from pgpcr import tran, log, newt
 from pgpcr import gpg_ops
 from pgpcr import disks_newt
+from pgpcr import gpg_newt
 
 tran.init()
 log.init()
@@ -14,19 +16,43 @@ else:
     fprs = sys.stdin.readlines()
     fprs = [x.strip() for x in fprs]
 
-gk = gpg_ops.GPGKey()
+screen = newt.Screen()
+tmp = tempfile.TemporaryDirectory()
+gk = gpg_ops.GPGKey(tmp.name)
+prog = newt.Progress(screen, _("Key Signing"), _("Finding Keys..."), 40)
+
+def _progress(what, type, current, total, prog):
+    prog.inc()
+gk.setprogress(_progress, prog)
+
+def _status(keyword, args, hook=None):
+    if hook is not None:
+        hook.inc()
+gk.setstatus(_status, prog)
+
 keys = []
 for f in fprs:
-    print(_("Finding %s...") % f)
+    prog.setText(f)
     kl = gk.findkey(f)
-    if len(kl) == 1:
-        keys.append(f)
-    else:
-        print(_("Ambigious fingerprint? '%s' returned %d keys") % (f, len(kl)))
-        sys.exit(1)
+    tries = 5
+    while tries:
+        if len(kl) == 0:
+            tries -= 1
+        else:
+            break
+    if len(kl) == 0:
+        newt.error(screen, _("No keys found for fingerprint:\n'%s'") % f)
+    for k in kl:
+        sign = newt.confirm(screen, _("Found Key"),
+                _("Found:\n%s\n%s\nSign it?") % (k.fpr,
+                    "\n".join([u.uid for u in k.uids])))
+        if sign:
+            keys.append(k.fpr)
+            gk.importkey(k)
 
-screen = newt.Screen()
 d = disks_newt.setup(screen, _("keys to sign"), "PGPCR Signing")
+screen.finish()
 if d is None:
     sys.exit(0)
 gk.exporttosign(d.mountpoint, keys)
+d.eject()
