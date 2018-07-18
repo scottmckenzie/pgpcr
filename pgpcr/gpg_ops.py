@@ -284,14 +284,16 @@ class GPGKey(context.Context):
             self.export(done, sk.fpr, keyfile)
             os.remove(pending+"/"+keyfile)
 
-    def findkey(self, fpr):
-        kl = self._ctx.keylist(fpr, mode=gpg.constants.keylist.mode.EXTERN)
+    def findkey(self, fpr, local=False):
+        mode = gpg.constants.keylist.mode.EXTERN
+        if local:
+            mode = gpg.constants.keylist.mode.LOCAL
+        kl = self._ctx.keylist(fpr, mode=mode)
         kl = list(kl)
         return kl
 
     def importkey(self, key):
         self._ctx.op_import_keys([key])
-
 
     def exporttosign(self, dest, fprs):
         pending, _ = self._signkeyfolders(dest)
