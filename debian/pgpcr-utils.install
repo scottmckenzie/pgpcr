@@ -1,3 +1,4 @@
 bin/pgpcr-part	/usr/sbin/
 bin/pgpcr-backup	/usr/bin
 bin/pgpcr-keysigning	/usr/bin
+bin/pgpcr-sendkeys	/usr/bin
