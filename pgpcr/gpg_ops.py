@@ -23,6 +23,7 @@ class GPGKey(context.Context):
         else:
             external.setuprundir()
         self._ctx = gpg.Context(home_dir=home)
+        self._master = None
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
         if loadfpr:
@@ -80,17 +81,25 @@ class GPGKey(context.Context):
 
     @property
     def fpr(self):
+        if self._master is None:
+            return None
         return self._master.fpr
 
     @property
     def revcert(self):
+        if self._master is None:
+            return None
         return self.homedir+"/openpgp-revocs.d/"+self.fpr+".rev"
 
     @property
     def uids(self):
+        if self._master is None:
+            return []
         return [x.uid for x in self._master.uids]
 
     def __str__(self):
+        if self._master is None:
+            return ""
         s = str(self.uids[0])
         s += " "
         s += self.fpr[-17:]
@@ -98,6 +107,8 @@ class GPGKey(context.Context):
 
     @property
     def keys(self):
+        if self._master is None:
+            return None
         keys = []
         for k in self._master.subkeys:
             s = k.fpr
@@ -120,6 +131,8 @@ class GPGKey(context.Context):
 
     @property
     def info(self):
+        if self._master is None:
+            return ""
         s = "\n"
         k = s.join(self.keys)
         u = s.join(self.uids)
