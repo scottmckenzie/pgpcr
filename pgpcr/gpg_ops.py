@@ -287,13 +287,15 @@ class GPGKey(context.Context):
     def findkey(self, fpr):
         kl = self._ctx.keylist(fpr, mode=gpg.constants.keylist.mode.EXTERN)
         kl = list(kl)
-        if len(kl) == 1:
-            self._ctx.op_import_keys(kl)
         return kl
 
-    def exporttosign(self, dest, keys):
+    def importkey(self, key):
+        self._ctx.op_import_keys(key)
+
+
+    def exporttosign(self, dest, fprs):
         pending, _ = self._signkeyfolders(dest)
-        for f in [k.fpr for k in keys]:
+        for f in fprs:
             self.export(pending, fpr=f)
 
     def revokekey(self, fpr, reason, text):
