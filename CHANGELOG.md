@@ -589,10 +589,12 @@ Week 10
  - [x] Sign keys only found locally
  - [ ] Send keys via email
 	- Requires some rethinking
+ - [x] Nitrokey support
+	- [#22](https://salsa.debian.org/tookmund-guest/pgpcr/issues/22)
 
 2018-07-19
 ----------
- - [ ] Nitrokey support
+ - [ ] Send keys via email
  - [ ] Sign keys from ksp file
  - [ ] Generate and test keysigning
 
