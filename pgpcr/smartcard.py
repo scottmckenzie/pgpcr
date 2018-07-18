@@ -69,6 +69,7 @@ class Smartcard(context.Context):
     def _scd(self, command):
         com = "SCD "
         com += command
+        _log.info(com)
         err = self._ctx.assuan_transact(com, status_cb=self._assuanstatus)
         if err:
             _raiseerr(err)
