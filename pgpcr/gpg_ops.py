@@ -41,6 +41,8 @@ class GPGKey(context.Context):
                 external.process(["gpgconf", "--remove-socketdir"])
         except external.CalledProcessError as e:
             _log.debug(e.stderr)
+        except Exception as e:
+            _log.debug(str(e))
 
     def genmaster(self, userid, passphrase=True):
         try:
