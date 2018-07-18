@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PGP Clean Room 0.1\n"
 "Report-Msgid-Bugs-To: tookmund@gmail.com\n"
-"POT-Creation-Date: 2018-07-10 15:44-0400\n"
+"POT-Creation-Date: 2018-07-18 13:00-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,254 +18,211 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.4.0\n"
 
-#: pgp-clean-room:55
+#: bin/pgp-clean-room:30
+msgid "Keyboard Layout"
+msgstr ""
+
+#: bin/pgp-clean-room:30
+msgid "Would you like to use the default keyboard layout (US QWERTY)"
+msgstr ""
+
+#: bin/pgp-clean-room:41
 msgid "Boot Media"
 msgstr ""
 
-#: pgp-clean-room:55
+#: bin/pgp-clean-room:41
 msgid ""
 "You can now remove the boot media, as the entire filesystem has been "
 "loaded into RAM."
 msgstr ""
 
-#: pgp-clean-room:61
+#: bin/pgp-clean-room:47
 msgid "Welcome to the PGP Clean Room!"
 msgstr ""
 
-#: pgp-clean-room:62
+#: bin/pgp-clean-room:48
 msgid "What do you wish to do?"
 msgstr ""
 
-#: pgp-clean-room:63
+#: bin/pgp-clean-room:49
 msgid "Generate a New GPG Master Key"
 msgstr ""
 
-#: pgp-clean-room:64
+#: bin/pgp-clean-room:50
 msgid "Load a GPG Master Key from USB"
 msgstr ""
 
-#: pgp-clean-room:65 pgp-clean-room:82
+#: bin/pgp-clean-room:51 bin/pgp-clean-room:63
 msgid "Advanced Options"
 msgstr ""
 
-#: pgp-clean-room:66 pgpcr/gpg_newt.py:164
+#: bin/pgp-clean-room:52 pgpcr/gpg_newt.py:158
 msgid "Quit"
 msgstr ""
 
-#: pgp-clean-room:83
+#: bin/pgp-clean-room:64
 msgid "These options are for users who know what they are doing"
 msgstr ""
 
-#: pgp-clean-room:85
+#: bin/pgp-clean-room:66
 msgid "Generate Key on Smartcard"
 msgstr ""
 
-#: pgp-clean-room:86 pgpcr/gpg_newt.py:271
+#: bin/pgp-clean-room:67 pgpcr/gpg_newt.py:268
 msgid "Import existing key"
 msgstr ""
 
-#: pgp-clean-room:87
+#: bin/pgp-clean-room:68
 msgid "Set Smartcard properties"
 msgstr ""
 
-#: pgp-clean-room:88
+#: bin/pgp-clean-room:69
 msgid "Set Smartcard PINs"
 msgstr ""
 
-#: pgp-clean-room:89
+#: bin/pgp-clean-room:70
 msgid "Run shell"
 msgstr ""
 
-#: pgp-clean-room:107
+#: bin/pgp-clean-room:88
 msgid "PGP Clean Room"
 msgstr ""
 
-#: pgp-clean-room:108
+#: bin/pgp-clean-room:89
 msgid "Would you like to shutdown the PGP Clean Room?"
 msgstr ""
 
-#: pgpcr-part:17
+#: bin/pgpcr-keysigning:22 pgpcr/gpg_newt.py:188 pgpcr/gpg_newt.py:193
+#: pgpcr/gpg_newt.py:200
+msgid "Key Signing"
+msgstr ""
+
+#: bin/pgpcr-keysigning:22
+msgid "Finding Keys..."
+msgstr ""
+
+#: bin/pgpcr-keysigning:47
+#, python-format
+msgid ""
+"No keys found for fingerprint:\n"
+"'%s'"
+msgstr ""
+
+#: bin/pgpcr-keysigning:49
+msgid "Found Key"
+msgstr ""
+
+#: bin/pgpcr-keysigning:50
+#, python-format
+msgid ""
+"Found:\n"
+"%s\n"
+"%s\n"
+"Sign it?"
+msgstr ""
+
+#: bin/pgpcr-keysigning:56 pgpcr/gpg_newt.py:183
+msgid "keys to sign"
+msgstr ""
+
+#: bin/pgpcr-part:17
 msgid "Need a disk to partition!"
 msgstr ""
 
-#: pgpcr-part:19
+#: bin/pgpcr-part:19
 msgid "Disk Setup"
 msgstr ""
 
-#: pgpcr-part:20
+#: bin/pgpcr-part:20
 msgid "Setting up..."
 msgstr ""
 
-#: pgpcr-part:24
+#: bin/pgpcr-part:24
 msgid "Formatting Disk..."
 msgstr ""
 
-#: pgpcr-part:27
+#: bin/pgpcr-part:27
 msgid "Partitioning..."
 msgstr ""
 
-#: pgpcr-part:38
+#: bin/pgpcr-part:38
 msgid "Creating Filesystem..."
-msgstr ""
-
-#: pgpcr/common_newt.py:11
-msgid ""
-"   <Tab>/<Alt-Tab> between elements   |   <Space> checks box   |   "
-"<Enter> selects"
-msgstr ""
-
-#: pgpcr/common_newt.py:16
-msgid "Help"
-msgstr ""
-
-#: pgpcr/common_newt.py:21 pgpcr/common_newt.py:22 pgpcr/common_newt.py:23
-#: pgpcr/common_newt.py:36 pgpcr/common_newt.py:40
-msgid "Password"
-msgstr ""
-
-#: pgpcr/common_newt.py:21 pgpcr/common_newt.py:38
-msgid "Enter your password"
-msgstr ""
-
-#: pgpcr/common_newt.py:23 pgpcr/common_newt.py:42
-msgid "(again)"
-msgstr ""
-
-#: pgpcr/common_newt.py:24 pgpcr/common_newt.py:60 pgpcr/common_newt.py:174
-#: pgpcr/common_newt.py:197 pgpcr/common_newt.py:204 pgpcr/common_newt.py:206
-msgid "Ok"
-msgstr ""
-
-#: pgpcr/common_newt.py:24 pgpcr/common_newt.py:174 pgpcr/common_newt.py:197
-#: pgpcr/common_newt.py:204 pgpcr/disks_newt.py:19
-msgid "Cancel"
-msgstr ""
-
-#: pgpcr/common_newt.py:26
-msgid "Passwords do not match!"
-msgstr ""
-
-#: pgpcr/common_newt.py:29
-msgid "Password cannot be empty!"
-msgstr ""
-
-#: pgpcr/common_newt.py:49
-msgid "Enter User Information"
-msgstr ""
-
-#: pgpcr/common_newt.py:50
-msgid "Name"
-msgstr ""
-
-#: pgpcr/common_newt.py:50
-msgid "Email Address"
-msgstr ""
-
-#: pgpcr/common_newt.py:57
-msgid "You must supply a valid email address"
-msgstr ""
-
-#: pgpcr/common_newt.py:64
-msgid "Error"
-msgstr ""
-
-#: pgpcr/common_newt.py:67 pgpcr/common_newt.py:72
-msgid "Yes"
-msgstr ""
-
-#: pgpcr/common_newt.py:68 pgpcr/common_newt.py:71
-msgid "No"
-msgstr ""
-
-#: pgpcr/common_newt.py:75
-msgid "Continue"
-msgstr ""
-
-#: pgpcr/common_newt.py:76
-msgid "Skip"
-msgstr ""
-
-#: pgpcr/common_newt.py:76
-msgid "Abort"
-msgstr ""
-
-#: pgpcr/common_newt.py:140
-msgid "Are you sure you want to cancel"
-msgstr ""
-
-#: pgpcr/common_newt.py:146
-msgid "error"
 msgstr ""
 
 #: pgpcr/disks.py:48
 msgid "[IN USE]"
 msgstr ""
 
-#: pgpcr/disks_newt.py:11 pgpcr/disks_newt.py:17
+#: pgpcr/disks_newt.py:12 pgpcr/disks_newt.py:18
 msgid "Disks"
 msgstr ""
 
-#: pgpcr/disks_newt.py:12
+#: pgpcr/disks_newt.py:13
 msgid "No removable storage connected. Please connect some and press OK."
 msgstr ""
 
-#: pgpcr/disks_newt.py:17
+#: pgpcr/disks_newt.py:18
 #, python-format
 msgid "Pick your %s disk"
 msgstr ""
 
-#: pgpcr/disks_newt.py:18
+#: pgpcr/disks_newt.py:19
 msgid "Refresh"
 msgstr ""
 
-#: pgpcr/disks_newt.py:22 pgpcr/disks_newt.py:117
+#: pgpcr/disks_newt.py:20 pgpcr/newt.py:24 pgpcr/newt.py:33 pgpcr/newt.py:62
+#: pgpcr/newt.py:88
+msgid "Cancel"
+msgstr ""
+
+#: pgpcr/disks_newt.py:23 pgpcr/disks_newt.py:118
 msgid "Warning"
 msgstr ""
 
-#: pgpcr/disks_newt.py:22
+#: pgpcr/disks_newt.py:23
 #, python-format
 msgid ""
 "Are you sure you want to use this disk?\n"
 "%s (%s)"
 msgstr ""
 
-#: pgpcr/disks_newt.py:43 pgpcr/gpg_newt.py:133
+#: pgpcr/disks_newt.py:44 pgpcr/gpg_newt.py:127
 msgid "master key backup"
 msgstr ""
 
-#: pgpcr/disks_newt.py:46
+#: pgpcr/disks_newt.py:47
 msgid "Danger!"
 msgstr ""
 
-#: pgpcr/disks_newt.py:47
+#: pgpcr/disks_newt.py:48
 msgid "Are you sure you don't want to make any more backups?"
 msgstr ""
 
-#: pgpcr/disks_newt.py:57
+#: pgpcr/disks_newt.py:58
 msgid "Your backup to the above disk is now complete and the disk can be ejected."
 msgstr ""
 
-#: pgpcr/disks_newt.py:61
+#: pgpcr/disks_newt.py:62
 msgid "Backups"
 msgstr ""
 
-#: pgpcr/disks_newt.py:62
+#: pgpcr/disks_newt.py:63
 msgid "Would you like to backup to another disk?"
 msgstr ""
 
-#: pgpcr/disks_newt.py:74
+#: pgpcr/disks_newt.py:75
 msgid "Public Key Export"
 msgstr ""
 
-#: pgpcr/disks_newt.py:76
+#: pgpcr/disks_newt.py:77
 msgid "Subkey and Public Key Export"
 msgstr ""
 
-#: pgpcr/disks_newt.py:82
+#: pgpcr/disks_newt.py:83
 msgid "Are you sure you don't want to export your key?"
 msgstr ""
 
-#: pgpcr/disks_newt.py:117
+#: pgpcr/disks_newt.py:118
 #, python-format
 msgid ""
 "Are you sure you want to use this disk?\n"
@@ -273,332 +230,401 @@ msgid ""
 "All the data currently on the disk WILL BE WIPED!"
 msgstr ""
 
-#: pgpcr/disks_newt.py:143
+#: pgpcr/disks_newt.py:144
 msgid "No mountable partitions found on this disk"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:11
+#: pgpcr/gpg_newt.py:13
 msgid "New GPG Key"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:17 pgpcr/gpg_newt.py:21 pgpcr/gpg_newt.py:47
-#: pgpcr/gpg_newt.py:62
+#: pgpcr/gpg_newt.py:19 pgpcr/gpg_newt.py:23 pgpcr/gpg_newt.py:41
+#: pgpcr/gpg_newt.py:56
 msgid "Key Generation"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:18
+#: pgpcr/gpg_newt.py:20
 msgid ""
 "GPG keys will now be generated. Progress is estimated and this may take a"
 " while. You will be prompted for your password several times."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:22
+#: pgpcr/gpg_newt.py:24
 msgid "Generating Master Key..."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:29
+#: pgpcr/gpg_newt.py:31
 msgid "Master Key generation"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:35
+#: pgpcr/gpg_newt.py:37
 msgid "Revocation certificate"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:35
+#: pgpcr/gpg_newt.py:37
 msgid ""
-"A revocation certificate will now be generated. You will be asked for "
-"your password."
+"You will be prompted for your password twice when you generate your first"
+" subkey. This is so that a revocation certificate can be generated for "
+"your master key"
 msgstr ""
 
 #: pgpcr/gpg_newt.py:42
-msgid "Revocation certificate generation"
-msgstr ""
-
-#: pgpcr/gpg_newt.py:48
 msgid "Generating Sub Keys..."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:56
+#: pgpcr/gpg_newt.py:50
 msgid "Subkey generation"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:62
+#: pgpcr/gpg_newt.py:56
 msgid "Key Generation Complete!"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:67
+#: pgpcr/gpg_newt.py:61
 msgid "Master Key Algorithm"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:67
+#: pgpcr/gpg_newt.py:61
 msgid ""
 "Pick the algorithm you would like to use for your new master key. If "
 "you're unsure, the defaults are well chosen and should work for most "
 "people"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:76 pgpcr/gpg_newt.py:92
+#: pgpcr/gpg_newt.py:70 pgpcr/gpg_newt.py:86
 msgid "Master Key Size"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:76 pgpcr/gpg_newt.py:92
+#: pgpcr/gpg_newt.py:70 pgpcr/gpg_newt.py:86
 msgid ""
 "Pick the size of your new master key. If you're unsure the defaults are "
 "well chosen and should work for most people"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:83
+#: pgpcr/gpg_newt.py:77
 msgid "Subkey Algorithm"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:83
+#: pgpcr/gpg_newt.py:77
 msgid ""
 "Pick the algorithm you would like to use for your new subkeys. If you're "
 "unsure, the defaults are well chosen and should work for most people"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:104
+#: pgpcr/gpg_newt.py:98
 msgid "Key Export"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:105
+#: pgpcr/gpg_newt.py:99
 msgid "How would you like to export your subkeys?"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:107
+#: pgpcr/gpg_newt.py:101
 msgid "External Storage"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:108 pgpcr/smartcard_newt.py:15
+#: pgpcr/gpg_newt.py:102 pgpcr/smartcard_newt.py:15
 msgid "Smartcard"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:115
+#: pgpcr/gpg_newt.py:109
 msgid "New Key Creation Complete"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:116
+#: pgpcr/gpg_newt.py:110
 msgid "You can now store your backups in a safe place"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:117
+#: pgpcr/gpg_newt.py:111
 msgid "IMPORTANT"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:118
+#: pgpcr/gpg_newt.py:112
 msgid ""
 "Don't forget to import your new key to your main computer by running "
 "import.sh from your public export disk."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:138
+#: pgpcr/gpg_newt.py:132
 msgid "This disk does not contain a master key backup."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:142
+#: pgpcr/gpg_newt.py:136
 msgid "Key Fingerprint"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:143
+#: pgpcr/gpg_newt.py:137
 msgid "Please select your key."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:153
-msgid "What would you like to do?"
-msgstr ""
-
-#: pgpcr/gpg_newt.py:154
+#: pgpcr/gpg_newt.py:148
 msgid "Sign GPG Public Keys"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:155
+#: pgpcr/gpg_newt.py:149
 msgid "Associate a UID with your master key"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:157
+#: pgpcr/gpg_newt.py:151
 msgid "Revoke a UID associated with your master key"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:159
+#: pgpcr/gpg_newt.py:153
 msgid "Revoke your master key or a subkey"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:161
+#: pgpcr/gpg_newt.py:155
 msgid "Change the expiration date on your master key or a subkey"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:179
+#: pgpcr/gpg_newt.py:176
 msgid "Save"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:179
+#: pgpcr/gpg_newt.py:176
 msgid "Do you want to save the changes you've made?"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:186
-msgid "keys to sign"
-msgstr ""
-
-#: pgpcr/gpg_newt.py:191 pgpcr/gpg_newt.py:196 pgpcr/gpg_newt.py:203
-msgid "Key Signing"
-msgstr ""
-
-#: pgpcr/gpg_newt.py:192
+#: pgpcr/gpg_newt.py:189
 msgid ""
 "There are no keys to sign on this disk. Please be sure they are in the "
 "signing/pending folder."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:196
+#: pgpcr/gpg_newt.py:193
 msgid "Which keys do you want to sign?"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:203
+#: pgpcr/gpg_newt.py:200
 #, python-format
 msgid "Signed %s"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:209
+#: pgpcr/gpg_newt.py:205
 msgid "Which key(s) do you want to revoke?"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:213
+#: pgpcr/gpg_newt.py:209
 #, python-format
 msgid "Why do you want to revoke %s"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:217
+#: pgpcr/gpg_newt.py:213
 msgid "Why are you revoking this key?"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:224
+#: pgpcr/gpg_newt.py:220
 #, python-format
 msgid "Revoked %s"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:227
+#: pgpcr/gpg_newt.py:223
 msgid "Add UID"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:231
+#: pgpcr/gpg_newt.py:227
 #, python-format
 msgid "Added %s to your key"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:235
+#: pgpcr/gpg_newt.py:231
 msgid "Which UID would you like to revoke?"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:240
+#: pgpcr/gpg_newt.py:236
 #, python-format
 msgid "Removed %s from your key"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:243
+#: pgpcr/gpg_newt.py:239
 msgid "Key expiration"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:243
+#: pgpcr/gpg_newt.py:239
 msgid "Which key do you want to expire?"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:251
+#: pgpcr/gpg_newt.py:247
 msgid "When do you want this key to expire?(YYYY-MM-DD)"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:252
+#: pgpcr/gpg_newt.py:248
 msgid "Expiration Date:"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:259
+#: pgpcr/gpg_newt.py:255
 msgid "Please enter a valid date in the future."
 msgstr ""
 
-#: pgpcr/gpg_newt.py:262
+#: pgpcr/gpg_newt.py:258
 #, python-format
 msgid "Changed expiration date on %s"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:271
+#: pgpcr/gpg_newt.py:268
 msgid ""
 "Please mount an existing key backup, either an exported secret key or "
 ".gnupg and enter the path to it below"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:284
+#: pgpcr/gpg_newt.py:282
 msgid "Master Key"
 msgstr ""
 
-#: pgpcr/gpg_newt.py:285
+#: pgpcr/gpg_newt.py:283
 msgid "Which key is your master key?"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:89
+#: pgpcr/gpg_ops.py:118
 msgid "(Master)"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:93
+#: pgpcr/gpg_ops.py:122
 msgid "(Certification)"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:95
+#: pgpcr/gpg_ops.py:124
 msgid "(Signing)"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:97
+#: pgpcr/gpg_ops.py:126
 msgid "(Encryption)"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:99
+#: pgpcr/gpg_ops.py:128
 msgid "(Authentication)"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:122
+#: pgpcr/gpg_ops.py:160
 msgid "Signing Subkey"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:122
+#: pgpcr/gpg_ops.py:160
 msgid ""
 "A signing subkey will now be generated. This is used to  ensure what you "
 "send across the Internet, like emails or Debian packages, has not been "
 "tampered with."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:129
+#: pgpcr/gpg_ops.py:167
 msgid "Generating signing subkey..."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:132
+#: pgpcr/gpg_ops.py:173
 msgid "Encryption Subkey"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:132
+#: pgpcr/gpg_ops.py:173
 msgid ""
 "An encryption subkey will now be generated. This is used to protect your "
 "data, like emails or backups, from being viewed by anyone else."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:139
+#: pgpcr/gpg_ops.py:180
 msgid "Generating encryption subkey..."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:142
+#: pgpcr/gpg_ops.py:186
 msgid "Authentication Subkey"
 msgstr ""
 
-#: pgpcr/gpg_ops.py:142
+#: pgpcr/gpg_ops.py:186
 msgid ""
 "An authentication subkey will now be generated. This is used to prove "
 "your identity and can be used as an ssh key."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:149
+#: pgpcr/gpg_ops.py:193
 msgid "Generating authentication subkey..."
 msgstr ""
 
-#: pgpcr/gpg_ops.py:207
+#: pgpcr/gpg_ops.py:257
 #, python-format
 msgid "No valid backup found at '%s'"
+msgstr ""
+
+#: pgpcr/newt.py:12
+msgid ""
+"   <Tab>/<Alt-Tab> between elements   |   <Space> checks box   |   "
+"<Enter> selects"
+msgstr ""
+
+#: pgpcr/newt.py:17
+msgid "Help"
+msgstr ""
+
+#: pgpcr/newt.py:24 pgpcr/newt.py:26 pgpcr/newt.py:33 pgpcr/newt.py:62
+#: pgpcr/newt.py:88 pgpcr/newt.py:124
+msgid "Ok"
+msgstr ""
+
+#: pgpcr/newt.py:85 pgpcr/newt.py:86 pgpcr/newt.py:87 pgpcr/newt.py:100
+#: pgpcr/newt.py:104
+msgid "Password"
+msgstr ""
+
+#: pgpcr/newt.py:85 pgpcr/newt.py:102
+msgid "Enter your password"
+msgstr ""
+
+#: pgpcr/newt.py:87 pgpcr/newt.py:106
+msgid "(again)"
+msgstr ""
+
+#: pgpcr/newt.py:90
+msgid "Passwords do not match!"
+msgstr ""
+
+#: pgpcr/newt.py:93
+msgid "Password cannot be empty!"
+msgstr ""
+
+#: pgpcr/newt.py:113
+msgid "Enter User Information"
+msgstr ""
+
+#: pgpcr/newt.py:114
+msgid "Name"
+msgstr ""
+
+#: pgpcr/newt.py:114
+msgid "Email Address"
+msgstr ""
+
+#: pgpcr/newt.py:121
+msgid "You must supply a valid email address"
+msgstr ""
+
+#: pgpcr/newt.py:128
+msgid "Error"
+msgstr ""
+
+#: pgpcr/newt.py:131 pgpcr/newt.py:134
+msgid "Yes"
+msgstr ""
+
+#: pgpcr/newt.py:131 pgpcr/newt.py:134
+msgid "No"
+msgstr ""
+
+#: pgpcr/newt.py:137
+msgid "Continue"
+msgstr ""
+
+#: pgpcr/newt.py:137
+msgid "Skip"
+msgstr ""
+
+#: pgpcr/newt.py:138
+msgid "Abort"
+msgstr ""
+
+#: pgpcr/newt.py:202
+msgid "Are you sure you want to cancel"
+msgstr ""
+
+#: pgpcr/newt.py:208
+msgid "error"
 msgstr ""
 
 #: pgpcr/smartcard_newt.py:10
@@ -613,7 +639,7 @@ msgstr ""
 msgid "Is this your smartcard?"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:25 pgpcr/smartcard_newt.py:74
+#: pgpcr/smartcard_newt.py:25 pgpcr/smartcard_newt.py:73
 msgid "New Smartcard"
 msgstr ""
 
@@ -637,67 +663,67 @@ msgstr ""
 msgid "PIN: "
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:35
+#: pgpcr/smartcard_newt.py:34
 msgid "Which key(s) do you want to export?"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:40
+#: pgpcr/smartcard_newt.py:39
 msgid "Which slot do you want to put this key in?"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:49 pgpcr/smartcard_newt.py:104
+#: pgpcr/smartcard_newt.py:48 pgpcr/smartcard_newt.py:103
 msgid "Overwrite?"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:50 pgpcr/smartcard_newt.py:105
+#: pgpcr/smartcard_newt.py:49 pgpcr/smartcard_newt.py:104
 #, python-format
 msgid "There is already a key in slot %d. Do you want to overwrite it?"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:67
+#: pgpcr/smartcard_newt.py:66
 msgid "Set PIN"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:67
+#: pgpcr/smartcard_newt.py:66
 msgid "You will now be asked to set the user and Admin PINs on your smartcard."
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:75
+#: pgpcr/smartcard_newt.py:74
 msgid "Setup your new smartcard"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:75
+#: pgpcr/smartcard_newt.py:74
 msgid "Given Name of Cardholder"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:76
+#: pgpcr/smartcard_newt.py:75
 msgid "Surname of Cardholder"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:76
+#: pgpcr/smartcard_newt.py:75
 msgid "Language Preference"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:77
+#: pgpcr/smartcard_newt.py:76
 msgid "Sex (m/f/u)"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:77
+#: pgpcr/smartcard_newt.py:76
 msgid "Login Data"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:98
+#: pgpcr/smartcard_newt.py:97
 msgid "Generate Key"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:98
+#: pgpcr/smartcard_newt.py:97
 #, python-format
 msgid ""
 "Do you want to generate a key in \n"
 "slot %d: %s?"
 msgstr ""
 
-#: pgpcr/smartcard_newt.py:111
+#: pgpcr/smartcard_newt.py:110
 msgid "Incorrect PIN"
 msgstr ""
 
