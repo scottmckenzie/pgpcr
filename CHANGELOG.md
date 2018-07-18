@@ -611,25 +611,15 @@ Evaluation Period 3 / Week 13
 ----------
  - [ ] Testing, testing and more testing
  - [ ] Overflow for anything not finished on schedule
- - [ ] Debconf18? (Would need sponsorship, but I don't want to apply for that unless I have a project to present about)
+ - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Incorporate translations and community testing
+ - [ ] Make sure to enable locales for translations
  - [ ] Bug fixes
 
 Misc
 ====
 
 Would like to do these if I have time but we'll see how this goes
- - [ ] Make sure to enable locales for translations
  - [ ] Figure out when progress_cb is called with primegen
 	- Time based? amount of randomness gathered?
- - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Alternative UI (Qt, GTK, etc)
- - [ ] Add the option to print key backups and revocation certificates
- - [ ] Run all tests in a virtual machine
-	- kvm?
- - [ ] Better import UI
- - [ ] Optional signature expiry date?
-	- I have no idea if people use this
- - [ ] PKI/CA UI
-	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
- - [ ] Create a Debian package for the pgp-clean-room application and submit it to mentors.d.o
