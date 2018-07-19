@@ -594,8 +594,13 @@ Week 10
 
 2018-07-19
 ----------
- - [ ] Send keys via email
+ - [x] Send keys via email
+	- At least theoretically this works now
+	- Need to find a way to test it though
+ - [x] Create tarball of printing stuff
+ - [x] Sign printing tarball and put public key in ISO
  - [ ] Sign keys from ksp file
+	- https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622560
  - [ ] Generate and test keysigning
 
 Week 11
