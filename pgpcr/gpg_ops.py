@@ -312,6 +312,13 @@ class GPGKey(context.Context):
         gpg_interact.keytocard(self, fpr, slot, overwrite)
         self._refreshmaster()
 
+    def encrypt(self, plaintext, recipients):
+        keys = []
+        for r in recipients:
+            keys.append(self._ctx.get_key(r))
+        c, _, _ =  self._ctx.encrypt(plaintext, keys)
+        return c
+
 GPGMEError = gpg.errors.GPGMEError
 
 class PinentryCancel(Exception):
