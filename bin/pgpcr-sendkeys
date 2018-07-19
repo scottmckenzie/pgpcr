@@ -5,10 +5,12 @@ import smtplib
 import sys
 import os
 import tempfile
+import configparser
 from pgpcr import tran, log, newt
 from pgpcr import fmt
 from pgpcr import gpg_ops
 from pgpcr import disks_newt
+from pgpcr import gpg_newt
 
 tran.init()
 log.init()
@@ -28,7 +30,32 @@ def mail(gk, smtp, address, fpr, keyfile):
     msg.add_attachment(data)
     smtp.send_message(msg)
 
-smtp = smtplib.SMTP("localhost")
+def setupsmtp():
+    config = configparser.ConfigParser()
+    config.read(os.getenv("HOME", "")+".pgpcr-sendkeys")
+    host = "localhost"
+    user = None
+    pwd = None
+    ssl = False
+    if "SMTP" in config:
+        conf = config["SMTP"]
+        if "host" in conf:
+            host = conf["host"]
+        if "user" in conf:
+            user = conf["user"]
+        if "password" in conf:
+            pwd = conf["password"]
+        if "ssl" in conf:
+            ssl = True
+    smtp = smtplib.SMTP(host)
+    smtp.ehlo()
+    if ssl:
+        smtp.starttls()
+    if user and pwd:
+        smtp.login(user, pwd)
+    return smtp
+
+smtp = setupsmtp()
 screen = newt.Screen()
 d = disks_newt.setup(screen, _("signed keys"), "PGPCR Signing")
 
@@ -49,8 +76,9 @@ if keys is None or keys == []:
     newt.error(screen, _("There are no signed keys on this disk. Please be"
         " sure they are in the signing/done folder."))
     finish()
-tmp = tempfile.TemporaryDirectory()
-gk = gpg_ops.GPGKey(tmp.name)
+gk = gpg_ops.GPGKey()
+kl = gk.getmaster()
+gpg_newt.setmasterkey(screen, gk, kl)
 for k in keys:
     kl = gk.importbackup(k)
     if kl is not None:
