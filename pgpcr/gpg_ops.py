@@ -79,6 +79,13 @@ class GPGKey(context.Context):
     def setmaster(self, fpr):
         self._master = self._ctx.get_key(fpr)
 
+    def getmaster(self):
+        kl = list(self._ctx.keylist(secret=True))
+        if len(kl) == 1:
+            self.setmaster(kl[0].fpr)
+            return None
+        return [x.fpr for x in kl]
+
     @property
     def fpr(self):
         if self._master is None:
@@ -259,11 +266,7 @@ class GPGKey(context.Context):
             self._import(backup)
         else:
             self.__init__(self.homedir, loaddir=backup)
-        kl = list(self._ctx.keylist(secret=True))
-        if len(kl) == 1:
-            self.setmaster(kl[0].fpr)
-            return None
-        return [x.fpr for x in kl]
+        return self.getmaster()
 
     def _signkeyfolders(self, folder):
         pending = folder+"/signing/pending"
