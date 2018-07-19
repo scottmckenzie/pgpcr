@@ -13,26 +13,13 @@ def parseinput():
     fprs = [x.strip() for x in fprs]
     return fprs
 
-local = False
 if len(sys.argv) > 1:
-    if sys.argv[1] == "--local":
-        local = True
-    else:
-        fprs = sys.argv[1:]
-    if len(sys.argv) > 2:
-        fprs = sys.argv[2:]
-    else:
-        fprs = parseinput()
+    fprs = sys.argv[1:]
 else:
     fprs = parseinput()
 
 screen = newt.Screen()
-if not local:
-    tmp = tempfile.TemporaryDirectory()
-    workdir = tmp.name
-else:
-    workdir = None
-gk = gpg_ops.GPGKey(workdir)
+gk = gpg_ops.GPGKey()
 prog = newt.Progress(screen, _("Key Signing"), _("Finding Keys..."), 40)
 
 def _progress(what, type, current, total, prog):
@@ -42,6 +29,7 @@ gk.setprogress(_progress, prog)
 def _status(keyword, args, hook=None):
     if hook is not None:
         hook.inc()
+
 gk.setstatus(_status, prog)
 
 keys = []
@@ -51,7 +39,7 @@ for f in fprs:
     kl = []
     tries = 5
     while tries:
-        kl = gk.findkey(f, local)
+        kl = gk.findkey(f)
         if len(kl) == 0:
             prog.inc(5)
             tries -= 1
