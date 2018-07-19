@@ -13,15 +13,18 @@ from pgpcr import disks_newt
 tran.init()
 log.init()
 
-def mail(smtp, address, fpr, keyfile):
+def mail(gk, smtp, address, fpr, keyfile):
     msg = EmailMessage()
     msg["From"] = "test@example.com"
     msg["To"] = address
     msg["Subject"] = "Your signed PGP key %s" % fpr
-    msg.preamble = "Attached is your signed PGP Key %s. It has been sent to"
+    desc = "Attached is your signed PGP Key %s. It has been sent to"
     " each of your UIDs to ensure you recieve it." % fpr
+    cdesc = gk.encrypt(desc, address)
+    msg.add_attachment(cdesc)
     with open(keyfile) as f:
         data = f.read()
+    cdata = gk.encrypt(data, address)
     msg.add_attachment(data)
     smtp.send_message(msg)
 
@@ -56,6 +59,5 @@ for k in keys:
         finish()
     fpr = k.strip(".pub")
     for u in gk.uids:
-        mail(smtp, u.address, fpr, k)
-
+        mail(gk, smtp, u.address, fpr, k)
 finish()
