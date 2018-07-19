@@ -22,7 +22,7 @@ class GPGKey(context.Context):
             home = None
         else:
             external.setuprundir()
-        self._ctx = gpg.Context(home_dir=home)
+        self._ctx = gpg.Context(home_dir=home, armor=True)
         self._master = None
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
