@@ -37,8 +37,10 @@ def killagent(homedir):
 def setupworkdir(workdir):
     if workdir is None:
         workdir = defaulthome
-    shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
-    shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
+    if not os.path.exists(workdir+"/gpg.conf"):
+        shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
+    if not os.path.exists(workdir+"/gpg-agent.conf"):
+        shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
     killagent(workdir)
 
 def timestamp2iso(ts):
