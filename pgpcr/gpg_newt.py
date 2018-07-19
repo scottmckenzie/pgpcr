@@ -260,6 +260,14 @@ def expirekey(screen, gk):
         invalid = False
 
 
+def setmasterkey(screen, gk, kl):
+        if kl is not None:
+            lcw = newt.LCW(screen, _("Master Key"),
+                    _("Which key is your master key?"), kl)
+            if lcw[0]:
+                return
+            gk.setmaster(kl[lcw[1]])
+
 def importkey(screen, workdir, keyloc=None):
     gk = gpg_ops.GPGKey(workdir)
     importFail = True
@@ -278,12 +286,7 @@ def importkey(screen, workdir, keyloc=None):
             newt.error(screen, str(e))
             continue
         importFail = False
-        if kl is not None:
-            lcw = newt.LCW(screen, _("Master Key"),
-                    _("Which key is your master key?"), kl)
-            if lcw[0]:
-                return
-            gk.setmaster(kl[lcw[1]])
+    setmasterkey(screen, gk, kl)
     save(screen, workdir, gk)
 
 
