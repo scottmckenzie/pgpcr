@@ -212,9 +212,12 @@ class GPGKey(context.Context):
         # 0 is the normal mode
         data = gpg.Data()
         self._ctx.op_export(pattern, mode, data)
-        if outfile is not None:
+        rd = self._readdata(data)
+        if hasattr(outfile, "write"):
+            outfile.write(rd)
+        elif type(outfile) is str:
             with open(outfile, "wb") as f:
-                f.write(self._readdata(data))
+                f.write(rd)
 
     def export(self, exportdir, fpr=None, name=None):
         if fpr is None:
