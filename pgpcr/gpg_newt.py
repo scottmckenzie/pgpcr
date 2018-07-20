@@ -3,6 +3,7 @@ from . import newt
 from . import disks_newt
 from . import smartcard_newt
 from . import fmt
+from . import printing
 import logging
 
 _log = logging.getLogger(__name__)
@@ -289,7 +290,16 @@ def importkey(screen, workdir, keyloc=None):
     setmasterkey(screen, gk, kl)
     save(screen, workdir, gk)
 
-
+def printkey(screen, gk):
+    if not printing.isInstalled():
+        ew = newt.EW(screen, _("Install Printing"), _("Please enter the path"
+            " to the folder containing printing.tar.gz.gpg"), ["Printing"])
+        if ew[0]:
+            return
+        workdir = ew[1][0]
+        printing.install(workdir)
+        printing.printrevcert(gk)
+        printing.printmasterkey(gk)
 
 def _status(keyword, args, hook=None):
     if keyword is None and args is None:
