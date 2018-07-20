@@ -241,6 +241,9 @@ class GPGKey(context.Context):
         self._callgpg(["--export-secret-subkeys"],
                           exportdir+"/"+self.fpr+".subsec")
 
+    def exportmasterkey(self, exportfile):
+        self._export(self.fpr, gpg.constants.EXPORT_MODE_SECRET, exportfile)
+
     def adduid(self, uid):
         try:
             self._ctx.key_add_uid(self._master, uid)
