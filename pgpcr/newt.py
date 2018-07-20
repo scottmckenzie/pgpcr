@@ -1,10 +1,12 @@
+from shutil import get_terminal_size
 from snack import *
 from . import external
 from . import valid
 
-width = 40
-padding = (0, 0, 0, 1)
 
+def getwidth():
+    c, l = get_terminal_size((80, 40))
+    return c // 2
 
 def Screen():
     s = SnackScreen()
@@ -16,21 +18,33 @@ def Screen():
 def helpCallback(screen, text):
     alert(screen, _("Help"), text)
 
-BCW = ButtonChoiceWindow
+def BCW(screen, title, text, buttons = None, width = None, x = None, y = None,
+        help = None):
+    if buttons is None:
+        buttons = [(_("Ok"), None), (_("Cancel"), True)]
+    if width is None:
+        width = getwidth()
+    return ButtonChoiceWindow(screen, title, text, buttons, width, x, y, help)
 
-def EW(screen, title, text, prompts, allowCancel = 1, width = 40,
-        entryWidth = 20, buttons = None, help = None):
+def EW(screen, title, text, prompts, allowCancel = 1, width = None,
+        entryWidth = None, buttons = None, help = None):
     if buttons is None:
         buttons = [(_("Ok"), None), (_("Cancel"), True)]
     if buttons is None and not allowCancel:
         buttons = [(_("Ok"), None)]
+    if width is None:
+        width = getwidth()
+    if entryWidth is None:
+        entryWidth = width // 2
     return EntryWindow(screen, title, text, prompts, allowCancel, width,
             entryWidth, buttons, help)
 
-def LCW(screen, title, text, items, buttons = None, width = 40, scroll = 0,
+def LCW(screen, title, text, items, buttons = None, width = None, scroll = 0,
         height = -1, help = None):
     if buttons is None:
         buttons = [(_("Ok"), None), (_("Cancel"), True)]
+    if width is None:
+        width = getwidth()
     return ListboxChoiceWindow(screen, title, text, items, buttons, width,
             scroll, height, help)
 
@@ -38,7 +52,7 @@ def LCW(screen, title, text, items, buttons = None, width = 40, scroll = 0,
 # Mostly borrowed from snack.py
 def LCM(screen, title, text, items, help=None):
     height = len(items)
-    t = TextboxReflowed(width, text)
+    t = TextboxReflowed(getwidth(), text)
     l = Listbox(height, returnExit = 1)
     count = 0
     for item in items:
@@ -55,11 +69,13 @@ def LCM(screen, title, text, items, help=None):
     g.runOnce()
     return l.current()
 
-def CCW(screen, title, text, items, buttons = None, width = 40, scroll = 0,
+def CCW(screen, title, text, items, buttons = None, width = None, scroll = 0,
         height = -1, help = None):
 
     if buttons is None:
         buttons = [(_("Ok"), None), (_("Cancel"), True)]
+    if width is None:
+        width = getwidth()
     if (height == -1): height = len(items)
     bb = ButtonBar(screen, buttons)
     t = TextboxReflowed(width, text)
@@ -155,9 +171,11 @@ class Progress:
     def _create(self, title, text, total, current):
         self.current = current
         self.g = GridFormHelp(self.screen, title, None, 1, 2)
+        width = getwidth()
         self.t = TextboxReflowed(width, text)
         self.p = Scale(width, total)
         self.p.set(current)
+        padding = (0, 0, 0, 1)
         self.g.add(self.t, 0, 0, padding=padding)
         self.g.add(self.p, 0, 1, padding=padding)
         self.refresh()
