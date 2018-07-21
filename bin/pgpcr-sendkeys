@@ -76,7 +76,7 @@ if keys is None or keys == []:
     newt.error(screen, _("There are no signed keys on this disk. Please be"
         " sure they are in the signing/done folder."))
     finish()
-gk = gpg_ops.GPGKey()
+gk = gpg_ops.GPGKey(os.getenv("GNUPGHOME", None))
 kl = gk.getmaster()
 gpg_newt.setmasterkey(screen, gk, kl)
 for k in keys:
