@@ -599,15 +599,26 @@ Week 10
 	- Need to find a way to test it though
  - [x] Create tarball of printing stuff
  - [x] Sign printing tarball and put public key in ISO
+
+2018-07-20
+----------
+ - [x] Adaptive dialog width
+ - [ ] Install printing
+	- Offline installation of debs is complex and out-of-scope
+	- Far too much time wasted in this endeavor
+	- Will need to just install CUPS on the live CD or not support printing at all
+ - [x] Generate and test keysigning
  - [ ] Sign keys from ksp file
 	- https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622560
- - [ ] Generate and test keysigning
 
 Week 11
 =======
 
 2018-07-23
 ----------
+ - [ ] More pgpcr-sendkey testing
+ - [ ] Yubikey keyboard and USBGuard
+ - [ ] Print masterkey and revocation certificate
 TBD
 
 Week 12
