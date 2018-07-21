@@ -17,7 +17,7 @@ log.init()
 
 def mail(gk, smtp, address, fpr, keyfile):
     msg = EmailMessage()
-    msg["From"] = "test@example.com"
+    msg["From"] = gk._master.uids[0].address
     msg["To"] = address
     msg["Subject"] = "Your signed PGP key %s" % fpr
     desc = "Attached is your signed PGP Key %s. It has been sent to"
