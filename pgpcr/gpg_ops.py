@@ -323,7 +323,8 @@ class GPGKey(context.Context):
             plaintext = plaintext.encode()
         keys = []
         for r in recipients:
-            keys.append(self._ctx.get_key(r))
+            kl = self._ctx.keylist(r)
+            keys.append(next(kl))
         c, _, _ =  self._ctx.encrypt(plaintext, keys)
         return c
 
