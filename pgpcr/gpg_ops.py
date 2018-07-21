@@ -319,6 +319,8 @@ class GPGKey(context.Context):
         self._refreshmaster()
 
     def encrypt(self, plaintext, recipients):
+        if type(plaintext) is str:
+            plaintext = plaintext.encode()
         keys = []
         for r in recipients:
             keys.append(self._ctx.get_key(r))
