@@ -24,11 +24,12 @@ def mail(gk, smtp, address, fpr, keyfile):
     " each of your UIDs to ensure you recieve it."
     desc = desc % fpr
     cdesc = gk.encrypt(desc, [address])
-    msg.add_attachment(cdesc)
-    with open(keyfile) as f:
+    msg.add_attachment(cdesc, maintype="application", subtype="octet-stream",
+            disposition="inline")
+    with open(keyfile, "rb") as f:
         data = f.read()
     cdata = gk.encrypt(data, [address])
-    msg.add_attachment(data)
+    msg.add_attachment(data, maintype="application", subtype="pgp-encrypted")
     smtp.send_message(msg)
 
 def setupsmtp():
