@@ -333,12 +333,12 @@ class GPGKey(context.Context):
 
 GPGMEError = gpg.errors.GPGMEError
 
-class PinentryCancel(Exception):
+class PinentryCancelled(Exception):
     pass
 
 def _pinentrycancel(e):
     if e.code_str == "Operation cancelled":
-        raise PinentryCancel
+        raise PinentryCancelled
     else:
         raise e
 

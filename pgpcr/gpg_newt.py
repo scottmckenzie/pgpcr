@@ -172,7 +172,7 @@ def load(screen, workdir):
             elif lm == "quit":
                 d.eject()
                 running = False
-        except gpg_ops.PinentryCancel:
+        except gpg_ops.PinentryCancelled:
             continue
     confirm = newt.confirm(screen, _("Save"), _("Do you want to save the"
         " changes you've made?"))
