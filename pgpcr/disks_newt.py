@@ -112,14 +112,17 @@ def setup(screen, use, label):
     if disk is None:
         return
     if disk.label is not None and "PGPCR" in disk.label:
-        try:
-            disk.mount()
-            return disk
-        except external.CalledProcessError as e:
-            newt.catchCPE(screen, e)
+        reformat = newt.dangerConfirm(screen, _("Reformat"), _("Do you want"
+            " to reformat this disk?\n%s") % str(disk))
+        if not reformat:
+            try:
+                disk.mount()
+                return disk
+            except external.CalledProcessError as e:
+                newt.catchCPE(screen, e)
 
     danger = newt.dangerConfirm(screen, _("Warning"), _("Are you sure you"
-                                  " want to use this disk?"
+                                  " want to reformat this disk?"
                                   "\n%s"
                                   "\nAll the data currently on the disk"
                                   " WILL BE WIPED!") % str(disk))
