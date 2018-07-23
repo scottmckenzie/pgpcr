@@ -274,12 +274,13 @@ def importkey(screen, workdir, keyloc=None):
     importFail = True
     while importFail:
         if keyloc is None:
-            ew = newt.EW(screen, _("Import existing key"), _("Please mount an"
-                " existing key backup, either an exported secret key or .gnupg"
-                " and enter the path to it below"), ["Key Location"])
-            if ew[0]:
+            newt.alert(screen, _("Import existing key"), _("Please mount an"
+                " existing key backup, either an exported secret key or"
+                " .gnupg"))
+            fp = newt.filepicker(screen, _("Import existing key"))
+            if fp is None:
                 return
-            keyloc = ew[1][0]
+            keyloc = fp
         kl = None
         try:
             kl = gk.importbackup(keyloc)
@@ -292,11 +293,12 @@ def importkey(screen, workdir, keyloc=None):
 
 def printkey(screen, gk):
     if not printing.isInstalled():
-        ew = newt.EW(screen, _("Install Printing"), _("Please enter the path"
-            " to the folder containing printing.tar.gz.gpg"), ["Printing"])
-        if ew[0]:
+        newt.alert(screen, _("Install Printing"), _("Please select the"
+            " folder containing printing.tar.gz.gpg"))
+        fp = newt.filepicker(screen, _("Install Printing"))
+        if fp is None:
             return
-        workdir = ew[1][0]
+        workdir = fp
         printing.install(workdir)
         printing.printrevcert(gk)
         printing.printmasterkey(gk)
