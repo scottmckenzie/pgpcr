@@ -266,10 +266,13 @@ class GPGKey(context.Context):
         return result.imports
 
     def importbackup(self, backup):
+        invalid = ValueError(_("No valid backup found at '%s'") % backup)
         if not os.path.exists(backup):
-            raise ValueError(_("No valid backup found at '%s'") % backup)
+            raise invalid
         if os.path.isfile(backup):
-            self._import(backup)
+            res = self._import(backup)
+            if not res: # Empty list
+                raise invalid
         else:
             self.__init__(self.homedir, loaddir=backup)
         return self.getmaster()
