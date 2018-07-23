@@ -34,7 +34,7 @@ def mail(gk, smtp, address, fpr, keyfile):
 
 def setupsmtp():
     config = configparser.ConfigParser()
-    config.read(os.getenv("HOME", "")+".pgpcr-sendkeys")
+    config.read(os.getenv("HOME", "")+"/.pgpcr-sendkeys")
     host = "localhost"
     user = None
     pwd = None
