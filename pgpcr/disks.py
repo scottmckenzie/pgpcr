@@ -103,6 +103,8 @@ class Disk:
         external.process(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
     def eject(self):
+        if self.mountpoint is None:
+            return
         external.process(["sync"])
         external.process(["sudo", "umount", self.mountpoint])
         self.mountpoint = None
