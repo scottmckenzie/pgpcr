@@ -37,7 +37,7 @@ subprocess.run(["sudo", "setupcon"])
 
 with open("/var/log/live/boot.log") as f:
     r = f.read()
-    if "Warning: Not enough free memory" not in r:
+    if "/live/medium_swap ... done" in r:
         ui.alert(screen, _("Boot Media"), _("You can now remove the"
         " boot media, as the entire filesystem has been loaded into RAM."))
 
