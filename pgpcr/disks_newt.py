@@ -17,6 +17,7 @@ def pickdisks(screen, use):
         dlist = [str(x) for x in d]
         lcw = newt.LCW(screen, _("Disks"), _("Pick your %s disk") % use,
                 dlist, buttons=[(_("Refresh"), False),
+                    (_("Unmount"), "umount"),
                     (_("Cancel"), True)])
         if lcw[0] is None:
             disk = d[lcw[1]]
@@ -27,6 +28,8 @@ def pickdisks(screen, use):
                 return disk
             else:
                 continue
+        elif lcw[0] == "umount":
+            d[lcw[1]].eject()
         elif lcw[0]:
             return None
         else:
