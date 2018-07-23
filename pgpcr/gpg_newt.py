@@ -273,15 +273,13 @@ def importkey(screen, workdir, keyloc=None):
     gk = gpg_ops.GPGKey(workdir)
     importFail = True
     while importFail:
-        if keyloc is None:
-            newt.alert(screen, _("Import existing key"), _("Please mount an"
-                " existing key backup, either an exported secret key or"
-                " .gnupg"))
-            fp = newt.filepicker(screen, _("Import existing key"))
-            if fp is None:
-                return
-            keyloc = fp
-        kl = None
+        newt.alert(screen, _("Import existing key"), _("Please select an"
+            " existing key backup, either an exported secret key or"
+            " .gnupg"))
+        fp = newt.filepicker(screen, _("Import existing key"))
+        if fp is None:
+            return
+        keyloc = fp
         try:
             kl = gk.importbackup(keyloc)
         except ValueError as e:
