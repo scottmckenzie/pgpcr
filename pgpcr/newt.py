@@ -1,4 +1,7 @@
 from shutil import get_terminal_size
+from os import scandir
+import os.path
+from time import sleep
 from snack import *
 from . import external
 from . import valid
@@ -204,6 +207,35 @@ class Progress:
         self.t.setText(text)
         self.refresh()
 
+
+def filepicker(screen, title, path="."):
+    path = os.path.abspath(path)
+    while True:
+        sd = list(scandir(path))
+        items = [".."]
+        items.extend([x.name for x in sd])
+        lcw = LCW(screen, title, path, items,
+                buttons = [
+                    (_("Open Directory"), None),
+                    (_("Select"), "select"),
+                    (_("Refresh"), "refresh"), (_("Cancel"), "cancel")
+                    ])
+        if lcw[1] == 0:
+            path = os.path.dirname(path)
+            continue
+        index = lcw[1] - 1
+        current = sd[index]
+        if lcw[0]  == "cancel":
+            return None
+        elif lcw[0] == "select":
+            return current.path
+        elif lcw[0] is None:
+            if current.is_dir():
+                path = current.path
+            else:
+                error(screen, _("Not a directory"))
+        elif lcw[0] == "refresh":
+            sleep(1)
 
 def catchCPE(screen, e):
     s = " ".join(e.cmd)
