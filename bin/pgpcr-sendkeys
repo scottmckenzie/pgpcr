@@ -25,11 +25,12 @@ def mail(gk, smtp, address, fpr, keyfile):
     desc = desc % fpr
     cdesc = gk.encrypt(desc, [address])
     msg.add_attachment(cdesc, maintype="application", subtype="octet-stream",
-            disposition="inline")
+            disposition="inline", filename="msg.gpg")
     with open(keyfile, "rb") as f:
         data = f.read()
     cdata = gk.encrypt(data, [address])
-    msg.add_attachment(data, maintype="application", subtype="pgp-encrypted")
+    msg.add_attachment(data, maintype="application", subtype="pgp-encrypted",
+            filename="signedkey.gpg")
     smtp.send_message(msg)
 
 def setupsmtp():
