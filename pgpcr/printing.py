@@ -9,12 +9,6 @@ def isInstalled():
         return False
     return True
 
-def install(workdir):
-    cwd = os.getcwd()
-    os.chdir(workdir)
-    external.process(["install-printing"])
-    os.chdir(cwd)
-
 def printrevcert(gk):
     external.run(["lp", gk.revcert])
 
