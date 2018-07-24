@@ -271,6 +271,13 @@ class GPGKey(context.Context):
         result = self._ctx.op_import_result()
         return result.imports
 
+    def importpublic(self, keyfile):
+        result = self._import(keyfile)
+        if len(result) > 1:
+            raise ValueError(_("Multiple keys found in '%s'") % keyfile)
+        key = self._ctx.get_key(result[0].fpr)
+        return key
+
     def importbackup(self, backup):
         invalid = ValueError(_("No valid backup found at '%s'") % backup)
         if not os.path.exists(backup):
