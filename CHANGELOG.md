@@ -616,10 +616,17 @@ Week 11
 
 2018-07-23
 ----------
- - [ ] More pgpcr-sendkey testing
- - [ ] Yubikey keyboard and USBGuard
+ - [x] Yubikey keyboard and USBGuard
+ - [x] Write a file picker for alternative backup imports
+ - [x] Add an option to reformat even disks in known formats
+ - [x] Add an option to eject disks if they are currently mounted
+ - [x] More pgpcr-sendkey testing
+
+2018-07-23
+----------
  - [ ] Print masterkey and revocation certificate
-TBD
+ - [ ] Assemble signed messages correctly
+ - [ ] Debian package
 
 Week 12
 =======
