@@ -145,6 +145,12 @@ class GPGKey(context.Context):
         u = s.join(self.uids)
         return k+s+u
 
+    def setarmor(self, a):
+        if a:
+            self._ctx.set_armor(1)
+        else:
+            self._ctx.set_armor(0)
+
     def setprogress(self, progress, hook=None):
         self._ctx.set_progress_cb(progress, hook)
 
