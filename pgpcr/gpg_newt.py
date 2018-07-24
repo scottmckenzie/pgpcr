@@ -48,7 +48,7 @@ def new(screen, workdir):
             gk.genseasubs(sprog.setText, newt.ContinueSkipAbort,
                     newt.redraw, screen)
         except gpg_ops.GPGMEError as g:
-            cancel = newt.catchGPGMEErr(_("Subkey generation"), str(g))
+            cancel = newt.catchGPGMEErr(_("Subkey generation"), g)
             if not cancel:
                 continue
             return
