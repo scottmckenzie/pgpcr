@@ -91,6 +91,9 @@ def export(screen, gk, secret=False):
         copy("/etc/pgpcr/import.sh", public.mountpoint)
         try:
             mkdir(public.mountpoint+"/public")
+        except FileExistsError:
+            pass
+        try:
             if secret:
                 mkdir(public.mountpoint+"/private")
         except FileExistsError:
