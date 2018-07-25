@@ -130,12 +130,15 @@ def password(hint, desc, prev_bad, screen):
 def uid(screen, purpose):
     while True:
         ew = EW(screen, purpose, _("Enter User Information"),
-                [_("Name"), _("Email Address")])
+                [_("Name"), _("Email Address"), _("Comment (Optional)")])
         if ew[0]:
             return None
         else:
+            ret = ew[1][0]
+            if ew[1][2] != "":
+                ret += " ("+ew[1][2]+")"
             if valid.email(ew[1][1]):
-                return ew[1][0]+" <"+ew[1][1]+">"
+                return ret+" <"+ew[1][1]+">"
             else:
                 error(screen, _("You must supply a valid email address"))
 
