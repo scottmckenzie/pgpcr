@@ -230,9 +230,10 @@ class GPGKey(context.Context):
 
     def _callgpg(self, args, outfile):
         gpgargv = [self._ctx.engine_info.file_name, "--no-tty", "--yes",
-                "--armor", "--status-fd", "2", "--output", outfile]
+                "--armor", "--status-fd", "2"]
         gpgargv.extend(args)
-        external.run(gpgargv, stderr=external.PIPE, check=True)
+        with open(outfile, "wb") as f:
+            external.run(gpgargv, stderr=external.PIPE, stdout=f, check=True)
 
     def exportsubkeys(self, exportdir):
         # Exporting only the secret subkeys isn't directly available
