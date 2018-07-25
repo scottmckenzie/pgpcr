@@ -622,11 +622,19 @@ Week 11
  - [x] Add an option to eject disks if they are currently mounted
  - [x] More pgpcr-sendkey testing
 
-2018-07-23
+2018-07-24
 ----------
  - [ ] Print masterkey and revocation certificate
- - [ ] Assemble signed messages correctly
- - [ ] Debian package
+	- It is incredibly tricky to get printers working in the live cd,
+	as we don't have the cups web interface or any idea what PPDs the users printer needs
+ - [x] Debian package description
+ - [x] Debian package ITP [#904497](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=904497)
+ - [x] ASCII armor everything
+	- Makes emails easier
+ - [x] Assemble signed messages correctly
+	- Email can be very annoying
+	- Python's EmailMessage mangles PGP/MIME, which made this 1000 times harder than it needed to be.
+	- For now combine short message and key in one signed text/pgp-encrypted file
 
 Week 12
 =======
