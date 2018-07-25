@@ -291,13 +291,11 @@ def importkey(screen, workdir, keyloc=None):
 
 def printkey(screen, gk):
     if not printing.isInstalled():
-        newt.alert(screen, _("Install Printing"), _("Please select the"
-            " folder containing printing.tar.gz.gpg"))
-        fp = newt.filepicker(screen, _("Install Printing"))
-        if fp is None:
-            return
-        workdir = fp
-        printing.install(workdir)
+        newt.error(screen, _("CUPS is not installed"))
+        return
+    p = newt.confirm(screen, _("Are you sure you want to print the master"
+        " key and revocation certificate for this key?\n%s") % str(gk))
+    if p:
         printing.printrevcert(gk)
         printing.printmasterkey(gk)
 
