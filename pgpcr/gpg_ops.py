@@ -22,7 +22,7 @@ class GPGKey(context.Context):
             home = None
         else:
             external.setuprundir()
-        self._ctx = gpg.Context(home_dir=home)
+        self._ctx = gpg.Context(home_dir=home, armor=True)
         self._master = None
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
@@ -145,12 +145,6 @@ class GPGKey(context.Context):
         u = s.join(self.uids)
         return k+s+u
 
-    def setarmor(self, a):
-        if a:
-            self._ctx.set_armor(1)
-        else:
-            self._ctx.set_armor(0)
-
     def setprogress(self, progress, hook=None):
         self._ctx.set_progress_cb(progress, hook)
 
@@ -236,7 +230,7 @@ class GPGKey(context.Context):
 
     def _callgpg(self, args, outfile):
         gpgargv = [self._ctx.engine_info.file_name, "--no-tty", "--yes",
-                "--status-fd", "2", "--output", outfile]
+                "--armor", "--status-fd", "2", "--output", outfile]
         gpgargv.extend(args)
         external.run(gpgargv, stderr=external.PIPE, check=True)
 
