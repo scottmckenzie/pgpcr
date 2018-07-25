@@ -226,6 +226,7 @@ class GPGKey(context.Context):
             name = fpr+".pub"
         if fpr == self.fpr:
             shutil.copy(self.revcert, exportdir)
+            self.exportownertrust(exportdir)
         self._export(fpr, outfile=exportdir+"/"+name)
 
     def _callgpg(self, args, outfile):
@@ -241,6 +242,9 @@ class GPGKey(context.Context):
         # gpg --export-secret-subkeys
         self._callgpg(["--export-secret-subkeys"],
                           exportdir+"/"+self.fpr+".subsec")
+
+    def exportownertrust(self, exportdir):
+        self._callgpg(["--export-ownertrust"], exportdir+"/ownertrust")
 
     def exportmasterkey(self, exportfile):
         self._export(self.fpr, gpg.constants.EXPORT_MODE_SECRET, exportfile)
