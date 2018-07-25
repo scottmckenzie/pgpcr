@@ -60,7 +60,7 @@ def setupsmtp():
 
 smtp = setupsmtp()
 screen = newt.Screen()
-d = disks_newt.setup(screen, _("signed keys"), "PGPCR Signing")
+d = disks_newt.mountdisk(screen, _("signed keys"))
 
 def finish():
     if screen is not None:
