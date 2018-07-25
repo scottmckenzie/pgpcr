@@ -636,6 +636,15 @@ Week 11
 	- Python's EmailMessage mangles PGP/MIME, which made this 1000 times harder than it needed to be.
 	- For now combine short message and key in one signed text/pgp-encrypted file
 
+2018-07-25
+----------
+ - [x] Add revocation certificate to homedir
+ - [x] Add German translation
+	- By Ulrike Uhlig [!1](https://salsa.debian.org/tookmund-guest/pgpcr/merge_requests/1)
+ - [x] Export and import ownertrust
+ - [ ] Debian packaging for the archive
+
+
 Week 12
 =======
 
