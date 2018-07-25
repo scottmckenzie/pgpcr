@@ -37,7 +37,7 @@ for f in fprs:
     prog.setText(f)
     prog.set(0)
     kl = []
-    tries = 5
+    tries = 3
     while tries:
         kl = gk.findkey(f)
         if len(kl) == 0:
