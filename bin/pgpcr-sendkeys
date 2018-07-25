@@ -84,12 +84,11 @@ kl = gk.getmaster()
 gpg_newt.setmasterkey(screen, gk, kl)
 signeddir = d.mountpoint+"/signing/done/"
 for k in keys:
-    kl = gk.importbackup(signeddir+k)
-    if kl is not None:
-        newt.error(screen, _("Multiple keys found in '%s': %s") % (k,
-            " ".join(kl)))
+    try:
+        kl = gk.importpublic(signeddir+k)
+    except ValueError as v:
+        newt.error(screen, str(v))
         finish()
-    fpr = k.strip(".pub")
-    for u in gk._master.uids:
-        mail(gk, smtp, u.address, fpr, signeddir+k)
+    for u in kl.uids:
+        mail(gk, smtp, u.address, kl.fpr, signeddir+k)
 finish()
