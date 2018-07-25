@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # Backup your local keys in PGPCR format
-import tempfile
+from tempfile import TemporaryDirectory
+from os import environ
 from pgpcr import tran
 from pgpcr import newt
 from pgpcr import gpg_newt
@@ -11,6 +12,11 @@ tran.init()
 log.init()
 
 screen = newt.Screen()
-tmp = tempfile.TemporaryDirectory()
-gpg_newt.importkey(screen, tmp.name, context.defaulthome)
+tmp = TemporaryDirectory()
+homevar = "GNUPGHOME"
+if homevar in environ:
+    home = environ[homevar]
+else:
+    home = context.defaulthome
+gpg_newt.importkey(screen, tmp.name, home)
 screen.finish()
