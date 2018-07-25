@@ -1,12 +1,13 @@
 import logging
 import traceback
 import sys
+from os import environ
 from snack import SnackScreen
 
 def init():
     log = logging.getLogger("pgpcr")
     log.setLevel(logging.INFO)
-    fh = logging.FileHandler("pgpcr.log")
+    fh = logging.FileHandler(environ["HOME"]+"/pgpcr.log")
     fh.setLevel(logging.INFO)
     formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
     fh.setFormatter(formatter)
