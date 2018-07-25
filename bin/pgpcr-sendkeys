@@ -20,8 +20,8 @@ def mail(gk, smtp, address, fpr, keyfile):
     msg["From"] = gk._master.uids[0].address
     msg["To"] = address
     msg["Subject"] = "Your signed PGP key %s" % fpr
-    desc = "Attached is your signed PGP Key %s. It has been sent to"
-    " each of your UIDs to ensure you recieve it."
+    desc = ("Attached is your signed PGP Key %s. It has been sent to"
+    " each of your UIDs to ensure you recieve it.")
     desc = desc % fpr
     cdesc = gk.encrypt(desc, [address])
     msg.add_attachment(cdesc, maintype="application", subtype="octet-stream",
