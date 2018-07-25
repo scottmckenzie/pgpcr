@@ -1,0 +1,5 @@
+pgp-clean-room (0.1~beta3-1) unstable; urgency=medium
+
+  * Initial Release. (Closes: #904497)
+
+ -- Jacob Adams <tookmund@gmail.com>  Wed, 25 Jul 2018 18:22:27 -0400
