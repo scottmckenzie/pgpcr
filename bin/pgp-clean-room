@@ -18,7 +18,7 @@ _log.info("GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
 
 screen = SnackScreen()
 lang = ui.LCM(screen, "Language", "Choose your language",
-                [("English", "en")])
+                [("English", "en"), ("Deutsch", "de")])
 
 os.environ["LANGUAGE"] = lang
 _log.info("LANGUAGE: "+lang)
