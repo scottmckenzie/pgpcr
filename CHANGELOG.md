@@ -642,6 +642,7 @@ Week 11
  - [x] Add German translation
 	- By Ulrike Uhlig [!1](https://salsa.debian.org/tookmund-guest/pgpcr/merge_requests/1)
  - [x] Export and import ownertrust
+ - [x] Add optional comment field to UIDs
  - [ ] Debian packaging for the archive
 
 
