@@ -20,17 +20,14 @@ def mail(gk, smtp, address, fpr, keyfile):
     msg["From"] = gk._master.uids[0].address
     msg["To"] = address
     msg["Subject"] = "Your signed PGP key %s" % fpr
-    desc = ("Attached is your signed PGP Key %s. It has been sent to"
-    " each of your UIDs to ensure you recieve it.")
-    desc = desc % fpr
-    cdesc = gk.encrypt(desc, [address])
-    msg.add_attachment(cdesc, maintype="text", subtype="pgp-encrypted",
+    header = ("Below is your signed PGP Key %s. It has been sent to"
+    " each of your UIDs to ensure you recieve it.") % fpr
+    with open(keyfile, "r") as f:
+        key = f.read()
+    data = header + "\n\n" + key
+    enc = gk.encrypt(data, [address])
+    msg.add_attachment(enc, maintype="text", subtype="pgp-encrypted",
             disposition="inline", filename="msg.asc")
-    with open(keyfile, "rb") as f:
-        data = f.read()
-    cdata = gk.encrypt(data, [address])
-    msg.add_attachment(cdata, maintype="text", subtype="pgp-encrypted",
-            filename="signedkey.asc")
     smtp.send_message(msg)
 
 def setupsmtp():
