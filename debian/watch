@@ -1,3 +1,2 @@
 version=4
-opts=filenamemangle=s/.*?-v(\d\S+)\.tar\.gz/pgpcr-$1.tar.gz/ \
- https://salsa.debian.org/tookmund-guest/pgpcr/tags .*?v(\d\S+)\.tar\.gz
+https://salsa.debian.org/tookmund-guest/pgpcr/tags .*?/archive/v(\d\S+)/.*\.tar\.gz
