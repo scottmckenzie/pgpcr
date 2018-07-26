@@ -37,9 +37,13 @@ def new(screen, workdir):
             return
         break
     screen = newt.redraw(screen, gk.redraw)
+    newt.alert(screen, _("Subkey generation"), _("A set of subkeys will now"
+        " be generated. These are the keys you will actually use, while the"
+        " private part of your key pair is stored safely offline and away from"
+        " your main computer."))
     newt.alert(screen, _("Revocation certificate"), _("You will be prompted"
-        " for your password twice when you generate your first subkey. This is"
-        " so that a revocation certificate can be generated for your master"
+        " for your passphrase twice when you generate your first subkey. This"
+        " is so that a revocation certificate can be generated for your master"
         " key"))
     sprog = newt.Progress(screen, _("Key Generation"),
                             _("Generating Sub Keys..."), 60)
@@ -87,8 +91,8 @@ def keyalgos(screen, gk):
     subalgo = subalgolist[slcw[1]]
     subsizes = gpg_ops.sub_algos[subalgo]
     if subsizes is not None:
-        sks = newt.LCW(screen, _("Master Key Size"), _("Pick the size of"
-            " your new master key. If you're unsure the defaults are well"
+        sks = newt.LCW(screen, _("Subkey Size"), _("Pick the size of"
+            " your new subkeys. If you're unsure the defaults are well"
             " chosen and should work for most people"), subsizes)
         if sks[0]:
             return False
@@ -187,17 +191,18 @@ def load(screen, workdir):
 
 
 def sign(screen, gk, path):
-    s = disks_newt.mountdisk(screen, _("keys to sign"))
+    s = disks_newt.mountdisk(screen, _("public keys to sign"))
     if s is None:
         return
     keys = fmt.signpending(s.mountpoint)
     if keys is None:
         newt.alert(screen, _("Key Signing"),
-                     _("There are no keys to sign on this disk. Please be sure"
-                       " they are in the signing/pending folder."))
+                     _("There are no public keys to sign on this disk."
+                     " Please be sure they are in the"
+                     " signing/pending folder."))
         sign(screen, gk, path)
         return
-    rw = newt.CCW(screen, _("Key Signing"), _("Which keys"
+    rw = newt.CCW(screen, _("Key Signing"), _("Which public key(s)"
                                      " do you want to sign?"), keys)
     if rw[0]:
         return
@@ -270,8 +275,8 @@ def expirekey(screen, gk):
 
 def setmasterkey(screen, gk, kl):
         if kl is not None:
-            lcw = newt.LCW(screen, _("Master Key"),
-                    _("Which key is your master key?"), kl)
+            lcw = newt.LCW(screen, _("Public Key"),
+                    _("Which key is your public key?"), kl)
             if lcw[0]:
                 return
             gk.setmaster(kl[lcw[1]])
