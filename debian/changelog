@@ -1,4 +1,4 @@
-pgp-clean-room (0.1~beta3-1) unstable; urgency=medium
+pgpcr (0.1~beta3-1) unstable; urgency=medium
 
   * Initial Release. (Closes: #904497)
 
