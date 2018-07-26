@@ -643,8 +643,12 @@ Week 11
 	- By Ulrike Uhlig [!1](https://salsa.debian.org/tookmund-guest/pgpcr/merge_requests/1)
  - [x] Export and import ownertrust
  - [x] Add optional comment field to UIDs
- - [ ] Debian packaging for the archive
 
+2018-07-26
+----------
+ - [ ] Write manual pages for pgpcr-utils
+ - [ ] Release 0.5
+ - [ ] Debian packaging for the archive
 
 Week 12
 =======
