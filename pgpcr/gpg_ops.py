@@ -6,6 +6,7 @@ import shutil
 from collections import OrderedDict
 from . import external
 from . import gpg_interact
+from . import time
 from . import context
 
 _log = logging.getLogger(__name__)
@@ -120,7 +121,7 @@ class GPGKey(context.Context):
         for k in self._master.subkeys:
             s = k.fpr
             if k.expires:
-                s += " ["+context.timestamp2iso(k.expires)+"]"
+                s += " ["+time.timestamp2iso(k.expires)+"]"
             if k.fpr == self.fpr:
                 s += " "+_("(Master)")
                 keys.append(s)
