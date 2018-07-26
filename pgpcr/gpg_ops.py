@@ -298,11 +298,11 @@ class GPGKey(context.Context):
         return (pending, done)
 
     def signkey(self, folder, keyfile):
+        self._ctx.signers = [self._master]
         pending, done = self._signkeyfolders(folder)
         keys = self._import(pending+"/"+keyfile)
         for k in keys:
             sk = self._ctx.get_key(k.fpr)
-            self._ctx.signers = [self._master]
             try:
                 self._ctx.key_sign(sk)
             except GPGMEError as e:
