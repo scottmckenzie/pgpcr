@@ -1,0 +1,31 @@
+.TH pgpcr-part 8
+
+.SH NAME
+pgpcr-part \- Partition a disk for use with the PGP Clean Room
+
+.SH SYNOPSIS
+.B pgpcr-part
+.I device
+[label]
+.SH DESCRIPTION
+.B pgpcr-part
+formats the given
+.I device
+, showing its progress with a newt progress bar throughout.
+It creates a msdos parition table and a single parition formatted as ext4.
+If
+.I label
+is passed then the
+.I ext4
+filesystem is labelled as
+.I label
+\&.
+
+.SH AUTHOR
+The PGP Clean Room and its utilities were created by
+Jacob Adams <tookmund@gmail.com>
+
+.SH SEE ALSO
+.BR mke2fs(8),
+.BR pgp-clean-room(1),
+.BR pgpcr-backup(1)
