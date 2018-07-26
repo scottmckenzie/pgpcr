@@ -1,17 +1,32 @@
-.TH name section
+.TH pgpcr-keysigning 1
 
 .SH NAME
-name \- description
+pgpcr-keysigning \- Collect public GPG keys to sign offline
 
 .SH SYNOPSIS
-.B name
+.B pgpcr-keysigning
+.I keyid
+[
+.I keyid
+\&..]
+
+.B pgpcr-keysigning <
+.I path/to/list/of/keys.txt
 
 .SH DESCRIPTION
+.B pgpcr-keysigning
+takes a list of key fingerprint, either on the command line
+or through standard input, locates their public keys, and exports them to
+a PGP Clean Room-compatible external USB disk.
 
-.SH OPTIONS
+One can then use the PGP Clean Room Live CD to sign these public keys,
+and then send them to their owners through
+.BR pgpcr-sendkeys(1)
 
 .SH AUTHOR
 The PGP Clean Room and its utilities were created by
 Jacob Adams <tookmund@gmail.com>
 
 .SH SEE ALSO
+.BR pgpcr-sendkeys(1),
+.BR caff(1)
