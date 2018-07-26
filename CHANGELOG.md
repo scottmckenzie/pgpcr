@@ -646,7 +646,7 @@ Week 11
 
 2018-07-26
 ----------
- - [ ] Write manual pages for pgpcr-utils
+ - [x] Write manual pages for pgpcr-utils
  - [ ] Release 0.5
  - [ ] Debian packaging for the archive
 
