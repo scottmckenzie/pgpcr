@@ -84,7 +84,7 @@ class GPGOpsTestKey(unittest.TestCase):
         self.datadir = "tests/data"
         self.testkeydir = self.datadir+"/testkey"
         self.testkeyfpr = "074D3879D4609448DEF716F6C7B98BC88227953F"
-        self.testsign = "0x3F90059E1AFDDD53"
+        self.testsign = "D3EAC374AC2B30DDC1B30A7F3F90059E1AFDDD53"
         self.gk = gpg_ops.GPGKey(self.tmp.name,
                                  self.testkeyfpr, self.testkeydir)
 
