@@ -1,0 +1,44 @@
+.TH pgpcr-sendkeys 1
+
+.SH NAME
+pgpcr-sendkeys \- Send out signed public GPG keys to their owners
+
+.SH DESCRIPTION
+.B pgpcr-sendkeys
+finds signed GPG keys on a PGP Clean Room signing disk and emails them,
+PGP encrypted, to their owners.
+
+It is designed to be used with
+.BR pgpcr-keysigning(1)
+and the PGP Clean Room to replicate
+.BR caff(1)
+for offline master keys.
+
+.SH FILES
+.IP $HOME/.pgpcr-sendkeys \- SMTP configuration
+This file holds smtp login information so that
+.B pgpcr-sendkeys
+knows how to send your mail.
+
+.SH CONFIGURATION EXAMPLE
+Assuming you had a Gmail account "example@gmail.com", your
+.I $HOME/.pgpcr-sendkeys
+would look something like this:
+
+[SMTP]
+
+host = smtp.gmail.com:587
+
+user = example@gmail.com
+
+password = password
+
+ssl = true
+
+.SH AUTHOR
+The PGP Clean Room and its utilities were created by
+Jacob Adams <tookmund@gmail.com>
+
+.SH SEE ALSO
+.BR pgpcr-keysigning(1),
+.BR caff(1)

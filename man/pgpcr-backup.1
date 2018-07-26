@@ -1,0 +1,26 @@
+.TH pgpcr-backup 1
+
+.SH NAME
+pgpcr-backup \- Backup local GPG keys to an external disk
+
+.SH DESCRIPTION
+.B pgpcr-backup
+backs up local GPG keys to an external USB disk in a format suitable for use in
+the PGP Clean Room.
+
+.SH ENVIRONMENT VARIABLES
+.TP
+.B GNUPGHOME
+The location of the user's GPG home directory. Defaults to $HOME/.gnupg
+
+.TP
+.B GPGME_DEBUG
+The log level and location of the GPGME debug log in [level]:[path] format.
+See GPGME's documentation for an explanation of logging levels
+
+.SH AUTHOR
+The PGP Clean Room and its utilities were created by
+Jacob Adams <tookmund@gmail.com>
+
+.SH SEE ALSO
+.BR pgpcr-part(8)

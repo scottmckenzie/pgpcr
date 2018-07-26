@@ -1,27 +1,28 @@
-Source: pgp-clean-room
+Source: pgpcr
 Maintainer: Jacob Adams <tookmund@gmail.com>
 Section: utils
 Priority: optional
 Build-Depends: dh-python, python3-setuptools, python3-all, debhelper (>= 11), python3-babel
-Standards-Version: 4.1.4
+Standards-Version: 4.1.5
 Homepage: https://salsa.debian.org/tookmund-guest/pgpcr
 
 Package: python3-pgpcr
 Architecture: all
+Section: python
 Depends: ${misc:Depends}, ${python3:Depends}, python3-gpg (>= 1.11.1), python3-newt
 Description: Python module for the PGP Clean Room and its utilities
- The PGP Clean Room is a newt-based application designed to make generating and storing
- GPG keys offline simpler and easier.
+ The PGP Clean Room is a newt-based application designed to make generating
+ and storing GPG keys offline simpler and easier.
  .
- This package contains the python module used to create the application and its
+ This package contains the Python module used to create the application and its
  utilities.
 
 Package: pgp-clean-room
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}, python3-pgpcr, pgpcr-utils
-Description: PGP Clean Room application for generating and storing offline GPG keys
- The PGP Clean Room is a newt-based application designed to make generating and storing
- GPG keys offline simpler and easier.
+Description: Application for generating and storing offline GPG keys
+ The PGP Clean Room is a newt-based application designed to make generating
+ and storing GPG keys offline simpler and easier.
  .
  This package contains the actual application. It is intended to be used in an
  offline environment like the PGP Clean Room Live CD:
@@ -31,13 +32,13 @@ Package: pgpcr-utils
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}, python3-pgpcr, sudo
 Description: PGP Clean Room Utilities
- The PGP Clean Room is a newt-based application designed to make generating and storing
- GPG keys offline simpler and easier.
+ The PGP Clean Room is a newt-based application designed to make generating
+ and storing GPG keys offline simpler and easier.
  .
  This package contains various utilities for use both within and without
  the PGP Clean Room:
  .
- * pgpcr-part: Partition a disk for use with the PGP Clean Room
- * pgpcr-backup: Backup local keys to an external disk
- * pgpcr-keysigning: Collect public keys to sign offline
- * pgpcr-sendkeys: Send out signed public keys to their owners
+  * pgpcr-part: Partition a disk for use with the PGP Clean Room
+  * pgpcr-backup: Backup local GPG keys to an external disk
+  * pgpcr-keysigning: Collect public GPG keys to sign offline
+  * pgpcr-sendkeys: Send out signed public GPG keys to their owners

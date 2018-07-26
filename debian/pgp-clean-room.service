@@ -1,0 +1,15 @@
+[Unit]
+Description=PGP Clean Room
+Conflicts=getty@tty1.service
+
+[Service]
+Type=idle
+ExecStart=-/sbin/agetty -a pgpcr -i -o '-p -f \\u' --noclear tty1 $TERM
+TTYPath=/dev/tty1
+StandardInput=tty-force
+StandardOutput=inherit
+StandardError=inherit
+Environment=GPGME_DEBUG=9:/home/pgp/gpgme.log GPG_TTY=/dev/tty1
+
+[Install]
+WantedBy=getty.target
