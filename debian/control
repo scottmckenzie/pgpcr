@@ -18,17 +18,6 @@ Description: Python module for the PGP Clean Room and its utilities
  This package contains the Python module used to create the application and its
  utilities.
 
-Package: pgp-clean-room
-Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}, python3-pgpcr, pgpcr-utils
-Description: Application for generating and storing offline GPG keys
- The PGP Clean Room is a newt-based application designed to make generating
- and storing GPG keys offline simpler and easier.
- .
- This package contains the actual application. It is intended to be used in an
- offline environment like the PGP Clean Room Live CD:
- https://salsa.debian.org/tookmund-guest/make-pgp-clean-room
-
 Package: pgpcr-utils
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}, python3-pgpcr, sudo
