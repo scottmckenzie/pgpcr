@@ -11,25 +11,27 @@ _log = logging.getLogger(__name__)
 def new(screen, workdir):
     gk = gpg_ops.GPGKey(workdir)
     gk.setstatus(_status)
-    uid = newt.uid(screen, _("New GPG Key"))
+    uid = newt.uid(screen, _("New GPG Master Key Pair"))
     if uid is None:
         return
     k = keyalgos(screen, gk)
     if not k:
         return
-    newt.alert(screen, _("Key Generation"),
-                 _("GPG keys will now be generated."
-                 " Progress is estimated and this may take a while."
-                 " You will be prompted for your password several times."))
+    newt.alert(screen, _("Master Key Pair Generation"),
+                 _("A new GPG master key pair (a private key and a public key)"
+                 " will now be generated. Progress is estimated and key pair"
+                 " generation may take a considerable amount of time depending"
+                 " on the amount of entropy available. You will be prompted"
+                 " for your passphrase several times."))
     mprog = newt.Progress(screen, _("Key Generation"),
-                            _("Generating Master Key..."), 40)
+                            _("Generating Master Key Pair..."), 40)
     mprog.gk = gk
     gk.setprogress(_progress, mprog)
     while True:
         try:
             gk.genmaster(uid)
         except gpg_ops.GPGMEError as g:
-            cont = newt.catchGPGMEErr(_("Master Key generation"), g)
+            cont = newt.catchGPGMEErr(_("Master key pair generation"), g)
             if cont:
                 continue
             return
@@ -54,22 +56,23 @@ def new(screen, workdir):
             return
         break
     screen = newt.Screen()
-    newt.alert(screen, _("Key Generation"), _("Key Generation Complete!"))
+    newt.alert(screen, _("Key Generation Complete"),
+            _("Sucessfully generated master key pair and subkeys."))
     save(screen, workdir, gk)
 
 def keyalgos(screen, gk):
     masteralgolist = list(gpg_ops.master_algos.keys())
-    mlcw = newt.LCW(screen, _("Master Key Algorithm"),_("Pick the"
-        " algorithm you would like to use for your new master key. If you're"
-        " unsure, the defaults are well chosen and should work for"
+    mlcw = newt.LCW(screen, _("Master Key Pair Algorithm"),_("Pick the"
+        " algorithm you would like to use for your new master key pair. If"
+        " you're unsure, the defaults are well chosen and should work for"
         " most people"), masteralgolist)
     if mlcw[0]:
         return False
     masteralgo = masteralgolist[mlcw[1]]
     mastersizes = gpg_ops.master_algos[masteralgo]
     if mastersizes is not None:
-        mks = newt.LCW(screen, _("Master Key Size"), _("Pick the size of"
-            " your new master key. If you're unsure the defaults are well"
+        mks = newt.LCW(screen, _("Master Key Pair Size"), _("Pick the size of"
+            " your new master key pair. If you're unsure the defaults are well"
             " chosen and should work for most people"), mastersizes)
         if mks[0]:
             return False
@@ -107,11 +110,12 @@ def save(screen, workdir, gk):
     elif export == "smartcard":
         smartcard_newt.export(screen, gk)
     disks_newt.export(screen, gk, secret)
-    newt.alert(screen, _("New Key Creation Complete"),
+    newt.alert(screen, _("New Key Pair Creation Complete"),
                  _("You can now store your backups in a safe place"))
     newt.alert(screen, _("IMPORTANT"),
-        _("Don't forget to import your new key to your main"
-            " computer by running import.sh from your public export disk."))
+        _("Don't forget to import your new public key to your main"
+            " computer by running import.sh from your public key export"
+            " disk."))
 
 def _progress(what, type, current, total, prog):
     if what == "primegen":
@@ -125,17 +129,18 @@ def _progress(what, type, current, total, prog):
 
 
 def load(screen, workdir):
-    d = disks_newt.mountdisk(screen, _("master key backup"))
+    d = disks_newt.mountdisk(screen, _("master key pair backup"))
     if d is None:
         return
     dirs = fmt.backups(d.mountpoint)
     if dirs is None:
-        newt.error(screen, _("This disk does not contain a master key"
+        newt.error(screen, _("This disk does not contain a master key pair"
                                " backup."))
         d.eject()
         load(screen, workdir)
     lcw = newt.LCW(screen, _("Key Fingerprint"),
-                              _("Please select your key."), dirs)
+                              _("Please select your master key fingerprint."),
+                              dirs)
     if lcw[0]:
         return
     key = dirs[lcw[1]]
@@ -147,14 +152,15 @@ def load(screen, workdir):
         screen = newt.Screen()
         lm = newt.LCM(screen, key, gk.info,
                                  [(_("Sign GPG Public Keys"), "sign"),
-                                  (_("Associate a UID with your master key"),
+                                  (_("Associate a UID with your master key"
+                                  " pair"),
                                      "adduid"),
                                   (_("Revoke a UID associated with your master"
-                                     " key"), "revuid"),
-                                  (_("Revoke your master key or a subkey"),
-                                     "revkeys"),
+                                  " key pair"), "revuid"),
+                                  (_("Revoke your master key pair or one of"
+                                  " its subkeys"), "revkeys"),
                                   (_("Change the expiration date on your"
-                                      " master key or a subkey"),
+                                      " master key pair or a subkey"),
                                       "expirekeys"),
                                   (_("Quit"), "quit")
                                  ])
@@ -225,7 +231,7 @@ def adduid(screen, gk):
     if uid is None:
         return
     gk.adduid(uid)
-    newt.alert(screen, gk.fpr, _("Added %s to your key") % uid)
+    newt.alert(screen, gk.fpr, _("Added %s to your master key pair") % uid)
 
 def revuid(screen, gk):
     uids = gk.uids
@@ -234,7 +240,8 @@ def revuid(screen, gk):
     if lcw[0]:
         return
     gk.revokeuid(uids[lcw[1]])
-    newt.alert(screen, gk.fpr, _("Removed %s from your key") % uids[lcw[1]])
+    newt.alert(screen, gk.fpr, _("Removed %s from your master key"
+        " pair") % uids[lcw[1]])
 
 def expirekey(screen, gk):
     lcw = newt.LCW(screen, _("Key expiration"), _("Which key do you"
@@ -293,7 +300,7 @@ def printkey(screen, gk):
     if not printing.isInstalled():
         newt.error(screen, _("CUPS is not installed"))
         return
-    p = newt.confirm(screen, _("Are you sure you want to print the master"
+    p = newt.confirm(screen, _("Are you sure you want to print the private"
         " key and revocation certificate for this key?\n%s") % str(gk))
     if p:
         printing.printrevcert(gk)
