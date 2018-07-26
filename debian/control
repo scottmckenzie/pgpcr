@@ -39,6 +39,6 @@ Description: PGP Clean Room Utilities
  the PGP Clean Room:
  .
   * pgpcr-part: Partition a disk for use with the PGP Clean Room
-  * pgpcr-backup: Backup local keys to an external disk
-  * pgpcr-keysigning: Collect public keys to sign offline
-  * pgpcr-sendkeys: Send out signed public keys to their owners
+  * pgpcr-backup: Backup local GPG keys to an external disk
+  * pgpcr-keysigning: Collect public GPG keys to sign offline
+  * pgpcr-sendkeys: Send out signed public GPG keys to their owners
