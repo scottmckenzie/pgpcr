@@ -206,8 +206,14 @@ def sign(screen, gk, path):
                                      " do you want to sign?"), keys)
     if rw[0]:
         return
+    exp = newt.EW(screen, _("Signature Expiry"), _("Optionally you can set an"
+        " expiration date on your signature"), ["YYYY/MM/DD"])
+    if exp[1][0] == "":
+        expires = False
+    else:
+        expires = exp[1][0]
     for k in rw[1]:
-        gk.signkey(s.mountpoint, k)
+        gk.signkey(s.mountpoint, k, expires)
         screen = newt.redraw(screen, gk.redraw)
         newt.alert(screen, _("Key Signing"), _("Signed %s") % k)
     s.eject()
