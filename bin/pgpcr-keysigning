@@ -26,33 +26,14 @@ else:
 
 screen = newt.Screen()
 gk = gpg_ops.GPGKey()
-prog = newt.Progress(screen, _("Key Signing"), _("Finding Keys..."), 40)
-
-def _progress(what, type, current, total, prog):
-    prog.inc()
-gk.setprogress(_progress, prog)
-
-def _status(keyword, args, hook=None):
-    if hook is not None:
-        hook.inc()
-
-gk.setstatus(_status, prog)
-
+prog = newt.Progress(screen, _("Key Signing"), _("Finding Keys..."), len(fprs))
 keys = []
 for f in fprs:
     prog.setText(f)
-    prog.set(0)
     kl = []
-    tries = 3
-    while tries:
-        kl = gk.findkey(f)
-        if len(kl) == 0:
-            prog.inc(5)
-            tries -= 1
-        else:
-            break
+    kl = gk.findkey(f)
     if len(kl) == 0:
-        newt.error(screen, _("No keys found for fingerprint:\n'%s'") % f)
+            newt.error(screen, _("No keys found for fingerprint:\n'%s'") % f)
     for k in kl:
         sign = newt.confirm(screen, _("Found Key"),
                 _("Found:\n%s\n%s\nSign it?") % (k.fpr,
@@ -60,6 +41,7 @@ for f in fprs:
         if sign:
             keys.append(k.fpr)
             gk.importkey(k)
+    prog.inc()
 
 d = disks_newt.setup(screen, _("keys to sign"), "PGPCR Signing")
 if d is None:
