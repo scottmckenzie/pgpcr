@@ -4,13 +4,19 @@ import tempfile
 from pgpcr import tran, log, newt
 from pgpcr import gpg_ops
 from pgpcr import disks_newt
+from pgpcr import external
 
 tran.init()
 log.init()
 
 def parseinput():
-    fprs = sys.stdin.readlines()
-    fprs = [x.strip() for x in fprs]
+    try:
+        p = external.process(["gpgpartparse"])
+    except external.CalledProcessError as e:
+        sys.stderr.write(e.stderr)
+        sys.exit(1)
+    fprs = p.stdout.split()
+
     return fprs
 
 if len(sys.argv) > 1:
