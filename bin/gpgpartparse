@@ -1,0 +1,121 @@
+#!/usr/bin/perl
+# gpgparticipant parsing from caff
+
+# caff  --  CA - Fire and Forget
+# $Id: caff 893 2017-07-07 15:05:09Z guilhem $
+#
+# Copyright (c) 2004, 2005, 2006 Peter Palfrader <peter@palfrader.org>
+# Copyright (c) 2005, 2006 Christoph Berg <cb@df7cb.de>
+# Copyright (c) 2014-2016 Guilhem Moulin <guilhem@debian.org>
+#
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+#  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+sub mycolored($@) {
+    my $msg = shift;
+    my $color = join (' ', grep defined, map { defined $_ ? $CONFIG{colors}->{$_} : undef } @_) if defined $CONFIG{colors};
+    $msg = colored($msg, $color) if defined $color and $color !~ /^\s*$/;
+    return $msg;
+}
+
+sub myerror($$) {
+    my ($exitcode, $line) = @_;
+    print STDERR mycolored("[ERROR] $line", 'error'), "\n";
+    exit $exitcode;
+}
+
+sub mywarn($) {
+    my ($line) = @_;
+    print STDERR mycolored("[WARN] $line", 'warn'), "\n";
+}
+
+sub notice($;$) {
+    my ($line,$color) = @_;
+    $color = $color ? 'success' : 'fail' if defined $color;
+    print STDERR mycolored("[NOTICE] $line", 'notice', $color), "\n";
+}
+
+sub info($;$) {
+    my ($line,$color) = @_;
+    $color = $color ? 'success' : 'fail' if defined $color;
+    print STDERR mycolored("[INFO] $line", 'info', $color), "\n";
+}
+
+my @KEYIDS;
+my @checksums;
+my $goodblock;
+my $got_input; # detect xargs, /dev/null, ...
+while (<STDIN>) {
+	unless ($got_input) {
+		notice("Reading gpgparticipants formatted input on STDIN");
+		$got_input = 1;
+	}
+
+	if (/^(\S+)\s+Checksum:\s+[_ 0-9A-F]+(?:\s+\[(.)\])?$/i) {
+		# ensure the checksum is (claimed to be) verified
+		my ($md, $r) = ($1, $2);
+		while (!defined $r) {
+			$_ = <STDIN>;
+			if (/^\s+[_ 0-9A-F]+\s+\[(.)\]$/i) {
+				$r = $1;
+			}
+			elsif (!/^(:?\s+[_ 0-9A-F]+)?$/i) {
+				myerror(1, "Unexpected input line: $_");
+			}
+		}
+		myerror(1, "$md checksum wasn't marked as verified!") unless lc $r eq 'x';
+		notice "Found $md checksum (marked as verified, assumed good)";
+		push @checksums, uc $md;
+	}
+	elsif (/^(?:-+|_+)$/) {
+		$goodblock = 0;
+	}
+	elsif (/^(#*)\d*\s+\[(.)\] Fingerprint(?:\(s\)|s)? OK\s+\[(.)\] ID OK\s*$/) {
+		$goodblock = (!$1 and lc $2 eq 'x' and lc $3 eq 'x') ? 1 : 0;
+	}
+	elsif (/^ {5,}Key fingerprint = ([A-F0-9]{32}|(?:[A-F0-9]{2} ){8}(?: [A-F0-9]{2}){8})$/) {
+		mywarn("Ignoring v3 fingerprint ".($1 =~ y/ //dr).".  v3 keys are obsolete.");
+	}
+	elsif (/^ {5,}(?:Key fingerprint = )?([A-F0-9]{40}|(?:[A-F0-9]{4} ){5}(?: [A-F0-9]{4}){5})$/) {
+		my $fpr = ($1 =~ y/ //dr);
+		if ($goodblock) {
+			info("Adding fingerprint $fpr", 1);
+			push @KEYIDS, $fpr;
+		} else {
+			info("Ignoring fingerprint $fpr", 0);
+		}
+	}
+}
+
+if ($got_input) {
+	if (!@checksums) {
+		mywarn "No checksum found!";
+	} elsif (!grep { my $x = $_; grep { $x eq $_ } qw/SHA256 SHA384 SHA512 SHA224/ } @checksums) {
+		mywarn "No checksum of the SHA-2 family found!";
+	}
+}
+
+foreach (@KEYIDS) {
+	print "$_\n"
+}
