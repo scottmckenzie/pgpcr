@@ -116,6 +116,10 @@ if ($got_input) {
 	}
 }
 
+if (!@KEYIDS) {
+	myerror(2, "No Valid Keys Found!");
+}
+
 foreach (@KEYIDS) {
 	print "$_\n"
 }
