@@ -123,17 +123,17 @@ class GPGKey(context.Context):
             if k.expires:
                 s += " ["+time.timestamp2iso(k.expires)+"]"
             if k.fpr == self.fpr:
-                s += " "+_("(Master)")
+                s += " ("+_("Master")+")"
                 keys.append(s)
                 continue
             if k.can_certify:
-                s += " "+_("(Certification)")
+                s += " ("+_("Certification")+")"
             if k.can_sign:
-                s += " "+_("(Signing)")
+                s += " ("+_("Signing")+")"
             if k.can_encrypt:
-                s += " "+_("(Encryption)")
+                s += " ("+_("Encryption")+")"
             if k.can_authenticate:
-                s += " "+_("(Authentication)")
+                s += " ("+_("Authentication")+")"
             keys.append(s)
         return keys
 
