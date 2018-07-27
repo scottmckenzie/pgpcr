@@ -356,8 +356,10 @@ def _pinentrycancel(e):
     else:
         raise e
 
-revoke_reasons = [_("No reason specified"), _("Key has been compromised"),
-                  _("Key is superseded"), _("Key is no longer used")]
+def revoke_reasons():
+    return [_("No reason specified"), _("Key has been compromised"),
+            _("Key is superseded"), _("Key is no longer used")]
+
 master_algos = OrderedDict([
     ("rsa", ["4096", "3072", "2048"]),
     ("ed25519", None),

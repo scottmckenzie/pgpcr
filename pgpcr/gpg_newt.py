@@ -219,7 +219,7 @@ def revokekey(screen, gk):
     for k in ccw[1]:
         fpr = k.split(" ")[0]
         lcw = newt.LCW(screen, fpr, _("Why do you want to revoke %s") % k,
-                gpg_ops.revoke_reasons)
+                gpg_ops.revoke_reasons())
         if lcw[0]:
             return
         text = newt.EW(screen, fpr, _("Why are you revoking this key?"),
