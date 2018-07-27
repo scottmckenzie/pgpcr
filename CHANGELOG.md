@@ -647,8 +647,15 @@ Week 11
 2018-07-26
 ----------
  - [x] Write manual pages for pgpcr-utils
- - [ ] Release 0.5
- - [ ] Debian packaging for the archive
+ - [x] Release 0.5
+ - [x] Debian packaging for the archive
+	- v0.5 packaged
+ - [x] Rewrite many strings to be more user-friendly
+	- [#31](https://salsa.debian.org/tookmund-guest/pgpcr/issues/31)
+ - [x] Fix signing test
+	- [#14](https://salsa.debian.org/tookmund-guest/pgpcr/issues/14)
+ - [x] Split up time-based operations into their own module
+ - [x] Add All option for CCWs
 
 Week 12
 =======
