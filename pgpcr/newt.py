@@ -72,7 +72,7 @@ def LCM(screen, title, text, items, help=None):
     g.runOnce()
     return l.current()
 
-def CCW(screen, title, text, items, buttons = None, width = None, scroll = 0,
+def CCW(screen, title, text, items, buttons = None, width = None, scroll = 1,
         height = -1, help = None):
 
     if buttons is None:
