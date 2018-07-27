@@ -9,7 +9,7 @@ Homepage: https://salsa.debian.org/tookmund-guest/pgpcr
 Package: python3-pgpcr
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python3:Depends}, python3-gpg (>= 1.11.1), python3-newt
+Depends: ${misc:Depends}, ${python3:Depends}, python3-gpg (>= 1.11.1), python3-newt, util-linux
 Description: Python module for the PGP Clean Room and its utilities
  The PGP Clean Room is a newt-based application designed to make generating
  and storing GPG keys offline simpler and easier.
