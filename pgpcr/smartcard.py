@@ -118,7 +118,8 @@ class Smartcard(context.Context):
     @sex.setter
     def sex(self, val):
         if val is not None and val not in sexopt.keys():
-            raise ValueError(_("Sex must be either Male, Female, or Unknown"))
+            raise ValueError(_("Sex must be either Male (m), Female (f),"
+            " or Not Announced (u)"))
         self._setattr("DISP-SEX", str(sexopt[val]))
 
     @property
