@@ -84,11 +84,15 @@ def CCW(screen, title, text, items, buttons = None, width = None, scroll = 0,
     t = TextboxReflowed(width, text)
     c = CheckboxTree(height, scroll)
     count = 0
+    c.append(_("All"), "all")
+    allitems = []
     for item in items:
         if type(item) == tuple:
             c.append(*item)
+            allitems.append(item[1])
         else:
             c.append(item)
+            allitems.append(item)
         count += 1
 
     g = GridFormHelp(screen, title, help, 1, 3)
@@ -96,7 +100,10 @@ def CCW(screen, title, text, items, buttons = None, width = None, scroll = 0,
     g.add(c, 0, 1)
     g.add(bb, 0, 2,  growx = 1, padding = (0, 1, 0, 1))
     rc = g.runOnce()
-    return (bb.buttonPressed(rc), c.getSelection())
+    selected = c.getSelection()
+    if selected[0] == "all":
+        selected = allitems
+    return (bb.buttonPressed(rc), selected)
 
 def new_password(screen):
     pass1 = Entry(20, password=1)
