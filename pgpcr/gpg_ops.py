@@ -234,8 +234,7 @@ class GPGKey(context.Context):
         gpgargv = [self._ctx.engine_info.file_name, "--no-tty", "--yes",
                 "--armor", "--status-fd", "2"]
         gpgargv.extend(args)
-        with open(outfile, "wb") as f:
-            external.run(gpgargv, stderr=external.PIPE, stdout=f, check=True)
+        external.processtofile(gpgargv, outfile)
 
     def exportsubkeys(self, exportdir):
         # Exporting only the secret subkeys isn't directly available
