@@ -101,7 +101,7 @@ def CCW(screen, title, text, items, buttons = None, width = None, scroll = 1,
     g.add(bb, 0, 2,  growx = 1, padding = (0, 1, 0, 1))
     rc = g.runOnce()
     selected = c.getSelection()
-    if selected[0] == "all":
+    if selected and selected[0] == "all":
         selected = allitems
     return (bb.buttonPressed(rc), selected)
 
