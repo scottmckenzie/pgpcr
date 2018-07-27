@@ -118,7 +118,7 @@ class Smartcard(context.Context):
     @sex.setter
     def sex(self, val):
         if val is not None and val not in sexopt.keys():
-            raise ValueError("Sex must be either Male, Female, or Unknown")
+            raise ValueError(_("Sex must be either Male, Female, or Unknown"))
         self._setattr("DISP-SEX", str(sexopt[val]))
 
     @property
@@ -159,7 +159,7 @@ class Smartcard(context.Context):
 
     @property
     def slots(self):
-        return ["Signing", "Encryption", "Authentication"]
+        return [_("Signing"), _("Encryption"), _("Authentication")]
 
     def __str__(self):
         return self.reader+" "+self.serial
