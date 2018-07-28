@@ -296,7 +296,7 @@ class GPGKey(context.Context):
         os.makedirs(done, exist_ok=True)
         return (pending, done)
 
-    def signkey(self, folder, keyfile, expires=False):
+    def signkey(self, folder, keyfile, expires=False, uidpick=None, hook=None):
         self._ctx.signers = [self._master]
         pending, done = self._signkeyfolders(folder)
         keys = self._import(pending+"/"+keyfile)
@@ -305,8 +305,17 @@ class GPGKey(context.Context):
             expires = delta.seconds
         for k in keys:
             sk = self._ctx.get_key(k.fpr)
+            uidlist = [x.uid for x in sk.uids if x.revoked == 0]
+            uids = None
+            if uidpick is not None:
+                cancel, uids = uidpick(hook, _("Sign UIDs"), _("Pick UIDs of"
+                " %s to sign") % sk.fpr, uidlist)
+                if cancel:
+                    return
+            if set(uids) == set(uidlist):
+                uids = None
             try:
-                self._ctx.key_sign(sk, expires_in=expires)
+                self._ctx.key_sign(sk, uids, expires_in=expires)
             except GPGMEError as e:
                 _pinentrycancel(e)
             self.export(done, sk.fpr, keyfile)

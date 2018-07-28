@@ -213,7 +213,7 @@ def sign(screen, gk, path):
     else:
         expires = exp[1][0]
     for k in rw[1]:
-        gk.signkey(s.mountpoint, k, expires)
+        gk.signkey(s.mountpoint, k, expires, newt.CCW, screen)
         screen = newt.redraw(screen, gk.redraw)
         newt.alert(screen, _("Key Signing"), _("Signed %s") % k)
     s.eject()
