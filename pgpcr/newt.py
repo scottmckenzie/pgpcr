@@ -72,14 +72,15 @@ def LCM(screen, title, text, items, help=None):
     g.runOnce()
     return l.current()
 
-def CCW(screen, title, text, items, buttons = None, width = None, scroll = 1,
+def CCW(screen, title, text, items, buttons = None, width = None, scroll = 0,
         height = -1, help = None):
 
     if buttons is None:
         buttons = [(_("Ok"), None), (_("Cancel"), True)]
     if width is None:
         width = getwidth()
-    if (height == -1): height = len(items)
+    if (height == -1):
+        height = len(items)+1
     bb = ButtonBar(screen, buttons)
     t = TextboxReflowed(width, text)
     c = CheckboxTree(height, scroll)
