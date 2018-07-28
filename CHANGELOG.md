@@ -657,12 +657,26 @@ Week 11
  - [x] Split up time-based operations into their own module
  - [x] Add All option for CCWs
 
+2018-07-27
+----------
+ - [x] Translate all strings from gpg_ops
+ - [x] pgpcr-keysigning support for gpgparticipants
+	- [#28](https://salsa.debian.org/tookmund-guest/pgpcr/issues/28)
+ - [x] Look into security impact of [#17](https://salsa.debian.org/tookmund-guest/pgpcr/issues/17)
+	- Looks hacky but not dangerous, so closed
+ - [x] Add optional key signature expiry
+	- [#26] (https://salsa.debian.org/tookmund-guest/pgpcr/issues/26)
+ - [x] Pick UIDs to sign
+	- [#32](https://salsa.debian.org/tookmund-guest/pgpcr/issues/32)
+
 Week 12
 =======
 
 2018-07-30
 ----------
-TBD
+ - [ ] Sign all UIDs
+ - [ ] Window height
+ - [ ] Only ask to save changes if changes have been made
 
 Evaluation Period 3 / Week 13
 =============================
