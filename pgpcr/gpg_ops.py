@@ -312,8 +312,8 @@ class GPGKey(context.Context):
                 " %s to sign") % sk.fpr, uidlist)
                 if cancel:
                     return
-            if set(uids) == set(uidlist):
-                uids = None
+                if set(uids) == set(uidlist):
+                    uids = None
             try:
                 self._ctx.key_sign(sk, uids, expires_in=expires)
             except GPGMEError as e:
