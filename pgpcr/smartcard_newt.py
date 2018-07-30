@@ -18,6 +18,28 @@ def pickcard(screen, homedir):
         return s
     return pickcard(screen, homedir)
 
+def _keytocard(screen, gk, fpr, slot):
+    success = True
+    try:
+        gk.keytocard(fpr, slot)
+    except smartcard.OverwriteError:
+        overwrite = newt.dangerConfirm(screen, _("Overwrite?"),
+            _("There is already a key in slot %d. Do you want to overwrite"
+            " it?") % slot)
+        if overwrite:
+            try:
+                gk.keytocard(fpr, slot, True)
+            except smartcard.SmartcardError as e:
+                success = False
+                newt.error(screen, str(e))
+        else:
+            success = False
+    except smartcard.SmartcardError as e:
+        success = False
+        newt.error(screen, str(e))
+    if success:
+        newt.alert(screen, _("Smartcard Export"), _("Exported %s to slot"
+        " %d") % (fpr, slot))
 
 def export(screen, gk):
     smart = pickcard(screen, gk.homedir)
@@ -30,32 +52,36 @@ def export(screen, gk):
         if ns:
             setup(screen, smart)
             screen = newt.redraw(screen, gk.redraw)
-    keys = gk.keys
-    ccw = newt.CCW(screen, gk.fpr, _("Which key(s) do you want to export?"),
-                                      keys)
-    if ccw[0]:
-        return
-    for k in ccw[1]:
-        lcw = newt.LCW(screen, k, _("Which slot do you want to put"
-            " this key in?"), smart.slots)
-        if lcw[0]:
-            continue
-        slot = lcw[1]+1
-        fpr = k.split(" ")[0]
-        try:
-            gk.keytocard(fpr, slot)
-        except smartcard.OverwriteError:
-            overwrite = newt.dangerConfirm(screen, _("Overwrite?"),
-                _("There is already a key in slot %d. Do you want to overwrite"
-                " it?") % slot)
-            if overwrite:
-                try:
-                    gk.keytocard(fpr, slot, True)
-                except smartcard.SmartcardError as e:
-                    newt.error(screen, str(e))
-        except smartcard.SmartcardError as e:
-            newt.error(screen, str(e))
-        screen = newt.redraw(screen, gk.redraw)
+    if gk.expert:
+        keys = gk.keys
+        ccw = newt.CCW(screen, gk.fpr, _("Which key(s) do you want to export?"),
+                                          keys)
+        if ccw[0]:
+            return
+        for k in ccw[1]:
+            lcw = newt.LCW(screen, k, _("Which slot do you want to put"
+                " this key in?"), smart.slots)
+            if lcw[0]:
+                continue
+            slot = lcw[1]+1
+            fpr = k.split(" ")[0]
+            _keytocard(screen, gk, fpr, slot)
+            screen = newt.redraw(screen, gk.redraw)
+    else:
+        newt.alert(screen, _("Export to Smartcard"), _("Your subkeys will"
+        " now be exported to your smartcard"))
+        for k in gk.subkeys:
+            if k.fpr == gk.fpr:
+                continue
+            if k.can_sign:
+                slot = 1
+            elif k.can_encrypt:
+                slot = 2
+            elif k.can_authenticate:
+                slot = 3
+            else:
+                continue
+            _keytocard(screen, gk, k.fpr, slot)
     if smart.new:
         setpins(screen, smart)
 
