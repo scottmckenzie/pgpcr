@@ -674,9 +674,19 @@ Week 12
 
 2018-07-30
 ----------
- - [ ] Sign all UIDs
- - [ ] Window height
- - [ ] Only ask to save changes if changes have been made
+ - [x] Window height for CCWs
+	- Had to account for the new all option
+ - [x] Only ask to save changes if changes have been made
+ - [x] Sign all UIDs
+ - [x] Add a new subkey
+ - [x] Add expert mode
+	- Like the debian installer
+	- Don't ask normal users so many questions
+ - [ ] Indicate expert mode is enabled
+ - [ ] Mark revoked keys and UIDs as such in info
+ - [ ] Debian package
+	- Add proper ${perl:Depends}
+	- Remove pgp-clean-room package
 
 Evaluation Period 3 / Week 13
 =============================
