@@ -184,10 +184,11 @@ def load(screen, workdir):
                 running = False
         except gpg_ops.PinentryCancelled:
             continue
-    confirm = newt.confirm(screen, _("Save"), _("Do you want to save the"
-        " changes you've made?"))
-    if confirm:
-        save(screen, workdir, gk)
+    if gk.changed:
+        confirm = newt.confirm(screen, _("Save"), _("Do you want to save the"
+            " changes you've made?"))
+        if confirm:
+            save(screen, workdir, gk)
 
 
 def sign(screen, gk, path):

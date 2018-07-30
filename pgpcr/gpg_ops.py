@@ -14,7 +14,9 @@ _log = logging.getLogger(__name__)
 class GPGKey(context.Context):
 
     def __init__(self, home=None,  loadfpr=None, loaddir=None):
+        self.changed = True
         if loaddir:
+            self.changed = False
             shutil.rmtree(home)
             shutil.copytree(loaddir, home, ignore=ignore)
         else:
@@ -76,6 +78,7 @@ class GPGKey(context.Context):
 
     def _refreshmaster(self):
         self._master = self._ctx.get_key(self._master.fpr)
+        self.changed = True
 
     def setmaster(self, fpr):
         self._master = self._ctx.get_key(fpr)
