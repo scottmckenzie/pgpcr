@@ -149,6 +149,7 @@ def load(screen, workdir):
         return
     key = dirs[lcw[1]]
     gk = gpg_ops.GPGKey(workdir, key, d.mountpoint+"/gpg/"+key)
+    d.eject()
     gk.setstatus(_status)
     running = True
     while running:
@@ -180,7 +181,6 @@ def load(screen, workdir):
             elif lm == "expirekeys":
                 expirekey(screen, gk)
             elif lm == "quit":
-                d.eject()
                 running = False
         except gpg_ops.PinentryCancelled:
             continue
