@@ -213,8 +213,13 @@ def sign(screen, gk, path):
         expires = False
     else:
         expires = exp[1][0]
+    alluids = newt.confirm(screen, _("Sign All UIDs"), _("Would you like to"
+        " sign all the UIDs of these keys?"))
     for k in rw[1]:
-        gk.signkey(s.mountpoint, k, expires, newt.CCW, screen)
+        if alluids:
+            gk.signkey(s.mountpoint, k, expires)
+        else:
+            gk.signkey(s.mountpoint, k, expires, newt.CCW, screen)
         screen = newt.redraw(screen, gk.redraw)
         newt.alert(screen, _("Key Signing"), _("Signed %s") % k)
     s.eject()
