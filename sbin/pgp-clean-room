@@ -77,7 +77,7 @@ while running:
         if adv[0]:
             continue
         if adv[1] == "expert":
-            confirm = newt.dangerConfirm(screen, _("Enable expert options"),
+            confirm = ui.dangerConfirm(screen, _("Enable expert options"),
                     _("Are you sure you want to enable expert options? They"
                         " will allow you control what keys are exported to"
                         " your smartcard, which UIDs you sign, and whether"
