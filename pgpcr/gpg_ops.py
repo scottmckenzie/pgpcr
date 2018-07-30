@@ -142,6 +142,10 @@ class GPGKey(context.Context):
         return keys
 
     @property
+    def subkeys(self):
+        return self._master.subkeys
+
+    @property
     def info(self):
         if self._master is None:
             return ""
