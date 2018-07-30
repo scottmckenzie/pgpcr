@@ -143,7 +143,7 @@ def load(screen, workdir, expert):
         newt.error(screen, _("This disk does not contain a master key pair"
                                " backup."))
         d.eject()
-        load(screen, workdir)
+        load(screen, workdir, expert)
     lcw = newt.LCW(screen, _("Key Fingerprint"),
                               _("Please select your master key fingerprint."),
                               dirs)
@@ -177,7 +177,7 @@ def load(screen, workdir, expert):
                                  ])
         try:
             if lm == "sign":
-                sign(screen, gk, d.mountpoint)
+                sign(screen, gk, d.mountpoint, expert)
             elif lm == "adduid":
                 adduid(screen, gk)
             elif lm == "revuid":
@@ -199,7 +199,7 @@ def load(screen, workdir, expert):
             save(screen, workdir, gk)
 
 
-def sign(screen, gk, path):
+def sign(screen, gk, path, expert):
     s = disks_newt.mountdisk(screen, _("public keys to sign"))
     if s is None:
         return
@@ -209,25 +209,26 @@ def sign(screen, gk, path):
                      _("There are no public keys to sign on this disk."
                      " Please be sure they are in the"
                      " signing/pending folder."))
-        sign(screen, gk, path)
+        sign(screen, gk, path, expert)
         return
     rw = newt.CCW(screen, _("Key Signing"), _("Which public key(s)"
                                      " do you want to sign?"), keys)
     if rw[0]:
         return
-    exp = newt.EW(screen, _("Signature Expiry"), _("Optionally you can set an"
-        " expiration date on your signature"), ["YYYY/MM/DD"])
-    if exp[1][0] == "":
-        expires = False
-    else:
-        expires = exp[1][0]
-    alluids = newt.confirm(screen, _("Sign All UIDs"), _("Would you like to"
-        " sign all the UIDs of these keys?"))
-    for k in rw[1]:
-        if alluids:
-            gk.signkey(s.mountpoint, k, expires)
+    if gk.expert:
+        exp = newt.EW(screen, _("Signature Expiry"), _("Optionally you can"
+        " set an expiration date on your signature"), ["YYYY/MM/DD"])
+        if exp[1][0] == "":
+            expires = False
         else:
+            expires = exp[1][0]
+    else:
+        expires = False
+    for k in rw[1]:
+        if gk.expert:
             gk.signkey(s.mountpoint, k, expires, newt.CCW, screen)
+        else:
+            gk.signkey(s.mountpoint, k, expires)
         screen = newt.redraw(screen, gk.redraw)
         newt.alert(screen, _("Key Signing"), _("Signed %s") % k)
     s.eject()
