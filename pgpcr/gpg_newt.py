@@ -22,7 +22,7 @@ def new(screen, workdir):
                  " will now be generated. Progress is estimated and key pair"
                  " generation may take a considerable amount of time depending"
                  " on the amount of entropy available. You will be prompted"
-                 " for a passphrase with which to protect your key pair.")
+                 " for a passphrase with which to protect your key pair."))
     mprog = newt.Progress(screen, _("Key Generation"),
                             _("Generating Master Key Pair..."), 40)
     mprog.gk = gk
