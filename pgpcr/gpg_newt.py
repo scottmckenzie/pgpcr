@@ -167,6 +167,8 @@ def load(screen, workdir):
                                   (_("Change the expiration date on your"
                                       " master key pair or a subkey"),
                                       "expirekeys"),
+                                  (_("Add a new subkey to your master key"
+                                      " pair"), "newsub"),
                                   (_("Quit"), "quit")
                                  ])
         try:
@@ -180,6 +182,8 @@ def load(screen, workdir):
                 revokekey(screen, gk)
             elif lm == "expirekeys":
                 expirekey(screen, gk)
+            elif lm == "newsub":
+                newsub(screen, gk)
             elif lm == "quit":
                 running = False
         except gpg_ops.PinentryCancelled:
@@ -312,6 +316,28 @@ def importkey(screen, workdir, keyloc=None):
         importFail = False
     setmasterkey(screen, gk, kl)
     save(screen, workdir, gk)
+
+def newsub(screen, gk):
+    cap = newt.CCW(screen, _("Generate a new subkey"), _("Please select the"
+    " capabilities of your new subkey"), [(_("Signing"), "sig"),
+        (_("Encryption"), "enc"), (_("Authentication"), "auth")])
+    if cap[0]:
+        return
+    sig = False
+    enc = False
+    auth = False
+    for c in cap[1]:
+        if c == "sig":
+            sig = True
+        elif c == "enc":
+            enc = True
+        elif c == "auth":
+            auth = True
+    confirm = newt.dangerConfirm(screen, _("Generate a new subkey"),
+            _("Are you sure you want to generate a new subkey for"
+            " %s?") % gk.fpr)
+    if confirm:
+        gk.gensub(sign=sig, encrypt=enc, authenticate=auth)
 
 def printkey(screen, gk):
     if not printing.isInstalled():
