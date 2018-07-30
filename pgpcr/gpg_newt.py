@@ -8,8 +8,10 @@ import logging
 
 _log = logging.getLogger(__name__)
 
-def new(screen, workdir):
+def new(screen, workdir, expert):
     gk = gpg_ops.GPGKey(workdir)
+    if expert:
+        gk.expert = True
     gk.setstatus(_status)
     uid = newt.uid(screen, _("New GPG Master Key Pair"))
     if uid is None:
@@ -132,7 +134,7 @@ def _progress(what, type, current, total, prog):
         prog.recreate()
 
 
-def load(screen, workdir):
+def load(screen, workdir, expert):
     d = disks_newt.mountdisk(screen, _("master key pair backup"))
     if d is None:
         return
@@ -149,6 +151,8 @@ def load(screen, workdir):
         return
     key = dirs[lcw[1]]
     gk = gpg_ops.GPGKey(workdir, key, d.mountpoint+"/gpg/"+key)
+    if expert:
+        gk.expert = True
     d.eject()
     gk.setstatus(_status)
     running = True

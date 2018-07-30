@@ -15,6 +15,7 @@ class GPGKey(context.Context):
 
     def __init__(self, home=None,  loadfpr=None, loaddir=None):
         self.changed = True
+        self.expert = False
         if loaddir:
             self.changed = False
             shutil.rmtree(home)

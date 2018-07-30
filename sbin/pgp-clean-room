@@ -41,6 +41,7 @@ with open("/var/log/live/boot.log") as f:
         ui.alert(screen, _("Boot Media"), _("You can now remove the"
         " boot media, as the entire filesystem has been loaded into RAM."))
 
+expert = False
 running = True
 while running:
     screen = ui.Screen()
@@ -58,14 +59,15 @@ while running:
     if not os.path.exists(workdir):
         os.mkdir(workdir)
     if ret == "new gpg":
-        gpg_ui.new(screen, workdir)
+        gpg_ui.new(screen, workdir, expert)
     elif ret == "load gpg":
-        gpg_ui.load(screen, workdir)
+        gpg_ui.load(screen, workdir, expert)
     elif ret == "adv":
         adv = ui.LCW(screen, _("Advanced Options"),
                                   _("These options are for users who know what"
                                   " they are doing"),
-                                  [(_("Generate Key(s) on Smartcard"), "gen"),
+                                  [(_("Enable expert options"), "expert"),
+                                   (_("Generate Key(s) on Smartcard"), "gen"),
                                    (_("Import existing master key pair"),
                                        "import"),
                                    (_("Set Smartcard properties"), "setsmart"),
@@ -74,7 +76,15 @@ while running:
                                   ])
         if adv[0]:
             continue
-        if adv[1] == "gen":
+        if adv[1] == "expert":
+            confirm = newt.dangerConfirm(screen, _("Enable expert options"),
+                    _("Are you sure you want to enable expert options? They"
+                        " will allow you control what keys are exported to"
+                        " your smartcard, which UIDs you sign, and whether"
+                        " your key signatures expire."))
+            if confirm:
+                expert = True
+        elif adv[1] == "gen":
             smartcard_ui.generate(screen, workdir)
         elif adv[1] == "import":
             gpg_ui.importkey(screen, workdir)
