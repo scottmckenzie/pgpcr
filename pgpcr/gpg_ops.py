@@ -105,9 +105,15 @@ class GPGKey(context.Context):
 
     @property
     def uids(self):
+        uids = []
         if self._master is None:
-            return []
-        return [x.uid for x in self._master.uids]
+            return uids
+        for u in self._master.uids:
+            s = u.uid
+            if u.revoked:
+                s += " "+_("REVOKED")
+            uids.append(s)
+        return uids
 
     def __str__(self):
         if self._master is None:
@@ -124,8 +130,13 @@ class GPGKey(context.Context):
         keys = []
         for k in self._master.subkeys:
             s = k.fpr
+            if k.revoked:
+                s += " "+_("REVOKED")
             if k.expires:
-                s += " ["+time.timestamp2iso(k.expires)+"]"
+                if k.expired:
+                    s += " ["+_("Expired")+"]"
+                else:
+                    s += " ["+time.timestamp2iso(k.expires)+"]"
             if k.fpr == self.fpr:
                 s += " ("+_("Master")+")"
                 keys.append(s)
