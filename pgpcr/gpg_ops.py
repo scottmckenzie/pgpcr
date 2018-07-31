@@ -74,10 +74,10 @@ class GPGKey(context.Context):
                     sign=sign, encrypt=encrypt, authenticate=authenticate)
         except GPGMEError as e:
             _pinentrycancel(e)
-        self._refreshmaster()
+        self.refreshmaster()
         return sk
 
-    def _refreshmaster(self):
+    def refreshmaster(self):
         self._master = self._ctx.get_key(self._master.fpr)
         self.changed = True
 
@@ -190,7 +190,7 @@ class GPGKey(context.Context):
             " now be generated. This is used to protect your data, like emails"
             " or backups, from being viewed by anyone else."))
         if e is None:
-            self._refreshmaster()
+            self.refreshmaster()
             return
         if e:
             status(_("Generating encryption subkey..."))
@@ -203,7 +203,7 @@ class GPGKey(context.Context):
             " subkey will now be generated. This is used to prove your"
             " identity and can be used as an ssh key."))
         if a is None:
-            self._refreshmaster()
+            self.refreshmaster()
             return
         if a:
             status(_("Generating authentication subkey..."))
@@ -211,7 +211,7 @@ class GPGKey(context.Context):
                 self.gensub(authenticate=True)
             except PinentryCancelled:
                 pass
-        self._refreshmaster()
+        self.refreshmaster()
 
     def _readdata(self, data):
         data.seek(0, os.SEEK_SET)
@@ -262,14 +262,14 @@ class GPGKey(context.Context):
             self._ctx.key_add_uid(self._master, uid)
         except GPGMEError as e:
             _pinentrycancel(e)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def revokeuid(self, uid):
         try:
             self._ctx.key_revoke_uid(self._master, uid)
         except GPGMEError as e:
             _pinentrycancel(e)
-        self._refreshmaster()
+        self.refreshmaster()
 
 
     def _import(self, keyfile):
@@ -344,15 +344,15 @@ class GPGKey(context.Context):
 
     def revokekey(self, fpr, reason, text):
         gpg_interact.revokekey(self, fpr, reason, text)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def expirekey(self, fpr, datestr):
         gpg_interact.expirekey(self, fpr, datestr)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def keytocard(self, fpr, slot, overwrite=False):
         gpg_interact.keytocard(self, fpr, slot, overwrite)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def encrypt(self, plaintext, recipients):
         if type(plaintext) is str:

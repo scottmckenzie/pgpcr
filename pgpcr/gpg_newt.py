@@ -173,6 +173,7 @@ def load(screen, workdir, expert):
                                       "expirekeys"),
                                   (_("Add a new subkey to your master key"
                                       " pair"), "newsub"),
+                                  (_("Refresh Key"), "refresh"),
                                   (_("Quit"), "quit")
                                  ])
         try:
@@ -188,6 +189,9 @@ def load(screen, workdir, expert):
                 expirekey(screen, gk)
             elif lm == "newsub":
                 newsub(screen, gk)
+            elif lm == "refresh":
+                gk.refreshmaster()
+                continue
             elif lm == "quit":
                 running = False
         except gpg_ops.PinentryCancelled:
