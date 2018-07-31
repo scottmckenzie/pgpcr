@@ -8,12 +8,7 @@ def timestamp2iso(ts):
 def _isostr2datetime(isostr):
     if not valid.date(isostr):
         raise ValueError
-    dl = isostr.split("-")
-    i = 0
-    for t in dl:
-        dl[i] = int(t)
-        i += 1
-    return datetime.date(*dl)
+    return datetime.datetime.strptime(isostr, "%Y-%m-%d")
 
 def _datetime2delta(dt):
     return dt - dt.today()
