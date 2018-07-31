@@ -116,8 +116,7 @@ class GPGOpsTestKey(unittest.TestCase):
         self.gk.adduid(addtest)
         self.assertIn(addtest, self.gk.uids)
         self.gk.revokeuid(addtest)
-        # Currently fails despite removing uid
-        #self.assertNotIn(addtest, self.gk.uids)
+        self.assertIn(addtest+" REVOKED", self.gk.uids)
 
     # Checking signatures doesn't work for some reason
     # So we do it manually
