@@ -354,7 +354,11 @@ class GPGKey(context.Context):
             self.export(pending, fpr=f)
 
     def revokekey(self, fpr, reason, text):
-        gpg_interact.revokekey(self, fpr, reason, text)
+        try:
+            revoke_reasons()[reason]
+        except IndexError:
+            raise ValueError(_("%d is not a valid revocation reason!") % reason)
+        gpg_interact.revokekey(self, fpr, str(reason), text)
         self.refreshmaster()
 
     def expirekey(self, fpr, datestr):

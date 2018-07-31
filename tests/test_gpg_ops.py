@@ -60,7 +60,7 @@ class GPGOpsTestGenCall(unittest.TestCase):
     def test_revokekey(self):
         self.gk.gensub(authenticate=True)
         sk = self.gk._master.subkeys[1]
-        self.gk.revokekey(sk.fpr, "0", "test")
+        self.gk.revokekey(sk.fpr, 0, "test")
         self.assertNotIn(sk, self.gk._master.subkeys)
 
     def test_curve25519_subkeys(self):
