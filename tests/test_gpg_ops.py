@@ -126,20 +126,31 @@ class GPGOpsTestKey(unittest.TestCase):
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             return sb.stdout.decode()
 
-    def test_signkey(self):
-        keyfile = self.testsign+".pub"
+    def _keyimportexport(self, key):
+        keyfile = key+".pub"
         keyimport = self.datadir+"/signing/pending/"+keyfile
+        keyexport = self.datadir+"/signing/done/"+keyfile
+        return (keyfile, keyimport, keyexport)
+
+    def _setupsign(self, key):
+        keyfile, keyimport, keyexport = self._keyimportexport(key)
         copy(keyimport, self.tmp.name)
         self.assertNotIn(self.testkeyfpr, self._checkkey(keyimport))
+        return keyfile
 
-        self.gk.signkey(self.datadir, keyfile)
-
+    def _teardownsign(self, key):
+        keyfile, keyimport, keyexport = self._keyimportexport(key)
         self.assertEqual(os.path.exists(keyimport), 0)
         keyexport = self.datadir+"/signing/done/"+keyfile
         self.assertEqual(os.path.exists(keyexport), 1)
         copy(self.tmp.name+"/"+keyfile, keyimport)
         self.assertIn(self.testkeyfpr, self._checkkey(keyexport))
         os.remove(keyexport)
+
+    def test_signkey(self):
+        keyfile = self._setupsign(self.testsign)
+        self.gk.signkey(self.datadir, keyfile)
+        self._teardownsign(self.testsign)
 
 if __name__ == "__main__":
     unittest.main()
