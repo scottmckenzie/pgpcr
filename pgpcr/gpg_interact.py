@@ -47,7 +47,7 @@ def _revokekey(status, args, rk):
     elif rk.step == 2:
         ret = "yes"
     elif rk.step == 3:
-        ret = rk.code
+        ret = str(rk.code)
     elif rk.step == 4:
         ret = rk.text
     elif rk.step == 5:
