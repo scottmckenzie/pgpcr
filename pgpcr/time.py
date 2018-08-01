@@ -11,7 +11,9 @@ def _isostr2datetime(isostr):
     return datetime.datetime.strptime(isostr, "%Y-%m-%d")
 
 def _datetime2delta(dt):
-    return dt - dt.now()
+    today = datetime.datetime.combine(datetime.date.today(),
+            datetime.time.min)
+    return dt - today
 
 def isostr2delta(isostr):
     dt = _isostr2datetime(isostr)
