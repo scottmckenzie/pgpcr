@@ -167,7 +167,6 @@ class GPGOpsTestKey(unittest.TestCase):
     def test_sign_expiration_uid(self):
         keyfile = self._setupsign(self.uidsign)
         expdate = datetime.date(2020, 12, 30)
-        expdelta = expdate - datetime.date.today()
         expstr = expdate.strftime("%Y-%m-%d")
         self.gk.signkey(self.datadir, keyfile, expires=expstr,
                 uidpick=self._uidpick)
