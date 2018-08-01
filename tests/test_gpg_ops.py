@@ -3,6 +3,7 @@ import os
 import subprocess
 import unittest
 import datetime
+from gpg.constants.keylist.mode import SIGS
 from pgpcr import gpg_ops
 from pgpcr.external import CalledProcessError
 from tests.helpers import cmpfiles, copy
@@ -52,7 +53,7 @@ class GPGOpsTestGenCall(unittest.TestCase):
         date = datetime.date(1, 1, 1).today()
         date = date.replace(date.year+1, 5)
         print("\nExpiring...")
-        self.gk.expirekey(self.gk.fpr, date.isoformat())
+        self.gk.expirekey(self.gk.fpr, date.strftime("%Y-%m-%d"))
         print("\nExpired key")
         gke = date.fromtimestamp(self.gk._master.subkeys[0].expires)
         self.assertEqual(gke, date)
@@ -85,6 +86,7 @@ class GPGOpsTestKey(unittest.TestCase):
         self.testkeydir = self.datadir+"/testkey"
         self.testkeyfpr = "074D3879D4609448DEF716F6C7B98BC88227953F"
         self.testsign = "D3EAC374AC2B30DDC1B30A7F3F90059E1AFDDD53"
+        self.uidsign = "0CF6773BEC26D5565D39F52CB9F15A65E8AC336F"
         self.gk = gpg_ops.GPGKey(self.tmp.name,
                                  self.testkeyfpr, self.testkeydir)
 
@@ -151,6 +153,38 @@ class GPGOpsTestKey(unittest.TestCase):
         keyfile = self._setupsign(self.testsign)
         self.gk.signkey(self.datadir, keyfile)
         self._teardownsign(self.testsign)
+
+    def _uidpick(self, hook, title, text, uidlist):
+        if len(uidlist) > 1:
+            return (False, [uidlist[1]])
+        else:
+            return (False, uidlist)
+
+    def _getkey(self, fpr):
+        return list(self.gk._ctx.keylist(fpr, mode=SIGS))[0]
+
+    def test_sign_expiration_uid(self):
+        keyfile = self._setupsign(self.uidsign)
+        expdate = datetime.date(2020, 12, 30)
+        expdelta = expdate - datetime.date.today()
+        expstr = expdate.strftime("%Y-%m-%d")
+        self.gk.signkey(self.datadir, keyfile, expires=expstr,
+                uidpick=self._uidpick)
+        self._teardownsign(self.uidsign)
+        key = self._getkey(self.uidsign)
+        cancel, uid = self._uidpick(None, None, None, self.gk.uids)
+        uid = uid[0]
+        keyid = self.gk._master.subkeys[0].keyid
+        for u in key.uids:
+            if u.uid == uid:
+                for s in u.signatures:
+                    if s.keyid != keyid:
+                        continue
+                    self.assertEqual(expdate, datetime.date.fromtimestamp(
+                        s.expires))
+            else:
+                for s in u.signatures:
+                    self.assertNotEqual(s.keyid, keyid)
 
 if __name__ == "__main__":
     unittest.main()
