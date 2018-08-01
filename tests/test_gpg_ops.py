@@ -50,8 +50,8 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.assertEqual(len(self.gk._master.subkeys), 4)
 
     def test_expirekey(self):
-        date = datetime.date(1, 1, 1).today()
-        date = date.replace(date.year+1, 5)
+        date = datetime.date.today()
+        date = date.replace(date.year+3)
         print("\nExpiring...")
         self.gk.expirekey(self.gk.fpr, date.strftime("%Y-%m-%d"))
         print("\nExpired key")
