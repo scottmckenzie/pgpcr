@@ -75,9 +75,9 @@ def store(screen, workdir, name, ignore=None):
 
 def export(screen, gk, secret=False):
     try:
-        label = _("Public Key Export")
+        label = _("public key export")
         if secret:
-            label = _("Subkey and Public Key Export")
+            label = _("subkey and public key export")
         publicFail = True
         while publicFail:
             public = setup(screen, label, "PGPCR Export")
