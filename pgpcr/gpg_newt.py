@@ -4,15 +4,14 @@ from . import disks_newt
 from . import smartcard_newt
 from . import fmt
 from . import printing
-import logging
+from . import log
 
-_log = logging.getLogger(__name__)
+_log = log.getlog(__name__)
 
 def new(screen, workdir, expert):
     gk = gpg_ops.GPGKey(workdir)
     if expert:
         gk.expert = True
-    gk.setstatus(_status)
     uid = newt.uid(screen, _("New GPG Master Key Pair"))
     if uid is None:
         return
@@ -154,7 +153,6 @@ def load(screen, workdir, expert):
     if expert:
         gk.expert = True
     d.eject()
-    gk.setstatus(_status)
     running = True
     while running:
         screen.finish()
@@ -357,8 +355,3 @@ def printkey(screen, gk):
     if p:
         printing.printrevcert(gk)
         printing.printmasterkey(gk)
-
-def _status(keyword, args, hook=None):
-    if keyword is None and args is None:
-        return
-    _log.info("Status {!s}({!s})".format(keyword, args))

@@ -1,6 +1,5 @@
 import gpg
 import os
-import logging
 import tempfile
 import shutil
 from collections import OrderedDict
@@ -8,8 +7,9 @@ from . import external
 from . import gpg_interact
 from . import time
 from . import context
+from . import log
 
-_log = logging.getLogger(__name__)
+_log = log.getlog(__name__)
 
 class GPGKey(context.Context):
 
@@ -30,6 +30,7 @@ class GPGKey(context.Context):
         self._master = None
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
+        log.status(self)
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
         # Ensure a gpg-agent is running and a socketdir is created
