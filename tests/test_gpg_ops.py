@@ -55,7 +55,8 @@ class GPGOpsTestGenCall(unittest.TestCase):
         print("\nExpiring...")
         self.gk.expirekey(self.gk.fpr, date.strftime("%Y-%m-%d"))
         print("\nExpired key")
-        gke = date.fromtimestamp(self.gk._master.subkeys[0].expires)
+        gke = datetime.datetime.fromtimestamp(
+                self.gk._master.subkeys[0].expires).date()
         self.assertEqual(gke, date)
 
     def test_revokekey(self):
@@ -180,8 +181,8 @@ class GPGOpsTestKey(unittest.TestCase):
                 for s in u.signatures:
                     if s.keyid != keyid:
                         continue
-                    self.assertEqual(expdate, datetime.date.fromtimestamp(
-                        s.expires))
+                    self.assertEqual(datetime.datetime.fromtimestamp(
+                        s.expires).date(), expdate)
             else:
                 for s in u.signatures:
                     self.assertNotEqual(s.keyid, keyid)
