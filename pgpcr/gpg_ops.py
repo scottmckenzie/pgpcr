@@ -321,7 +321,7 @@ class GPGKey(context.Context):
         keys = self._import(pending+"/"+keyfile)
         if expires:
             delta = time.isostr2delta(expires)
-            expires = delta.seconds
+            expires = int(delta.total_seconds())
         for k in keys:
             sk = self._ctx.get_key(k.fpr)
             uidlist = [x.uid for x in sk.uids if x.revoked == 0]
