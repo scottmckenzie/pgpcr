@@ -104,7 +104,8 @@ def keyalgos(screen, gk):
     return True
 
 def save(screen, workdir, gk):
-    disks_newt.store(screen, workdir, "gpg/"+gk.fpr, gpg_ops.ignore)
+    disks_newt.store(screen, workdir, "gpg/"+gk.fpr, _("master key backup"),
+            "PGPCR Backup", gpg_ops.ignore)
     export = newt.BCW(screen, _("Key Export"),
                                 _("How would you like to export your"
                                 " subkeys?"),

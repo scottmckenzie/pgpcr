@@ -36,7 +36,7 @@ def pickdisks(screen, use):
             sleep(1)
             continue
 
-def store(screen, workdir, name, ignore=None):
+def store(screen, workdir, folder, kind, label, ignore=None):
     try:
         i = 1
         moredisks = True
@@ -44,8 +44,8 @@ def store(screen, workdir, name, ignore=None):
             setupFail = True
             b = None
             while setupFail:
-                b = setup(screen, _("master key backup")+" "+str(i),
-                        "PGPCR Backup "+str(i))
+                b = setup(screen, kind+" "+str(i),
+                        label+" "+str(i))
                 if b is None:
                     skip = newt.dangerConfirm(screen, _("Danger!"),
                             _("Are you sure you don't want to make any more"
@@ -73,7 +73,7 @@ def store(screen, workdir, name, ignore=None):
         store(screen, workdir, name)
 
 
-def export(screen, gk, secret=False):
+def export(screen, obj, secret=False):
     try:
         label = _("public key export")
         if secret:
@@ -98,16 +98,16 @@ def export(screen, gk, secret=False):
                 mkdir(public.mountpoint+"/private")
         except FileExistsError:
             pass
-        gk.export(public.mountpoint+"/public")
+        obj.export(public.mountpoint+"/public")
         if secret:
-            gk.exportsubkeys(public.mountpoint+"/private")
+            obj.exportsubkeys(public.mountpoint+"/private")
         public.eject()
     except disks.CopyError as e:
         s = " ".join(e)
         newt.error(s)
     except external.CalledProcessError as e:
         newt.catchCPE(screen, e)
-        export(screen, gk)
+        export(screen, obj, secret)
 
 
 def setup(screen, use, label):
