@@ -690,10 +690,24 @@ Week 12
  - [x] Properly test UID revocation
  - [x] Look into datetime miscalculations
 	- Seem to get zero seconds often for some reason
- - [ ] Check key signature properties
+
+2018-08-01
+----------
+ - [x] Check key signature properties
 	- [#33](https://salsa.debian.org/tookmund-guest/pgpcr/issues/33)
 	- [#34](https://salsa.debian.org/tookmund-guest/pgpcr/issues/34)
- - [ ] Indicate expert mode is enabled
+ - [x] Log status for all GPGKeys
+ - [ ] Tell the user to spam keyboard input when entropy is low
+	- Should get "need_entropy" from status callback but we don't seem to
+ - [x] Indicate expert mode is enabled
+ - [x] Clarify license of live cd proper
+	- GPL3+ since it uses live-build example code
+ - [x] Document expert mode
+
+2018-08-02
+----------
+ - [ ] Explain second passphrase prompt
+ - [ ] Tell the user to spam keyboard input when entropy is low
  - [ ] Debian package
 	- Add proper ${perl:Depends}
 	- Remove pgp-clean-room package
