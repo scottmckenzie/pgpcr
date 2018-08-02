@@ -66,7 +66,7 @@ while running:
         adv = ui.LCW(screen, _("Advanced Options"),
                                   _("These options are for users who know what"
                                   " they are doing"),
-                                  [(_("Enable expert options"), "expert"),
+                                  [(_("Enable expert mode"), "expert"),
                                    (_("Generate Key(s) on Smartcard"), "gen"),
                                    (_("Import existing master key pair"),
                                        "import"),
@@ -77,11 +77,13 @@ while running:
         if adv[0]:
             continue
         if adv[1] == "expert":
-            confirm = ui.dangerConfirm(screen, _("Enable expert options"),
-                    _("Are you sure you want to enable expert options? They"
-                        " will allow you control what keys are exported to"
-                        " your smartcard, which UIDs you sign, and whether"
-                        " your key signatures expire."))
+            confirm = ui.dangerConfirm(screen, _("Enable expert mode"),
+                    _("Are you sure you want to enable expert mode? It will"
+                        " allow you control what algorithms your key pair"
+                        " uses, what keys are exported to your smartcard,"
+                        " which UIDs you sign, and whether your key"
+                        " signatures expire. To disable it you will need to"
+                        " reboot."))
             if confirm:
                 expert = True
         elif adv[1] == "gen":
