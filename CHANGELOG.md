@@ -716,9 +716,11 @@ Week 12
  - [ ] Tell the user to spam keyboard input when entropy is low
 	- Can't do this until I know when there's low entropy
 	- https://lists.gnupg.org/pipermail/gnupg-users/2018-August/060851.html
- - [ ] Debian package
+ - [x] Debian package
 	- Add proper ${perl:Depends}
 	- Remove pgp-clean-room package
+	- Uploaded to mentors, but will wait for a stable release first:
+		- https://mentors.debian.net/package/pgpcr
 
 Evaluation Period 3 / Week 13
 =============================
