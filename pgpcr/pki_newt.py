@@ -1,9 +1,9 @@
-from pgpcr import common_newt as common
+from pgpcr import newt
 from pgpcr import ca
 
 def new(workdir):
-    screen = common.Screen()
-    ew = common.EW(screen, _("New CA"), _("Fill out the fields below to create"
+    screen = newt.Screen()
+    ew = newt.EW(screen, _("New CA"), _("Fill out the fields below to create"
         " a new Certificate Authority."), [_("Name of CA"), _("Days CA should"
             " be valid for"), _("Domain of CA"), _("Days Server certificates"
                 " should be valid for"), _("Key Type"), _("Key Size"),
