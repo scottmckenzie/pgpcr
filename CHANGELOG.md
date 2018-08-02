@@ -647,15 +647,78 @@ Week 11
 2018-07-26
 ----------
  - [x] Write manual pages for pgpcr-utils
- - [ ] Release 0.5
- - [ ] Debian packaging for the archive
+ - [x] Release 0.5
+ - [x] Debian packaging for the archive
+	- v0.5 packaged
+ - [x] Rewrite many strings to be more user-friendly
+	- [#31](https://salsa.debian.org/tookmund-guest/pgpcr/issues/31)
+ - [x] Fix signing test
+	- [#14](https://salsa.debian.org/tookmund-guest/pgpcr/issues/14)
+ - [x] Split up time-based operations into their own module
+ - [x] Add All option for CCWs
+
+2018-07-27
+----------
+ - [x] Translate all strings from gpg_ops
+ - [x] pgpcr-keysigning support for gpgparticipants
+	- [#28](https://salsa.debian.org/tookmund-guest/pgpcr/issues/28)
+ - [x] Look into security impact of [#17](https://salsa.debian.org/tookmund-guest/pgpcr/issues/17)
+	- Looks hacky but not dangerous, so closed
+ - [x] Add optional key signature expiry
+	- [#26] (https://salsa.debian.org/tookmund-guest/pgpcr/issues/26)
+ - [x] Pick UIDs to sign
+	- [#32](https://salsa.debian.org/tookmund-guest/pgpcr/issues/32)
 
 Week 12
 =======
 
 2018-07-30
 ----------
-TBD
+ - [x] Window height for CCWs
+	- Had to account for the new all option
+ - [x] Only ask to save changes if changes have been made
+ - [x] Sign all UIDs
+ - [x] Add a new subkey
+ - [x] Add expert mode
+	- Like the debian installer
+	- Don't ask normal users so many questions
+
+2018-07-31
+----------
+ - [x] Mark revoked keys and UIDs as such in info
+ - [x] Fix key revocation
+ - [x] Properly test UID revocation
+ - [x] Look into datetime miscalculations
+	- Seem to get zero seconds often for some reason
+
+2018-08-01
+----------
+ - [x] Check key signature properties
+	- [#33](https://salsa.debian.org/tookmund-guest/pgpcr/issues/33)
+	- [#34](https://salsa.debian.org/tookmund-guest/pgpcr/issues/34)
+ - [x] Log status for all GPGKeys
+ - [ ] Tell the user to spam keyboard input when entropy is low
+	- Should get "need_entropy" from status callback but we don't seem to
+ - [x] Indicate expert mode is enabled
+ - [x] Clarify license of live cd proper
+	- GPL3+ since it uses live-build example code
+ - [x] Document expert mode
+
+2018-08-02
+----------
+ - [x] Clean up unused branches
+	- yktouch, while useful, is too specific (Only one model of yubikey)
+	- Will wait on proper support for this till yubikey-manager is shipped in debian
+	- Then we can support any Yubikey
+ - [x] Explain second passphrase prompt
+	- Asked on gnupg-users about it: https://lists.gnupg.org/pipermail/gnupg-users/2018-July/060837.html
+	- For now just don't explain it
+ - [ ] Tell the user to spam keyboard input when entropy is low
+	- Can't do this until I know when there's low entropy
+	- https://lists.gnupg.org/pipermail/gnupg-users/2018-August/060851.html
+ - [ ] Debian package
+	- Add proper ${perl:Depends}
+	- Remove pgp-clean-room package
 
 Evaluation Period 3 / Week 13
 =============================

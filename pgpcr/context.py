@@ -1,6 +1,5 @@
 import os
 import shutil
-import datetime
 from pgpcr import external
 
 class Context:
@@ -45,7 +44,3 @@ def setupworkdir(workdir):
             and os.path.exists(agentconf)):
         shutil.copyfile(agentconf, workdir+"/gpg-agent.conf")
     killagent(workdir)
-
-def timestamp2iso(ts):
-    d = datetime.datetime.fromtimestamp(int(ts))
-    return d.strftime("%Y-%m-%d")

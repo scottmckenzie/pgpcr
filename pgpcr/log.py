@@ -25,3 +25,13 @@ sys.excepthook = _excepthook
 
 def getlog(name):
     return logging.getLogger(name)
+
+def _status(keyword, args, hook=None):
+    if keyword is None and args is None:
+        return
+    if hook is not None:
+        hook.info("Status {!s}({!s})".format(keyword, args))
+
+def status(gk):
+    gklog = getlog("pgpcr.GPGKey")
+    gk.setstatus(_status, gklog)

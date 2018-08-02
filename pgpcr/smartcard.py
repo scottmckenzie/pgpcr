@@ -24,7 +24,7 @@ class SmartcardError(Exception):
         return self.msg
 
 def _raiseerr(err):
-    _log.info("Smartcard Error: err.code_str")
+    _log.info("Smartcard Error: "+err.code_str)
     if err.code_str == "Card Removed" or err.code_str == "No such device":
         raise NoSmartcardDetected
     elif err.code_str == "Bad PIN":
@@ -118,7 +118,8 @@ class Smartcard(context.Context):
     @sex.setter
     def sex(self, val):
         if val is not None and val not in sexopt.keys():
-            raise ValueError("Sex must be either Male, Female, or Unknown")
+            raise ValueError(_("Sex must be either Male (m), Female (f),"
+            " or Not Announced (u)"))
         self._setattr("DISP-SEX", str(sexopt[val]))
 
     @property
@@ -159,7 +160,7 @@ class Smartcard(context.Context):
 
     @property
     def slots(self):
-        return ["Signing", "Encryption", "Authentication"]
+        return [_("Signing"), _("Encryption"), _("Authentication")]
 
     def __str__(self):
         return self.reader+" "+self.serial

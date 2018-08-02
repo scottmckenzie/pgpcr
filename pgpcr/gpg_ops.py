@@ -1,19 +1,23 @@
 import gpg
 import os
-import logging
 import tempfile
 import shutil
 from collections import OrderedDict
 from . import external
 from . import gpg_interact
+from . import time
 from . import context
+from . import log
 
-_log = logging.getLogger(__name__)
+_log = log.getlog(__name__)
 
 class GPGKey(context.Context):
 
     def __init__(self, home=None,  loadfpr=None, loaddir=None):
+        self.changed = True
+        self.expert = False
         if loaddir:
+            self.changed = False
             shutil.rmtree(home)
             shutil.copytree(loaddir, home, ignore=ignore)
         else:
@@ -26,6 +30,7 @@ class GPGKey(context.Context):
         self._master = None
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
+        log.status(self)
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
         # Ensure a gpg-agent is running and a socketdir is created
@@ -70,11 +75,12 @@ class GPGKey(context.Context):
                     sign=sign, encrypt=encrypt, authenticate=authenticate)
         except GPGMEError as e:
             _pinentrycancel(e)
-        self._refreshmaster()
+        self.refreshmaster()
         return sk
 
-    def _refreshmaster(self):
+    def refreshmaster(self):
         self._master = self._ctx.get_key(self._master.fpr)
+        self.changed = True
 
     def setmaster(self, fpr):
         self._master = self._ctx.get_key(fpr)
@@ -100,9 +106,15 @@ class GPGKey(context.Context):
 
     @property
     def uids(self):
+        uids = []
         if self._master is None:
-            return []
-        return [x.uid for x in self._master.uids]
+            return uids
+        for u in self._master.uids:
+            s = u.uid
+            if u.revoked:
+                s += " "+_("REVOKED")
+            uids.append(s)
+        return uids
 
     def __str__(self):
         if self._master is None:
@@ -119,22 +131,31 @@ class GPGKey(context.Context):
         keys = []
         for k in self._master.subkeys:
             s = k.fpr
+            if k.revoked:
+                s += " "+_("REVOKED")
             if k.expires:
-                s += " ["+context.timestamp2iso(k.expires)+"]"
+                if k.expired:
+                    s += " ["+_("Expired")+"]"
+                else:
+                    s += " ["+time.timestamp2iso(k.expires)+"]"
             if k.fpr == self.fpr:
-                s += " "+_("(Master)")
+                s += " ("+_("Master")+")"
                 keys.append(s)
                 continue
             if k.can_certify:
-                s += " "+_("(Certification)")
+                s += " ("+_("Certification")+")"
             if k.can_sign:
-                s += " "+_("(Signing)")
+                s += " ("+_("Signing")+")"
             if k.can_encrypt:
-                s += " "+_("(Encryption)")
+                s += " ("+_("Encryption")+")"
             if k.can_authenticate:
-                s += " "+_("(Authentication)")
+                s += " ("+_("Authentication")+")"
             keys.append(s)
         return keys
+
+    @property
+    def subkeys(self):
+        return self._master.subkeys
 
     @property
     def info(self):
@@ -165,7 +186,7 @@ class GPGKey(context.Context):
         # Force a redraw
         data = redraw(data, True)
         s = explain(data, _("Signing Subkey"), _("A signing subkey will now be"
-            " generated. This is used to  ensure what you send across the"
+            " generated. This is used to ensure what you send across the"
             " Internet, like emails or Debian packages, has not been tampered"
             " with."))
         if s is None:
@@ -181,7 +202,7 @@ class GPGKey(context.Context):
             " now be generated. This is used to protect your data, like emails"
             " or backups, from being viewed by anyone else."))
         if e is None:
-            self._refreshmaster()
+            self.refreshmaster()
             return
         if e:
             status(_("Generating encryption subkey..."))
@@ -194,7 +215,7 @@ class GPGKey(context.Context):
             " subkey will now be generated. This is used to prove your"
             " identity and can be used as an ssh key."))
         if a is None:
-            self._refreshmaster()
+            self.refreshmaster()
             return
         if a:
             status(_("Generating authentication subkey..."))
@@ -202,7 +223,7 @@ class GPGKey(context.Context):
                 self.gensub(authenticate=True)
             except PinentryCancelled:
                 pass
-        self._refreshmaster()
+        self.refreshmaster()
 
     def _readdata(self, data):
         data.seek(0, os.SEEK_SET)
@@ -233,8 +254,7 @@ class GPGKey(context.Context):
         gpgargv = [self._ctx.engine_info.file_name, "--no-tty", "--yes",
                 "--armor", "--status-fd", "2"]
         gpgargv.extend(args)
-        with open(outfile, "wb") as f:
-            external.run(gpgargv, stderr=external.PIPE, stdout=f, check=True)
+        external.processtofile(gpgargv, outfile)
 
     def exportsubkeys(self, exportdir):
         # Exporting only the secret subkeys isn't directly available
@@ -254,14 +274,14 @@ class GPGKey(context.Context):
             self._ctx.key_add_uid(self._master, uid)
         except GPGMEError as e:
             _pinentrycancel(e)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def revokeuid(self, uid):
         try:
             self._ctx.key_revoke_uid(self._master, uid)
         except GPGMEError as e:
             _pinentrycancel(e)
-        self._refreshmaster()
+        self.refreshmaster()
 
 
     def _import(self, keyfile):
@@ -296,13 +316,26 @@ class GPGKey(context.Context):
         os.makedirs(done, exist_ok=True)
         return (pending, done)
 
-    def signkey(self, folder, keyfile):
+    def signkey(self, folder, keyfile, expires=False, uidpick=None, hook=None):
+        self._ctx.signers = [self._master]
         pending, done = self._signkeyfolders(folder)
         keys = self._import(pending+"/"+keyfile)
+        if expires:
+            delta = time.isostr2delta(expires)
+            expires = int(delta.total_seconds())
         for k in keys:
             sk = self._ctx.get_key(k.fpr)
+            uidlist = [x.uid for x in sk.uids if x.revoked == 0]
+            uids = None
+            if uidpick is not None:
+                cancel, uids = uidpick(hook, _("Sign UIDs"), _("Pick UIDs of"
+                " %s to sign") % sk.fpr, uidlist)
+                if cancel:
+                    return
+                if set(uids) == set(uidlist):
+                    uids = None
             try:
-                self._ctx.key_sign(sk)
+                self._ctx.key_sign(sk, uids, expires_in=expires)
             except GPGMEError as e:
                 _pinentrycancel(e)
             self.export(done, sk.fpr, keyfile)
@@ -322,16 +355,20 @@ class GPGKey(context.Context):
             self.export(pending, fpr=f)
 
     def revokekey(self, fpr, reason, text):
+        try:
+            revoke_reasons()[reason]
+        except IndexError:
+            raise ValueError(_("%d is not a valid revocation reason!") % reason)
         gpg_interact.revokekey(self, fpr, reason, text)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def expirekey(self, fpr, datestr):
         gpg_interact.expirekey(self, fpr, datestr)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def keytocard(self, fpr, slot, overwrite=False):
         gpg_interact.keytocard(self, fpr, slot, overwrite)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def encrypt(self, plaintext, recipients):
         if type(plaintext) is str:
@@ -354,8 +391,10 @@ def _pinentrycancel(e):
     else:
         raise e
 
-revoke_reasons = ["No reason specified", "Key has been compromised",
-                  "Key is superseded", "Key is no longer used"]
+def revoke_reasons():
+    return [_("No reason specified"), _("Key has been compromised"),
+            _("Key is superseded"), _("Key is no longer used")]
+
 master_algos = OrderedDict([
     ("rsa", ["4096", "3072", "2048"]),
     ("ed25519", None),
