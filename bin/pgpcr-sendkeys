@@ -1,0 +1,91 @@
+#!/usr/bin/python3
+
+from email.message import EmailMessage
+import smtplib
+import sys
+import os
+import tempfile
+import configparser
+from pgpcr import tran, log, newt
+from pgpcr import fmt
+from pgpcr import gpg_ops
+from pgpcr import disks_newt
+from pgpcr import gpg_newt
+
+tran.init()
+log.init()
+
+def mail(gk, smtp, address, fpr, keyfile):
+    msg = EmailMessage()
+    msg["From"] = gk._master.uids[0].address
+    msg["To"] = address
+    msg["Subject"] = "Your signed PGP key %s" % fpr
+    header = ("Below is your signed PGP Key %s. It has been sent to"
+    " each of your UIDs to ensure you recieve it.") % fpr
+    with open(keyfile, "r") as f:
+        key = f.read()
+    data = header + "\n\n" + key
+    enc = gk.encrypt(data, [address])
+    msg.add_attachment(enc, maintype="text", subtype="pgp-encrypted",
+            disposition="inline", filename="msg.asc")
+    smtp.send_message(msg)
+
+def setupsmtp():
+    config = configparser.ConfigParser()
+    config.read(os.getenv("HOME", "")+"/.pgpcr-sendkeys")
+    host = "localhost"
+    user = None
+    pwd = None
+    ssl = False
+    if "SMTP" in config:
+        conf = config["SMTP"]
+        if "host" in conf:
+            host = conf["host"]
+        if "user" in conf:
+            user = conf["user"]
+        if "password" in conf:
+            pwd = conf["password"]
+        if "ssl" in conf:
+            ssl = True
+    smtp = smtplib.SMTP(host)
+    smtp.ehlo()
+    if ssl:
+        smtp.starttls()
+    if user and pwd:
+        smtp.login(user, pwd)
+    return smtp
+
+smtp = setupsmtp()
+screen = newt.Screen()
+d = disks_newt.mountdisk(screen, _("signed keys"))
+
+def finish():
+    if screen is not None:
+        screen.finish()
+    if d is not None:
+        d.eject()
+    if smtp is not None:
+        smtp.quit()
+    sys.exit(0)
+
+if d is None:
+    finish()
+
+keys = fmt.signdone(d.mountpoint)
+if keys is None or keys == []:
+    newt.error(screen, _("There are no signed keys on this disk. Please be"
+        " sure they are in the signing/done folder."))
+    finish()
+gk = gpg_ops.GPGKey(os.getenv("GNUPGHOME", None))
+kl = gk.getmaster()
+gpg_newt.setmasterkey(screen, gk, kl)
+signeddir = d.mountpoint+"/signing/done/"
+for k in keys:
+    try:
+        kl = gk.importpublic(signeddir+k)
+    except ValueError as v:
+        newt.error(screen, str(v))
+        finish()
+    for u in kl.uids:
+        mail(gk, smtp, u.address, kl.fpr, signeddir+k)
+finish()

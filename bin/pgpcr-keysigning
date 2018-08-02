@@ -1,0 +1,54 @@
+#!/usr/bin/python3
+import sys
+import tempfile
+from pgpcr import tran, log, newt
+from pgpcr import gpg_ops
+from pgpcr import disks_newt
+from pgpcr import external
+
+tran.init()
+log.init()
+
+def parseinput():
+    try:
+        p = external.process(["gpgpartparse"])
+    except external.CalledProcessError as e:
+        sys.stderr.write(e.stderr)
+        sys.exit(1)
+    fprs = p.stdout.split()
+
+    return fprs
+
+if len(sys.argv) > 1:
+    fprs = sys.argv[1:]
+else:
+    fprs = parseinput()
+
+screen = newt.Screen()
+gk = gpg_ops.GPGKey()
+prog = newt.Progress(screen, _("Key Signing"), _("Finding Keys..."), len(fprs))
+keys = []
+for f in fprs:
+    prog.setText(f)
+    kl = []
+    kl = gk.findkey(f)
+    if len(kl) == 0:
+            newt.error(screen, _("No keys found for fingerprint:\n'%s'") % f)
+    for k in kl:
+        sign = newt.confirm(screen, _("Found Key"),
+                _("Found:\n%s\n%s\nSign it?") % (k.fpr,
+                    "\n".join([u.uid for u in k.uids])))
+        if sign:
+            keys.append(k.fpr)
+            gk.importkey(k)
+    prog.inc()
+
+d = disks_newt.setup(screen, _("keys to sign"), "PGPCR Signing")
+if d is None:
+    screen.finish()
+    sys.exit(0)
+gk.exporttosign(d.mountpoint, keys)
+d.eject()
+newt.alert(screen, _("Key Signing"),_("These keys have been exported to"
+    " %s") % str(d))
+screen.finish()

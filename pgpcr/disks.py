@@ -1,8 +1,8 @@
-from . import external
 import json
 import shutil
 import os
 import logging
+from . import external
 
 CopyError = shutil.Error
 
@@ -26,6 +26,7 @@ def lsblk(options):
 
 class NotMountable(Exception):
     pass
+
 class Disk:
 
     def __init__(self, blkdev):
@@ -78,14 +79,13 @@ class Disk:
         self._partition(label)
         self.mount()
 
-    def backup(self, workdir, name):
+    def backup(self, workdir, name, ignore=None):
         if not self.ismounted():
             return None
         else:
             dest = self.mountpoint+"/"+name
             shutil.rmtree(dest, ignore_errors=True)
-            shutil.copytree(workdir, dest,
-                            ignore=shutil.ignore_patterns("S.*"))
+            shutil.copytree(workdir, dest, ignore=ignore)
             self.eject()
 
     def _partition(self, label):
@@ -98,13 +98,13 @@ class Disk:
             raise NotMountable
         mountdir = "/mnt/"+self.serial
         external.process(["sudo", "mkdir", "-p", mountdir])
-        external.process(
-            ["sudo", "mount", children[0]["name"], mountdir])
+        external.process(["sudo", "mount", children[0]["name"], mountdir])
         self.mountpoint = mountdir
-        chown = external.process(
-            ["sudo", "chown", "-R", str(os.getuid()), mountdir])
+        external.process(["sudo", "chown", "-R", str(os.getuid()), mountdir])
 
     def eject(self):
+        if self.mountpoint is None:
+            return
         external.process(["sync"])
         external.process(["sudo", "umount", self.mountpoint])
         self.mountpoint = None

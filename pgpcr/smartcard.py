@@ -1,5 +1,4 @@
 import gpg
-import os
 import logging
 from pgpcr import context
 
@@ -25,7 +24,7 @@ class SmartcardError(Exception):
         return self.msg
 
 def _raiseerr(err):
-    _log.info("Smartcard Error: err.code_str")
+    _log.info("Smartcard Error: "+err.code_str)
     if err.code_str == "Card Removed" or err.code_str == "No such device":
         raise NoSmartcardDetected
     elif err.code_str == "Bad PIN":
@@ -41,6 +40,8 @@ def _raiseerr(err):
 
 class Smartcard(context.Context):
     def __init__(self, homedir=None):
+        self.__status = None
+        self.__args = None
         context.launchagent(homedir)
         if homedir == context.defaulthome:
             homedir = None
@@ -68,6 +69,7 @@ class Smartcard(context.Context):
     def _scd(self, command):
         com = "SCD "
         com += command
+        _log.info(com)
         err = self._ctx.assuan_transact(com, status_cb=self._assuanstatus)
         if err:
             _raiseerr(err)
@@ -116,7 +118,8 @@ class Smartcard(context.Context):
     @sex.setter
     def sex(self, val):
         if val is not None and val not in sexopt.keys():
-            raise ValueError("Sex must be either Male, Female, or Unknown")
+            raise ValueError(_("Sex must be either Male (m), Female (f),"
+            " or Not Announced (u)"))
         self._setattr("DISP-SEX", str(sexopt[val]))
 
     @property
@@ -157,8 +160,7 @@ class Smartcard(context.Context):
 
     @property
     def slots(self):
-        if self.vendor == "Yubico":
-            return ["Signing", "Encryption", "Authentication"]
+        return [_("Signing"), _("Encryption"), _("Authentication")]
 
     def __str__(self):
         return self.reader+" "+self.serial
@@ -168,34 +170,6 @@ class Smartcard(context.Context):
 
     def setAdminPIN(self):
         self._scd("PASSWD 3")
-
-    # Based on yubitouch.sh https://github.com/a-dma/yubitouch
-    def yk_touch(self, operation, requirement):
-        _log.info(self.vendor+" "+operation+" "+str(requirement))
-        if self.vendor != "Yubico":
-            raise UnsupportedOperation
-        if operation == "sig":
-            DO = "D6"
-        elif operation == "dec":
-            DO = "D7"
-        elif operation == "aut":
-            DO = "D8"
-        else:
-            raise UnsupportedOperation
-        if requirement == False:
-            UIF = "00"
-        elif requirement == True:
-            UIF = "01"
-        elif requirement == None:
-            UIF = "02"
-        else:
-            raise UnsupportedOperation
-        self._scd("APDU 00 da 00 "+DO+" 02 "+UIF+" 20")
-
-    def yk_fixtouch(self):
-        for x in ["sig", "dec", "aut"]:
-            self.yk_touch(x, None)
-
 
 sexopt = {"m": 1, "f": 2, "u": 9}
 sexoptsm = {}

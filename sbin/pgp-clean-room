@@ -1,0 +1,113 @@
+#!/usr/bin/python3
+
+from snack import SnackScreen
+import subprocess
+import shutil
+import os
+from pgpcr import gpg_newt as gpg_ui
+from pgpcr import newt as ui
+from pgpcr import smartcard_newt as smartcard_ui
+from pgpcr.context import defaulthome
+from pgpcr import tran
+from pgpcr import log
+
+log.init()
+_log = log.getlog("pgpcr")
+_log.info("GPGME_DEBUG: "+os.getenv("GPGME_DEBUG", "NOT SET"))
+_log.info("GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
+
+screen = SnackScreen()
+lang = ui.LCM(screen, "Language", "Choose your language",
+                [("English", "en"), ("Deutsch", "de")])
+
+os.environ["LANGUAGE"] = lang
+_log.info("LANGUAGE: "+lang)
+tran = tran.init(lang)
+if not tran:
+    ui.error(screen, "Translation for "+lang+" not found! Falling"
+            "back to English")
+
+keyboard = ui.confirm(screen, _("Keyboard Layout"), _("Would you like to"
+    " use the default keyboard layout (US QWERTY)"))
+if not keyboard:
+    screen.finish()
+    subprocess.run(["sudo", "dpkg-reconfigure", "keyboard-configuration"])
+    screen = SnackScreen()
+subprocess.run(["sudo", "setupcon"])
+
+with open("/var/log/live/boot.log") as f:
+    r = f.read()
+    if "/live/medium_swap ... done" in r:
+        ui.alert(screen, _("Boot Media"), _("You can now remove the"
+        " boot media, as the entire filesystem has been loaded into RAM."))
+
+expert = False
+running = True
+while running:
+    screen = ui.Screen()
+    welcome = _("Welcome to the PGP Clean Room!")
+    if expert:
+        welcome += " "+_("EXPERT MODE")
+    ret = ui.LCM(screen, welcome,_("What do you wish to do?"),
+            [(_("Generate a New GPG Master Key Pair"), "new gpg"),
+                (_("Load a GPG Master Key Pair from USB"), "load gpg"),
+                (_("Advanced Options"), "adv"),
+                (_("Quit"), "quit")
+                             ])
+
+    workdir = defaulthome
+    if not os.path.exists(workdir):
+        os.mkdir(workdir)
+    if ret == "new gpg":
+        gpg_ui.new(screen, workdir, expert)
+    elif ret == "load gpg":
+        gpg_ui.load(screen, workdir, expert)
+    elif ret == "adv":
+        adv = ui.LCW(screen, _("Advanced Options"),
+                                  _("These options are for users who know what"
+                                  " they are doing"),
+                                  [(_("Enable expert mode"), "expert"),
+                                   (_("Generate Key(s) on Smartcard"), "gen"),
+                                   (_("Import existing master key pair"),
+                                       "import"),
+                                   (_("Set Smartcard properties"), "setsmart"),
+                                   (_("Set Smartcard PINs"), "setpins"),
+                                   (_("Run shell"), "shell"),
+                                  ])
+        if adv[0]:
+            continue
+        if adv[1] == "expert":
+            confirm = ui.dangerConfirm(screen, _("Enable expert mode"),
+                    _("Are you sure you want to enable expert mode? It will"
+                        " allow you control what algorithms your key pair"
+                        " uses, what keys are exported to your smartcard,"
+                        " which UIDs you sign, and whether your key"
+                        " signatures expire. To disable it you will need to"
+                        " reboot."))
+            if confirm:
+                expert = True
+        elif adv[1] == "gen":
+            smartcard_ui.generate(screen, workdir)
+        elif adv[1] == "import":
+            gpg_ui.importkey(screen, workdir)
+        elif adv[1] == "setsmart":
+            smart = smartcard_ui.pickcard(screen, workdir)
+            smartcard_ui.setproperties(screen, smart)
+        elif adv[1] == "setpins":
+            smart = smartcard_ui.pickcard(screen, workdir)
+            smartcard_ui.setpins(screen, smart)
+        elif adv[1] == "shell":
+            screen.finish()
+            subprocess.run(["bash", "-l"])
+    elif ret == "quit":
+        ret = ui.dangerConfirm(screen, _("PGP Clean Room"),
+                                      _("Would you like to shutdown the PGP Clean Room?"))
+        if ret:
+            running = False
+    try:
+        shutil.rmtree(workdir)
+    except:
+        pass
+
+screen.finish()
+subprocess.run(["sudo", "shutdown", "now"])

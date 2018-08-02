@@ -34,6 +34,13 @@ def killagent(homedir):
     _agent(homedir, "--kill")
 
 def setupworkdir(workdir):
-    shutil.copyfile("/etc/pgpcr/gpg.conf", workdir+"/gpg.conf")
-    shutil.copyfile("/etc/pgpcr/gpg-agent.conf", workdir+"/gpg-agent.conf")
+    gpgconf = "/etc/pgpcr/gpg.conf"
+    agentconf = "/etc/pgpcr/gpg-agent.conf"
+    if workdir is None:
+        workdir = defaulthome
+    if not os.path.exists(workdir+"/gpg.conf") and os.path.exists(gpgconf):
+        shutil.copyfile(gpgconf, workdir+"/gpg.conf")
+    if (not os.path.exists(workdir+"/gpg-agent.conf")
+            and os.path.exists(agentconf)):
+        shutil.copyfile(agentconf, workdir+"/gpg-agent.conf")
     killagent(workdir)

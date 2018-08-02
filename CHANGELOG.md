@@ -497,36 +497,220 @@ Evaluation Period 2 / Week 9
  - [ ] Support setting yubikey touch operation
 	- Wasted a bunch of time trying to figure this out
 	- Requires low-level smartcard operations that I don't totally understand
-	- Will take another crack at this tomorrow
  - [x] Begin PKI UI
- - [ ] PKI/CA UI
-	- Scripts for this already exist on the PGP Clean Room, so this would simply be a matter of exposing them via python-newt
- - [ ] Secure the Live Environment as much as possible
+ - [x] Clean up Git repo a bit
+	- It's still kinda a mess as it exists as a log of my work this summer
+	- Split yubikey touch and pki stuff into their own branches
+
+2018-07-10
+----------
+ - [x] Sort out locations for prebuilt versions
+	- Google Drive and Thomas's server
+ - [x] Refactor code
+	- Move gpg ignore pattern to gpg_ops
+	- Log exceptions and log earlier
+	- Reorganize GPGKey object
+	- Move date validation to _Expire object where it is used
+ - [x] Rename common_newt to newt
+ - [x] Use consistent naming conventions for creating windows with newt
+	- BCW for ButtonChoiceWindow
+	- CCW for CheckboxChoiceWindow
+	- LCM for listmenu
+ - [x] Move all direct snack usage to common_newt
+ - [x] Remove unused imports
+ - [x] Simplify checking for cancelled dialogs
+ - [ ] Set font via console-setup instead of in pgp-clean-room
+	- Allows other consoles to use the much better Unifont over the default
+	- I don't know why this doesn't work.
+	- /lib/udev/rules.d/90-console-setup runs /etc/console-setup/cached_setup_font.sh which has the correct setfont command
+	- But the font is still not set
+
+
+2018-07-11
+----------
+ - [x] Run ```cached_setup_font``` manually
+	- Workaround for [#18](https://salsa.debian.org/tookmund-guest/pgpcr/issues/18)
+	- Should be setup by udev but isn't for some reason
+ - [x] Secure the Live Environment as much as possible
 	- Minimize local packages, remove device drivers for anything that's not keyboard/mouse/storage/graphics
-	- USBGuard?
- - [ ] Call for testing from the wider Debian/FLOSS community
- - [ ] Create a Debian package for the pgp-clean-room application and submit it to mentors.d.o
+ - [x] Remove NFC and Bluetooth drivers
+ - [x] Shrunk the live image by 34MB
+ - [x] Disable APT caching
+
+2018-07-12
+----------
+ - [x] Shrink the image more
+	- Lost another 25MB, down to 157MB
+ - [x] Remove APT
+	- 23 MB from that alone
+ - 40% reduction in image size over the past two days: 216MB to 134MB
+ - [x] Remove console-setup, use simplified console-font.service
+ - [x] USBGuard
+	- Probably just paranoia, but seems useful
+	- Increases image size by 1MB thanks to dbus though
+
+2018-07-13
+----------
+ - [x] Use the automatic revocation certificate
+ - [x] Build font cache during image construction instead of creating it manually
+ - [x] Handle Pinentry cancellation
+ - [x] Test image extensively
+ - [x] Display loaded key info
+	- [#20](https://salsa.debian.org/tookmund-guest/pgpcr/issues/20)
 
 Week 10
 =======
 
 2018-07-16
 ----------
-TBD
+ - [x] Release Beta 2
+ - [x] Call for testing from the wider Debian/FLOSS community
+ - [x] Fix loading crash [#21](https://salsa.debian.org/tookmund-guest/pgpcr/issues/21)
+ - [x] Research how d-i sets its keyboard
+	- Looks to be overkill for what I want to do
+	- Requires a bunch of udebs and I can't seem to get them from the debian archive
+ - [x] Set keyboard layout
+
+2018-07-17
+----------
+ - [x] Enable set keyboard layout
+	- Since we have to run setupcon anyway now, we just let it set the font for us.
+ - [x] Split translation into its own submodule of pgpcr
+ - [x] Split package up into three packages
+	- pgpcr-utils could be shipped in the debian archive
+ - [x] pgpcr-backup for backing up local keys
+ - [ ] Support signing lots of keys, like caff
+	- Began work on pgpcr-keysigning, which should do just that
+
+2018-07-18
+----------
+ - [x] Sign keys from external keyservers
+ - [x] Move much of Misc to issues
+ - [x] Sign keys only found locally
+ - [ ] Send keys via email
+	- Requires some rethinking
+ - [x] Nitrokey support
+	- [#22](https://salsa.debian.org/tookmund-guest/pgpcr/issues/22)
+
+2018-07-19
+----------
+ - [x] Send keys via email
+	- At least theoretically this works now
+	- Need to find a way to test it though
+ - [x] Create tarball of printing stuff
+ - [x] Sign printing tarball and put public key in ISO
+
+2018-07-20
+----------
+ - [x] Adaptive dialog width
+ - [ ] Install printing
+	- Offline installation of debs is complex and out-of-scope
+	- Far too much time wasted in this endeavor
+	- Will need to just install CUPS on the live CD or not support printing at all
+ - [x] Generate and test keysigning
+ - [ ] Sign keys from ksp file
+	- https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=622560
 
 Week 11
 =======
 
 2018-07-23
 ----------
-TBD
+ - [x] Yubikey keyboard and USBGuard
+ - [x] Write a file picker for alternative backup imports
+ - [x] Add an option to reformat even disks in known formats
+ - [x] Add an option to eject disks if they are currently mounted
+ - [x] More pgpcr-sendkey testing
+
+2018-07-24
+----------
+ - [ ] Print masterkey and revocation certificate
+	- It is incredibly tricky to get printers working in the live cd,
+	as we don't have the cups web interface or any idea what PPDs the users printer needs
+ - [x] Debian package description
+ - [x] Debian package ITP [#904497](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=904497)
+ - [x] ASCII armor everything
+	- Makes emails easier
+ - [x] Assemble signed messages correctly
+	- Email can be very annoying
+	- Python's EmailMessage mangles PGP/MIME, which made this 1000 times harder than it needed to be.
+	- For now combine short message and key in one signed text/pgp-encrypted file
+
+2018-07-25
+----------
+ - [x] Add revocation certificate to homedir
+ - [x] Add German translation
+	- By Ulrike Uhlig [!1](https://salsa.debian.org/tookmund-guest/pgpcr/merge_requests/1)
+ - [x] Export and import ownertrust
+ - [x] Add optional comment field to UIDs
+
+2018-07-26
+----------
+ - [x] Write manual pages for pgpcr-utils
+ - [x] Release 0.5
+ - [x] Debian packaging for the archive
+	- v0.5 packaged
+ - [x] Rewrite many strings to be more user-friendly
+	- [#31](https://salsa.debian.org/tookmund-guest/pgpcr/issues/31)
+ - [x] Fix signing test
+	- [#14](https://salsa.debian.org/tookmund-guest/pgpcr/issues/14)
+ - [x] Split up time-based operations into their own module
+ - [x] Add All option for CCWs
+
+2018-07-27
+----------
+ - [x] Translate all strings from gpg_ops
+ - [x] pgpcr-keysigning support for gpgparticipants
+	- [#28](https://salsa.debian.org/tookmund-guest/pgpcr/issues/28)
+ - [x] Look into security impact of [#17](https://salsa.debian.org/tookmund-guest/pgpcr/issues/17)
+	- Looks hacky but not dangerous, so closed
+ - [x] Add optional key signature expiry
+	- [#26] (https://salsa.debian.org/tookmund-guest/pgpcr/issues/26)
+ - [x] Pick UIDs to sign
+	- [#32](https://salsa.debian.org/tookmund-guest/pgpcr/issues/32)
 
 Week 12
 =======
 
 2018-07-30
 ----------
-TBD
+ - [x] Window height for CCWs
+	- Had to account for the new all option
+ - [x] Only ask to save changes if changes have been made
+ - [x] Sign all UIDs
+ - [x] Add a new subkey
+ - [x] Add expert mode
+	- Like the debian installer
+	- Don't ask normal users so many questions
+
+2018-07-31
+----------
+ - [x] Mark revoked keys and UIDs as such in info
+ - [x] Fix key revocation
+ - [x] Properly test UID revocation
+ - [x] Look into datetime miscalculations
+	- Seem to get zero seconds often for some reason
+
+2018-08-01
+----------
+ - [x] Check key signature properties
+	- [#33](https://salsa.debian.org/tookmund-guest/pgpcr/issues/33)
+	- [#34](https://salsa.debian.org/tookmund-guest/pgpcr/issues/34)
+ - [x] Log status for all GPGKeys
+ - [ ] Tell the user to spam keyboard input when entropy is low
+	- Should get "need_entropy" from status callback but we don't seem to
+ - [x] Indicate expert mode is enabled
+ - [x] Clarify license of live cd proper
+	- GPL3+ since it uses live-build example code
+ - [x] Document expert mode
+
+2018-08-02
+----------
+ - [ ] Explain second passphrase prompt
+ - [ ] Tell the user to spam keyboard input when entropy is low
+ - [ ] Debian package
+	- Add proper ${perl:Depends}
+	- Remove pgp-clean-room package
 
 Evaluation Period 3 / Week 13
 =============================
@@ -535,8 +719,9 @@ Evaluation Period 3 / Week 13
 ----------
  - [ ] Testing, testing and more testing
  - [ ] Overflow for anything not finished on schedule
- - [ ] Debconf18? (Would need sponsorship, but I don't want to apply for that unless I have a project to present about)
+ - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Incorporate translations and community testing
+ - [ ] Make sure to enable locales for translations
  - [ ] Bug fixes
 
 Misc
@@ -545,11 +730,4 @@ Misc
 Would like to do these if I have time but we'll see how this goes
  - [ ] Figure out when progress_cb is called with primegen
 	- Time based? amount of randomness gathered?
- - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Alternative UI (Qt, GTK, etc)
- - [ ] Add the option to print key backups and revocation certificates
- - [ ] Run all tests in a virtual machine
-	- kvm?
- - [ ] Better import UI
- - [ ] Optional signature expiry date?
-	- I have no idea if people use this

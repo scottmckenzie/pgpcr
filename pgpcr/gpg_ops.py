@@ -1,25 +1,36 @@
 import gpg
 import os
-import logging
 import tempfile
-from shutil import copy
-from distutils.dir_util import copy_tree
+import shutil
 from collections import OrderedDict
-from . import external, gpg_interact, context, valid
+from . import external
+from . import gpg_interact
+from . import time
+from . import context
+from . import log
 
-_log = logging.getLogger(__name__)
+_log = log.getlog(__name__)
 
 class GPGKey(context.Context):
 
-    def __init__(self, home,  loadfpr=None, loaddir=None):
+    def __init__(self, home=None,  loadfpr=None, loaddir=None):
+        self.changed = True
+        self.expert = False
         if loaddir:
-            copy_tree(loaddir, home, verbose=0)
+            self.changed = False
+            shutil.rmtree(home)
+            shutil.copytree(loaddir, home, ignore=ignore)
+        else:
+            context.setupworkdir(home)
         if home == context.defaulthome:
             home = None
-        self._ctx = gpg.Context(home_dir=home)
+        else:
+            external.setuprundir()
+        self._ctx = gpg.Context(home_dir=home, armor=True)
+        self._master = None
         self._masteralgo = "rsa4096"
         self._subalgo = "rsa2048"
-        self.revcert = None
+        log.status(self)
         if loadfpr:
             self._master = self._ctx.get_key(loadfpr)
         # Ensure a gpg-agent is running and a socketdir is created
@@ -36,15 +47,17 @@ class GPGKey(context.Context):
                 external.process(["gpgconf", "--remove-socketdir"])
         except external.CalledProcessError as e:
             _log.debug(e.stderr)
+        except Exception as e:
+            _log.debug(str(e))
 
     def genmaster(self, userid, passphrase=True):
-        genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
-                                      sign=True, certify=True,
-                                      passphrase=passphrase)
-        self._master = self._ctx.get_key(genkey.fpr)
+        try:
+            genkey = self._ctx.create_key(userid, algorithm=self._masteralgo,
+                    sign=True, certify=True, passphrase=passphrase)
+        except GPGMEError as e:
+            _pinentrycancel(e)
 
-    def _refreshmaster(self):
-        self._master = self._ctx.get_key(self._master.fpr)
+        self._master = self._ctx.get_key(genkey.fpr)
 
     def gensub(self, sign=False, encrypt=False, authenticate=False):
         algo = self._subalgo
@@ -57,45 +70,101 @@ class GPGKey(context.Context):
             # https://lists.gnupg.org/pipermail/gnupg-users/2018-July/060755.html
             if sign or authenticate:
                 algo += "/ecdsa"
-        sk = self._ctx.create_subkey(self._master, algorithm=algo,
-                                       sign=sign, encrypt=encrypt,
-                                       authenticate=authenticate)
-        self._refreshmaster()
+        try:
+            sk = self._ctx.create_subkey(self._master, algorithm=algo,
+                    sign=sign, encrypt=encrypt, authenticate=authenticate)
+        except GPGMEError as e:
+            _pinentrycancel(e)
+        self.refreshmaster()
         return sk
 
-    def genseasubs(self, status, explain, redraw, data):
-        # Force a redraw
-        data = redraw(data, True)
-        s = explain(data, _("Signing Subkey"), _("A signing subkey will now be"
-            " generated. This is used to  ensure what you send across the"
-            " Internet, like emails or Debian packages, has not been tampered"
-            " with."))
-        if s is None:
-            return
-        if s:
-            status(_("Generating signing subkey")+"...")
-            self.gensub(sign=True)
-            data = redraw(data, self.redraw)
-        e = explain(data, _("Encryption Subkey"), _("An encryption subkey will"
-            " now be generated. This is used to protect your data, like emails"
-            " or backups, from being viewed by anyone else."))
-        if e is None:
-            self._refreshmaster()
-            return
-        if e:
-            status(_("Generating encryption subkey")+"...")
-            self.gensub(encrypt=True)
-            data = redraw(data, self.redraw)
-        a = explain(data, _("Authentication Subkey"), _("An authentication"
-            " subkey will now be generated. This is used to prove your"
-            " identity and can be used as an ssh key."))
-        if a is None:
-            self._refreshmaster()
-            return
-        if a:
-            status(_("Generating authentication subkey")+"...")
-            self.gensub(authenticate=True)
-        self._refreshmaster()
+    def refreshmaster(self):
+        self._master = self._ctx.get_key(self._master.fpr)
+        self.changed = True
+
+    def setmaster(self, fpr):
+        self._master = self._ctx.get_key(fpr)
+
+    def getmaster(self):
+        kl = list(self._ctx.keylist(secret=True))
+        if len(kl) == 1:
+            self.setmaster(kl[0].fpr)
+            return None
+        return [x.fpr for x in kl]
+
+    @property
+    def fpr(self):
+        if self._master is None:
+            return None
+        return self._master.fpr
+
+    @property
+    def revcert(self):
+        if self._master is None:
+            return None
+        return self.homedir+"/openpgp-revocs.d/"+self.fpr+".rev"
+
+    @property
+    def uids(self):
+        uids = []
+        if self._master is None:
+            return uids
+        for u in self._master.uids:
+            s = u.uid
+            if u.revoked:
+                s += " "+_("REVOKED")
+            uids.append(s)
+        return uids
+
+    def __str__(self):
+        if self._master is None:
+            return ""
+        s = str(self.uids[0])
+        s += " "
+        s += self.fpr[-17:]
+        return s
+
+    @property
+    def keys(self):
+        if self._master is None:
+            return None
+        keys = []
+        for k in self._master.subkeys:
+            s = k.fpr
+            if k.revoked:
+                s += " "+_("REVOKED")
+            if k.expires:
+                if k.expired:
+                    s += " ["+_("Expired")+"]"
+                else:
+                    s += " ["+time.timestamp2iso(k.expires)+"]"
+            if k.fpr == self.fpr:
+                s += " ("+_("Master")+")"
+                keys.append(s)
+                continue
+            if k.can_certify:
+                s += " ("+_("Certification")+")"
+            if k.can_sign:
+                s += " ("+_("Signing")+")"
+            if k.can_encrypt:
+                s += " ("+_("Encryption")+")"
+            if k.can_authenticate:
+                s += " ("+_("Authentication")+")"
+            keys.append(s)
+        return keys
+
+    @property
+    def subkeys(self):
+        return self._master.subkeys
+
+    @property
+    def info(self):
+        if self._master is None:
+            return ""
+        s = "\n"
+        k = s.join(self.keys)
+        u = s.join(self.uids)
+        return k+s+u
 
     def setprogress(self, progress, hook=None):
         self._ctx.set_progress_cb(progress, hook)
@@ -113,9 +182,48 @@ class GPGKey(context.Context):
         if sub is not None:
             self._subalgo = sub
 
-    @property
-    def fpr(self):
-        return self._master.fpr
+    def genseasubs(self, status, explain, redraw, data):
+        # Force a redraw
+        data = redraw(data, True)
+        s = explain(data, _("Signing Subkey"), _("A signing subkey will now be"
+            " generated. This is used to ensure what you send across the"
+            " Internet, like emails or Debian packages, has not been tampered"
+            " with."))
+        if s is None:
+            return
+        if s:
+            status(_("Generating signing subkey..."))
+            try:
+                self.gensub(sign=True)
+            except PinentryCancelled:
+                pass
+            data = redraw(data, self.redraw)
+        e = explain(data, _("Encryption Subkey"), _("An encryption subkey will"
+            " now be generated. This is used to protect your data, like emails"
+            " or backups, from being viewed by anyone else."))
+        if e is None:
+            self.refreshmaster()
+            return
+        if e:
+            status(_("Generating encryption subkey..."))
+            try:
+                self.gensub(encrypt=True)
+            except PinentryCancelled:
+                pass
+            data = redraw(data, self.redraw)
+        a = explain(data, _("Authentication Subkey"), _("An authentication"
+            " subkey will now be generated. This is used to prove your"
+            " identity and can be used as an ssh key."))
+        if a is None:
+            self.refreshmaster()
+            return
+        if a:
+            status(_("Generating authentication subkey..."))
+            try:
+                self.gensub(authenticate=True)
+            except PinentryCancelled:
+                pass
+        self.refreshmaster()
 
     def _readdata(self, data):
         data.seek(0, os.SEEK_SET)
@@ -125,72 +233,56 @@ class GPGKey(context.Context):
         # 0 is the normal mode
         data = gpg.Data()
         self._ctx.op_export(pattern, mode, data)
-        if outfile is not None:
+        rd = self._readdata(data)
+        if hasattr(outfile, "write"):
+            outfile.write(rd)
+        elif type(outfile) is str:
             with open(outfile, "wb") as f:
-                f.write(self._readdata(data))
+                f.write(rd)
 
-    def export(self, dir, fpr=None, name=None):
+    def export(self, exportdir, fpr=None, name=None):
         if fpr is None:
             fpr = self.fpr
         if name is None:
             name = fpr+".pub"
-        if self.revcert is not None:
-            copy(self.revcert, dir)
-        d = self._export(fpr, outfile=dir +
-                         "/"+name)
+        if fpr == self.fpr:
+            shutil.copy(self.revcert, exportdir)
+            self.exportownertrust(exportdir)
+        self._export(fpr, outfile=exportdir+"/"+name)
 
-    def _callgpg(self, args, outfile, infile=None):
+    def _callgpg(self, args, outfile):
         gpgargv = [self._ctx.engine_info.file_name, "--no-tty", "--yes",
-                "--status-fd", "2", "--output", outfile]
-        if infile is not None:
-            gpgargv.extend(["--command-file", infile])
+                "--armor", "--status-fd", "2"]
         gpgargv.extend(args)
-        external.run(gpgargv, stderr=external.PIPE, check=True)
+        external.processtofile(gpgargv, outfile)
 
-    def exportsubkeys(self, dir):
+    def exportsubkeys(self, exportdir):
         # Exporting only the secret subkeys isn't directly available
         # so we have to call gpg directly
         # gpg --export-secret-subkeys
-        k = self._callgpg(["--export-secret-subkeys"],
-                          dir+"/"+self.fpr+".subsec")
+        self._callgpg(["--export-secret-subkeys"],
+                          exportdir+"/"+self.fpr+".subsec")
 
-    @property
-    def keys(self):
-        keys = []
-        for k in self._master.subkeys:
-            s = k.fpr
-            if k.fpr == self.fpr:
-                s += " "+_("(Master)")
-                keys.append(s)
-                continue
-            if k.can_certify:
-                s += " "+_("(Certification)")
-            if k.can_sign:
-                s += " "+_("(Signing)")
-            if k.can_encrypt:
-                s += " "+_("(Encryption)")
-            if k.can_authenticate:
-                s += " "+_("(Authentication)")
-            keys.append(s)
-        return keys
+    def exportownertrust(self, exportdir):
+        self._callgpg(["--export-ownertrust"], exportdir+"/ownertrust")
+
+    def exportmasterkey(self, exportfile):
+        self._export(self.fpr, gpg.constants.EXPORT_MODE_SECRET, exportfile)
 
     def adduid(self, uid):
-        self._ctx.key_add_uid(self._master, uid)
-        self._refreshmaster()
+        try:
+            self._ctx.key_add_uid(self._master, uid)
+        except GPGMEError as e:
+            _pinentrycancel(e)
+        self.refreshmaster()
 
     def revokeuid(self, uid):
-        self._ctx.key_revoke_uid(self._master, uid)
-        self._refreshmaster()
+        try:
+            self._ctx.key_revoke_uid(self._master, uid)
+        except GPGMEError as e:
+            _pinentrycancel(e)
+        self.refreshmaster()
 
-    @property
-    def uids(self):
-        return [x.uid for x in self._master.uids]
-
-    def __str__(self):
-        s = str(self.uids[0])
-        s += " "
-        s += self.fpr[-17:]
-        return s
 
     def _import(self, keyfile):
         keydata = gpg.Data(file=keyfile)
@@ -198,61 +290,111 @@ class GPGKey(context.Context):
         result = self._ctx.op_import_result()
         return result.imports
 
-    def setmaster(self, fpr):
-        self._master = self._ctx.get_key(fpr)
+    def importpublic(self, keyfile):
+        result = self._import(keyfile)
+        if len(result) > 1:
+            raise ValueError(_("Multiple keys found in '%s'") % keyfile)
+        key = self._ctx.get_key(result[0].fpr)
+        return key
 
-    def signkey(self, folder, keyfile):
+    def importbackup(self, backup):
+        invalid = ValueError(_("No valid backup found at '%s'") % backup)
+        if not os.path.exists(backup):
+            raise invalid
+        if os.path.isfile(backup):
+            res = self._import(backup)
+            if not res: # Empty list
+                raise invalid
+        else:
+            self.__init__(self.homedir, loaddir=backup)
+        return self.getmaster()
+
+    def _signkeyfolders(self, folder):
         pending = folder+"/signing/pending"
         done = folder+"/signing/done"
-        try:
-            os.mkdir(done)
-        except FileExistsError:
-            pass
+        os.makedirs(pending, exist_ok=True)
+        os.makedirs(done, exist_ok=True)
+        return (pending, done)
+
+    def signkey(self, folder, keyfile, expires=False, uidpick=None, hook=None):
+        self._ctx.signers = [self._master]
+        pending, done = self._signkeyfolders(folder)
         keys = self._import(pending+"/"+keyfile)
+        if expires:
+            delta = time.isostr2delta(expires)
+            expires = int(delta.total_seconds())
         for k in keys:
             sk = self._ctx.get_key(k.fpr)
-            self._ctx.key_sign(sk)
+            uidlist = [x.uid for x in sk.uids if x.revoked == 0]
+            uids = None
+            if uidpick is not None:
+                cancel, uids = uidpick(hook, _("Sign UIDs"), _("Pick UIDs of"
+                " %s to sign") % sk.fpr, uidlist)
+                if cancel:
+                    return
+                if set(uids) == set(uidlist):
+                    uids = None
+            try:
+                self._ctx.key_sign(sk, uids, expires_in=expires)
+            except GPGMEError as e:
+                _pinentrycancel(e)
             self.export(done, sk.fpr, keyfile)
             os.remove(pending+"/"+keyfile)
 
+    def findkey(self, fpr):
+        kl = self._ctx.keylist(fpr, mode=gpg.constants.keylist.mode.LOCATE)
+        kl = list(kl)
+        return kl
+
+    def importkey(self, key):
+        self._ctx.op_import_keys([key])
+
+    def exporttosign(self, dest, fprs):
+        pending, _ = self._signkeyfolders(dest)
+        for f in fprs:
+            self.export(pending, fpr=f)
+
     def revokekey(self, fpr, reason, text):
+        try:
+            revoke_reasons()[reason]
+        except IndexError:
+            raise ValueError(_("%d is not a valid revocation reason!") % reason)
         gpg_interact.revokekey(self, fpr, reason, text)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def expirekey(self, fpr, datestr):
-        if not valid.date(datestr):
-            raise ValueError
         gpg_interact.expirekey(self, fpr, datestr)
-        self._refreshmaster()
+        self.refreshmaster()
 
     def keytocard(self, fpr, slot, overwrite=False):
         gpg_interact.keytocard(self, fpr, slot, overwrite)
-        self._refreshmaster()
+        self.refreshmaster()
 
-    def importbackup(self, backup):
-        if not os.path.exists(backup):
-            raise ValueError(_("No valid backup found at '%s'") % backup)
-        if os.path.isfile(backup):
-            self._import(backup)
-        else:
-            self.__init__(self.homedir, loaddir=backup)
-        kl = list(self._ctx.keylist(secret=True))
-        if len(kl) == 1:
-            self.setmaster(kl[0])
-            return None
-        return [x.fpr for x in kl]
-
-    def genrevoke(self):
-        self.revcert = self.homedir+"/"+self.fpr+".rev"
-        with tempfile.NamedTemporaryFile() as f:
-            f.write("y\n0\nGeneral Revocation Certificate\n\ny\n\n".encode())
-            f.flush()
-            self._callgpg(["--gen-revoke", self.fpr], self.revcert, f.name)
+    def encrypt(self, plaintext, recipients):
+        if type(plaintext) is str:
+            plaintext = plaintext.encode()
+        keys = []
+        for r in recipients:
+            kl = self._ctx.keylist(r)
+            keys.append(next(kl))
+        c, _, _ =  self._ctx.encrypt(plaintext, keys)
+        return c
 
 GPGMEError = gpg.errors.GPGMEError
 
-revoke_reasons = ["No reason specified", "Key has been compromised",
-                  "Key is superseded", "Key is no longer used"]
+class PinentryCancelled(Exception):
+    pass
+
+def _pinentrycancel(e):
+    if e.code_str == "Operation cancelled":
+        raise PinentryCancelled
+    else:
+        raise e
+
+def revoke_reasons():
+    return [_("No reason specified"), _("Key has been compromised"),
+            _("Key is superseded"), _("Key is no longer used")]
+
 master_algos = OrderedDict([
     ("rsa", ["4096", "3072", "2048"]),
     ("ed25519", None),
@@ -266,4 +408,5 @@ sub_algos = OrderedDict([
     ("brainpoolP", ["512r1", "384r1", "256r1"])
     ])
 
-
+# Files to ignore when backing up gpg home directories
+ignore = shutil.ignore_patterns("S.*")

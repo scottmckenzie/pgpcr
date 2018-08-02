@@ -1,6 +1,5 @@
-import gpg
-import datetime
 import logging
+from . import time
 from . import smartcard
 
 _log = logging.getLogger(__name__)
@@ -23,15 +22,9 @@ class _Revoke(_Interact):
         self.text = text
 
 class _Expire(_Interact):
-    def __init__(self, master, fpr, datestr):
+    def __init__(self, master, fpr, isostr):
         super().__init__(master, fpr)
-        dl = datestr.split("-")
-        i = 0
-        for t in dl:
-            dl[i] = int(t)
-            i += 1
-        date = datetime.date(*dl)
-        delta = date - date.today()
+        delta = time.isostr2delta(isostr)
         if delta.days < 0:
             raise ValueError
         self.expire = delta.days
@@ -54,7 +47,7 @@ def _revokekey(status, args, rk):
     elif rk.step == 2:
         ret = "yes"
     elif rk.step == 3:
-        ret = rk.code
+        ret = str(rk.code)
     elif rk.step == 4:
         ret = rk.text
     elif rk.step == 5:
