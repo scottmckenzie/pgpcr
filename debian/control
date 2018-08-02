@@ -21,7 +21,7 @@ Description: Python module for the PGP Clean Room and its utilities
 
 Package: pgpcr-utils
 Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}, perl-base, python3-pgpcr, sudo
+Depends: ${misc:Depends}, ${python3:Depends}, ${perl:Depends}, python3-pgpcr, sudo
 Description: PGP Clean Room Utilities
  The PGP Clean Room is a newt-based application designed to make generating
  and storing GPG keys offline simpler and easier.
