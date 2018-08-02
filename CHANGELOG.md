@@ -706,8 +706,16 @@ Week 12
 
 2018-08-02
 ----------
- - [ ] Explain second passphrase prompt
+ - [x] Clean up unused branches
+	- yktouch, while useful, is too specific (Only one model of yubikey)
+	- Will wait on proper support for this till yubikey-manager is shipped in debian
+	- Then we can support any Yubikey
+ - [x] Explain second passphrase prompt
+	- Asked on gnupg-users about it: https://lists.gnupg.org/pipermail/gnupg-users/2018-July/060837.html
+	- For now just don't explain it
  - [ ] Tell the user to spam keyboard input when entropy is low
+	- Can't do this until I know when there's low entropy
+	- https://lists.gnupg.org/pipermail/gnupg-users/2018-August/060851.html
  - [ ] Debian package
 	- Add proper ${perl:Depends}
 	- Remove pgp-clean-room package
