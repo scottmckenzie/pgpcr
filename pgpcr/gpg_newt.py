@@ -43,10 +43,8 @@ def new(screen, workdir, expert):
         " be generated. These are the keys you will actually use, while the"
         " private part of your key pair is stored safely offline and away from"
         " your main computer."))
-    newt.alert(screen, _("Revocation certificate"), _("You will be prompted"
-        " for your passphrase twice when you generate your first subkey. This"
-        " is so that a revocation certificate can be generated for your master"
-        " key"))
+    newt.alert(screen, _("Passphrase prompt"), _("You will be prompted"
+        " for your passphrase twice when you generate your first subkey."))
     sprog = newt.Progress(screen, _("Key Generation"),
                             _("Generating Sub Keys..."), 60)
     sprog.gk = gk
