@@ -157,7 +157,10 @@ def load(screen, workdir, expert):
     while running:
         screen.finish()
         screen = newt.Screen()
-        lm = newt.LCM(screen, key, gk.info,
+        title = key
+        if expert:
+            title += " "+_("EXPERT MODE")
+        lm = newt.LCM(screen, title, gk.info,
                                  [(_("Sign GPG Public Keys"), "sign"),
                                   (_("Associate a UID with your master key"
                                   " pair"),
