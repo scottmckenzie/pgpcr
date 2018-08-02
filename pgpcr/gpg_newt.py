@@ -15,9 +15,10 @@ def new(screen, workdir, expert):
     uid = newt.uid(screen, _("New GPG Master Key Pair"))
     if uid is None:
         return
-    k = keyalgos(screen, gk)
-    if not k:
-        return
+    if expert:
+        k = keyalgos(screen, gk)
+        if not k:
+            return
     newt.alert(screen, _("Master Key Pair Generation"),
                  _("A new GPG master key pair (a private key and a public key)"
                  " will now be generated. Progress is estimated and key pair"
