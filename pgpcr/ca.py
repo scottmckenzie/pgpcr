@@ -1,20 +1,22 @@
 import json
-from pgpcr import external
+from . import external
+from . import log
+
+_log = log.getlog(__name__)
+
+_prop = {
+    "name": "CA_NAME",
+    "CAValid": "CA_VALIDITY_DAYS",
+    "DN": "CA_DN",
+    "ServerValid": "SERVER_VALIDITY_DAYS",
+    "keyType": "KEY_TYPE",
+    "keySize": "KEY_SIZE",
+    "digest": "CERT_DIGEST"
+}
 
 class CA:
     def __init__(self, workdir, filename=None):
-        self._prop = {
-                "name": "CA_NAME",
-                "CAValid": "CA_VALIDITY_DAYS",
-                "DN": "CA_DN",
-                "ServerValid": "SERVER_VALIDITY_DAYS",
-                "keyType": "KEY_TYPE",
-                "keySize": "KEY_SIZE",
-                "digest": "CERT_DIGEST"
-                }
         self._workdir = workdir
-        self._key = workdir+"/"+self.name+"Key.pem"
-        self._cert = workdir+"/"+self.name+"Cert.pem"
 
         if filename is not None:
             f = open(filename)
@@ -24,17 +26,31 @@ class CA:
         else:
             self._dict = {}
 
+
+    @property
+    def _key(self):
+        return self._workdir+"/"+self.name+"Key.pem"
+
+    @property
+    def _cert(self):
+        return self._workdir+"/"+self.name+"Cert.pem"
+
     def save(self, filename):
-        with open(filename) as f:
+        with open(filename, "w+") as f:
             json.dump(self._dict,f)
 
     def __getattr__(self, name):
-        prop = self._prop[name]
+        _log.info("Get %s" % name)
+        prop = _prop[name]
         return self._dict[prop]
 
     def __setattr__(self, name, value):
-        prop = self._prop[name]
-        self._dict[prop] = value
+        _log.info("Set %s = %s" % (name, str(value)))
+        if name not in _prop:
+            super().__setattr__(name, value)
+        else:
+            prop = _prop[name]
+            self._dict[prop] = value
 
     def _pki(options, filename):
         com = ["pki"]
