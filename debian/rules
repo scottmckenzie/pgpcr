@@ -7,4 +7,4 @@ export PYBUILD_NAME=pgpcr
 override_dh_clean:
 	dh_clean
 	rm -rf PGP_Clean_Room.egg-info
-	rm po/*/LC_MESSAGES/*.mo
+	rm -f po/*/LC_MESSAGES/*.mo
