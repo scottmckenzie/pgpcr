@@ -56,7 +56,7 @@ def store(screen, workdir, folder, kind, label, ignore=None):
                     setupFail = False
             if b is None:
                 return
-            b.backup(workdir, name, ignore)
+            b.backup(workdir, folder, ignore)
             newt.alert(screen, str(b),
                          _("Your backup to the above disk is now complete "
                          "and the disk can be ejected."))
@@ -70,7 +70,7 @@ def store(screen, workdir, folder, kind, label, ignore=None):
         newt.error(s)
     except external.CalledProcessError as e:
         newt.catchCPE(screen, e)
-        store(screen, workdir, name)
+        store(screen, workdir, folder, kind, label, ignore)
 
 
 def export(screen, obj, secret=False):
