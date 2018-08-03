@@ -114,7 +114,8 @@ def setup(screen, use, label):
     disk = pickdisks(screen, use)
     if disk is None:
         return
-    if disk.label is not None and "PGPCR" in disk.label:
+    if disk.label is not None and ("PGPCR" in disk.label
+            or "PKICR" in disk.label):
         reformat = newt.dangerConfirm(screen, _("Reformat"), _("Do you want"
             " to reformat this disk?\n%s") % str(disk))
         if not reformat:
