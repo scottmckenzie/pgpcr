@@ -1,6 +1,7 @@
 from . import newt
 from . import ca
 from . import disks_newt
+from . import external
 
 def new(workdir):
     screen = newt.Screen()
@@ -21,7 +22,11 @@ def new(workdir):
     CA.digest = ew[1][6]
 
     CA.save()
-    CA.genroot()
+    try:
+        CA.genroot()
+    except external.CalledProcessError as e:
+        external.outputtostr(e)
+        newt.error(screen, e.stderr)
 
     disks_newt.store(screen, workdir, "pki/"+CA.name,
             _("CA private key backup"), "PKICR Backup")
