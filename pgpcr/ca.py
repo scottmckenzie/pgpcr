@@ -70,8 +70,9 @@ class CA:
         self._pki(["--gen", "--type", self.keyType, "--size", self.keySize,
             "--outform", "pem"], self._key)
         self._pki(["--self", "--type", self.keyType, "--digest", self.digest,
-            "--in", self._key, "--dn", self.domain, "--lifetime", self.CAValid,
-            "--ca", "--outform", "pem"], self._cert)
+            "--in", self._key, "--dn", "CN="+self.domain,
+            "--lifetime", self.CAValid, "--ca", "--outform", "pem"],
+            self._cert)
 
     def signserver(self, csr):
         pass
