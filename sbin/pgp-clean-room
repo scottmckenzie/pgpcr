@@ -54,11 +54,14 @@ while running:
             [(_("Generate a New GPG Master Key Pair"), "new gpg"),
                 (_("Load a GPG Master Key Pair from USB"), "load gpg"),
                 (_("New CA"), "newca"),
+                (_("Load CA"), "loadca"),
                 (_("Advanced Options"), "adv"),
                 (_("Quit"), "quit")
-                             ])
+                ])
 
     workdir = defaulthome
+    if ret.endswith("ca"):
+        workdir = os.environ["HOME"]+"/.pki"
     if not os.path.exists(workdir):
         os.mkdir(workdir)
     if ret == "new gpg":
@@ -66,9 +69,9 @@ while running:
     elif ret == "load gpg":
         gpg_ui.load(screen, workdir, expert)
     elif ret == "newca":
-        tmp = tempfile.TemporaryDirectory()
-        workdir = tmp.name
-        pki_ui.new(workdir)
+        pki_ui.new(screen, workdir)
+    elif ret == "loadca":
+        pki_ui.load(screen, workdir)
     elif ret == "adv":
         adv = ui.LCW(screen, _("Advanced Options"),
                                   _("These options are for users who know what"
