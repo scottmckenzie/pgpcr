@@ -7,7 +7,7 @@ _log = log.getlog(__name__)
 _prop = {
     "name": "CA_NAME",
     "CAValid": "CA_VALIDITY_DAYS",
-    "DN": "CA_DN",
+    "domain": "CA_DN",
     "ServerValid": "SERVER_VALIDITY_DAYS",
     "keyType": "KEY_TYPE",
     "keySize": "KEY_SIZE",
@@ -61,7 +61,7 @@ class CA:
         self._pki(["--gen", "--type", self.keyType, "--size", self.keySize,
             "--outform", "pem"], self._key)
         self._pki(["--self", "--type", self.keyType, "--digest", self.digest,
-            "--in", self._key, "--dn", self.DN, "--lifetime", self.CAValid,
+            "--in", self._key, "--dn", self.domain, "--lifetime", self.CAValid,
             "--ca", "--outform", "pem"], self._cert)
 
     def signserver(self, csr):
