@@ -721,6 +721,7 @@ Week 12
 	- Remove pgp-clean-room package
 	- Uploaded to mentors, but will wait for a stable release first:
 		- https://mentors.debian.net/package/pgpcr
+ - [x] Restart work on PKI UI
 
 Evaluation Period 3 / Week 13
 =============================
