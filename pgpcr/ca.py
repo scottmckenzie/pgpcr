@@ -52,12 +52,12 @@ class CA:
             prop = _prop[name]
             self._dict[prop] = value
 
-    def _pki(options, filename):
+    def _pki(self, options, filename):
         com = ["pki"]
         com.extend(options)
         external.processtofile(com, filename)
 
-    def genroot(self, workdir):
+    def genroot(self):
         self._pki(["--gen", "--type", self.keyType, "--size", self.keySize,
             "--outform", "pem"], self._key)
         self._pki(["--self", "--type", self.keyType, "--digest", self.digest,
