@@ -3,6 +3,8 @@ import shutil
 from collections import OrderedDict
 from . import external
 from . import log
+from . import time
+
 
 _log = log.getlog(__name__)
 
@@ -87,4 +89,15 @@ class CA:
             self._cert)
 
     def signserver(self, csr):
-        pass
+        subject = external.process(["openssl", "req", "-noout", "-in", csr,
+            "-subject"])
+        domain = subject.stdout[13:-1]
+        _log.info("subject %s domain=%s" % (subject.stdout, domain))
+        servercert = self._workdir+time.today()+"_"+domain+"_cert.pem"
+        csrpub = self._pki(["--pub", "--type", "pkcs10", "--outform", "pem",
+            "--in", csr])
+        _log.info(csrpub.stdout)
+        self._pki(["--issue", "--cacert", self._cert, "--cakey", self._key,
+            "--digest", self.digest, "--lifetime", self.serverValid,
+            "--flag", "serverAuth", "--flag", "clientAuth", "--san", domain,
+            "--dn", "CN="+domain, "--outform", "pem"], servercert)
