@@ -1,5 +1,6 @@
-from pgpcr import newt
-from pgpcr import ca
+from . import newt
+from . import ca
+from . import disks_newt
 
 def new(workdir):
     screen = newt.Screen()
@@ -19,5 +20,8 @@ def new(workdir):
     CA.keySize = ew[1][5]
     CA.digest = ew[1][6]
 
-    CA.save(workdir+"/temp.ca")
+    CA.save()
+    CA.genroot()
 
+    disks_newt.store(screen, workdir, "pki/"+CA.name,
+            _("CA private key backup"), "PKICR Backup")
