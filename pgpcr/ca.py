@@ -57,7 +57,7 @@ class CA:
             super().__setattr__(name, value)
         else:
             prop = _prop[name]
-            self._dict[prop] = value
+            self._dict[prop] = str(value)
 
     def _pki(self, options, filename):
         com = ["pki"]
