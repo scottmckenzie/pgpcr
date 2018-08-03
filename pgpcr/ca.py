@@ -88,6 +88,9 @@ class CA:
             "--lifetime", self.CAValid, "--ca", "--outform", "pem"],
             self._cert)
 
+    def export(self, path):
+        shutil.copy(self._cert, path)
+
     def signserver(self, csr):
         subject = external.process(["openssl", "req", "-noout", "-in", csr,
             "-subject"])
