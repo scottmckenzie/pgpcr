@@ -4,9 +4,11 @@ from snack import SnackScreen
 import subprocess
 import shutil
 import os
+import tempfile
 from pgpcr import gpg_newt as gpg_ui
 from pgpcr import newt as ui
 from pgpcr import smartcard_newt as smartcard_ui
+from pgpcr import pki_newt as pki_ui
 from pgpcr.context import defaulthome
 from pgpcr import tran
 from pgpcr import log
@@ -51,6 +53,7 @@ while running:
     ret = ui.LCM(screen, welcome,_("What do you wish to do?"),
             [(_("Generate a New GPG Master Key Pair"), "new gpg"),
                 (_("Load a GPG Master Key Pair from USB"), "load gpg"),
+                (_("New CA"), "newca"),
                 (_("Advanced Options"), "adv"),
                 (_("Quit"), "quit")
                              ])
@@ -62,6 +65,10 @@ while running:
         gpg_ui.new(screen, workdir, expert)
     elif ret == "load gpg":
         gpg_ui.load(screen, workdir, expert)
+    elif ret == "newca":
+        tmp = tempfile.TemporaryDirectory()
+        workdir = tmp.name
+        pki_ui.new(workdir)
     elif ret == "adv":
         adv = ui.LCW(screen, _("Advanced Options"),
                                   _("These options are for users who know what"
