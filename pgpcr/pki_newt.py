@@ -6,9 +6,13 @@ from . import external
 def new(workdir):
     screen = newt.Screen()
     ew = newt.EW(screen, _("New CA"), _("Fill out the fields below to create"
-        " a new Certificate Authority."), [_("Name of CA"), _("Days CA should"
-            " be valid for"), _("Domain of CA"), _("Days Server certificates"
-                " should be valid for"), _("Key Type"), _("Key Size"),
+        " a new Certificate Authority."), [
+            _("Name of CA"),
+            _("Days CA should be valid for"),
+            _("Domain of CA"),
+            _("Days Server certificates should be valid for"),
+            _("Key Type"),
+            _("Key Size"),
             _("Certificate Digest")])
     if ew[0] == "cancel":
         return
