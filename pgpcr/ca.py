@@ -1,4 +1,5 @@
 import json
+import shutil
 from collections import OrderedDict
 from . import external
 from . import log
@@ -22,11 +23,13 @@ keyTypes = OrderedDict([
 digests = ["sha256", "sha512", "sha384", "sha224", "sha1", "md5"]
 
 class CA:
-    def __init__(self, workdir, filename=None):
+    def __init__(self, workdir, loaddir=None):
         self._workdir = workdir
 
-        if filename is not None:
-            f = open(filename)
+        if loaddir is not None:
+            shutil.rmtree(workdir)
+            shutil.copytree(loaddir, workdir)
+            f = open(workdir+"/ca.json")
             j = json.load(f)
             f.close()
             self._dict = j
