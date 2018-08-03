@@ -8,7 +8,7 @@ _prop = {
     "name": "CA_NAME",
     "CAValid": "CA_VALIDITY_DAYS",
     "domain": "CA_DN",
-    "ServerValid": "SERVER_VALIDITY_DAYS",
+    "serverValid": "SERVER_VALIDITY_DAYS",
     "keyType": "KEY_TYPE",
     "keySize": "KEY_SIZE",
     "digest": "CERT_DIGEST"
