@@ -4,8 +4,7 @@ from . import disks_newt
 from . import external
 from . import time
 
-def new(workdir):
-    screen = newt.Screen()
+def new(screen, workdir):
     ew = newt.EW(screen, _("New CA"), _("Fill out the fields below to create"
         " a new Certificate Authority."), [
             _("Name of CA"),
