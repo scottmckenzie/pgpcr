@@ -60,7 +60,11 @@ class CA:
     def _pki(self, options, filename):
         com = ["pki"]
         com.extend(options)
-        external.processtofile(com, filename)
+        try:
+            external.processtofile(com, filename)
+        except external.CalledProcessError as e:
+            _log.info(e.stderr)
+            raise e
 
     def genroot(self):
         self._pki(["--gen", "--type", self.keyType, "--size", self.keySize,
