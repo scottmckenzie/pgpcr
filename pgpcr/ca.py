@@ -1,4 +1,5 @@
 import json
+from collections import OrderedDict
 from . import external
 from . import log
 
@@ -14,6 +15,10 @@ _prop = {
     "digest": "CERT_DIGEST"
 }
 
+keyTypes = OrderedDict([
+    ("rsa", ["4096", "3072", "2048"]),
+    ("ecdsa", ["521", "384", "256"])
+    ])
 class CA:
     def __init__(self, workdir, filename=None):
         self._workdir = workdir
