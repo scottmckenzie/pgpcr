@@ -44,3 +44,6 @@ def new(screen, workdir):
 
     disks_newt.store(screen, workdir, "pki/"+CA.name,
             _("CA private key backup"), "PKICR Backup")
+    disks_newt.export(screen, CA)
+    newt.alert(screen, _("CA creation successful!"), _("You have now"
+        " sucessfully created a Certificate Authority"))
