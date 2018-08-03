@@ -12,7 +12,7 @@ def new(workdir):
         return
     CA = ca.CA(workdir)
     CA.name = ew[1][0]
-    CA.daysValid = ew[1][1]
+    CA.CAValid = ew[1][1]
     CA.domain = ew[1][2]
     CA.serverValid = ew[1][3]
     CA.keyType = ew[1][4]
