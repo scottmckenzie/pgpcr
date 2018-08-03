@@ -62,14 +62,21 @@ class CA:
             prop = _prop[name]
             self._dict[prop] = str(value)
 
-    def _pki(self, options, filename):
+    def _pki(self, options, filename=None):
         com = ["pki"]
         com.extend(options)
-        try:
-            external.processtofile(com, filename)
-        except external.CalledProcessError as e:
-            _log.info(e.stderr)
-            raise e
+        if filename is not None:
+            try:
+                external.processtofile(com, filename)
+            except external.CalledProcessError as e:
+                _log.info(e.stderr)
+                raise e
+        else:
+            try:
+                return external.process(com)
+            except external.CalledProcessError as e:
+                _log.info(e.stderr)
+                raise e
 
     def genroot(self):
         self._pki(["--gen", "--type", self.keyType, "--size", self.keySize,
