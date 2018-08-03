@@ -19,6 +19,8 @@ keyTypes = OrderedDict([
     ("rsa", ["4096", "3072", "2048"]),
     ("ecdsa", ["521", "384", "256"])
     ])
+digests = ["sha256", "sha512", "sha384", "sha224", "sha1", "md5"]
+
 class CA:
     def __init__(self, workdir, filename=None):
         self._workdir = workdir
