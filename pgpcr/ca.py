@@ -35,9 +35,9 @@ class CA:
     def _cert(self):
         return self._workdir+"/"+self.name+"Cert.pem"
 
-    def save(self, filename):
-        with open(filename, "w+") as f:
-            json.dump(self._dict,f)
+    def save(self):
+        with open(self._workdir+"/ca.json", "w+") as f:
+            json.dump(self._dict, f)
 
     def __getattr__(self, name):
         _log.info("Get %s" % name)
