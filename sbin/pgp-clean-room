@@ -53,8 +53,8 @@ while running:
     ret = ui.LCM(screen, welcome,_("What do you wish to do?"),
             [(_("Generate a New GPG Master Key Pair"), "new gpg"),
                 (_("Load a GPG Master Key Pair from USB"), "load gpg"),
-                (_("New CA"), "newca"),
-                (_("Load CA"), "loadca"),
+                (_("Create a New Certificate Authority"), "newca"),
+                (_("Issue Certificates from Signing Requests"), "loadca"),
                 (_("Advanced Options"), "adv"),
                 (_("Quit"), "quit")
                 ])
@@ -82,6 +82,8 @@ while running:
                                        "import"),
                                    (_("Set Smartcard properties"), "setsmart"),
                                    (_("Set Smartcard PINs"), "setpins"),
+                                   (_("Issue certificate for local CSR"),
+                                       "localcsr"),
                                    (_("Run shell"), "shell"),
                                   ])
         if adv[0]:
@@ -106,6 +108,8 @@ while running:
         elif adv[1] == "setpins":
             smart = smartcard_ui.pickcard(screen, workdir)
             smartcard_ui.setpins(screen, smart)
+        elif adv[1] == "localcsr":
+            pki_newt.signfile(screen, workdir)
         elif adv[1] == "shell":
             screen.finish()
             subprocess.run(["bash", "-l"])
