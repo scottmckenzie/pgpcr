@@ -1,8 +1,11 @@
+from shutil import copy
+from os import makedirs
 from . import newt
 from . import ca
 from . import disks_newt
 from . import external
 from . import time
+from . import fmt
 
 def new(screen, workdir):
     ew = newt.EW(screen, _("New CA"), _("Fill out the fields below to create"
@@ -47,3 +50,59 @@ def new(screen, workdir):
     disks_newt.export(screen, CA)
     newt.alert(screen, _("CA creation successful!"), _("You have now"
         " sucessfully created a Certificate Authority"))
+
+def _loadCA(screen, workdir):
+    d = disks_newt.mountdisk(screen, _("CA private key backup"))
+    if d is None:
+        return
+    dirs = fmt.pki(d.mountpoint)
+    if dirs is None:
+        newt.error(screen, _("This disk does not contain a CA backup"))
+        d.eject()
+        load(screen, workdir)
+    lcw = newt.LCW(screen, _("CA Backup"), _("Please select your CA"), dirs)
+    if lcw[0]:
+        return
+    cafolder = d.mountpoint+"/pki/"+dirs[lcw[1]]
+    return ca.CA(workdir, cafolder)
+
+def signfile(screen, workdir):
+    CA = _loadCA(screen, workdir)
+    csr = newt.filepicker(screen, _("Open CSR"))
+    sign = newt.dangerConfirm(screen, _("Sign Certificate"), _("Do you want to"
+        " sign %s?" % csr))
+    if sign:
+        try:
+            cert = CA.signserver(csr)
+            newt.alert(screen, _("CSR"), _("Created certificate:\n%s") % cert)
+        except external.CalledProcessError as e:
+            newt.error(_("Certificate Signing Request Invalid. Please be sure"
+                " it is in Base64 PEM format.\n"+e.stderr))
+            return
+        d = disks_newt.setup(screen, _("CSR"), "PKICR CSR")
+        copy(cert, d.mountpoint)
+        d.eject()
+
+def load(screen, workdir):
+    CA = _loadCA(screen, workdir)
+    csrs = None
+    while csrs is None:
+        csrdisk = disks_newt.mountdisk(screen, _("CSR"))
+        if csrdisk is None:
+            return
+        csrs = fmt.csr(csrdisk.mountpoint)
+        if csrs is None:
+            newt.alert(screen, _("CSR"), _("There are no CSRs on this disks."
+                " Please be sure they are in the csr/ folder"))
+    ccw = newt.CCW(screen, _("Certificate Signing Request"), _("Which CSRs"
+        " would you like to issue certificates for?"), csrs)
+    if ccw[0]:
+        return
+    export = csrdisk.mountpoint+"/certs"
+    makedirs(export, exist_ok=True)
+    for c in ccw[1]:
+        path = csrdisk.mountpoint+"/csr/"+c
+        cert = CA.signserver(path)
+        copy(cert, export)
+        newt.alert(screen, _("CSR"), _("Created certificate:\n%s") % cert)
+    csrdisk.eject()
