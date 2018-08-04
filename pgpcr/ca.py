@@ -111,4 +111,6 @@ class CA:
         self._pki(["--issue", "--cacert", self._cert, "--cakey", self._key,
             "--digest", self.digest, "--lifetime", self.serverValid,
             "--flag", "serverAuth", "--flag", "clientAuth", "--san", domain,
-            "--dn", "CN="+domain, "--outform", "pem"], servercert)
+            "--dn", "CN="+domain, "--outform", "pem"], servercert,
+            csrpub.stdout)
+        return servercert
