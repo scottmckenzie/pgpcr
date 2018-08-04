@@ -104,7 +104,7 @@ class CA:
             "-subject"])
         domain = subject.stdout[13:-1]
         _log.info("subject %s domain=%s" % (subject.stdout, domain))
-        servercert = self._workdir+time.today()+"_"+domain+"_cert.pem"
+        servercert = self._workdir+"/"+time.today()+"_"+domain+"_cert.pem"
         csrpub = self._pki(["--pub", "--type", "pkcs10", "--outform", "pem",
             "--in", csr])
         _log.info(csrpub.stdout)
