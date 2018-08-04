@@ -723,6 +723,18 @@ Week 12
 		- https://mentors.debian.net/package/pgpcr
  - [x] Restart work on PKI UI
 
+2018-08-03
+----------
+ - [x] Save CA to USB
+	- Make disks_newt.store more generic
+ - [x] Load CA from USB
+ - [x] Issue certificate from CSR
+ - [x] Load CSR from disk
+ - [x] Export server certificate to USB
+ - [x] Issue multiple CSRs at once
+ - [x] Export Certificate
+	- Make disks_newt.export more generic
+
 Evaluation Period 3 / Week 13
 =============================
 
