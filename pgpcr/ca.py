@@ -1,5 +1,6 @@
 import json
 import shutil
+import os
 from collections import OrderedDict
 from . import external
 from . import log
@@ -64,18 +65,25 @@ class CA:
             prop = _prop[name]
             self._dict[prop] = str(value)
 
-    def _pki(self, options, filename=None):
+    def _pki(self, options, filename=None, inp=None):
+        if type(inp) is str:
+            r, w = os.pipe()
+            r = os.fdopen(r)
+            w = os.fdopen(w, "w")
+            w.write(inp)
+            w.close()
+            inp = r
         com = ["pki"]
         com.extend(options)
         if filename is not None:
             try:
-                external.processtofile(com, filename)
+                external.processtofile(com, filename, inp)
             except external.CalledProcessError as e:
                 _log.info(e.stderr)
                 raise e
         else:
             try:
-                return external.process(com)
+                return external.process(com, {'stdin': inp})
             except external.CalledProcessError as e:
                 _log.info(e.stderr)
                 raise e
