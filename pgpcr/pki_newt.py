@@ -64,7 +64,9 @@ def _loadCA(screen, workdir):
     if lcw[0]:
         return
     cafolder = d.mountpoint+"/pki/"+dirs[lcw[1]]
-    return ca.CA(workdir, cafolder)
+    CA = ca.CA(workdir, cafolder)
+    d.eject()
+    return CA
 
 def signfile(screen, workdir):
     CA = _loadCA(screen, workdir)
