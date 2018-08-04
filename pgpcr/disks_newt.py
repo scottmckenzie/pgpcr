@@ -73,22 +73,22 @@ def store(screen, workdir, folder, kind, label, ignore=None):
         store(screen, workdir, folder, kind, label, ignore)
 
 
-def export(screen, obj, secret=False):
+def export(screen, obj, kind, label, secret=False):
     try:
-        label = _("public key export")
         if secret:
-            label = _("subkey and public key export")
+            kind = secret
         publicFail = True
         while publicFail:
-            public = setup(screen, label, "PGPCR Export")
+            public = setup(screen, kind, label)
             if public is None:
-                exp = newt.dangerConfirm(screen, label,
+                exp = newt.dangerConfirm(screen, kind,
                         _("Are you sure you don't want to export your key?"))
                 if exp:
                     return
             else:
                 publicFail = False
-        copy("/etc/pgpcr/import.sh", public.mountpoint)
+        if "PGPCR" in label:
+            copy("/etc/pgpcr/import.sh", public.mountpoint)
         try:
             mkdir(public.mountpoint+"/public")
         except FileExistsError:
