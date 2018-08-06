@@ -109,7 +109,7 @@ while running:
             smart = smartcard_ui.pickcard(screen, workdir)
             smartcard_ui.setpins(screen, smart)
         elif adv[1] == "localcsr":
-            pki_newt.signfile(screen, workdir)
+            pki_ui.signfile(screen, workdir)
         elif adv[1] == "shell":
             screen.finish()
             subprocess.run(["bash", "-l"])
