@@ -36,7 +36,7 @@ def pickdisks(screen, use):
             sleep(1)
             continue
 
-def store(screen, workdir, name, ignore=None):
+def store(screen, workdir, folder, kind, label, ignore=None):
     try:
         i = 1
         moredisks = True
@@ -44,8 +44,8 @@ def store(screen, workdir, name, ignore=None):
             setupFail = True
             b = None
             while setupFail:
-                b = setup(screen, _("master key backup")+" "+str(i),
-                        "PGPCR Backup "+str(i))
+                b = setup(screen, kind+" "+str(i),
+                        label+" "+str(i))
                 if b is None:
                     skip = newt.dangerConfirm(screen, _("Danger!"),
                             _("Are you sure you don't want to make any more"
@@ -56,7 +56,7 @@ def store(screen, workdir, name, ignore=None):
                     setupFail = False
             if b is None:
                 return
-            b.backup(workdir, name, ignore)
+            b.backup(workdir, folder, ignore)
             newt.alert(screen, str(b),
                          _("Your backup to the above disk is now complete "
                          "and the disk can be ejected."))
@@ -70,25 +70,25 @@ def store(screen, workdir, name, ignore=None):
         newt.error(s)
     except external.CalledProcessError as e:
         newt.catchCPE(screen, e)
-        store(screen, workdir, name)
+        store(screen, workdir, folder, kind, label, ignore)
 
 
-def export(screen, gk, secret=False):
+def export(screen, obj, kind, label, secret=False):
     try:
-        label = _("public key export")
         if secret:
-            label = _("subkey and public key export")
+            kind = secret
         publicFail = True
         while publicFail:
-            public = setup(screen, label, "PGPCR Export")
+            public = setup(screen, kind, label)
             if public is None:
-                exp = newt.dangerConfirm(screen, label,
+                exp = newt.dangerConfirm(screen, kind,
                         _("Are you sure you don't want to export your key?"))
                 if exp:
                     return
             else:
                 publicFail = False
-        copy("/etc/pgpcr/import.sh", public.mountpoint)
+        if "PGPCR" in label:
+            copy("/etc/pgpcr/import.sh", public.mountpoint)
         try:
             mkdir(public.mountpoint+"/public")
         except FileExistsError:
@@ -98,23 +98,24 @@ def export(screen, gk, secret=False):
                 mkdir(public.mountpoint+"/private")
         except FileExistsError:
             pass
-        gk.export(public.mountpoint+"/public")
+        obj.export(public.mountpoint+"/public")
         if secret:
-            gk.exportsubkeys(public.mountpoint+"/private")
+            obj.exportsubkeys(public.mountpoint+"/private")
         public.eject()
     except disks.CopyError as e:
         s = " ".join(e)
         newt.error(s)
     except external.CalledProcessError as e:
         newt.catchCPE(screen, e)
-        export(screen, gk)
+        export(screen, obj, secret)
 
 
 def setup(screen, use, label):
     disk = pickdisks(screen, use)
     if disk is None:
         return
-    if disk.label is not None and "PGPCR" in disk.label:
+    if disk.label is not None and ("PGPCR" in disk.label
+            or "PKICR" in disk.label):
         reformat = newt.dangerConfirm(screen, _("Reformat"), _("Do you want"
             " to reformat this disk?\n%s") % str(disk))
         if not reformat:

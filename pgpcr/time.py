@@ -18,3 +18,6 @@ def _datetime2delta(dt):
 def isostr2delta(isostr):
     dt = _isostr2datetime(isostr)
     return _datetime2delta(dt)
+
+def today():
+    return datetime.date.today().strftime("%Y-%m-%d")

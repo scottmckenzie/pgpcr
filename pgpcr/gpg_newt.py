@@ -102,7 +102,8 @@ def keyalgos(screen, gk):
     return True
 
 def save(screen, workdir, gk):
-    disks_newt.store(screen, workdir, "gpg/"+gk.fpr, gpg_ops.ignore)
+    disks_newt.store(screen, workdir, "gpg/"+gk.fpr, _("master key backup"),
+            "PGPCR Backup", gpg_ops.ignore)
     export = newt.BCW(screen, _("Key Export"),
                                 _("How would you like to export your"
                                 " subkeys?"),
@@ -110,10 +111,11 @@ def save(screen, workdir, gk):
                                 (_("Smartcard"), "smartcard")])
     secret = False
     if export == "storage":
-        secret = True
+        secret = _("subkey and public key export")
     elif export == "smartcard":
-        smartcard_newt.export(screen, gk)
-    disks_newt.export(screen, gk, secret)
+        smartcard_newt.export(screen, gk, secret)
+    disks_newt.export(screen, gk, _("public key export"), "PGPCR Export",
+            secret)
     newt.alert(screen, _("New Key Pair Creation Complete"),
                  _("You can now store your backups in a safe place"))
     newt.alert(screen, _("IMPORTANT"),

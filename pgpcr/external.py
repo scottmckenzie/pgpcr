@@ -25,9 +25,9 @@ def processb(cmd, args={}):
     return run(**default)
 
 
-def processtofile(cmd, file):
+def processtofile(cmd, file=None, inp=None):
     with open(file, "wb") as f:
-        args = {"stdout": f}
+        args = {"stdout": f, "stdin": inp}
         return processb(cmd, args)
 
 def setuprundir():
