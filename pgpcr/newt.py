@@ -241,9 +241,6 @@ def filepicker(screen, title, path="."):
                     (_("Select"), "select"),
                     (_("Refresh"), "refresh"), (_("Cancel"), "cancel")
                     ])
-        if lcw[1] == 0:
-            path = os.path.dirname(path)
-            continue
         index = lcw[1] - 1
         current = sd[index]
         if lcw[0]  == "cancel":
@@ -251,7 +248,9 @@ def filepicker(screen, title, path="."):
         elif lcw[0] == "select":
             return current.path
         elif lcw[0] is None:
-            if current.is_dir():
+            if lcw[1] == 0:
+                path = os.path.dirname(path)
+            elif current.is_dir():
                 path = current.path
             else:
                 error(screen, _("Not a directory"))
