@@ -754,10 +754,12 @@ Evaluation Period 3 / Week 13
  - [x] Fix up file picker
  - [x] Better form validation for new CA creation
  - [x] gpgpartparse manual page
- - [ ] Release 1.0
- - [ ] Submit Debian package
- - [ ] File RFS
- - [ ] Link RFS in blog post and publish blog post
+ - [x] Release 1.0
+ - [x] Submit Debian package
+ - [x] File RFS
+	- [#905666](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=905666)
+ - [x] Link RFS in blog post
+ - [ ] Publish blog post
  - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Incorporate translations and community testing
  - [ ] Bug fixes
