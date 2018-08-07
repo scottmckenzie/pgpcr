@@ -1,0 +1,27 @@
+.TH gpgpartparse 1
+
+.SH NAME
+gpgpartparse \- parse files in
+.BR gpgparticipants(1)
+format
+
+.SH DESCRIPTION
+.B gpgpartparse
+parses
+.BR gpgparticipants(1)
+files and outputs a newline-separated list of key fingerprints as long as:
+
+At least one checksum is marked as verified, and both "Fingerprint OK" and
+"ID OK" are marked as verified for that key.
+
+An item is marked as verified by replacing the space in "[ ]" with an x.
+
+.SH AUTHOR
+The PGP Clean Room and its utilities were created by
+Jacob Adams <tookmund@gmail.com>
+
+.SH SEE ALSO
+.BR gpgparticipants(1),
+.BR pgpcr-keysigning(1),
+.BR pgpcr-sendkeys(1),
+.BR caff(1)
