@@ -60,8 +60,9 @@ while running:
                 ])
 
     workdir = defaulthome
+    cawd = os.environ["HOME"]+"/.pki"
     if ret.endswith("ca"):
-        workdir = os.environ["HOME"]+"/.pki"
+        workdir = cawd
     if not os.path.exists(workdir):
         os.mkdir(workdir)
     if ret == "new gpg":
@@ -109,6 +110,7 @@ while running:
             smart = smartcard_ui.pickcard(screen, workdir)
             smartcard_ui.setpins(screen, smart)
         elif adv[1] == "localcsr":
+            workdir = cawd
             pki_ui.signfile(screen, workdir)
         elif adv[1] == "shell":
             screen.finish()
