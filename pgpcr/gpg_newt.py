@@ -166,18 +166,18 @@ def load(screen, workdir, expert):
             title += " "+_("EXPERT MODE")
         lm = newt.LCM(screen, title, gk.info,
                                  [(_("Sign GPG Public Keys"), "sign"),
-                                  (_("Associate a UID with your master key"
-                                  " pair"),
-                                     "adduid"),
-                                  (_("Revoke a UID associated with your master"
-                                  " key pair"), "revuid"),
-                                  (_("Revoke your master key pair or one of"
-                                  " its subkeys"), "revkeys"),
                                   (_("Change the expiration date on your"
                                       " master key pair or a subkey"),
                                       "expirekeys"),
+                                  (_("Associate a UID with your master key"
+                                  " pair"),
+                                     "adduid"),
                                   (_("Add a new subkey to your master key"
                                       " pair"), "newsub"),
+                                  (_("Revoke your master key pair or one of"
+                                  " its subkeys"), "revkeys"),
+                                  (_("Revoke a UID associated with your master"
+                                  " key pair"), "revuid"),
                                   (_("Refresh Key"), "refresh"),
                                   (_("Quit"), "quit")
                                  ])
