@@ -182,9 +182,9 @@ class GPGKey(context.Context):
         if sub is not None:
             self._subalgo = sub
 
-    def genseasubs(self, status, explain, redraw, data):
+    def genseasubs(self, status, explain, redraw, data=None):
         # Force a redraw
-        data = redraw(data, True)
+        data = redraw(data)
         s = explain(data, _("Signing Subkey"), _("A signing subkey will now be"
             " generated. This is used to ensure what you send across the"
             " Internet, like emails or Debian packages, has not been tampered"

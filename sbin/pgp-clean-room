@@ -4,9 +4,11 @@ from snack import SnackScreen
 import subprocess
 import shutil
 import os
+import tempfile
 from pgpcr import gpg_newt as gpg_ui
 from pgpcr import newt as ui
 from pgpcr import smartcard_newt as smartcard_ui
+from pgpcr import pki_newt as pki_ui
 from pgpcr.context import defaulthome
 from pgpcr import tran
 from pgpcr import log
@@ -18,7 +20,7 @@ _log.info("GPG_TTY: "+os.getenv("GPG_TTY", "NOT SET"))
 
 screen = SnackScreen()
 lang = ui.LCM(screen, "Language", "Choose your language",
-                [("English", "en"), ("Deutsch", "de")])
+                [("English", "en")])
 
 os.environ["LANGUAGE"] = lang
 _log.info("LANGUAGE: "+lang)
@@ -28,7 +30,7 @@ if not tran:
             "back to English")
 
 keyboard = ui.confirm(screen, _("Keyboard Layout"), _("Would you like to"
-    " use the default keyboard layout (US QWERTY)"))
+    " use the default keyboard layout (US QWERTY)?"))
 if not keyboard:
     screen.finish()
     subprocess.run(["sudo", "dpkg-reconfigure", "keyboard-configuration"])
@@ -48,20 +50,29 @@ while running:
     welcome = _("Welcome to the PGP Clean Room!")
     if expert:
         welcome += " "+_("EXPERT MODE")
-    ret = ui.LCM(screen, welcome,_("What do you wish to do?"),
+    ret = ui.LCM(screen, welcome, _("What would you like to do?"),
             [(_("Generate a New GPG Master Key Pair"), "new gpg"),
                 (_("Load a GPG Master Key Pair from USB"), "load gpg"),
+                (_("Create a New Certificate Authority"), "newca"),
+                (_("Issue Certificates from Signing Requests"), "loadca"),
                 (_("Advanced Options"), "adv"),
                 (_("Quit"), "quit")
-                             ])
+                ])
 
     workdir = defaulthome
+    cawd = os.environ["HOME"]+"/.pki"
+    if ret.endswith("ca"):
+        workdir = cawd
     if not os.path.exists(workdir):
         os.mkdir(workdir)
     if ret == "new gpg":
         gpg_ui.new(screen, workdir, expert)
     elif ret == "load gpg":
         gpg_ui.load(screen, workdir, expert)
+    elif ret == "newca":
+        pki_ui.new(screen, workdir)
+    elif ret == "loadca":
+        pki_ui.load(screen, workdir)
     elif ret == "adv":
         adv = ui.LCW(screen, _("Advanced Options"),
                                   _("These options are for users who know what"
@@ -72,6 +83,8 @@ while running:
                                        "import"),
                                    (_("Set Smartcard properties"), "setsmart"),
                                    (_("Set Smartcard PINs"), "setpins"),
+                                   (_("Issue certificate for local CSR"),
+                                       "localcsr"),
                                    (_("Run shell"), "shell"),
                                   ])
         if adv[0]:
@@ -96,12 +109,16 @@ while running:
         elif adv[1] == "setpins":
             smart = smartcard_ui.pickcard(screen, workdir)
             smartcard_ui.setpins(screen, smart)
+        elif adv[1] == "localcsr":
+            workdir = cawd
+            pki_ui.signfile(screen, workdir)
         elif adv[1] == "shell":
             screen.finish()
             subprocess.run(["bash", "-l"])
     elif ret == "quit":
         ret = ui.dangerConfirm(screen, _("PGP Clean Room"),
-                                      _("Would you like to shutdown the PGP Clean Room?"))
+                                      _("Would you like to shutdown the PGP"
+                                      " Clean Room?"))
         if ret:
             running = False
     try:

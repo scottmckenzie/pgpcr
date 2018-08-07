@@ -5,6 +5,7 @@ from time import sleep
 from snack import *
 from . import external
 from . import valid
+from .gpg_ops import PinentryCancelled
 
 
 def getwidth():
@@ -142,13 +143,22 @@ def uid(screen, purpose):
         if ew[0]:
             return None
         else:
-            ret = ew[1][0]
-            if ew[1][2] != "":
+            name = ew[1][0]
+            email = ew[1][1]
+            comment = ew[1][2]
+            if name != "":
+                ret = name
+            else:
+                error(screen, _("You must supply a name"))
+                continue
+            if comment != "":
                 ret += " ("+ew[1][2]+")"
-            if valid.email(ew[1][1]):
-                return ret+" <"+ew[1][1]+">"
+            if valid.email(email):
+                ret += " <"+ew[1][1]+">"
             else:
                 error(screen, _("You must supply a valid email address"))
+                continue
+            return ret
 
 def alert(screen, title, msg):
     BCW(screen, title, msg, [(_("Ok"), None)])
@@ -171,7 +181,7 @@ def NotImplementedYet(screen):
     alert(screen, "Not Implemented Yet",
           "This feature has not yet been implemented")
 
-def redraw(screen, doIt):
+def redraw(screen, doIt=True):
     if doIt:
         screen.finish()
         screen = Screen()
@@ -231,9 +241,6 @@ def filepicker(screen, title, path="."):
                     (_("Select"), "select"),
                     (_("Refresh"), "refresh"), (_("Cancel"), "cancel")
                     ])
-        if lcw[1] == 0:
-            path = os.path.dirname(path)
-            continue
         index = lcw[1] - 1
         current = sd[index]
         if lcw[0]  == "cancel":
@@ -241,7 +248,9 @@ def filepicker(screen, title, path="."):
         elif lcw[0] == "select":
             return current.path
         elif lcw[0] is None:
-            if current.is_dir():
+            if lcw[1] == 0:
+                path = os.path.dirname(path)
+            elif current.is_dir():
                 path = current.path
             else:
                 error(screen, _("Not a directory"))
@@ -259,12 +268,12 @@ def catchCPE(screen, e):
 
 def catchGPGMEErr(what, g):
     screen = Screen()
-    if g.code_str == "Operation cancelled":
+    if type(g) is PinentryCancelled:
         cancel = dangerConfirm(screen, what, _("Are you sure you want to"
         " cancel")+" "+what+"?")
         if cancel:
             return False
         return True
     else:
-        error(screen, what+_("error")+": "+str(g))
+        error(screen, what+" "+_("error")+": "+str(g))
         return False

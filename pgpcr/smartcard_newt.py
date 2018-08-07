@@ -9,7 +9,7 @@ def pickcard(screen, homedir):
     except smartcard.NoSmartcardDetected:
         newt.alert(screen, _("Smartcards"),
                      _("No smartcards detected."
-                       " Please connect one and press Ok."))
+                       " Please connect one (or reconnect it) and press Ok."))
         sleep(1)
         return pickcard(screen, homedir)
     card = newt.confirm(screen, _("Smartcard"), _("Is this your smartcard?")+
@@ -82,7 +82,7 @@ def export(screen, gk):
             else:
                 continue
             _keytocard(screen, gk, k.fpr, slot)
-    if smart.new:
+    if smart.new or smart.vendor == "Nitrokey":
         setpins(screen, smart)
 
 def setup(screen, smart):

@@ -32,7 +32,7 @@ def new(screen, workdir, expert):
     while True:
         try:
             gk.genmaster(uid)
-        except gpg_ops.GPGMEError as g:
+        except (gpg_ops.GPGMEError, gpg_ops.PinentryCancelled) as g:
             cont = newt.catchGPGMEErr(_("Master key pair generation"), g)
             if cont:
                 continue
@@ -53,7 +53,7 @@ def new(screen, workdir, expert):
         try:
             gk.genseasubs(sprog.setText, newt.ContinueSkipAbort,
                     newt.redraw, screen)
-        except gpg_ops.GPGMEError as g:
+        except (gpg_ops.GPGMEError, gpg_ops.PinentryCancelled) as g:
             cancel = newt.catchGPGMEErr(_("Subkey generation"), g)
             if not cancel:
                 continue
@@ -102,7 +102,9 @@ def keyalgos(screen, gk):
     return True
 
 def save(screen, workdir, gk):
-    disks_newt.store(screen, workdir, "gpg/"+gk.fpr, gpg_ops.ignore)
+    disks_newt.store(screen, workdir, "gpg/"+gk.fpr, _("master key backup"),
+            "PGPCR Backup", gpg_ops.ignore)
+    screen = newt.redraw(screen)
     export = newt.BCW(screen, _("Key Export"),
                                 _("How would you like to export your"
                                 " subkeys?"),
@@ -110,10 +112,12 @@ def save(screen, workdir, gk):
                                 (_("Smartcard"), "smartcard")])
     secret = False
     if export == "storage":
-        secret = True
+        secret = _("subkey and public key export")
     elif export == "smartcard":
         smartcard_newt.export(screen, gk)
-    disks_newt.export(screen, gk, secret)
+    disks_newt.export(screen, gk, _("public key export"), "PGPCR Export",
+            secret)
+    screen = newt.redraw(screen)
     newt.alert(screen, _("New Key Pair Creation Complete"),
                  _("You can now store your backups in a safe place"))
     newt.alert(screen, _("IMPORTANT"),
@@ -139,7 +143,8 @@ def load(screen, workdir, expert):
     dirs = fmt.backups(d.mountpoint)
     if dirs is None:
         newt.error(screen, _("This disk does not contain a master key pair"
-                               " backup."))
+                               " backup. Please be sure it is in the gpg/"
+                               " folder."))
         d.eject()
         load(screen, workdir, expert)
     lcw = newt.LCW(screen, _("Key Fingerprint"),
@@ -161,18 +166,18 @@ def load(screen, workdir, expert):
             title += " "+_("EXPERT MODE")
         lm = newt.LCM(screen, title, gk.info,
                                  [(_("Sign GPG Public Keys"), "sign"),
-                                  (_("Associate a UID with your master key"
-                                  " pair"),
-                                     "adduid"),
-                                  (_("Revoke a UID associated with your master"
-                                  " key pair"), "revuid"),
-                                  (_("Revoke your master key pair or one of"
-                                  " its subkeys"), "revkeys"),
                                   (_("Change the expiration date on your"
                                       " master key pair or a subkey"),
                                       "expirekeys"),
+                                  (_("Associate a UID with your master key"
+                                  " pair"),
+                                     "adduid"),
                                   (_("Add a new subkey to your master key"
                                       " pair"), "newsub"),
+                                  (_("Revoke your master key pair or one of"
+                                  " its subkeys"), "revkeys"),
+                                  (_("Revoke a UID associated with your master"
+                                  " key pair"), "revuid"),
                                   (_("Refresh Key"), "refresh"),
                                   (_("Quit"), "quit")
                                  ])

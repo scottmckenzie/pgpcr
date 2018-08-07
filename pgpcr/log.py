@@ -4,15 +4,6 @@ import sys
 from os import environ
 from snack import SnackScreen
 
-def init():
-    log = logging.getLogger("pgpcr")
-    log.setLevel(logging.INFO)
-    fh = logging.FileHandler(environ["HOME"]+"/pgpcr.log")
-    fh.setLevel(logging.INFO)
-    formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
-    fh.setFormatter(formatter)
-    log.addHandler(fh)
-
 def _excepthook(t, v, tb):
     log = logging.getLogger("pgpcr")
     SnackScreen().finish()
@@ -21,7 +12,15 @@ def _excepthook(t, v, tb):
     for x in exc:
         log.error(x)
 
-sys.excepthook = _excepthook
+def init():
+    sys.excepthook = _excepthook
+    log = logging.getLogger("pgpcr")
+    log.setLevel(logging.INFO)
+    fh = logging.FileHandler(environ["HOME"]+"/pgpcr.log")
+    fh.setLevel(logging.INFO)
+    formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
+    fh.setFormatter(formatter)
+    log.addHandler(fh)
 
 def getlog(name):
     return logging.getLogger(name)

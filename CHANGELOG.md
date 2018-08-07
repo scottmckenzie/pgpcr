@@ -716,20 +716,50 @@ Week 12
  - [ ] Tell the user to spam keyboard input when entropy is low
 	- Can't do this until I know when there's low entropy
 	- https://lists.gnupg.org/pipermail/gnupg-users/2018-August/060851.html
- - [ ] Debian package
+ - [x] Debian package
 	- Add proper ${perl:Depends}
 	- Remove pgp-clean-room package
+	- Uploaded to mentors, but will wait for a stable release first:
+		- https://mentors.debian.net/package/pgpcr
+ - [x] Restart work on PKI UI
+
+2018-08-03
+----------
+ - [x] Save CA to USB
+	- Make disks_newt.store more generic
+ - [x] Load CA from USB
+ - [x] Issue certificate from CSR
+ - [x] Load CSR from disk
+ - [x] Export server certificate to USB
+ - [x] Issue multiple CSRs at once
+ - [x] Export Certificate
+	- Make disks_newt.export more generic
 
 Evaluation Period 3 / Week 13
 =============================
 
 2018-08-06
 ----------
- - [ ] Testing, testing and more testing
- - [ ] Overflow for anything not finished on schedule
+ - [x] Merge PKI/CA code
+ - [x] Disable incomplete German translation
+ - [x] Draft final blog post
+ - [x] Testing, testing and more testing
+
+2018-08-07
+----------
+ - [x] Test PinentryCancelled
+ - [x] Don't simplify ca.json
+	- [#37](https://salsa.debian.org/tookmund-guest/pgpcr/issues/37)
+	- Makes sense to save properties so we can regenerate without asking questions
+ - [x] Fix up file picker
+ - [x] Better form validation for new CA creation
+ - [x] gpgpartparse manual page
+ - [ ] Release 1.0
+ - [ ] Submit Debian package
+ - [ ] File RFS
+ - [ ] Link RFS in blog post and publish blog post
  - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Incorporate translations and community testing
- - [ ] Make sure to enable locales for translations
  - [ ] Bug fixes
 
 Misc
