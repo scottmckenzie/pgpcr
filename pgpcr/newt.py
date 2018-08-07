@@ -276,5 +276,5 @@ def catchGPGMEErr(what, g):
             return False
         return True
     else:
-        error(screen, what+_("error")+": "+str(g))
+        error(screen, what+" "+_("error")+": "+str(g))
         return False
