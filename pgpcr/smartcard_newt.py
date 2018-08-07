@@ -82,7 +82,7 @@ def export(screen, gk):
             else:
                 continue
             _keytocard(screen, gk, k.fpr, slot)
-    if smart.new:
+    if smart.new or smart.vendor == "Nitrokey":
         setpins(screen, smart)
 
 def setup(screen, smart):
