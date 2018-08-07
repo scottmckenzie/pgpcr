@@ -57,6 +57,7 @@ def store(screen, workdir, folder, kind, label, ignore=None):
             if b is None:
                 return
             b.backup(workdir, folder, ignore)
+            screen = newt.redraw(screen, True)
             newt.alert(screen, str(b),
                          _("Your backup to the above disk is now complete "
                          "and the disk can be ejected."))
