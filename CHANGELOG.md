@@ -747,10 +747,15 @@ Evaluation Period 3 / Week 13
 
 2018-08-07
 ----------
- - [ ] Test PinentryCancelled
- - [ ] Simplify ca.json
+ - [x] Test PinentryCancelled
+ - [x] Don't simplify ca.json
 	- [#37](https://salsa.debian.org/tookmund-guest/pgpcr/issues/37)
+	- Makes sense to save properties so we can regenerate without asking questions
+ - [x] Fix up file picker
  - [ ] Release 1.0
+ - [ ] Submit Debian package
+ - [ ] File RFS
+ - [ ] Link RFS in blog post and publish blog post
  - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Incorporate translations and community testing
  - [ ] Bug fixes
