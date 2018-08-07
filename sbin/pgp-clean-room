@@ -50,7 +50,7 @@ while running:
     welcome = _("Welcome to the PGP Clean Room!")
     if expert:
         welcome += " "+_("EXPERT MODE")
-    ret = ui.LCM(screen, welcome,_("What do you wish to do?"),
+    ret = ui.LCM(screen, welcome, _("What would you like to do?"),
             [(_("Generate a New GPG Master Key Pair"), "new gpg"),
                 (_("Load a GPG Master Key Pair from USB"), "load gpg"),
                 (_("Create a New Certificate Authority"), "newca"),
