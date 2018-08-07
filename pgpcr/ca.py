@@ -21,7 +21,6 @@ _prop = {
 
 keyTypes = OrderedDict([
     ("rsa", ["4096", "3072", "2048"]),
-    ("ecdsa", ["521", "384", "256"])
     ])
 digests = ["sha256", "sha512", "sha384", "sha224", "sha1", "md5"]
 
