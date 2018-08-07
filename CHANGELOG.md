@@ -740,11 +740,17 @@ Evaluation Period 3 / Week 13
 
 2018-08-06
 ----------
- - [ ] Testing, testing and more testing
- - [ ] Overflow for anything not finished on schedule
+ - [x] Merge PKI/CA code
+ - [x] Disable incomplete German translation
+ - [x] Draft final blog post
+ - [x] Testing, testing and more testing
+
+2018-08-07
+----------
+ - [ ] Test PinentryCancelled
+ - [ ] Release 1.0
  - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Incorporate translations and community testing
- - [ ] Make sure to enable locales for translations
  - [ ] Bug fixes
 
 Misc
