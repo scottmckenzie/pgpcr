@@ -143,7 +143,8 @@ def load(screen, workdir, expert):
     dirs = fmt.backups(d.mountpoint)
     if dirs is None:
         newt.error(screen, _("This disk does not contain a master key pair"
-                               " backup."))
+                               " backup. Please be sure it is in the gpg/"
+                               " folder."))
         d.eject()
         load(screen, workdir, expert)
     lcw = newt.LCW(screen, _("Key Fingerprint"),
