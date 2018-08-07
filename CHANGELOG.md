@@ -748,6 +748,8 @@ Evaluation Period 3 / Week 13
 2018-08-07
 ----------
  - [ ] Test PinentryCancelled
+ - [ ] Simplify ca.json
+	- [#37](https://salsa.debian.org/tookmund-guest/pgpcr/issues/37)
  - [ ] Release 1.0
  - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
  - [ ] Incorporate translations and community testing
