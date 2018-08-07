@@ -14,7 +14,7 @@ def new(screen, workdir):
             _("When the CA should expire (YYYY-MM-DD)"),
             _("Domain of CA"),
             _("Days Server certificates should be valid for")])
-    if ew[0] == "cancel":
+    if ew[0]:
         return
     CA = ca.CA(workdir)
     CA.name = ew[1][0]
