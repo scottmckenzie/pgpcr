@@ -117,7 +117,8 @@ while running:
             subprocess.run(["bash", "-l"])
     elif ret == "quit":
         ret = ui.dangerConfirm(screen, _("PGP Clean Room"),
-                                      _("Would you like to shutdown the PGP Clean Room?"))
+                                      _("Would you like to shutdown the PGP"
+                                      " Clean Room?"))
         if ret:
             running = False
     try:
