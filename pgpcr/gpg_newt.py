@@ -114,7 +114,7 @@ def save(screen, workdir, gk):
     if export == "storage":
         secret = _("subkey and public key export")
     elif export == "smartcard":
-        smartcard_newt.export(screen, gk, secret)
+        smartcard_newt.export(screen, gk)
     disks_newt.export(screen, gk, _("public key export"), "PGPCR Export",
             secret)
     screen = newt.redraw(screen, True)
