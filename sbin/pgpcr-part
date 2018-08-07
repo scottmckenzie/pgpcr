@@ -16,7 +16,9 @@ gettext.install("pgpcr")
 if len(sys.argv) <= 1:
 	print(_("Need a disk to partition!"))
 	sys.exit(1)
-prog = newt.Progress(None, _("Disk Setup")+": "+sys.argv[1],
+
+screen = newt.Screen()
+prog = newt.Progress(screen, _("Disk Setup")+": "+sys.argv[1],
                             _("Setting up..."), 4)
 log = open(environ["HOME"]+"/pgpcr-part.log", "a")
 log.write(sys.argv[1]+"\n")
@@ -45,3 +47,4 @@ subprocess.run(mkfs, stdout=log, stderr=log)
 log.write("\n\n")
 log.close()
 prog.inc()
+screen.finish()
