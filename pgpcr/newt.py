@@ -142,13 +142,22 @@ def uid(screen, purpose):
         if ew[0]:
             return None
         else:
-            ret = ew[1][0]
-            if ew[1][2] != "":
+            name = ew[1][0]
+            email = ew[1][1]
+            comment = ew[1][2]
+            if name != "":
+                ret = name
+            else:
+                error(screen, _("You must supply a name"))
+                continue
+            if comment != "":
                 ret += " ("+ew[1][2]+")"
-            if valid.email(ew[1][1]):
-                return ret+" <"+ew[1][1]+">"
+            if valid.email(email):
+                ret += " <"+ew[1][1]+">"
             else:
                 error(screen, _("You must supply a valid email address"))
+                continue
+            return ret
 
 def alert(screen, title, msg):
     BCW(screen, title, msg, [(_("Ok"), None)])
