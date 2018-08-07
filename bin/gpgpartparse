@@ -34,8 +34,6 @@
 
 sub mycolored($@) {
     my $msg = shift;
-    my $color = join (' ', grep defined, map { defined $_ ? $CONFIG{colors}->{$_} : undef } @_) if defined $CONFIG{colors};
-    $msg = colored($msg, $color) if defined $color and $color !~ /^\s*$/;
     return $msg;
 }
 
