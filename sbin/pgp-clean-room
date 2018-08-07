@@ -30,7 +30,7 @@ if not tran:
             "back to English")
 
 keyboard = ui.confirm(screen, _("Keyboard Layout"), _("Would you like to"
-    " use the default keyboard layout (US QWERTY)"))
+    " use the default keyboard layout (US QWERTY)?"))
 if not keyboard:
     screen.finish()
     subprocess.run(["sudo", "dpkg-reconfigure", "keyboard-configuration"])
