@@ -6,37 +6,59 @@ from . import disks_newt
 from . import external
 from . import time
 from . import fmt
+from . import valid
 
 def new(screen, workdir):
-    ew = newt.EW(screen, _("New CA"), _("Fill out the fields below to create"
-        " a new Certificate Authority."), [
-            _("Name of CA"),
-            _("When the CA should expire (YYYY-MM-DD)"),
-            _("Domain of CA"),
-            _("Days Server certificates should be valid for")])
-    if ew[0]:
-        return
-    CA = ca.CA(workdir)
-    CA.name = ew[1][0]
-    delta = time.isostr2delta(ew[1][1])
-    CA.CAValid = delta.days
-    CA.domain = ew[1][2]
-    CA.serverValid = ew[1][3]
-    kt = list(ca.keyTypes.keys())
-    ktlcw = newt.LCW(screen, _("CA Key Type"), _("Pick your key type"), kt)
-    if ktlcw[0]:
-        return
-    CA.keyType = kt[ktlcw[1]]
-    ks = list(ca.keyTypes[CA.keyType])
-    kslcw = newt.LCW(screen, _("CA Key Size"), _("Pick your key size"), ks)
-    if kslcw[0]:
-        return
-    CA.keySize = ks[kslcw[1]]
-    digestlcw = newt.LCW(screen, _("Certificate Digest Type"), _("Pick your"
-        " digest type"), ca.digests)
-    if digestlcw[0]:
-        return
-    CA.digest = ca.digests[digestlcw[1]]
+    while True:
+        ew = newt.EW(screen, _("New CA"), _("Fill out the fields below to"
+            " create a new Certificate Authority."), [
+                _("Name of CA"),
+                _("When the CA should expire (YYYY-MM-DD)"),
+                _("Domain of CA"),
+                _("Days Server certificates should be valid for")])
+        if ew[0]:
+            return
+        CA = ca.CA(workdir)
+        CA.name = ew[1][0]
+        if CA.name == "":
+            newt.error(screen, _("You must supply a CA name"))
+            continue
+        try:
+            delta = time.isostr2delta(ew[1][1])
+            CA.CAValid = delta.days
+        except ValueError:
+            newt.error(screen, _("You must supply a valid date in the future,"
+                " in YYYY-MM-DD format"))
+            continue
+        CA.domain = ew[1][2]
+        if CA.domain == "" or (not valid.domain(CA.domain)):
+            newt.error(screen, _("You must supply a valid domain"))
+            continue
+        CA.serverValid = ew[1][3]
+        try:
+            i = int(CA.serverValid)
+            if i < 1:
+                raise ValueError
+        except ValueError:
+            newt.error(screen, _("Server certificates must be valid for at"
+                " least one day"))
+            continue
+        kt = list(ca.keyTypes.keys())
+        ktlcw = newt.LCW(screen, _("CA Key Type"), _("Pick your key type"), kt)
+        if ktlcw[0]:
+            return
+        CA.keyType = kt[ktlcw[1]]
+        ks = list(ca.keyTypes[CA.keyType])
+        kslcw = newt.LCW(screen, _("CA Key Size"), _("Pick your key size"), ks)
+        if kslcw[0]:
+            return
+        CA.keySize = ks[kslcw[1]]
+        digestlcw = newt.LCW(screen, _("Certificate Digest Type"), _("Pick your"
+            " digest type"), ca.digests)
+        if digestlcw[0]:
+            return
+        CA.digest = ca.digests[digestlcw[1]]
+        break
 
     CA.save()
     try:
