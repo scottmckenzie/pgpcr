@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PGP Clean Room 0.1\n"
 "Report-Msgid-Bugs-To: tookmund@gmail.com\n"
-"POT-Creation-Date: 2018-08-07 14:38-0400\n"
+"POT-Creation-Date: 2018-08-07 16:53-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -709,124 +709,140 @@ msgstr ""
 msgid "error"
 msgstr ""
 
-#: pgpcr/pki_newt.py:11
+#: pgpcr/pki_newt.py:13
 msgid "New CA"
 msgstr ""
 
-#: pgpcr/pki_newt.py:11
+#: pgpcr/pki_newt.py:13
 msgid "Fill out the fields below to create a new Certificate Authority."
 msgstr ""
 
-#: pgpcr/pki_newt.py:13
+#: pgpcr/pki_newt.py:15
 msgid "Name of CA"
 msgstr ""
 
-#: pgpcr/pki_newt.py:14
+#: pgpcr/pki_newt.py:16
 msgid "When the CA should expire (YYYY-MM-DD)"
 msgstr ""
 
-#: pgpcr/pki_newt.py:15
+#: pgpcr/pki_newt.py:17
 msgid "Domain of CA"
 msgstr ""
 
-#: pgpcr/pki_newt.py:16
+#: pgpcr/pki_newt.py:18
 msgid "Days Server certificates should be valid for"
 msgstr ""
 
-#: pgpcr/pki_newt.py:26
+#: pgpcr/pki_newt.py:24
+msgid "You must supply a CA name"
+msgstr ""
+
+#: pgpcr/pki_newt.py:30
+msgid "You must supply a valid date in the future, in YYYY-MM-DD format"
+msgstr ""
+
+#: pgpcr/pki_newt.py:35
+msgid "You must supply a valid domain"
+msgstr ""
+
+#: pgpcr/pki_newt.py:43
+msgid "Server certificates must be valid for at least one day"
+msgstr ""
+
+#: pgpcr/pki_newt.py:47
 msgid "CA Key Type"
 msgstr ""
 
-#: pgpcr/pki_newt.py:26
+#: pgpcr/pki_newt.py:47
 msgid "Pick your key type"
 msgstr ""
 
-#: pgpcr/pki_newt.py:31
+#: pgpcr/pki_newt.py:52
 msgid "CA Key Size"
 msgstr ""
 
-#: pgpcr/pki_newt.py:31
+#: pgpcr/pki_newt.py:52
 msgid "Pick your key size"
 msgstr ""
 
-#: pgpcr/pki_newt.py:35
+#: pgpcr/pki_newt.py:56
 msgid "Certificate Digest Type"
 msgstr ""
 
-#: pgpcr/pki_newt.py:35
+#: pgpcr/pki_newt.py:56
 msgid "Pick your digest type"
 msgstr ""
 
-#: pgpcr/pki_newt.py:49 pgpcr/pki_newt.py:56
+#: pgpcr/pki_newt.py:71 pgpcr/pki_newt.py:78
 msgid "CA private key backup"
 msgstr ""
 
-#: pgpcr/pki_newt.py:50
+#: pgpcr/pki_newt.py:72
 msgid "certificate export"
 msgstr ""
 
-#: pgpcr/pki_newt.py:52
+#: pgpcr/pki_newt.py:74
 msgid "CA creation successful!"
 msgstr ""
 
-#: pgpcr/pki_newt.py:52
+#: pgpcr/pki_newt.py:74
 msgid "You have now sucessfully created a Certificate Authority"
 msgstr ""
 
-#: pgpcr/pki_newt.py:61
+#: pgpcr/pki_newt.py:83
 msgid "This disk does not contain a CA backup"
 msgstr ""
 
-#: pgpcr/pki_newt.py:64
+#: pgpcr/pki_newt.py:86
 msgid "CA Backup"
 msgstr ""
 
-#: pgpcr/pki_newt.py:64
+#: pgpcr/pki_newt.py:86
 msgid "Please select your CA"
 msgstr ""
 
-#: pgpcr/pki_newt.py:76
+#: pgpcr/pki_newt.py:98
 msgid "Open CSR"
 msgstr ""
 
-#: pgpcr/pki_newt.py:79
+#: pgpcr/pki_newt.py:101
 msgid "Sign Certificate"
 msgstr ""
 
-#: pgpcr/pki_newt.py:79
+#: pgpcr/pki_newt.py:101
 #, python-format
 msgid "Do you want to sign %s?"
 msgstr ""
 
-#: pgpcr/pki_newt.py:84 pgpcr/pki_newt.py:89 pgpcr/pki_newt.py:99
-#: pgpcr/pki_newt.py:104 pgpcr/pki_newt.py:116
+#: pgpcr/pki_newt.py:106 pgpcr/pki_newt.py:111 pgpcr/pki_newt.py:121
+#: pgpcr/pki_newt.py:126 pgpcr/pki_newt.py:138
 msgid "CSR"
 msgstr ""
 
-#: pgpcr/pki_newt.py:84 pgpcr/pki_newt.py:116
+#: pgpcr/pki_newt.py:106 pgpcr/pki_newt.py:138
 #, python-format
 msgid ""
 "Created certificate:\n"
 "%s"
 msgstr ""
 
-#: pgpcr/pki_newt.py:86
+#: pgpcr/pki_newt.py:108
 msgid ""
 "Certificate Signing Request Invalid. Please be sure it is in Base64 PEM "
 "format.\n"
 msgstr ""
 
-#: pgpcr/pki_newt.py:104
+#: pgpcr/pki_newt.py:126
 msgid ""
 "There are no CSRs on this disks. Please be sure they are in the csr/ "
 "folder"
 msgstr ""
 
-#: pgpcr/pki_newt.py:106
+#: pgpcr/pki_newt.py:128
 msgid "Certificate Signing Request"
 msgstr ""
 
-#: pgpcr/pki_newt.py:106
+#: pgpcr/pki_newt.py:128
 msgid "Which CSRs would you like to issue certificates for?"
 msgstr ""
 
