@@ -34,13 +34,11 @@ for f in fprs:
     kl = gk.findkey(f)
     if len(kl) == 0:
             newt.error(screen, _("No keys found for fingerprint:\n'%s'") % f)
-    for k in kl:
-        sign = newt.confirm(screen, _("Found Key"),
-                _("Found:\n%s\n%s\nSign it?") % (k.fpr,
-                    "\n".join([u.uid for u in k.uids])))
-        if sign:
-            keys.append(k.fpr)
-            gk.importkey(k)
+    elif len(kl) > 1:
+        newt.error(screen, _("Found multiple keys for fingerprint:\n'%s'") % f)
+    else:
+        keys.append(kl[0].fpr)
+        gk.importkey(kl[0])
     prog.inc()
 
 d = disks_newt.setup(screen, _("keys to sign"), "PGPCR Signing")
