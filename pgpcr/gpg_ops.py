@@ -182,7 +182,7 @@ class GPGKey(context.Context):
         if sub is not None:
             self._subalgo = sub
 
-    def genseasubs(self, status, explain, redraw, data):
+    def genseasubs(self, status, explain, redraw, data=None):
         # Force a redraw
         data = redraw(data)
         s = explain(data, _("Signing Subkey"), _("A signing subkey will now be"

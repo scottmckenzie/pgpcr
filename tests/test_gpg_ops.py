@@ -43,10 +43,13 @@ class GPGOpsTestGenCall(unittest.TestCase):
         print(title, text, sep="\n")
         return True
 
+    def _redraw(self, screen, doIt=True):
+        return False
+
     def test_subkey_generation_and_progress_callback(self):
         self.gk.setprogress(self._progress)
         print("\nGenerating subkeys...")
-        self.gk.genseasubs(print, self._explain, lambda x,y: False, None)
+        self.gk.genseasubs(print, self._explain, self._redraw)
         self.assertEqual(len(self.gk._master.subkeys), 4)
 
     def test_expirekey(self):
