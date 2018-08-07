@@ -752,6 +752,7 @@ Evaluation Period 3 / Week 13
 	- [#37](https://salsa.debian.org/tookmund-guest/pgpcr/issues/37)
 	- Makes sense to save properties so we can regenerate without asking questions
  - [x] Fix up file picker
+ - [x] Better form validation for new CA creation
  - [ ] Release 1.0
  - [ ] Submit Debian package
  - [ ] File RFS
