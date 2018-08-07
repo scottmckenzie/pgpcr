@@ -71,7 +71,11 @@ def _loadCA(screen, workdir):
 
 def signfile(screen, workdir):
     CA = _loadCA(screen, workdir)
+    if CA is None:
+        return
     csr = newt.filepicker(screen, _("Open CSR"))
+    if csr is None:
+        return
     sign = newt.dangerConfirm(screen, _("Sign Certificate"), _("Do you want to"
         " sign %s?" % csr))
     if sign:
@@ -88,6 +92,8 @@ def signfile(screen, workdir):
 
 def load(screen, workdir):
     CA = _loadCA(screen, workdir)
+    if CA is None:
+        return
     csrs = None
     while csrs is None:
         csrdisk = disks_newt.mountdisk(screen, _("CSR"))
