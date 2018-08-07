@@ -5,6 +5,7 @@ from time import sleep
 from snack import *
 from . import external
 from . import valid
+from .gpg_ops import PinentryCancelled
 
 
 def getwidth():
@@ -268,7 +269,7 @@ def catchCPE(screen, e):
 
 def catchGPGMEErr(what, g):
     screen = Screen()
-    if g.code_str == "Operation cancelled":
+    if type(g) is PinentryCancelled:
         cancel = dangerConfirm(screen, what, _("Are you sure you want to"
         " cancel")+" "+what+"?")
         if cancel:

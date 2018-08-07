@@ -32,7 +32,7 @@ def new(screen, workdir, expert):
     while True:
         try:
             gk.genmaster(uid)
-        except gpg_ops.GPGMEError as g:
+        except (gpg_ops.GPGMEError, gpg_ops.PinentryCancelled) as g:
             cont = newt.catchGPGMEErr(_("Master key pair generation"), g)
             if cont:
                 continue
@@ -53,7 +53,7 @@ def new(screen, workdir, expert):
         try:
             gk.genseasubs(sprog.setText, newt.ContinueSkipAbort,
                     newt.redraw, screen)
-        except gpg_ops.GPGMEError as g:
+        except (gpg_ops.GPGMEError, gpg_ops.PinentryCancelled) as g:
             cancel = newt.catchGPGMEErr(_("Subkey generation"), g)
             if not cancel:
                 continue
