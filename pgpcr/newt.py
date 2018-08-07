@@ -180,7 +180,7 @@ def NotImplementedYet(screen):
     alert(screen, "Not Implemented Yet",
           "This feature has not yet been implemented")
 
-def redraw(screen, doIt):
+def redraw(screen, doIt=True):
     if doIt:
         screen.finish()
         screen = Screen()
