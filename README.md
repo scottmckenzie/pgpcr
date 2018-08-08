@@ -39,12 +39,12 @@ Add a catalog for your language:
 
 Add your translations to the newly created po file at `po/$LANG/LC_MESSAGES/pgpcr.po`
 
-Add your translations to the install file by appending the line below to ```debian/pgp-clean-room.install```:
+Add your translations to the install file by appending the line below to `debian/pgp-clean-room.install`:
 ```
 po/$LANG/LC_MESSAGES/$LANG.mo	/usr/share/locales/$LANG/LC_MESSAGES/
 ```
 
-Add your translation to the language selection menu in ```pgp-clean-room```.
+Add your translation to the language selection menu in `pgp-clean-room`.
 
 ### Updating your translation
 ```
