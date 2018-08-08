@@ -7,8 +7,10 @@ This is the PGP Clean Room application, designed to be run as part of the
 Dependencies
 ------------
 ```
-apt-get install debhelper devscripts gnupg libgpgme-dev:i386 dh-python python3-newt python3-babel python3-setuptools python3-all python3-gpg
+apt-get install debhelper devscripts gnupg libgpgme-dev dh-python python3-newt python3-babel python3-setuptools python3-all python3-gpg
 ```
+
+You'll need a recent version of `libgpgme`, at least 1.11.1
 
 Building
 --------
