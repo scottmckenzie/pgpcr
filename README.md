@@ -37,7 +37,7 @@ Add a catalog for your language:
 ./setup.py init_catalog -l $LANG
 ```
 
-Add your translations to the po file.
+Add your translations to the newly created po file at `po/$LANG/LC_MESSAGES/pgpcr.po`
 
 Add your translations to the install file by appending the line below to ```debian/pgp-clean-room.install```:
 ```
