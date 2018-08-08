@@ -4,6 +4,12 @@ PGP Clean Room
 This is the PGP Clean Room application, designed to be run as part of the
 [PGP/PKI Clean Room Live CD](https://salsa.debian.org/tookmund-guest/make-pgp-clean-room)
 
+Dependencies
+------------
+```
+apt-get install debhelper devscripts gnupg libgpgme-dev:i386 dh-python python3-newt python3-babel python3-setuptools python3-all python3-gpg
+```
+
 Building
 --------
 **This should only be used for testing!**
@@ -14,12 +20,6 @@ for instructions on how to build this application properly
 Run the build script:
 ```
 ./build.sh
-```
-
-Dependencies
-------------
-```
-apt-get install debhelper devscripts gnupg libgpgme-dev:i386 dh-python python3-newt python3-babel python3-setuptools python3-all python3-gpg
 ```
 
 Translations
