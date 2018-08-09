@@ -43,6 +43,13 @@ with open("/var/log/live/boot.log") as f:
         ui.alert(screen, _("Boot Media"), _("You can now remove the"
         " boot media, as the entire filesystem has been loaded into RAM."))
 
+with open ("/proc/sys/kernel/random/entropy_avail") as f:
+    ent = int(f.read())
+    _log.info("Entropy Available: %d" % ent)
+    if ent < 1000:
+        ui.alert(screen, _("Warning"), _("Low entropy detected. It may take a"
+        " very long time for this computer to generate keys."))
+
 expert = False
 running = True
 while running:
