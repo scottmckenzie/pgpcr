@@ -759,10 +759,13 @@ Evaluation Period 3 / Week 13
  - [x] File RFS
 	- [#905666](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=905666)
  - [x] Link RFS in blog post
+
+2018-08-09
+----------
+ - [x] Indicate when low entropy is detected
+	- [#16](https://salsa.debian.org/tookmund-guest/pgpcr/issues/16)
+	- Still would like need_entropy events from GPG, which should be possible
  - [ ] Publish blog post
- - [ ] Research Debian's translation infrastructure and reach out to the appropriate teams to have the application translated
- - [ ] Incorporate translations and community testing
- - [ ] Bug fixes
 
 Misc
 ====
