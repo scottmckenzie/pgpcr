@@ -26,6 +26,11 @@ Run the build script:
 
 Translations
 ------------
+You'll need python3, setuptools, and babel installed:
+```shell
+apt install python3 python3-setuptools python3-babel
+```
+
 To update the template, run:
 ```
 ./setup.py extract_messages
