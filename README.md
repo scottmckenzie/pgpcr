@@ -8,16 +8,16 @@ Dependencies
 ------------
 On Debian:
 
-* debhelper
+* debhelper (>= 11)
 * devscripts
-* gnupg
-* libgpgme-dev (>= 1.11.1)
+* gnupg (>= 2.1.21-4)
+* libgpgme-dev (>= 1.11.1-1)
 * dh-python
 * python3-newt
 * python3-babel
 * python3-setuptools
 * python3-all
-* python3-gpg
+* python3-gpg (>= 1.11.1-1)
 
 Building
 --------
