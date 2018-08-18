@@ -6,11 +6,18 @@ This is the PGP Clean Room application, designed to be run as part of the
 
 Dependencies
 ------------
-```
-apt-get install debhelper devscripts gnupg libgpgme-dev dh-python python3-newt python3-babel python3-setuptools python3-all python3-gpg
-```
+On Debian:
 
-You'll need a recent version of `libgpgme`, at least 1.11.1
+* debhelper
+* devscripts
+* gnupg
+* libgpgme-dev (>= 1.11.1)
+* dh-python
+* python3-newt
+* python3-babel
+* python3-setuptools
+* python3-all
+* python3-gpg
 
 Building
 --------
@@ -26,10 +33,11 @@ Run the build script:
 
 Translations
 ------------
-You'll need python3, setuptools, and babel installed:
-```shell
-apt install python3 python3-setuptools python3-babel
-```
+You'll need the following Debian packages to use these commands:
+
+* python3
+* python3-setuptools
+* python3-babel
 
 To update the template, run:
 ```
