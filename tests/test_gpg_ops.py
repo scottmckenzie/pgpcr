@@ -82,6 +82,7 @@ class GPGOpsTestGenCall(unittest.TestCase):
 
     def test_addrevuid(self):
         addtest = "addtest <addtest@example.com>"
+        self.assertNotIn(addtest, self.gk.uids)
         self.gk.adduid(addtest)
         self.assertIn(addtest, self.gk.uids)
         self.gk.revokeuid(addtest)
