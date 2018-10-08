@@ -2,7 +2,7 @@ Source: pgpcr
 Maintainer: Jacob Adams <tookmund@gmail.com>
 Section: utils
 Priority: optional
-Build-Depends: dh-python, python3-setuptools, python3-all, debhelper (>= 11), python3-babel
+Build-Depends: dh-python, python3-setuptools, python3, debhelper (>= 11), python3-babel
 Standards-Version: 4.1.5
 Homepage: https://salsa.debian.org/tookmund-guest/pgpcr
 
