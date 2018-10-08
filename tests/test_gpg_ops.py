@@ -80,6 +80,12 @@ class GPGOpsTestGenCall(unittest.TestCase):
         self.gk.gensub(encrypt=True)
         self.gk.gensub(authenticate=True)
 
+    def test_addrevuid(self):
+        addtest = "addtest <addtest@example.com>"
+        self.gk.adduid(addtest)
+        self.assertIn(addtest, self.gk.uids)
+        self.gk.revokeuid(addtest)
+        self.assertIn(addtest+" REVOKED", self.gk.uids)
 
 class GPGOpsTestKey(unittest.TestCase):
 
@@ -116,13 +122,6 @@ class GPGOpsTestKey(unittest.TestCase):
               'F351E19BF3F9C2E5392338104B4C747617C77194 (Encryption)',
               '04E8C72E5513A1FB1D925ABA62E94671570D8082 (Authentication)']
         self.assertEqual(kl, self.gk.keys)
-
-    def test_addrevuid(self):
-        addtest = "addtest <addtest@example.com>"
-        self.gk.adduid(addtest)
-        self.assertIn(addtest, self.gk.uids)
-        self.gk.revokeuid(addtest)
-        self.assertIn(addtest+" REVOKED", self.gk.uids)
 
     # Checking signatures doesn't work for some reason
     # So we do it manually
