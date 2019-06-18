@@ -16,7 +16,7 @@ setup(name="PGP Clean Room",
       author_email="tookmund@gmail.com",
       url="https://salsa.debian.org/tookmund-guest/pgpcr",
       packages=["pgpcr"],
-      install_requires=["gpg"],
+      install_requires=["gpg", "snack"],
       setup_requires=["babel"],
       cmdclass={'build_py': BuildCommand},
      )
