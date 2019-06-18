@@ -3,13 +3,19 @@ import os
 import subprocess
 import unittest
 import datetime
+import time
 from gpg.constants.keylist.mode import SIGS
 from pgpcr import gpg_ops
 from pgpcr.external import CalledProcessError
 from tests.helpers import cmpfiles, copy
 
+def setTZ():
+    os.environ['TZ'] = "UTC"
+    time.tzset()
+
 class GPGOpsTestGenCall(unittest.TestCase):
     def setUp(self):
+        setTZ()
         self.tmp = tempfile.TemporaryDirectory()
         self.gk = gpg_ops.GPGKey(self.tmp.name)
         # Generate smaller keys so the test doesn't take as long
@@ -91,6 +97,7 @@ class GPGOpsTestGenCall(unittest.TestCase):
 class GPGOpsTestKey(unittest.TestCase):
 
     def setUp(self):
+        setTZ()
         self.tmp = tempfile.TemporaryDirectory()
         # Directory where the test key is stored
         self.datadir = "tests/data"
